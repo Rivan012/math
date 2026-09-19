@@ -1,6 +1,2 @@
 id,nama,kelas,avatar,poin,stars,completed_levels,material_progress,last_score,last_correct,last_total,last_hints,last_played,created_at
-1,"Zahra Aulia","Kelas 3 SD","👧",780,15,"1,2,3,4,5",100,100,15,15,0,1726718400000,1726632000000
-2,"Ahmad Fauzi","Kelas 3 SD","👦",620,12,"1,2,3,4",100,87,13,15,1,1726714800000,1726633000000
-3,"Doni Pratama","Kelas 2 SD","🧒",450,9,"1,2,3",80,80,12,15,2,1726690000000,1726634000000
-4,"Bintang Kejora","Kelas 4 SD","🐰",390,7,"1,2",60,73,11,15,1,1726680000000,1726635000000
-5,"Rian Ardiansyah","Kelas 2 SD","🐱",280,5,"1",40,67,10,15,2,1726670000000,1726636000000
+S001,Rivan,Kelas 2 SD,budi,1764,1,"1,2,3",100,50,2,4,0,1789831166789,1789827052869

@@ -133,6 +133,23 @@ function playSound(type) {
       playTone(ctx, 659.25, now + 0.12, 0.12, "triangle");
       playTone(ctx, 783.99, now + 0.24, 0.14, "triangle");
       playTone(ctx, 1046.50, now + 0.38, 0.40, "sine");
+    } else if (type === "pageTurn") {
+      // Efek geser kertas buku (swoosh lembut)
+      playTone(ctx, 440.00, now, 0.06, "sine");
+      playTone(ctx, 587.33, now + 0.04, 0.08, "sine");
+    } else if (type === "streak") {
+      // Efek api combo streak (tri-chord berkilau)
+      playTone(ctx, 523.25, now, 0.08, "sine");
+      playTone(ctx, 659.25, now + 0.07, 0.08, "sine");
+      playTone(ctx, 783.99, now + 0.14, 0.12, "triangle");
+      playTone(ctx, 1046.50, now + 0.20, 0.24, "sine");
+    } else if (type === "tick") {
+      // Ketukan jam timer halus
+      playTone(ctx, 880.00, now, 0.02, "sine");
+    } else if (type === "timeUp") {
+      // Waktu habis
+      playTone(ctx, 220.00, now, 0.15, "sawtooth");
+      playTone(ctx, 185.00, now + 0.12, 0.25, "sawtooth");
     }
   } catch (e) {
     // Abaikan jika browser membatasi autoplay
@@ -160,11 +177,13 @@ function playTone(ctx, freq, startTime, duration, type = "sine") {
    INISIALISASI APLIKASI
    ========================================================= */
 
-function initialize() {
+async function initialize() {
   const loadingScreen = $("appLoadingScreen");
 
-  // Inisialisasi seed data awal
-  seedInitialDataIfEmpty();
+  // Inisialisasi seed data awal (sinkronisasi dari server jika mode HTTP)
+  if (typeof seedInitialDataIfEmpty === "function") {
+    await seedInitialDataIfEmpty();
+  }
 
   // Inisialisasi event listener tiap modul
   if (typeof initAuth === "function") initAuth();

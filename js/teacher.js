@@ -683,6 +683,28 @@ function checkAdminAuth() {
   const loginView = $("adminLoginView");
   const dashboardView = $("adminDashboardView");
   const teacherNameBadge = $("teacherNameBadge");
+  const syncStatusBadge = $("syncStatusBadge");
+  const studentsStorageBadge = $("studentsStorageBadge");
+
+  // Perbarui indikator koneksi server
+  const isServer = typeof IS_SERVER_MODE !== "undefined" && IS_SERVER_MODE;
+  if (syncStatusBadge) {
+    if (isServer) {
+      syncStatusBadge.textContent = "🟢 Server Terhubung (Real-time)";
+      syncStatusBadge.className = "badge badge-green";
+      syncStatusBadge.title = "Data otomatis tersinkronisasi antar-browser dan tersimpan ke data/siswa.csv";
+    } else {
+      syncStatusBadge.textContent = "🟡 Berkas Offline (file:///)";
+      syncStatusBadge.className = "badge badge-yellow";
+      syncStatusBadge.title = "Aplikasi berjalan offline di satu peramban via file:///. Gunakan 'node server.js' untuk sinkronisasi antar-browser.";
+    }
+  }
+
+  if (studentsStorageBadge) {
+    studentsStorageBadge.textContent = isServer
+      ? "Tersinkron ke data/siswa.csv"
+      : "Tersimpan di LocalStorage";
+  }
 
   if (session) {
     // Pengajar sudah login
@@ -811,16 +833,42 @@ function initTeacherEvents() {
     });
   }
 
+  // Tombol Sinkronkan Data dari Server
+  const refreshStudentsBtn = $("refreshStudentsBtn");
+  if (refreshStudentsBtn) {
+    refreshStudentsBtn.addEventListener("click", async () => {
+      refreshStudentsBtn.disabled = true;
+      refreshStudentsBtn.textContent = "⏳ Menyinkronkan...";
+      if (typeof fetchStudentsFromServer === "function") {
+        await fetchStudentsFromServer();
+      }
+      renderTeacherDashboard();
+      setTimeout(() => {
+        refreshStudentsBtn.disabled = false;
+        refreshStudentsBtn.textContent = "🔄 Sinkronkan Data";
+      }, 500);
+      showToast("Data murid berhasil disegarkan.", "success");
+    });
+  }
+
   // Tombol Kosongkan Data Seluruh Siswa
   const clearStudentsBtn = $("clearStudentsBtn");
   if (clearStudentsBtn) {
-    clearStudentsBtn.addEventListener("click", () => {
+    clearStudentsBtn.addEventListener("click", async () => {
       if (confirm("Apakah Anda yakin ingin menghapus seluruh data siswa terdaftar? Daftar siswa akan menjadi kosong.")) {
         if (typeof saveStudents === "function") {
           saveStudents([]);
         }
         if (typeof Storage !== "undefined" && typeof Storage.set === "function") {
           Storage.set("timequest_initialized", true);
+        }
+        // Jika mode server, kosongkan berkas data/siswa.csv di server
+        if (typeof IS_SERVER_MODE !== "undefined" && IS_SERVER_MODE) {
+          try {
+            await fetch("/api/students/reset", { method: "POST" });
+          } catch (e) {
+            console.warn("Gagal mereset siswa di server:", e);
+          }
         }
         showToast("Daftar murid berhasil dibersihkan.", "success");
         renderTeacherDashboard();
@@ -1501,12 +1549,26 @@ function initTeacherEvents() {
 }
 
 // Inisialisasi otomatis jika dijalankan di admin.html
-document.addEventListener("DOMContentLoaded", () => {
-  // Pastikan data awal tersedia
+document.addEventListener("DOMContentLoaded", async () => {
+  // Pastikan data awal tersedia dan tersinkronisasi dari server jika mode HTTP
   if (typeof seedInitialDataIfEmpty === "function") {
-    seedInitialDataIfEmpty();
+    await seedInitialDataIfEmpty();
   }
 
   initTeacherEvents();
   checkAdminAuth();
+
+  // Sinkronisasi otomatis latar belakang setiap 4 detik pada mode server
+  const isServer = typeof IS_SERVER_MODE !== "undefined" && IS_SERVER_MODE;
+  if (isServer && !window._teacherSyncPoll) {
+    window._teacherSyncPoll = setInterval(async () => {
+      // Hanya polling jika sesi aktif dan tab sedang dilihat
+      if (getTeacherSession() && document.visibilityState === "visible") {
+        if (typeof fetchStudentsFromServer === "function") {
+          await fetchStudentsFromServer();
+          renderTeacherDashboard();
+        }
+      }
+    }, 4000);
+  }
 });

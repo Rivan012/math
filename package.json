@@ -1,0 +1,12 @@
+{
+  "name": "time-quest-math",
+  "version": "2.0.0",
+  "description": "Game edukasi matematika membaca jam dan durasi untuk siswa SD dengan server sinkronisasi lokal.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["math", "education", "clock", "quiz", "elementary-school"],
+  "author": "TIME QUEST Team",
+  "license": "MIT"
+}

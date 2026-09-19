@@ -12,8 +12,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Stylesheet Utama & Responsif -->
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/style.css?v=2.2">
+  <link rel="stylesheet" href="css/responsive.css?v=2.2">
 </head>
 <body>
 
@@ -30,6 +30,7 @@
       </div>
 
       <div class="header-actions">
+        <span id="syncStatusBadge" class="badge badge-green">🟢 Server Terhubung</span>
         <span id="teacherNameBadge" class="badge badge-accent">Panel Pengajar</span>
         <button id="teacherLogoutBtn" class="btn btn-outline btn-sm" type="button" title="Keluar ke Halaman Siswa">
           Keluar
@@ -159,7 +160,10 @@
           <div class="section-heading">
             <h2>Daftar Murid Terdaftar</h2>
             <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-              <span class="badge badge-outline">Tersimpan di Browser</span>
+              <span id="studentsStorageBadge" class="badge badge-outline">Tersimpan di Browser</span>
+              <button id="refreshStudentsBtn" class="btn btn-outline btn-sm" type="button" title="Segarkan Data dari Server">
+                🔄 Sinkronkan Data
+              </button>
               <button id="clearStudentsBtn" class="btn btn-danger-outline btn-sm" type="button" title="Kosongkan seluruh data murid">
                 Kosongkan Data Siswa
               </button>
@@ -256,11 +260,10 @@
                 <input type="text" id="searchMaterialInput" class="admin-table-search" placeholder="🔍 Cari materi...">
                 <select id="filterMaterialLevel" class="admin-table-select">
                   <option value="all">Semua Level</option>
-                  <option value="1">Level 1</option>
-                  <option value="2">Level 2</option>
-                  <option value="3">Level 3</option>
-                  <option value="4">Level 4</option>
-                  <option value="5">Level 5</option>
+                  <option value="1">Level 1 - Jam Analog</option>
+                  <option value="2">Level 2 - Jam Digital</option>
+                  <option value="3">Level 3 - Lebih Lama / Lebih Cepat</option>
+                  <option value="4">Level 4 - Waktu Kegiatan</option>
                 </select>
                 <button type="button" id="btnResetMaterials" class="btn btn-danger-outline btn-sm" title="Kembalikan ke data bawaan">
                   Reset Default
@@ -301,11 +304,10 @@
                 <div class="form-group">
                   <label for="matLevel">Level Pembelajaran</label>
                   <select id="matLevel" class="select" required>
-                    <option value="1">Level 1 - Mengenal Jam Bulat (Pukul .00)</option>
-                    <option value="2">Level 2 - Mengenal Jam Setengah (.30)</option>
-                    <option value="3">Level 3 - Jam Seperempat (.15 & .45)</option>
-                    <option value="4">Level 4 - Menit Kelipatan 5 (.05 s.d .55)</option>
-                    <option value="5">Level 5 - Format Waktu 24 Jam (Siang/Malam)</option>
+                    <option value="1">Level 1 - Mengenal Jam Analog</option>
+                    <option value="2">Level 2 - Mengenal Jam Digital</option>
+                    <option value="3">Level 3 - Lebih Lama atau Lebih Cepat</option>
+                    <option value="4">Level 4 - Mengenal Waktu Kegiatan</option>
                   </select>
                 </div>
 
@@ -409,7 +411,7 @@
                   <span class="excel-col-badge">tip</span>
                 </div>
                 <ul class="template-features-list">
-                  <li><strong>level</strong>: Angka level materi (1 sampai 5).</li>
+                  <li><strong>level</strong>: Angka level materi (1 sampai 4).</li>
                   <li><strong>judul</strong>: Nama judul modul pembelajaran.</li>
                   <li><strong>isi</strong>: Penjelasan konsep materi waktu.</li>
                   <li><strong>tip</strong>: Tips cara cepat atau kunci hafalan.</li>
@@ -449,11 +451,10 @@
                 <input type="text" id="searchQuestionInput" class="admin-table-search" placeholder="🔍 Cari soal kuis...">
                 <select id="filterQuestionLevel" class="admin-table-select">
                   <option value="all">Semua Level</option>
-                  <option value="1">Level 1</option>
-                  <option value="2">Level 2</option>
-                  <option value="3">Level 3</option>
-                  <option value="4">Level 4</option>
-                  <option value="5">Level 5</option>
+                  <option value="1">Level 1 - Jam Analog</option>
+                  <option value="2">Level 2 - Jam Digital</option>
+                  <option value="3">Level 3 - Lebih Lama / Lebih Cepat</option>
+                  <option value="4">Level 4 - Waktu Kegiatan</option>
                 </select>
                 <select id="filterQuestionType" class="admin-table-select">
                   <option value="all">Semua Tipe</option>
@@ -501,11 +502,10 @@
                   <div class="form-group">
                     <label for="qLevel">Level Kuis</label>
                     <select id="qLevel" class="select" required>
-                      <option value="1">Level 1 - Jam Tepat (.00)</option>
-                      <option value="2">Level 2 - Jam Setengah (.30)</option>
-                      <option value="3">Level 3 - Jam Seperempat (.15/.45)</option>
-                      <option value="4">Level 4 - Kelipatan 5 Menit</option>
-                      <option value="5">Level 5 - Format 24 Jam</option>
+                      <option value="1">Level 1 - Mengenal Jam Analog</option>
+                      <option value="2">Level 2 - Mengenal Jam Digital</option>
+                      <option value="3">Level 3 - Lebih Lama atau Lebih Cepat</option>
+                      <option value="4">Level 4 - Mengenal Waktu Kegiatan</option>
                     </select>
                   </div>
 
@@ -760,9 +760,9 @@
   <!-- =========================================================
        JAVASCRIPT MODULES KHUSUS GURU / ADMIN
        ========================================================= -->
-  <script src="js/storage.js"></script>
+  <script src="js/storage.js?v=2.2"></script>
   <script src="js/xlsx.full.min.js"></script>
-  <script src="js/csv.js"></script>
-  <script src="js/teacher.js"></script>
+  <script src="js/csv.js?v=2.2"></script>
+  <script src="js/teacher.js?v=2.2"></script>
 </body>
 </html>

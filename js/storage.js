@@ -85,6 +85,75 @@ function getAvatarImg(avatarKey, size = 36) {
 }
 
 /**
+ * Deteksi lingkungan server HTTP lokal
+ */
+const IS_SERVER_MODE = typeof window !== "undefined" &&
+  (window.location.protocol === "http:" || window.location.protocol === "https:");
+
+/**
+ * Mengambil data siswa dari server jika dalam mode server
+ * @returns {Promise<Array>}
+ */
+async function fetchStudentsFromServer() {
+  if (!IS_SERVER_MODE) return getStudents();
+  try {
+    const res = await fetch("/api/students");
+    if (!res.ok) throw new Error("Gagal mengambil data siswa dari server");
+    const json = await res.json();
+    if (json.success && Array.isArray(json.data)) {
+      // Simpan ke localStorage sebagai cache lokal
+      Storage.set(STORAGE_KEYS.STUDENTS, json.data);
+      // Jika siswa aktif saat ini ada dalam daftar, perbarui objek currentStudent
+      if (currentStudent) {
+        const matched = json.data.find(s => s.id === currentStudent.id);
+        if (matched) {
+          currentStudent = matched;
+          Storage.set(STORAGE_KEYS.SESSION, currentStudent);
+        }
+      }
+      return json.data;
+    }
+  } catch (err) {
+    console.warn("Server lokal belum siap atau mode offline, menggunakan data lokal:", err);
+  }
+  return getStudents();
+}
+
+/**
+ * Mengirim pembaruan data siswa ke server lokal secara background
+ * @param {Object} student 
+ */
+async function pushStudentToServer(student) {
+  if (!IS_SERVER_MODE || !student) return;
+  try {
+    await fetch("/api/students", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(student)
+    });
+  } catch (err) {
+    console.warn("Gagal mengirim pembaruan siswa ke server:", err);
+  }
+}
+
+/**
+ * Mengirim data seluruh siswa secara massal ke server
+ * @param {Array} students 
+ */
+async function pushAllStudentsToServer(students) {
+  if (!IS_SERVER_MODE || !Array.isArray(students)) return;
+  try {
+    await fetch("/api/students/bulk", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(students)
+    });
+  } catch (err) {
+    console.warn("Gagal sinkronisasi massal siswa ke server:", err);
+  }
+}
+
+/**
  * Mengambil daftar seluruh siswa
  * @returns {Array}
  */
@@ -99,6 +168,9 @@ function getStudents() {
  */
 function saveStudents(students) {
   Storage.set(STORAGE_KEYS.STUDENTS, students);
+  if (IS_SERVER_MODE) {
+    pushAllStudentsToServer(students);
+  }
 }
 
 /**
@@ -129,6 +201,7 @@ function createStudent(name, className, avatar = "budi") {
     points: 0,
     stars: 0,
     completedLevels: [],
+    studiedLevels: [],
     materialProgress: 0,
     lastScore: null,
     lastCorrect: 0,
@@ -159,6 +232,10 @@ function saveCurrentStudent() {
 
   saveStudents(students);
   Storage.set(STORAGE_KEYS.SESSION, currentStudent);
+
+  if (IS_SERVER_MODE) {
+    pushStudentToServer(currentStudent);
+  }
 }
 
 /**
@@ -186,7 +263,19 @@ function clearCurrentStudent() {
 /**
  * Mengisi data demonstrasi siswa awal jika storage kosong
  */
-function seedInitialDataIfEmpty() {
+async function seedInitialDataIfEmpty() {
+  if (Storage.get("timequest_curriculum_version") !== "2.1") {
+    Storage.set(STORAGE_KEYS.MATERIALS, JSON.parse(JSON.stringify(DEFAULT_MATERIALS)));
+    Storage.set(STORAGE_KEYS.QUESTIONS, JSON.parse(JSON.stringify(DEFAULT_QUESTIONS)));
+    Storage.set("timequest_curriculum_version", "2.1");
+  }
+
+  if (IS_SERVER_MODE) {
+    // Pada mode server, selalu ambil data dari data/siswa.csv di server
+    await fetchStudentsFromServer();
+    return;
+  }
+
   const isInitialized = Storage.get("timequest_initialized", false);
   if (isInitialized) return;
 
@@ -276,6 +365,11 @@ function seedInitialDataIfEmpty() {
     ];
     saveStudents(seed);
   }
+  if (Storage.get("timequest_curriculum_version") !== "3.2") {
+    Storage.set(STORAGE_KEYS.MATERIALS, JSON.parse(JSON.stringify(DEFAULT_MATERIALS)));
+    Storage.set(STORAGE_KEYS.QUESTIONS, JSON.parse(JSON.stringify(DEFAULT_QUESTIONS)));
+    Storage.set("timequest_curriculum_version", "3.2");
+  }
   Storage.set("timequest_initialized", true);
 }
 
@@ -287,48 +381,68 @@ const DEFAULT_MATERIALS = [
   {
     id: "M001",
     level: 1,
-    title: "Mengenal Jam Analog",
-    content: "Jam analog memiliki angka 1 sampai 12. Jarum pendek menunjukkan jam dan jarum panjang menunjukkan menit.",
-    tip: "Jarum panjang ke angka 12 berarti menit 00."
+    title: "Anatomi Jam Analog",
+    content: "Jam analog memiliki jarum jam dan angka 1 sampai 12. Jarum pendek menunjukkan JAM dan jarum panjang menunjukkan MENIT. Jam membantu kita mengetahui waktu sehari-hari seperti saat Halim bangun tidur pukul 5 pagi.",
+    tip: "Jarum pendek menunjukkan jam, jarum panjang menunjukkan menit."
   },
   {
     id: "M002",
-    level: 2,
-    title: "Membaca Jam Tepat",
-    content: "Jika jarum panjang berada di angka 12, waktu menunjukkan tepat satu jam. Contoh: jarum pendek di 3 dan jarum panjang di 12 dibaca pukul 03.00.",
-    tip: "Perhatikan posisi jarum pendek untuk menentukan jamnya."
+    level: 1,
+    title: "Membaca Jam Tepat dan Setengah",
+    content: "Jika jarum panjang berada di angka 12, maka waktu menunjukkan tepat (contoh: jarum pendek di 5 dan jarum panjang di 12 dibaca pukul 5 tepat atau 05.00). Jika jarum panjang di angka 6, artinya berjalan 30 menit atau setengah jam (contoh: 04.30 dibaca setengah lima).",
+    tip: "Jarum panjang di 12 = menit 00 (tepat). Jarum panjang di 6 = menit 30 (setengah jam)."
   },
   {
     id: "M003",
-    level: 3,
-    title: "Membaca Setengah Jam",
-    content: "Jika jarum panjang berada di angka 6, artinya telah berjalan 30 menit atau setengah jam. Contoh: pukul 04.30 dibaca setengah lima.",
-    tip: "Angka 6 pada jarum panjang selalu bernilai 30 menit."
+    level: 2,
+    title: "Anatomi Jam Digital",
+    content: "Jam digital menampilkan waktu dalam bentuk angka secara langsung tanpa jarum. Pada tampilan 05:00, dua angka di sebelah KIRI (05) menunjukkan JAM, dan dua angka di sebelah KANAN (00) menunjukkan MENIT.",
+    tip: "Sebelah kiri adalah jam, sebelah kanan adalah menit."
   },
   {
     id: "M004",
-    level: 4,
-    title: "Jam Digital",
-    content: "Jam digital menampilkan angka secara langsung. Angka sebelum titik adalah jam dan setelah titik adalah menit. Contoh: 07.00.",
-    tip: "07.00 berarti pukul tujuh tepat."
+    level: 2,
+    title: "Membaca Jam Digital Sehari-hari",
+    content: "Jam digital sangat mudah dibaca. Angka 07:00 dibaca pukul tujuh tepat. Jika menunjukkan 07:30, dibaca pukul tujuh lewat tiga puluh menit atau setengah delapan. Jam digital sering kita temukan pada jam meja, ponsel, dan jam tangan pintar.",
+    tip: "07:00 sama dengan jarum pendek di 7 dan jarum panjang di 12 pada jam analog."
   },
   {
     id: "M005",
-    level: 5,
-    title: "Urutan Kegiatan",
-    content: "Kegiatan sehari-hari berlangsung secara teratur: Pagi hari (sarapan & sekolah) → Siang hari (istirahat/makan siang) → Sore hari (bermain/mengaji) → Malam hari (tidur).",
-    tip: "Matahari terbit di pagi hari dan terbenam di sore hari."
+    level: 3,
+    title: "Lama dan Sebentarnya Waktu",
+    content: "Setiap kegiatan memerlukan waktu yang berbeda-beda. Ada kegiatan yang memerlukan waktu SEBENTAR (hanya beberapa detik atau menit), dan ada kegiatan yang memerlukan waktu LAMA (berlangsung berjam-jam).",
+    tip: "Meminum air dan menggosok gigi memerlukan waktu sebentar. Memasak dan tidur malam memerlukan waktu lama."
   },
   {
     id: "M006",
-    level: 5,
-    title: "Lama Kegiatan",
-    content: "Durasi adalah selisih waktu selesai dikurangi waktu mulai. Contoh: Ani mulai belajar pukul 08.00 dan selesai pukul 09.00, maka lama belajar = 1 jam (60 menit).",
-    tip: "Durasi = Waktu Selesai − Waktu Mulai."
+    level: 3,
+    title: "Membandingkan Durasi Kegiatan",
+    content: "Kita dapat membandingkan mana kegiatan yang lebih lama atau lebih cepat. Mandi memerlukan waktu lebih lama daripada menyisir rambut. Tidur malam memerlukan waktu lebih lama daripada menyikat gigi. Belajar di sekolah memerlukan waktu lebih lama daripada sarapan.",
+    tip: "Kegiatan yang berdurasi jam lebih lama dari kegiatan yang berdurasi menit."
+  },
+  {
+    id: "M007",
+    level: 4,
+    title: "Pagi, Siang, Sore, dan Malam",
+    content: "Dalam satu hari ada empat pembagian waktu utama: PAGI hari (saat matahari terbit), SIANG hari (matahari terik di atas kepala), SORE hari (matahari mulai condong dan terbenam), serta MALAM hari (gelap dan tampak bulan serta bintang).",
+    tip: "Pagi → Siang → Sore → Malam berlangsung secara teratur setiap hari."
+  },
+  {
+    id: "M008",
+    level: 4,
+    title: "Jadwal Waktu Kegiatan Sehari-hari",
+    content: "Aktivitas kita mengikuti waktu: Bangun tidur pukul 5 pagi, menyikat gigi pukul 6 pagi, berangkat sekolah pukul 7 pagi, makan siang di kantin pukul 1 siang, bermain di taman pukul 4 sore, dan belajar serta tidur pukul 9 malam.",
+    tip: "Selalu sebutkan jam dan keterangan waktunya, contoh: pukul 6 pagi atau pukul 4 sore."
   }
 ];
 
 function getMaterials() {
+  if (Storage.get("timequest_curriculum_version") !== "3.2") {
+    Storage.set(STORAGE_KEYS.MATERIALS, JSON.parse(JSON.stringify(DEFAULT_MATERIALS)));
+    Storage.set(STORAGE_KEYS.QUESTIONS, JSON.parse(JSON.stringify(DEFAULT_QUESTIONS)));
+    Storage.set("timequest_curriculum_version", "3.2");
+    return JSON.parse(JSON.stringify(DEFAULT_MATERIALS));
+  }
   const materials = Storage.get(STORAGE_KEYS.MATERIALS, null);
   if (!materials || !Array.isArray(materials) || materials.length === 0) {
     return JSON.parse(JSON.stringify(DEFAULT_MATERIALS));
@@ -345,191 +459,230 @@ function resetMaterials() {
 }
 
 /* =========================================================
-   DATA BAWAAN & MANAJEMEN SOAL KUIS
+   DATA BAWAAN & MANAJEMEN SOAL KUIS (4 UNIT KURIKULUM RESMI)
    ========================================================= */
 
 const DEFAULT_QUESTIONS = [
+  /* UNIT 1: MENGENAL JAM ANALOG — Mengarahkan Jarum Jam */
   {
     id: "Q001",
     level: 1,
-    type: "mcq",
-    question: "Jarum panjang pada jam menunjukkan angka 12. Apa artinya?",
-    options: ["Menit 15", "Menit 30", "Menit 00", "Menit 45"],
-    correct: 2,
+    type: "clock_drag",
+    targetHour: 5,
+    targetMinute: 0,
+    question: "Halim bangun tidur pukul 5 pagi. Arahkan jarum jam ke pukul 05.00!",
     points: 100,
-    hint: "Jarum panjang di angka 12 berarti tepat satu jam.",
-    explanation: "Angka 12 pada jarum panjang menunjukkan menit 00."
+    hint: "Arahkan jarum pendek merah ke angka 5, dan jarum panjang biru ke angka 12.",
+    explanation: "Pukul 05.00 artinya jarum pendek (merah) menunjuk angka 5 dan jarum panjang (biru) menunjuk angka 12."
   },
   {
     id: "Q002",
     level: 1,
-    type: "clock",
-    hour: 3,
-    minute: 0,
-    question: "Pukul berapakah waktu yang ditunjukkan jam berikut?",
-    options: ["02.00", "03.00", "03.30", "12.03"],
-    correct: 1,
+    type: "clock_drag",
+    targetHour: 7,
+    targetMinute: 0,
+    question: "Tika berangkat ke sekolah pukul 7 pagi. Arahkan jarum jam ke pukul 07.00!",
     points: 100,
-    hint: "Jarum panjang di 12 berarti menit 00.",
-    explanation: "Jarum pendek di 3 dan jarum panjang di 12 menunjukkan pukul 03.00."
+    hint: "Arahkan jarum pendek merah ke angka 7, dan jarum panjang biru ke angka 12.",
+    explanation: "Pukul 07.00 artinya jarum pendek (merah) menunjuk angka 7 dan jarum panjang (biru) menunjuk angka 12."
   },
   {
     id: "Q003",
     level: 1,
-    type: "clock",
-    hour: 6,
-    minute: 0,
-    question: "Jam menunjukkan jarum pendek di angka 6 dan jarum panjang di angka 12. Waktunya adalah...",
-    options: ["06.00", "12.06", "06.30", "05.00"],
-    correct: 0,
+    type: "clock_drag",
+    targetHour: 12,
+    targetMinute: 0,
+    question: "Jam istirahat dan makan siang di sekolah. Arahkan jarum jam ke pukul 12.00!",
     points: 100,
-    hint: "Jarum pendek menunjukkan jam.",
-    explanation: "Jarum pendek di 6 dan jarum panjang di 12 berarti pukul 06.00."
+    hint: "Arahkan kedua jarum jam (pendek dan panjang) tegak lurus ke atas menunjuk angka 12.",
+    explanation: "Pukul 12.00 artinya kedua jarum jam sama-sama tegak lurus menunjuk angka 12."
   },
   {
     id: "Q004",
-    level: 2,
-    type: "clock",
-    hour: 9,
-    minute: 0,
-    question: "Jam analog menunjukkan pukul berapa?",
-    options: ["08.00", "09.00", "09.30", "12.09"],
-    correct: 1,
+    level: 1,
+    type: "clock_drag",
+    targetHour: 9,
+    targetMinute: 0,
+    question: "Kira bersiap tidur malam pukul 9 malam. Arahkan jarum jam ke pukul 09.00!",
     points: 100,
-    hint: "Jarum panjang berada di 12.",
-    explanation: "Jarum pendek di 9 menunjukkan pukul 09.00."
+    hint: "Arahkan jarum pendek merah ke angka 9, dan jarum panjang biru ke angka 12.",
+    explanation: "Pukul 09.00 artinya jarum pendek (merah) menunjuk angka 9 dan jarum panjang (biru) menunjuk angka 12."
   },
+
+  /* UNIT 2: MENGENAL JAM DIGITAL — Drag & Drop Angka (Jam) dan (Menit) ke Jam Digital */
   {
     id: "Q005",
     level: 2,
-    type: "mcq",
-    question: "Pukul 07.00 dibaca sebagai...",
-    options: ["Setengah tujuh", "Pukul tujuh tepat", "Pukul delapan tepat", "Pukul tujuh lewat tiga puluh menit"],
-    correct: 1,
+    type: "clock_drop",
+    targetHour: "05",
+    targetMinute: "00",
+    question: "Halim bangun tidur pukul 5 pagi. Pasangkan angka (jam) dan (menit) yang tepat pada jam digital!",
+    options: ["05", "00", "07", "30"],
     points: 100,
-    hint: "Angka setelah titik menunjukkan menit.",
-    explanation: "07.00 berarti pukul tujuh tepat."
+    hint: "Pasangkan angka 05 pada kotak Jam dan angka 00 pada kotak Menit.",
+    explanation: "Pukul 5 pagi pada jam digital: angka jam diisi 05 dan angka menit diisi 00 (05:00)."
   },
   {
     id: "Q006",
     level: 2,
-    type: "clock",
-    hour: 2,
-    minute: 30,
-    question: "Jarum panjang berada di angka 6 dan jarum pendek di antara 2 dan 3. Waktunya adalah...",
-    options: ["02.00", "03.30", "02.30", "06.02"],
-    correct: 2,
+    type: "clock_drop",
+    targetHour: "07",
+    targetMinute: "00",
+    question: "Tika berangkat ke sekolah pukul 7 pagi. Pasangkan angka (jam) dan (menit) yang tepat pada jam digital!",
+    options: ["07", "00", "05", "30"],
     points: 100,
-    hint: "Angka 6 pada jarum panjang berarti 30 menit.",
-    explanation: "Jarum pendek di antara 2 dan 3 menunjukkan pukul 02.30."
+    hint: "Pasangkan angka 07 pada kotak Jam dan angka 00 pada kotak Menit.",
+    explanation: "Pukul 7 pagi pada jam digital: angka jam diisi 07 dan angka menit diisi 00 (07:00)."
   },
   {
     id: "Q007",
-    level: 3,
-    type: "mcq",
-    question: "Satu jam sama dengan berapa menit?",
-    options: ["30 menit", "45 menit", "60 menit", "100 menit"],
-    correct: 2,
+    level: 2,
+    type: "clock_drop",
+    targetHour: "12",
+    targetMinute: "00",
+    question: "Jam istirahat dan makan siang di sekolah pukul 12 siang. Pasangkan angka (jam) dan (menit) yang tepat!",
+    options: ["12", "00", "06", "30"],
     points: 100,
-    hint: "Satu jam terdiri dari enam puluh menit.",
-    explanation: "1 jam = 60 menit."
+    hint: "Pasangkan angka 12 pada kotak Jam dan angka 00 pada kotak Menit.",
+    explanation: "Pukul 12 siang pada jam digital: angka jam diisi 12 dan angka menit diisi 00 (12:00)."
   },
   {
     id: "Q008",
-    level: 3,
-    type: "mcq",
-    question: "Setengah jam sama dengan...",
-    options: ["15 menit", "20 menit", "30 menit", "60 menit"],
-    correct: 2,
+    level: 2,
+    type: "clock_drop",
+    targetHour: "09",
+    targetMinute: "30",
+    question: "Belajar malam pada pukul setengah sepuluh (09.30). Pasangkan angka (jam) dan (menit) yang tepat!",
+    options: ["09", "30", "00", "08"],
     points: 100,
-    hint: "Setengah dari 60 menit.",
-    explanation: "60 ÷ 2 = 30 menit."
+    hint: "Pasangkan angka 09 pada kotak Jam dan angka 30 pada kotak Menit.",
+    explanation: "Pukul setengah sepuluh malam pada jam digital: angka jam diisi 09 dan angka menit diisi 30 (09:30)."
   },
+
+  /* UNIT 3: LEBIH LAMA ATAU LEBIH CEPAT (Beri tanda centang pada kegiatan) */
   {
     id: "Q009",
     level: 3,
-    type: "mcq",
-    question: "Pukul 08.00 sampai 09.00 adalah berapa lama?",
-    options: ["30 menit", "1 jam", "2 jam", "15 menit"],
+    type: "time_compare",
+    question: "Beri tanda centang (✓) pada kegiatan yang lebih lama!",
+    items: [
+      { label: "Menyisir rambut", img: "assets/images/activity_combing.png" },
+      { label: "Mandi", img: "assets/images/activity_bathing.png" }
+    ],
+    options: ["Menyisir rambut", "Mandi"],
     correct: 1,
     points: 100,
-    hint: "Hitung selisih jam 8 dan jam 9.",
-    explanation: "Dari pukul 08.00 sampai 09.00 adalah 1 jam."
+    hint: "Bandingkan waktu menyisir rambut (sekitar 1 menit) dengan mandi (sekitar 15 menit).",
+    explanation: "Mandi memerlukan waktu lebih lama (sekitar 15 menit) dibandingkan menyisir rambut yang hanya butuh waktu sebentar (1 menit)."
   },
   {
     id: "Q010",
-    level: 4,
-    type: "mcq",
-    question: "Kegiatan manakah yang biasanya dilakukan pada pagi hari?",
-    options: ["Tidur malam", "Sarapan", "Makan malam", "Tidur tengah malam"],
+    level: 3,
+    type: "time_compare",
+    question: "Beri tanda centang (✓) pada kegiatan yang lebih sebentar (lebih cepat)!",
+    items: [
+      { label: "Memasak", img: "assets/images/activity_cooking.png" },
+      { label: "Meminum air", img: "assets/images/activity_drinking.png" }
+    ],
+    options: ["Memasak", "Meminum air"],
     correct: 1,
     points: 100,
-    hint: "Pagi hari biasanya sebelum berangkat sekolah.",
-    explanation: "Sarapan biasanya dilakukan pada pagi hari sebelum sekolah."
+    hint: "Meminum air hanya butuh beberapa tegukan sebentar saja, sedangkan memasak butuh waktu lama.",
+    explanation: "Meminum segelas air memerlukan waktu lebih sebentar / lebih cepat (beberapa detik hingga 1 menit), sedangkan memasak memerlukan waktu lebih lama."
   },
   {
     id: "Q011",
-    level: 4,
-    type: "mcq",
-    question: "Urutan waktu yang benar adalah...",
-    options: [
-      "Malam → Pagi → Siang → Sore",
-      "Pagi → Siang → Sore → Malam",
-      "Siang → Malam → Pagi → Sore",
-      "Sore → Pagi → Malam → Siang"
+    level: 3,
+    type: "time_compare",
+    question: "Beri tanda centang (✓) pada kegiatan yang lebih lama!",
+    items: [
+      { label: "Tidur malam", img: "assets/images/activity_sleeping.png" },
+      { label: "Menyikat gigi", img: "assets/images/activity_brushing.png" }
     ],
-    correct: 1,
+    options: ["Tidur malam", "Menyikat gigi"],
+    correct: 0,
     points: 100,
-    hint: "Mulai dari saat matahari terbit.",
-    explanation: "Urutan umum waktu adalah pagi, siang, sore, lalu malam."
+    hint: "Tidur malam berlangsung sekitar 8 jam sampai pagi, sedangkan menyikat gigi hanya 2 menit.",
+    explanation: "Tidur malam memerlukan waktu lebih lama (sekitar 8 jam) dibandingkan menyikat gigi yang hanya 2 menit."
   },
   {
     id: "Q012",
-    level: 4,
-    type: "mcq",
-    question: "Ani mulai belajar pukul 07.00 dan selesai pukul 08.00. Berapa lama Ani belajar?",
-    options: ["30 menit", "1 jam", "2 jam", "3 jam"],
-    correct: 1,
+    level: 3,
+    type: "time_compare",
+    question: "Beri tanda centang (✓) pada kegiatan yang lebih lama!",
+    items: [
+      { label: "Belajar di sekolah", img: "assets/images/activity_studying.png" },
+      { label: "Sarapan", img: "assets/images/activity_breakfast.png" }
+    ],
+    options: ["Belajar di sekolah", "Sarapan"],
+    correct: 0,
     points: 100,
-    hint: "08 dikurangi 07.",
-    explanation: "08.00 − 07.00 = 1 jam."
+    hint: "Belajar di sekolah berlangsung berjam-jam dari pagi hingga siang hari, sedangkan sarapan sekitar 15 menit.",
+    explanation: "Belajar di sekolah berlangsung berjam-jam (sekitar 5 jam), jauh lebih lama dari sarapan pagi."
   },
+
+  /* UNIT 4: MENGENAL WAKTU KEGIATAN — Drag & Drop Pilihan Waktu ke Kotak Kegiatan */
   {
     id: "Q013",
-    level: 5,
-    type: "mcq",
-    question: "Budi bermain dari pukul 15.00 sampai 15.30. Lama bermain Budi adalah...",
-    options: ["15 menit", "20 menit", "30 menit", "1 jam"],
-    correct: 2,
+    level: 4,
+    type: "clock_activity_drop",
+    img: "assets/images/time_activity_school.png",
+    targetAnswer: "Pukul 7 pagi",
+    question: "Amati gambar dan jam analog berikut! Pasangkan keterangan waktu kegiatan yang tepat:",
+    options: ["Pukul 7 pagi", "Pukul 7 malam", "Pukul 8 pagi", "Pukul 12 siang"],
+    correct: 0,
     points: 100,
-    hint: "Angka 30 menunjukkan setengah jam.",
-    explanation: "Dari 15.00 sampai 15.30 adalah 30 menit."
+    hint: "Jarum pendek menunjuk angka 7 pada pagi hari saat anak-anak berangkat sekolah.",
+    explanation: "Jarum jam menunjuk angka 7 tepat di pagi hari saat anak-anak berangkat sekolah, yaitu Pukul 7 pagi."
   },
   {
     id: "Q014",
-    level: 5,
-    type: "mcq",
-    question: "Siti mulai membaca pukul 09.00 selama 2 jam. Pukul berapa Siti selesai membaca?",
-    options: ["09.30", "10.00", "11.00", "12.00"],
-    correct: 2,
+    level: 4,
+    type: "clock_activity_drop",
+    img: "assets/images/time_activity_class.png",
+    targetAnswer: "Pukul 8 pagi",
+    question: "Amati gambar dan jam analog berikut! Pasangkan keterangan waktu kegiatan yang tepat:",
+    options: ["Pukul 8 pagi", "Pukul 8 malam", "Pukul 7 pagi", "Pukul 1 siang"],
+    correct: 0,
     points: 100,
-    hint: "Tambahkan 2 jam dari pukul 09.00.",
-    explanation: "09.00 + 2 jam = 11.00."
+    hint: "Jarum pendek menunjuk angka 8 pada pagi hari saat belajar di kelas bersama guru.",
+    explanation: "Jarum jam menunjuk angka 8 tepat saat murid belajar di sekolah di pagi hari, yaitu Pukul 8 pagi."
   },
   {
     id: "Q015",
-    level: 5,
-    type: "mcq",
-    question: "Ayah berangkat pukul 06.30 dan tiba pukul 07.00. Berapa lama perjalanan Ayah?",
-    options: ["15 menit", "30 menit", "1 jam", "2 jam"],
-    correct: 1,
+    level: 4,
+    type: "clock_activity_drop",
+    img: "assets/images/time_activity_football.png",
+    targetAnswer: "Pukul 5 sore",
+    question: "Amati gambar dan jam analog berikut! Pasangkan keterangan waktu kegiatan yang tepat:",
+    options: ["Pukul 5 sore", "Pukul 5 pagi", "Pukul 4 sore", "Pukul 8 malam"],
+    correct: 0,
     points: 100,
-    hint: "Hitung dari menit 30 ke menit 60.",
-    explanation: "Dari 06.30 sampai 07.00 adalah 30 menit."
+    hint: "Jarum pendek menunjuk angka 5 menjelang matahari terbenam di sore hari saat bermain sepak bola.",
+    explanation: "Jarum jam menunjuk angka 5 saat bermain bola di sore hari menjelang matahari terbenam, yaitu Pukul 5 sore."
+  },
+  {
+    id: "Q016",
+    level: 4,
+    type: "clock_activity_drop",
+    img: "assets/images/time_activity_sleep.png",
+    targetAnswer: "Pukul 8 malam",
+    question: "Amati gambar dan jam analog berikut! Pasangkan keterangan waktu kegiatan yang tepat:",
+    options: ["Pukul 8 malam", "Pukul 8 pagi", "Pukul 6 pagi", "Pukul 5 sore"],
+    correct: 0,
+    points: 100,
+    hint: "Jarum pendek menunjuk angka 8 dan tampak bulan sabit di jendela saat tidur malam.",
+    explanation: "Jarum jam menunjuk angka 8 tepat saat tidur malam dengan pemandangan bulan dan bintang, yaitu Pukul 8 malam."
   }
 ];
 
 function getQuestions() {
+  if (Storage.get("timequest_curriculum_version") !== "3.2") {
+    Storage.set(STORAGE_KEYS.MATERIALS, JSON.parse(JSON.stringify(DEFAULT_MATERIALS)));
+    Storage.set(STORAGE_KEYS.QUESTIONS, JSON.parse(JSON.stringify(DEFAULT_QUESTIONS)));
+    Storage.set("timequest_curriculum_version", "3.2");
+    return JSON.parse(JSON.stringify(DEFAULT_QUESTIONS));
+  }
   const questions = Storage.get(STORAGE_KEYS.QUESTIONS, null);
   if (!questions || !Array.isArray(questions) || questions.length === 0) {
     return JSON.parse(JSON.stringify(DEFAULT_QUESTIONS));
@@ -544,3 +697,17 @@ function saveQuestions(questions) {
 function resetQuestions() {
   Storage.remove(STORAGE_KEYS.QUESTIONS);
 }
+
+// Auto sync curriculum version on load
+(function autoSyncCurriculum() {
+  try {
+    if (typeof Storage !== "undefined" && Storage.get("timequest_curriculum_version") !== "3.2") {
+      Storage.set(STORAGE_KEYS.MATERIALS, JSON.parse(JSON.stringify(DEFAULT_MATERIALS)));
+      Storage.set(STORAGE_KEYS.QUESTIONS, JSON.parse(JSON.stringify(DEFAULT_QUESTIONS)));
+      Storage.set("timequest_curriculum_version", "3.2");
+      console.log("[TIME QUEST] Kurikulum diperbarui otomatis ke versi 3.2 (Unit 4 clock_activity_drop drag n drop keterangan waktu).");
+    }
+  } catch (err) {
+    console.warn("[TIME QUEST] Gagal auto sync:", err);
+  }
+})();
