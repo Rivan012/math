@@ -162,9 +162,34 @@ function saveCurrentStudent() {
 }
 
 /**
+ * Mengambil data sesi siswa yang sedang aktif dari storage
+ * @returns {Object|null}
+ */
+function getCurrentStudent() {
+  if (currentStudent) return currentStudent;
+  const session = Storage.get(STORAGE_KEYS.SESSION, null);
+  if (session && (session.id || session.name)) {
+    currentStudent = session;
+    return currentStudent;
+  }
+  return null;
+}
+
+/**
+ * Menghapus data sesi siswa aktif (saat logout)
+ */
+function clearCurrentStudent() {
+  currentStudent = null;
+  Storage.remove(STORAGE_KEYS.SESSION);
+}
+
+/**
  * Mengisi data demonstrasi siswa awal jika storage kosong
  */
 function seedInitialDataIfEmpty() {
+  const isInitialized = Storage.get("timequest_initialized", false);
+  if (isInitialized) return;
+
   const existing = getStudents();
   if (existing.length === 0) {
     const seed = [
@@ -251,6 +276,7 @@ function seedInitialDataIfEmpty() {
     ];
     saveStudents(seed);
   }
+  Storage.set("timequest_initialized", true);
 }
 
 /* =========================================================

@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TIME QUEST - Area Bermain & Belajar Matematika Membaca Jam Siswa SD.">
+  <title>Petualangan Siswa — TIME QUEST</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet Utama & Responsif Anti-Slop -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- =========================================================
+       0. LOADING SCREEN
+       ========================================================= -->
+  <div id="appLoadingScreen" class="loading-screen hidden" aria-live="polite">
+    <div class="loading-card">
+      <div class="loading-spinner"></div>
+      <p class="loading-text">Menyiapkan Petualangan Waktu...</p>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       1. STUDENT APP (ANTARMUKA SISWA)
+       ========================================================= -->
+  <section id="studentApp" class="screen active">
+
+    <!-- Header Siswa dengan Game HUD -->
+    <header class="app-header">
+      <div class="container header-inner">
+        <div class="brand">
+          <a href="siswa.html" class="brand-link" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+            <div class="brand-icon">
+              <img src="assets/icons/clock.svg" alt="" width="22" height="22">
+            </div>
+            <div class="brand-title">TIME QUEST</div>
+          </a>
+        </div>
+
+        <!-- Game HUD: Poin & Bintang -->
+        <div class="game-hud">
+          <div class="hud-pill gold" title="Total Poinmu">
+            <img src="assets/icons/coin.svg" width="18" height="18" alt="Poin">
+            <span id="hudPoints">0</span>
+          </div>
+          <div class="hud-pill yellow" title="Total Bintangmu">
+            <img src="assets/icons/star-gold.svg" width="18" height="18" alt="Bintang">
+            <span id="hudStars">0</span>
+          </div>
+        </div>
+
+        <div class="header-user-section">
+          <div class="user-pill">
+            <div id="headerAvatar" class="user-avatar-wrap">
+              <img src="assets/images/avatar-budi.svg" alt="" width="32" height="32">
+            </div>
+            <div class="user-meta">
+              <span id="headerName" class="user-name">Penjaga Waktu</span>
+              <span class="user-role">Siswa SD</span>
+            </div>
+          </div>
+
+          <button id="studentLogoutBtn" class="btn btn-outline btn-sm" type="button" aria-label="Keluar dari akun">
+            Keluar
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container page-wrap">
+
+      <!-- =====================================================
+           1A. BERANDA SISWA
+           ===================================================== -->
+      <section id="homeScreen" class="student-page">
+
+        <div class="welcome-box">
+          <div class="welcome-info">
+            <span class="badge badge-accent">Zona Belajar Jam</span>
+            <h1 id="welcomeTitle">Halo, Penjaga Waktu!</h1>
+            <p class="muted">
+              Yuk lanjutkan latihan membaca jam dan durasi kegiatan untuk membuka semua bintang level!
+            </p>
+            <div class="welcome-action-row">
+              <button id="continueLearningBtn" class="btn btn-game-primary" type="button">
+                <img src="assets/icons/book.svg" width="18" height="18" alt=""> Pelajari Materi Waktu
+              </button>
+            </div>
+          </div>
+          <div class="welcome-clock-mascot" aria-hidden="true">
+            <img src="assets/images/hero-clock.svg" alt="" width="120" height="120">
+          </div>
+        </div>
+
+        <!-- Kartu Statistik -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon-wrapper amber">
+              <img src="assets/icons/coin.svg" width="24" height="24" alt="">
+            </div>
+            <div class="stat-data">
+              <span class="stat-label">Total Poin</span>
+              <span id="homePoints" class="stat-value">0</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon-wrapper yellow">
+              <img src="assets/icons/star-gold.svg" width="24" height="24" alt="">
+            </div>
+            <div class="stat-data">
+              <span class="stat-label">Bintang Didapat</span>
+              <span id="homeStars" class="stat-value">0</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon-wrapper blue">
+              <img src="assets/icons/book.svg" width="24" height="24" alt="">
+            </div>
+            <div class="stat-data">
+              <span class="stat-label">Materi Tuntas</span>
+              <span id="homeMaterial" class="stat-value">0%</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon-wrapper green">
+              <img src="assets/icons/trophy.svg" width="24" height="24" alt="">
+            </div>
+            <div class="stat-data">
+              <span class="stat-label">Misi Terbuka</span>
+              <span id="homeLevel" class="stat-value">1 / 5</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Progress Track -->
+        <div class="card card-progress">
+          <div class="section-heading">
+            <h2>Perjalanan Petualanganmu</h2>
+            <span id="homeProgressText" class="badge badge-accent">0% Tuntas</span>
+          </div>
+
+          <div class="progress-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+            <div id="homeProgress" class="progress-fill"></div>
+          </div>
+
+          <p class="muted small" style="margin-top: 8px;">
+            Selesaikan misi pada setiap level untuk membuka level menantang berikutnya!
+          </p>
+        </div>
+
+        <!-- Peta 5 Level Misi -->
+        <div class="section-heading">
+          <h2>Peta 5 Misi Petualangan</h2>
+          <span class="badge badge-outline">Tantangan Bertingkat</span>
+        </div>
+
+        <div id="levelGrid" class="level-grid"></div>
+
+        <!-- Cuplikan Leaderboard -->
+        <div class="section-heading">
+          <h2>Papan Juara Waktu</h2>
+          <button id="homeLeaderboardBtn" class="btn btn-outline btn-sm" type="button">
+            Lihat Semua Peringkat →
+          </button>
+        </div>
+
+        <div class="card">
+          <div id="homeLeaderboardPreview"></div>
+        </div>
+
+      </section>
+
+      <!-- =====================================================
+           1B. MATERI PEMBELAJARAN
+           ===================================================== -->
+      <section id="materialScreen" class="student-page hidden">
+
+        <div class="nav-back-row">
+          <button id="materialBackBtn" class="btn btn-outline btn-sm" type="button">
+            ← Kembali ke Beranda
+          </button>
+          <span class="badge badge-accent">Modul Matematika SD</span>
+        </div>
+
+        <div class="material-hero-card">
+          <div class="material-hero-icon" aria-hidden="true">
+            <img src="assets/icons/clock.svg" width="56" height="56" alt="">
+          </div>
+          <div class="material-hero-content">
+            <h1>Mengenal dan Membaca Waktu</h1>
+            <p class="muted">
+              Pahami jarum jam analog, jam digital, serta cara menghitung lama kegiatan sebelum memulai kuis.
+            </p>
+          </div>
+        </div>
+
+        <div class="card card-objective">
+          <h2>Tujuan Pembelajaran</h2>
+          <ul class="learning-list">
+            <li>Membedakan fungsi <strong>jarum pendek (penunjuk jam)</strong> dan <strong>jarum panjang (penunjuk menit)</strong>.</li>
+            <li>Membaca waktu tepat (menit 00) dan setengah jam (menit 30).</li>
+            <li>Menghubungkan penulisan jam analog dengan jam digital (misal 07.00 dan 04.30).</li>
+            <li>Memahami urutan kegiatan harian: <em>Pagi → Siang → Sore → Malam</em>.</li>
+            <li>Menghitung durasi waktu kegiatan sederhana (Waktu Selesai − Waktu Mulai).</li>
+          </ul>
+        </div>
+
+        <div class="section-heading">
+          <h2>Rangkuman Materi Pelajaran</h2>
+        </div>
+
+        <div id="materialList" class="material-list">
+
+          <article class="material-card">
+            <div class="material-step-badge">1</div>
+            <div class="material-text">
+              <h3>Bagian-Bagian Jam Analog</h3>
+              <p>
+                Jam analog memiliki angka dari <strong>1 sampai 12</strong>. Terdapat dua jarum utama:
+                jarum pendek menunjukkan <strong>jam</strong> dan jarum panjang menunjukkan <strong>menit</strong>.
+              </p>
+              <div class="tip-banner">
+                <img src="assets/icons/lightbulb.svg" width="18" height="18" alt="" style="vertical-align:-3px;margin-right:4px;"> <strong>Kunci Utama:</strong> Bila jarum panjang berada tepat di angka 12, artinya menit menunjukkan <strong>00 (tepat)</strong>.
+              </div>
+            </div>
+          </article>
+
+          <article class="material-card">
+            <div class="material-step-badge">2</div>
+            <div class="material-text">
+              <h3>Membaca Jam Tepat (00 Menit)</h3>
+              <p>
+                Ketika jarum panjang berada di angka 12 dan jarum pendek menunjuk angka 3, waktu dibaca <strong>pukul tiga tepat (03.00)</strong>.
+              </p>
+
+              <div class="clock-demo-card">
+                <div class="clock-demo-viewport">
+                  <div class="clock-face" id="materialClock1" aria-label="Jam menunjukkan pukul 03.00">
+                    <!-- Tanda Jam (Ticks) -->
+                    <div class="clock-tick major" style="--tick-angle: 0deg;"></div>
+                    <div class="clock-tick major" style="--tick-angle: 30deg;"></div>
+                    <div class="clock-tick major" style="--tick-angle: 60deg;"></div>
+                    <div class="clock-tick major" style="--tick-angle: 90deg;"></div>
+                    <div class="clock-tick major" style="--tick-angle: 120deg;"></div>
+                    <div class="clock-tick major" style="--tick-angle: 150deg;"></div>
+                    <div class="clock-tick major" style="--tick-angle: 180deg;"></div>
+                    <div class="clock-tick major" style="--tick-angle: 210deg;"></div>
+                    <div class="clock-tick major" style="--tick-angle: 240deg;"></div>
+                    <div class="clock-tick major" style="--tick-angle: 270deg;"></div>
+                    <div class="clock-tick major" style="--tick-angle: 300deg;"></div>
+                    <div class="clock-tick major" style="--tick-angle: 330deg;"></div>
+
+                    <!-- Angka Jam 1 sampai 12 -->
+                    <div class="clock-number" style="--angle: 30deg;"><span>1</span></div>
+                    <div class="clock-number" style="--angle: 60deg;"><span>2</span></div>
+                    <div class="clock-number" style="--angle: 90deg;"><span>3</span></div>
+                    <div class="clock-number" style="--angle: 120deg;"><span>4</span></div>
+                    <div class="clock-number" style="--angle: 150deg;"><span>5</span></div>
+                    <div class="clock-number" style="--angle: 180deg;"><span>6</span></div>
+                    <div class="clock-number" style="--angle: 210deg;"><span>7</span></div>
+                    <div class="clock-number" style="--angle: 240deg;"><span>8</span></div>
+                    <div class="clock-number" style="--angle: 270deg;"><span>9</span></div>
+                    <div class="clock-number" style="--angle: 300deg;"><span>10</span></div>
+                    <div class="clock-number" style="--angle: 330deg;"><span>11</span></div>
+                    <div class="clock-number" style="--angle: 360deg;"><span>12</span></div>
+
+                    <!-- Jarum Jam & Titik Tengah -->
+                    <div class="clock-hand hour-hand" style="transform:translateX(-50%) rotate(90deg);"></div>
+                    <div class="clock-hand minute-hand" style="transform:translateX(-50%) rotate(0deg);"></div>
+                    <div class="clock-center"></div>
+                  </div>
+                </div>
+                <div class="clock-demo-info">
+                  <span class="demo-tag">Contoh Tampilan</span>
+                  <div class="digital-badge">03:00</div>
+                  <p class="muted small">Jarum pendek di angka 3, jarum panjang tepat di 12.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="material-card">
+            <div class="material-step-badge">3</div>
+            <div class="material-text">
+              <h3>Membaca Setengah Jam (30 Menit)</h3>
+              <p>
+                Satu putaran penuh jam adalah 60 menit. Setengah putaran berada di angka 6, yang bernilai <strong>30 menit</strong>.
+                Contoh: pukul <strong>04.30</strong> dibaca <em>setengah lima</em>.
+              </p>
+              <div class="tip-banner">
+                <img src="assets/icons/lightbulb.svg" width="18" height="18" alt="" style="vertical-align:-3px;margin-right:4px;"> <strong>Tips:</strong> Saat jarum panjang di angka 6, jarum pendek berada tepat di tengah antara dua angka.
+              </div>
+            </div>
+          </article>
+
+          <article class="material-card">
+            <div class="material-step-badge">4</div>
+            <div class="material-text">
+              <h3>Hubungan Jam Analog & Jam Digital</h3>
+              <p>
+                Jam digital langsung menampilkan angka. Dua angka pertama adalah <strong>jam</strong> dan dua angka berikutnya adalah <strong>menit</strong>.
+              </p>
+              <div class="digital-preview-box">
+                <div class="digital-clock-display">07:00</div>
+                <p class="muted small">Pukul tujuh tepat (Waktu masuk sekolah pagi hari).</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="material-card">
+            <div class="material-step-badge">5</div>
+            <div class="material-text">
+              <h3>Urutan Kegiatan Sehari-hari</h3>
+              <p>Aktivitas kita teratur mengikuti rotasi waktu dari terbitnya fajar:</p>
+              <div class="timeline-row">
+                <span class="timeline-chip morning">Pagi Hari (06.00)</span>
+                <span class="timeline-arrow">→</span>
+                <span class="timeline-chip noon">Siang Hari (12.00)</span>
+                <span class="timeline-arrow">→</span>
+                <span class="timeline-chip evening">Sore Hari (15.30)</span>
+                <span class="timeline-arrow">→</span>
+                <span class="timeline-chip night">Malam Hari (19.00)</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="material-card">
+            <div class="material-step-badge">6</div>
+            <div class="material-text">
+              <h3>Menghitung Lama (Durasi) Kegiatan</h3>
+              <p>
+                Durasi kegiatan dihitung dengan rumus selisih:
+                <br><code>Lama Kegiatan = Waktu Selesai − Waktu Mulai</code>
+              </p>
+              <div class="tip-banner">
+                Contoh: Ani mulai belajar pukul <strong>08.00</strong> dan selesai pukul <strong>09.00</strong>.
+                Maka lama Ani belajar adalah <code>09.00 − 08.00 = 1 Jam (60 Menit)</code>.
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <div class="card start-quiz-cta">
+          <h2>Sudah Paham Konsep Waktu?</h2>
+          <p class="muted">
+            Ayo uji kemampuan membaca jammu lewat 15 pertanyaan kuis dan kumpulkan poin maksimal!
+          </p>
+          <button id="startQuizBtn" class="btn btn-game-primary btn-lg" type="button">
+            Mulai Misi Kuis
+          </button>
+        </div>
+
+      </section>
+
+      <!-- =====================================================
+           1C. KUIS INTERAKTIF (Flashcard Taktil Fokus Tunggal)
+           ===================================================== -->
+      <section id="quizScreen" class="student-page hidden">
+
+        <div class="nav-back-row">
+          <button id="quizHomeBtn" class="btn btn-outline btn-sm" type="button">
+            ← Kembali ke Beranda
+          </button>
+          <span class="badge badge-accent">Tantangan Misi</span>
+        </div>
+
+        <div class="card quiz-card">
+
+          <!-- Status Bar Kuis -->
+          <div class="quiz-status-header">
+            <div class="quiz-track-wrap">
+              <div class="quiz-progress-text">
+                <span id="quizProgressLabel">Soal 1 dari 15</span>
+                <span id="quizProgressPercent">0%</span>
+              </div>
+              <div class="progress-track">
+                <div id="quizProgressFill" class="progress-fill"></div>
+              </div>
+            </div>
+
+            <div class="quiz-score-pill">
+              <img src="assets/icons/coin.svg" width="18" height="18" alt="">
+              <strong id="quizPoints">0</strong> Poin
+            </div>
+          </div>
+
+          <!-- Baris Kontrol Kuis -->
+          <div class="quiz-control-row">
+            <span id="quizLevelBadge" class="badge badge-outline">Level 1</span>
+            <button id="hintBtn" class="btn btn-yellow btn-sm" type="button" aria-label="Buka petunjuk">
+              <img src="assets/icons/lightbulb.svg" width="16" height="16" alt=""> Bantuan Hint (−30)
+            </button>
+          </div>
+
+          <!-- Pertanyaan Kuis -->
+          <h2 id="quizQuestion" class="quiz-question-title">
+            Memuat pertanyaan kuis...
+          </h2>
+
+          <!-- Ilustrasi Jam jika tipe clock -->
+          <div id="questionIllustration" class="question-illustration"></div>
+
+          <!-- Opsi Jawaban (Tuts Taktil 3D) -->
+          <div id="answerGrid" class="answer-grid"></div>
+
+          <!-- Kotak Bantuan Hint -->
+          <div id="hintBox" class="hint-card hidden" role="region" aria-live="polite"></div>
+
+          <!-- Feedback Pembahasan Jawaban -->
+          <div id="quizFeedback" class="feedback-card hidden" role="region" aria-live="polite"></div>
+
+          <!-- Footer Kuis -->
+          <div class="quiz-footer">
+            <span class="muted small safe-info">
+              Santai dan teliti, tidak ada batasan nyawa.
+            </span>
+            <button id="nextQuestionBtn" class="btn btn-game-primary hidden" type="button">
+              Soal Berikutnya →
+            </button>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- =====================================================
+           1D. HASIL KUIS
+           ===================================================== -->
+      <section id="resultScreen" class="student-page hidden">
+
+        <div class="nav-back-row">
+          <button id="resultHomeBtn" class="btn btn-outline btn-sm" type="button">
+            ← Kembali ke Beranda
+          </button>
+          <span class="badge badge-green">Misi Tuntas</span>
+        </div>
+
+        <div class="result-hero-card">
+          <div class="result-badge-top">
+            <img src="assets/icons/trophy.svg" width="18" height="18" alt=""> Misi Berhasil Dituntaskan!
+          </div>
+          <h1 id="resultTitle" class="result-heading">Hebat, Penjaga Waktu!</h1>
+          <p class="muted">Berikut adalah catatan evaluasi petualangan kuis matematikamu:</p>
+
+          <div class="result-score-box">
+            <div id="resultScore" class="result-score-value">0</div>
+            <span class="score-caption">Nilai Akhir (Skala 100)</span>
+          </div>
+
+          <div id="resultStars" class="result-stars" aria-label="Jumlah bintang yang didapat"></div>
+        </div>
+
+        <div class="result-stats-grid">
+          <div class="result-stat-card">
+            <span class="stat-card-title">Jawaban Benar</span>
+            <strong id="resultCorrect">0 / 15</strong>
+          </div>
+
+          <div class="result-stat-card">
+            <span class="stat-card-title">Poin Diperoleh</span>
+            <strong id="resultPoints" class="highlight-blue">0</strong>
+          </div>
+
+          <div class="result-stat-card">
+            <span class="stat-card-title">Bantuan Dipakai</span>
+            <strong id="resultHints">0</strong>
+          </div>
+        </div>
+
+        <div class="card result-feedback-card">
+          <h2>Catatan Evaluasi</h2>
+          <p id="resultMessage" class="muted message-text">
+            Terus berlatih membaca jam agar kemampuan matematikamu semakin hebat!
+          </p>
+
+          <div class="result-cta-row">
+            <button id="resultLeaderboardBtn" class="btn btn-game-primary" type="button">
+              <img src="assets/icons/trophy.svg" width="18" height="18" alt=""> Lihat Papan Peringkat
+            </button>
+            <button id="retryQuizBtn" class="btn btn-outline" type="button">
+              <img src="assets/icons/refresh.svg" width="18" height="18" alt=""> Mainkan Kuis Lagi
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- =====================================================
+           1E. PAPAN PERINGKAT (LEADERBOARD)
+           ===================================================== -->
+      <section id="leaderboardScreen" class="student-page hidden">
+
+        <div class="nav-back-row">
+          <button id="leaderboardBackBtn" class="btn btn-outline btn-sm" type="button">
+            ← Kembali ke Beranda
+          </button>
+          <span class="badge badge-accent">Papan Juara</span>
+        </div>
+
+        <div class="card center leaderboard-hero">
+          <h1>Papan Peringkat Penjaga Waktu</h1>
+          <p class="muted small">
+            Daftar siswa dengan perolehan poin petualangan waktu tertinggi.
+          </p>
+
+          <!-- Podium 3 Besar -->
+          <div id="podium" class="podium-layout"></div>
+        </div>
+
+        <div class="card leaderboard-table-card">
+          <div class="section-heading">
+            <h2>Daftar Seluruh Peserta</h2>
+            <span class="badge badge-outline">Urut Poin Tertinggi</span>
+          </div>
+
+          <div class="table-scroll-container">
+            <table class="rank-table">
+              <thead>
+                <tr>
+                  <th scope="col" style="width: 80px;">Peringkat</th>
+                  <th scope="col">Nama Petualang</th>
+                  <th scope="col" style="width: 120px;">Nilai Kuis</th>
+                  <th scope="col" style="width: 130px;">Total Poin</th>
+                </tr>
+              </thead>
+              <tbody id="leaderboardBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+  </section>
+
+  <!-- =========================================================
+       2. TOAST NOTIFIKASI
+       ========================================================= -->
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <!-- =========================================================
+       3. JAVASCRIPT MODULES
+       ========================================================= -->
+  <script src="js/storage.js"></script>
+  <script src="js/csv.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/student.js"></script>
+  <script src="js/quiz.js"></script>
+  <script src="js/leaderboard.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

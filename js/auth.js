@@ -56,8 +56,12 @@ function initAuth() {
       currentStudent = createStudent(name, className, selectedAvatar);
       saveCurrentStudent();
 
-      openStudentApp();
-      showToast("Selamat datang, " + name + "!", "success");
+      if ($("studentApp")) {
+        openStudentApp();
+        showToast("Selamat datang, " + name + "!", "success");
+      } else {
+        window.location.href = "siswa.html";
+      }
     });
   }
 
@@ -65,19 +69,25 @@ function initAuth() {
   const studentLogoutBtn = $("studentLogoutBtn");
   if (studentLogoutBtn) {
     studentLogoutBtn.addEventListener("click", () => {
-      currentStudent = null;
+      if (typeof clearCurrentStudent === "function") {
+        clearCurrentStudent();
+      } else {
+        currentStudent = null;
+        Storage.remove(STORAGE_KEYS.SESSION);
+      }
       lastResult = null;
-      showScreen("loginScreen");
-      resetLoginForm();
-      showToast("Sampai jumpa lagi, Penjaga Waktu!");
+      window.location.href = "index.html";
     });
   }
 
   // Buka Modal Login Guru (Bebas Dialog prompt() Slop)
   const teacherLoginBtn = $("teacherLoginBtn");
   if (teacherLoginBtn) {
-    teacherLoginBtn.addEventListener("click", () => {
-      openTeacherModal();
+    teacherLoginBtn.addEventListener("click", event => {
+      if ($("teacherLoginModal")) {
+        event.preventDefault();
+        openTeacherModal();
+      }
     });
   }
 
@@ -112,6 +122,7 @@ function initAuth() {
 
         try {
           sessionStorage.setItem("timequest_teacher", JSON.stringify(teacherSession));
+          localStorage.setItem("timequest_teacher", JSON.stringify(teacherSession));
         } catch (e) {
           console.error("Gagal menyimpan sesi guru:", e);
         }

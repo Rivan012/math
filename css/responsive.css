@@ -55,9 +55,15 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .admin-content-grid {
+  .admin-content-grid,
+  .studio-grid,
+  .excel-import-hub {
     grid-template-columns: 1fr;
     gap: 18px;
+  }
+
+  .live-preview-box {
+    position: static;
   }
 
   .material-hero-card {

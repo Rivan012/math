@@ -173,8 +173,29 @@ function initialize() {
   if (typeof initLeaderboardEvents === "function") initLeaderboardEvents();
   if (typeof initTeacherEvents === "function") initTeacherEvents();
 
-  // Tampilkan layar login awal
-  showScreen("loginScreen");
+  // Deteksi lingkungan halaman: Siswa App vs Gerbang Index
+  if ($("studentApp")) {
+    const student = typeof getCurrentStudent === "function" ? getCurrentStudent() : null;
+    if (student) {
+      currentStudent = student;
+      openStudentApp();
+    } else {
+      // Jika diakses langsung tanpa sesi login siswa, arahkan ke index.html
+      window.location.href = "index.html";
+      return;
+    }
+  } else if ($("loginScreen")) {
+    showScreen("loginScreen");
+
+    // Jika siswa sudah login sebelumnya dan membuka index.html, beri opsi lanjutkan
+    const student = typeof getCurrentStudent === "function" ? getCurrentStudent() : null;
+    const resumeEl = $("resumeStudentBanner");
+    const resumeName = $("resumeStudentName");
+    if (student && resumeEl && resumeName) {
+      resumeName.textContent = student.name;
+      resumeEl.classList.remove("hidden");
+    }
+  }
 
   // Sembunyikan loading screen jika ada
   if (loadingScreen) {

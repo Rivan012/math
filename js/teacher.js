@@ -67,7 +67,7 @@ let currentTeacherTab = "students";
  */
 function getTeacherSession() {
   try {
-    const raw = sessionStorage.getItem("timequest_teacher");
+    const raw = sessionStorage.getItem("timequest_teacher") || localStorage.getItem("timequest_teacher");
     return raw ? JSON.parse(raw) : null;
   } catch (e) {
     return null;
@@ -80,6 +80,7 @@ function getTeacherSession() {
 function clearTeacherSession() {
   try {
     sessionStorage.removeItem("timequest_teacher");
+    localStorage.removeItem("timequest_teacher");
   } catch (e) {
     console.error("Gagal menghapus sesi guru:", e);
   }
@@ -309,26 +310,215 @@ function renderTeacherRanking() {
 }
 
 /**
+ * Navigasi Subtab pada Tab Kelola Materi
+ * @param {string} subtabKey ('mat-list', 'mat-create', 'mat-upload')
+ */
+function setMaterialSubtab(subtabKey) {
+  const tabContainer = $("teacherMaterialsTab");
+  if (!tabContainer) return;
+
+  tabContainer.querySelectorAll(".admin-subnav-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.subtab === subtabKey);
+  });
+
+  const views = {
+    "mat-list": $("matSubtabList"),
+    "mat-create": $("matSubtabCreate"),
+    "mat-upload": $("matSubtabUpload")
+  };
+
+  Object.keys(views).forEach(key => {
+    const el = views[key];
+    if (el) el.classList.toggle("hidden", key !== subtabKey);
+  });
+
+  if (subtabKey === "mat-list") {
+    renderTeacherMaterials();
+  } else if (subtabKey === "mat-create") {
+    updateMaterialLivePreview();
+  }
+}
+
+/**
+ * Navigasi Subtab pada Tab Kelola Soal Kuis
+ * @param {string} subtabKey ('q-list', 'q-create', 'q-upload')
+ */
+function setQuestionSubtab(subtabKey) {
+  const tabContainer = $("teacherQuestionsTab");
+  if (!tabContainer) return;
+
+  tabContainer.querySelectorAll(".admin-subnav-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.subtab === subtabKey);
+  });
+
+  const views = {
+    "q-list": $("qSubtabList"),
+    "q-create": $("qSubtabCreate"),
+    "q-upload": $("qSubtabUpload")
+  };
+
+  Object.keys(views).forEach(key => {
+    const el = views[key];
+    if (el) el.classList.toggle("hidden", key !== subtabKey);
+  });
+
+  if (subtabKey === "q-list") {
+    renderTeacherQuestions();
+  } else if (subtabKey === "q-create") {
+    updateQuestionLivePreview();
+  }
+}
+
+/**
+ * Memperbarui Pratinjau Langsung (Live Preview) Kartu Materi Murid
+ */
+function updateMaterialLivePreview() {
+  const level = $("matLevel") ? $("matLevel").value : "1";
+  const judul = $("matJudul") ? $("matJudul").value.trim() : "";
+  const isi = $("matIsi") ? $("matIsi").value.trim() : "";
+  const tip = $("matTip") ? $("matTip").value.trim() : "";
+
+  const stepEl = $("previewMatStep");
+  const judulEl = $("previewMatJudul");
+  const levelBadge = $("previewMatLevelBadge");
+  const isiEl = $("previewMatIsi");
+  const tipWrap = $("previewMatTipWrap");
+  const tipEl = $("previewMatTip");
+
+  if (stepEl) stepEl.textContent = level;
+  if (levelBadge) levelBadge.textContent = `Misi Level ${level}`;
+  if (judulEl) judulEl.textContent = judul || "Judul Modul Materi";
+  if (isiEl) {
+    isiEl.textContent = isi || "Tuliskan materi pada formulir di sebelah kiri untuk melihat tampilan langsung di sini...";
+  }
+
+  if (tipWrap && tipEl) {
+    if (tip) {
+      tipWrap.style.display = "flex";
+      tipEl.textContent = tip;
+    } else {
+      tipWrap.style.display = "none";
+    }
+  }
+}
+
+/**
+ * Memperbarui Pratinjau Langsung (Live Preview) Kuis Murid & Animasi Jam Analog
+ */
+function updateQuestionLivePreview() {
+  const tipe = $("qType") ? $("qType").value : "clock";
+  const qText = $("qText") ? $("qText").value.trim() : "";
+  const points = $("qPoints") ? $("qPoints").value : "20";
+  const hint = $("qHint") ? $("qHint").value.trim() : "";
+
+  const hour = parseInt($("qClockHour") ? $("qClockHour").value : 3, 10) || 12;
+  const minute = parseInt($("qClockMinute") ? $("qClockMinute").value : 0, 10) || 0;
+
+  const optA = $("qOptA") ? $("qOptA").value.trim() : "";
+  const optB = $("qOptB") ? $("qOptB").value.trim() : "";
+  const optC = $("qOptC") ? $("qOptC").value.trim() : "";
+  const optD = $("qOptD") ? $("qOptD").value.trim() : "";
+
+  const correctKey = $("qCorrectKey") ? $("qCorrectKey").value : "A";
+
+  // Elements
+  const previewQPointsBadge = $("previewQPointsBadge");
+  const previewQText = $("previewQText");
+  const previewClockWrap = $("previewClockWrap");
+  const previewHourHand = $("previewHourHand");
+  const previewMinuteHand = $("previewMinuteHand");
+
+  const previewOptTextA = $("previewOptTextA");
+  const previewOptTextB = $("previewOptTextB");
+  const previewOptTextC = $("previewOptTextC");
+  const previewOptTextD = $("previewOptTextD");
+
+  const previewOptA = $("previewOptA");
+  const previewOptB = $("previewOptB");
+  const previewOptC = $("previewOptC");
+  const previewOptD = $("previewOptD");
+
+  const previewHintWrap = $("previewHintWrap");
+  const previewHintText = $("previewHintText");
+
+  if (previewQPointsBadge) previewQPointsBadge.textContent = `${points || 20} Poin`;
+  if (previewQText) previewQText.textContent = qText || "Pukul berapakah yang ditunjukkan jam di atas?";
+
+  // Tampilkan atau sembunyikan jam analog berdasarkan tipe soal
+  if (previewClockWrap) {
+    previewClockWrap.style.display = tipe === "clock" ? "flex" : "none";
+  }
+
+  if (tipe === "clock" && previewHourHand && previewMinuteHand) {
+    const safeHour = Math.min(Math.max(hour, 1), 12);
+    const safeMin = Math.min(Math.max(minute, 0), 59);
+    const hDeg = ((safeHour % 12) * 30) + (safeMin * 0.5);
+    const mDeg = safeMin * 6;
+    previewHourHand.style.transform = `translateX(-50%) rotate(${hDeg}deg)`;
+    previewMinuteHand.style.transform = `translateX(-50%) rotate(${mDeg}deg)`;
+  }
+
+  // Teks Opsi Jawaban
+  if (previewOptTextA) previewOptTextA.textContent = optA || "Pilihan A";
+  if (previewOptTextB) previewOptTextB.textContent = optB || "Pilihan B";
+  if (previewOptTextC) previewOptTextC.textContent = optC || "Pilihan C";
+  if (previewOptTextD) previewOptTextD.textContent = optD || "Pilihan D";
+
+  // Penanda Jawaban Benar
+  if (previewOptA) previewOptA.classList.toggle("is-answer", correctKey === "A");
+  if (previewOptB) previewOptB.classList.toggle("is-answer", correctKey === "B");
+  if (previewOptC) previewOptC.classList.toggle("is-answer", correctKey === "C");
+  if (previewOptD) previewOptD.classList.toggle("is-answer", correctKey === "D");
+
+  // Petunjuk Hint
+  if (previewHintWrap && previewHintText) {
+    if (hint) {
+      previewHintWrap.style.display = "block";
+      previewHintText.textContent = hint;
+    } else {
+      previewHintWrap.style.display = "none";
+    }
+  }
+}
+
+/**
  * Merender daftar materi pembelajaran yang tersimpan
  */
 function renderTeacherMaterials() {
   const body = $("teacherMaterialsBody");
   if (!body) return;
 
-  body.innerHTML = "";
   const allMaterials = typeof getMaterials === "function" ? getMaterials() : [];
-  const filterVal = $("filterMaterialLevel") ? $("filterMaterialLevel").value : "all";
 
-  const filtered = filterVal === "all"
-    ? allMaterials
-    : allMaterials.filter(m => String(m.level) === filterVal);
+  // Update badge count
+  const badge = $("matCountBadge");
+  if (badge) badge.textContent = allMaterials.length;
+
+  body.innerHTML = "";
+  const filterVal = $("filterMaterialLevel") ? $("filterMaterialLevel").value : "all";
+  const searchVal = $("searchMaterialInput") ? $("searchMaterialInput").value.trim().toLowerCase() : "";
+
+  let filtered = allMaterials;
+
+  if (filterVal !== "all") {
+    filtered = filtered.filter(m => String(m.level) === filterVal);
+  }
+
+  if (searchVal) {
+    filtered = filtered.filter(m => {
+      const judul = (m.judul || m.title || "").toLowerCase();
+      const isi = (m.isi || m.content || "").toLowerCase();
+      const tip = (m.tip || "").toLowerCase();
+      return judul.includes(searchVal) || isi.includes(searchVal) || tip.includes(searchVal);
+    });
+  }
 
   if (filtered.length === 0) {
     body.innerHTML = `
       <tr>
         <td colspan="6">
           <div class="empty-state">
-            Belum ada modul materi pembelajaran untuk level yang dipilih.
+            ${searchVal ? "Tidak ada materi pembelajaran yang cocok dengan kata kunci pencarian." : "Belum ada modul materi pembelajaran untuk level yang dipilih."}
           </div>
         </td>
       </tr>
@@ -376,20 +566,43 @@ function renderTeacherQuestions() {
   const body = $("teacherQuestionsBody");
   if (!body) return;
 
-  body.innerHTML = "";
   const allQuestions = typeof getQuestions === "function" ? getQuestions() : [];
-  const filterVal = $("filterQuestionLevel") ? $("filterQuestionLevel").value : "all";
 
-  const filtered = filterVal === "all"
-    ? allQuestions
-    : allQuestions.filter(q => String(q.level) === filterVal);
+  // Update badge count
+  const badge = $("qCountBadge");
+  if (badge) badge.textContent = allQuestions.length;
+
+  body.innerHTML = "";
+  const filterVal = $("filterQuestionLevel") ? $("filterQuestionLevel").value : "all";
+  const filterType = $("filterQuestionType") ? $("filterQuestionType").value : "all";
+  const searchVal = $("searchQuestionInput") ? $("searchQuestionInput").value.trim().toLowerCase() : "";
+
+  let filtered = allQuestions;
+
+  if (filterVal !== "all") {
+    filtered = filtered.filter(q => String(q.level) === filterVal);
+  }
+
+  if (filterType !== "all") {
+    filtered = filtered.filter(q => (q.tipe || "clock") === filterType);
+  }
+
+  if (searchVal) {
+    filtered = filtered.filter(q => {
+      const qText = (q.pertanyaan || "").toLowerCase();
+      const hint = (q.hint || "").toLowerCase();
+      const explanation = (q.penjelasan || "").toLowerCase();
+      const optionsText = Array.isArray(q.pilihan) ? q.pilihan.join(" ").toLowerCase() : "";
+      return qText.includes(searchVal) || hint.includes(searchVal) || explanation.includes(searchVal) || optionsText.includes(searchVal);
+    });
+  }
 
   if (filtered.length === 0) {
     body.innerHTML = `
       <tr>
         <td colspan="7">
           <div class="empty-state">
-            Belum ada soal kuis untuk level yang dipilih.
+            ${searchVal ? "Tidak ada soal kuis yang cocok dengan kata kunci pencarian." : "Belum ada soal kuis untuk level/tipe yang dipilih."}
           </div>
         </td>
       </tr>
@@ -576,6 +789,45 @@ function initTeacherEvents() {
     });
   }
 
+  // Tombol Kosongkan Riwayat Nilai Siswa
+  const clearResultsBtn = $("clearResultsBtn");
+  if (clearResultsBtn) {
+    clearResultsBtn.addEventListener("click", () => {
+      if (confirm("Apakah Anda yakin ingin mengosongkan seluruh riwayat hasil kuis murid? Nilai, benar/salah, dan waktu pengerjaan akan direset.")) {
+        const students = typeof getStudents === "function" ? getStudents() : [];
+        students.forEach(s => {
+          s.lastScore = null;
+          s.lastCorrect = 0;
+          s.lastTotal = 0;
+          s.lastHints = 0;
+          s.lastPlayed = null;
+        });
+        if (typeof saveStudents === "function") {
+          saveStudents(students);
+        }
+        showToast("Seluruh riwayat nilai kuis berhasil dikosongkan.", "success");
+        renderTeacherDashboard();
+      }
+    });
+  }
+
+  // Tombol Kosongkan Data Seluruh Siswa
+  const clearStudentsBtn = $("clearStudentsBtn");
+  if (clearStudentsBtn) {
+    clearStudentsBtn.addEventListener("click", () => {
+      if (confirm("Apakah Anda yakin ingin menghapus seluruh data siswa terdaftar? Daftar siswa akan menjadi kosong.")) {
+        if (typeof saveStudents === "function") {
+          saveStudents([]);
+        }
+        if (typeof Storage !== "undefined" && typeof Storage.set === "function") {
+          Storage.set("timequest_initialized", true);
+        }
+        showToast("Daftar murid berhasil dibersihkan.", "success");
+        renderTeacherDashboard();
+      }
+    });
+  }
+
   // Tombol Logout Guru di Halaman Admin
   const teacherLogoutBtn = $("teacherLogoutBtn");
   if (teacherLogoutBtn) {
@@ -624,8 +876,9 @@ function initTeacherEvents() {
 
       singleMaterialForm.reset();
       $("matLevel").value = String(level);
-      showToast("Materi baru berhasil disimpan!", "success");
-      renderTeacherMaterials();
+      updateMaterialLivePreview();
+      showToast("Materi baru berhasil disimpan & diterbitkan!", "success");
+      setMaterialSubtab("mat-list");
     });
   }
 
@@ -733,7 +986,7 @@ function initTeacherEvents() {
             matFileLabel.textContent = "";
             matFileLabel.classList.add("hidden");
           }
-          renderTeacherMaterials();
+          setMaterialSubtab("mat-list");
         } else {
           showToast("Tidak ada baris materi yang valid. Pastikan kolom header bernama 'judul' dan 'isi'.", "error");
         }
@@ -867,8 +1120,14 @@ function initTeacherEvents() {
       $("qType").value = "clock";
       if (clockSettingsRow) clockSettingsRow.classList.remove("hidden");
       $("qPoints").value = "20";
-      showToast("Soal kuis baru berhasil disimpan!", "success");
-      renderTeacherQuestions();
+      document.querySelectorAll(".option-radio-btn").forEach(b => b.classList.toggle("selected", b.dataset.key === "A"));
+      document.querySelectorAll(".option-builder-item").forEach(item => {
+        item.classList.toggle("is-correct", item.id === "optItemA");
+      });
+      if ($("qCorrectKey")) $("qCorrectKey").value = "A";
+      updateQuestionLivePreview();
+      showToast("Soal kuis baru berhasil disimpan & diterbitkan!", "success");
+      setQuestionSubtab("q-list");
     });
   }
 
@@ -1002,7 +1261,7 @@ function initTeacherEvents() {
             qFileLabel.textContent = "";
             qFileLabel.classList.add("hidden");
           }
-          renderTeacherQuestions();
+          setQuestionSubtab("q-list");
         } else {
           showToast("Tidak ada baris soal yang valid. Pastikan kolom pertanyaan dan opsi A, B, C, D terisi.", "error");
         }
@@ -1079,6 +1338,111 @@ function initTeacherEvents() {
     filterQLevel.addEventListener("change", renderTeacherQuestions);
   }
 
+  // 8. Filter Tipe Soal Kuis (Analog vs Teks)
+  const filterQType = $("filterQuestionType");
+  if (filterQType) {
+    filterQType.addEventListener("change", renderTeacherQuestions);
+  }
+
+  // 9. Pencarian Real-Time Materi & Soal
+  const searchMatInput = $("searchMaterialInput");
+  if (searchMatInput) {
+    searchMatInput.addEventListener("input", renderTeacherMaterials);
+  }
+
+  const searchQInput = $("searchQuestionInput");
+  if (searchQInput) {
+    searchQInput.addEventListener("input", renderTeacherQuestions);
+  }
+
+  // 10. Navigasi Sub-Tab Materi
+  const matSubnavBtns = document.querySelectorAll("#teacherMaterialsTab .admin-subnav-btn");
+  matSubnavBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      setMaterialSubtab(btn.dataset.subtab);
+    });
+  });
+
+  // 11. Navigasi Sub-Tab Soal Kuis
+  const qSubnavBtns = document.querySelectorAll("#teacherQuestionsTab .admin-subnav-btn");
+  qSubnavBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      setQuestionSubtab(btn.dataset.subtab);
+    });
+  });
+
+  // 12. Tombol Batal Form Studio
+  const btnCancelMat = $("btnCancelMatCreate");
+  if (btnCancelMat) {
+    btnCancelMat.addEventListener("click", () => {
+      setMaterialSubtab("mat-list");
+    });
+  }
+
+  const btnCancelQ = $("btnCancelQCreate");
+  if (btnCancelQ) {
+    btnCancelQ.addEventListener("click", () => {
+      setQuestionSubtab("q-list");
+    });
+  }
+
+  // 13. Sinkronisasi Real-Time Live Preview Materi
+  ["matLevel", "matJudul", "matIsi", "matTip"].forEach(fieldId => {
+    const el = $(fieldId);
+    if (el) {
+      el.addEventListener("input", updateMaterialLivePreview);
+      el.addEventListener("change", updateMaterialLivePreview);
+    }
+  });
+
+  // 14. Sinkronisasi Real-Time Live Preview Soal Kuis & Jam Analog
+  ["qLevel", "qType", "qClockHour", "qClockMinute", "qText", "qOptA", "qOptB", "qOptC", "qOptD", "qPoints", "qHint"].forEach(fieldId => {
+    const el = $(fieldId);
+    if (el) {
+      el.addEventListener("input", updateQuestionLivePreview);
+      el.addEventListener("change", updateQuestionLivePreview);
+    }
+  });
+
+  // 15. Pemilihan Kunci Jawaban dengan Tombol Bulat A, B, C, D
+  const optRadioBtns = document.querySelectorAll(".option-radio-btn");
+  optRadioBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const key = btn.dataset.key;
+      optRadioBtns.forEach(b => b.classList.remove("selected"));
+      btn.classList.add("selected");
+
+      document.querySelectorAll(".option-builder-item").forEach(item => {
+        item.classList.remove("is-correct");
+      });
+      const parentItem = btn.closest(".option-builder-item");
+      if (parentItem) parentItem.classList.add("is-correct");
+
+      const correctKeySelect = $("qCorrectKey");
+      if (correctKeySelect) {
+        correctKeySelect.value = key;
+      }
+      updateQuestionLivePreview();
+    });
+  });
+
+  // 16. Tombol Cepat Preset Menit Jam Analog (:00, :15, :30, :45)
+  const presetChips = document.querySelectorAll(".preset-chip");
+  presetChips.forEach(chip => {
+    chip.addEventListener("click", () => {
+      const minVal = chip.dataset.min;
+      const minInput = $("qClockMinute");
+      if (minInput) {
+        minInput.value = minVal;
+        updateQuestionLivePreview();
+      }
+    });
+  });
+
+  // Inisialisasi awal preview kartu
+  updateMaterialLivePreview();
+  updateQuestionLivePreview();
+
   // Form Login Mandiri pada admin.html (Jika diakses tanpa sesi)
   const adminLoginForm = $("adminLoginForm");
   if (adminLoginForm) {
@@ -1113,6 +1477,7 @@ function initTeacherEvents() {
 
         try {
           sessionStorage.setItem("timequest_teacher", JSON.stringify(teacherSession));
+          localStorage.setItem("timequest_teacher", JSON.stringify(teacherSession));
         } catch (e) {
           console.error("Gagal menyimpan sesi:", e);
         }

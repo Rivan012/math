@@ -158,7 +158,12 @@
         <div class="card">
           <div class="section-heading">
             <h2>Daftar Murid Terdaftar</h2>
-            <span class="badge badge-outline">Tersimpan di Browser</span>
+            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+              <span class="badge badge-outline">Tersimpan di Browser</span>
+              <button id="clearStudentsBtn" class="btn btn-danger-outline btn-sm" type="button" title="Kosongkan seluruh data murid">
+                Kosongkan Data Siswa
+              </button>
+            </div>
           </div>
 
           <div class="table-scroll-container">
@@ -184,9 +189,14 @@
         <div class="card">
           <div class="section-heading">
             <h2>Rekapitulasi Hasil Penilaian</h2>
-            <button id="exportResultsBtn" class="btn btn-green btn-sm" type="button">
-              <img src="assets/icons/download.svg" width="18" height="18" alt=""> Unduh Format Excel (.xlsx)
-            </button>
+            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+              <button id="exportResultsBtn" class="btn btn-green btn-sm" type="button">
+                <img src="assets/icons/download.svg" width="18" height="18" alt=""> Unduh Format Excel (.xlsx)
+              </button>
+              <button id="clearResultsBtn" class="btn btn-danger-outline btn-sm" type="button" title="Reset semua riwayat nilai kuis">
+                Kosongkan Riwayat Nilai
+              </button>
+            </div>
           </div>
 
           <div class="table-scroll-container">
@@ -218,301 +228,516 @@
         </div>
       </section>
 
-      <!-- TAB 4: KELOLA MATERI (SATU PER SATU & BULK CSV) -->
+      <!-- TAB 4: KELOLA MATERI -->
       <section id="teacherMaterialsTab" class="teacher-tab-content hidden" role="tabpanel">
-        <div class="admin-content-grid">
-          <!-- Form Tambah Materi 1 per 1 -->
+        
+        <!-- Sub-Nav Pill Bar -->
+        <div class="admin-subnav" role="tablist">
+          <button type="button" class="admin-subnav-btn active" data-subtab="mat-list" id="btnMatSubtabList">
+            <img src="assets/icons/book.svg" width="16" height="16" alt=""> Daftar Modul Materi <span class="pill-badge" id="matCountBadge">0</span>
+          </button>
+          <button type="button" class="admin-subnav-btn" data-subtab="mat-create" id="btnMatSubtabCreate">
+            <span>➕</span> Tambah Materi Baru
+          </button>
+          <button type="button" class="admin-subnav-btn" data-subtab="mat-upload" id="btnMatSubtabUpload">
+            <img src="assets/icons/upload.svg" width="16" height="16" alt=""> Upload Berkas Excel / CSV
+          </button>
+        </div>
+
+        <!-- SUBTAB 1: DAFTAR MATERI (Tabel Utama) -->
+        <div id="matSubtabList" class="mat-subtab-view">
           <div class="card">
             <div class="section-heading">
-              <h2>Tambah Materi Baru</h2>
-              <span class="badge badge-outline">Satu per Satu</span>
-            </div>
-            <p class="muted small" style="margin-bottom:14px;">Tambahkan modul materi pembelajaran secara langsung ke sistem.</p>
-            
-            <form id="singleMaterialForm">
-              <div class="form-group">
-                <label for="matLevel">Level Pembelajaran</label>
-                <select id="matLevel" required>
-                  <option value="1">Level 1 - Mengenal Jam Bulat (Pukul .00)</option>
-                  <option value="2">Level 2 - Mengenal Jam Setengah (.30)</option>
-                  <option value="3">Level 3 - Jam Seperempat (.15 & .45)</option>
-                  <option value="4">Level 4 - Menit Kelipatan 5 (.05 s.d .55)</option>
-                  <option value="5">Level 5 - Format Waktu 24 Jam (Siang/Malam)</option>
+              <div>
+                <h2>Daftar Materi Pembelajaran</h2>
+                <span class="muted small">Modul konsep waktu yang aktif dipelajari oleh murid</span>
+              </div>
+              <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+                <input type="text" id="searchMaterialInput" class="admin-table-search" placeholder="🔍 Cari materi...">
+                <select id="filterMaterialLevel" class="admin-table-select">
+                  <option value="all">Semua Level</option>
+                  <option value="1">Level 1</option>
+                  <option value="2">Level 2</option>
+                  <option value="3">Level 3</option>
+                  <option value="4">Level 4</option>
+                  <option value="5">Level 5</option>
                 </select>
+                <button type="button" id="btnResetMaterials" class="btn btn-danger-outline btn-sm" title="Kembalikan ke data bawaan">
+                  Reset Default
+                </button>
               </div>
-
-              <div class="form-group">
-                <label for="matJudul">Judul Modul Materi</label>
-                <input type="text" id="matJudul" required placeholder="Contoh: Mengenal Jarum Pendek & Panjang">
-              </div>
-
-              <div class="form-group">
-                <label for="matIsi">Isi Penjelasan Materi</label>
-                <textarea id="matIsi" rows="4" required placeholder="Tuliskan materi penjelasan konsep waktu di sini..."></textarea>
-              </div>
-
-              <div class="form-group">
-                <label for="matTip">Tips / Cara Cepat Ingat (Opsional)</label>
-                <input type="text" id="matTip" placeholder="Contoh: Jarum pendek = Jam, jarum panjang = Menit.">
-              </div>
-
-              <button type="submit" class="btn btn-primary" style="width:100%;">
-                + Simpan Materi Baru
-              </button>
-            </form>
-          </div>
-
-          <!-- Upload Bulk Excel / CSV Materi -->
-          <div class="card">
-            <div class="section-heading">
-              <h2>Upload Berkas Materi</h2>
-              <span class="badge badge-accent">Excel (.xlsx) / CSV</span>
-            </div>
-            <p class="muted small" style="margin-bottom:14px;">Impor puluhan materi sekaligus menggunakan file spreadsheet Microsoft Excel (.xlsx) atau CSV.</p>
-
-            <div class="dropzone-box" id="materialDropzone">
-              <input type="file" id="materialCsvInput" accept=".xlsx,.xls,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,text/csv" style="display:none;">
-              <img src="assets/icons/upload.svg" width="38" height="38" alt="" style="margin-bottom:8px;opacity:0.75;">
-              <p style="font-weight:700;margin-bottom:4px;">Pilih Berkas Excel / CSV Materi</p>
-              <p class="muted small">atau drag & drop berkas Excel (.xlsx) ke kotak ini</p>
-              <button type="button" class="btn btn-outline btn-sm" style="margin-top:10px;" id="btnBrowseMaterialCsv">
-                Pilih Berkas Excel / CSV
-              </button>
-              <div id="materialFileSelected" class="file-chosen-text hidden"></div>
             </div>
 
-            <button type="button" id="btnUploadMaterialCsv" class="btn btn-green btn-sm" style="width:100%;margin-top:12px;">
-              <img src="assets/icons/upload.svg" width="16" height="16" alt=""> Upload Berkas Excel / CSV
-            </button>
-
-            <div class="csv-format-help">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-                <span style="font-weight:700;">Format Kolom Header Excel:</span>
-              </div>
-              <code>level, judul, isi, tip</code>
-              <button type="button" id="btnTemplateMaterialCsv" class="btn btn-outline btn-sm" style="margin-top:8px;width:100%;">
-                <img src="assets/icons/download.svg" width="14" height="14" alt=""> Unduh Template Excel Materi (.xlsx)
-              </button>
+            <div class="table-scroll-container">
+              <table class="teacher-table">
+                <thead>
+                  <tr>
+                    <th scope="col" style="width: 45px;">No</th>
+                    <th scope="col" style="width: 85px;">Level</th>
+                    <th scope="col" style="width: 220px;">Judul Modul</th>
+                    <th scope="col">Penjelasan Materi</th>
+                    <th scope="col" style="width: 200px;">Tip Kunci Belajar</th>
+                    <th scope="col" style="width: 70px; text-align:center;">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="teacherMaterialsBody"></tbody>
+              </table>
             </div>
           </div>
         </div>
 
-        <!-- Tabel Daftar Materi Tersimpan -->
-        <div class="card" style="margin-top:16px;">
-          <div class="section-heading">
-            <div>
-              <h2>Daftar Materi Pembelajaran</h2>
-              <span class="muted small">Total materi yang tampil saat siswa belajar</span>
-            </div>
-            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-              <select id="filterMaterialLevel" style="padding:6px 12px;font-size:0.88rem;">
-                <option value="all">Semua Level</option>
-                <option value="1">Level 1</option>
-                <option value="2">Level 2</option>
-                <option value="3">Level 3</option>
-                <option value="4">Level 4</option>
-                <option value="5">Level 5</option>
-              </select>
-              <button type="button" id="btnResetMaterials" class="btn btn-danger-outline btn-sm" title="Kembalikan ke data bawaan">
-                Reset Default
-              </button>
-            </div>
-          </div>
+        <!-- SUBTAB 2: TAMBAH MATERI SATUAN (Studio dengan Live Preview) -->
+        <div id="matSubtabCreate" class="mat-subtab-view hidden">
+          <div class="studio-grid">
+            <!-- Form Input -->
+            <div class="card">
+              <div class="section-heading">
+                <h2>Formulir Modul Materi</h2>
+                <span class="badge badge-primary">Satu per Satu</span>
+              </div>
+              <p class="muted small" style="margin-bottom:16px;">Tuliskan materi pembelajaran baru yang akan langsung terbit ke aplikasi siswa.</p>
 
-          <div class="table-scroll-container">
-            <table class="teacher-table">
-              <thead>
-                <tr>
-                  <th scope="col" style="width: 45px;">No</th>
-                  <th scope="col" style="width: 80px;">Level</th>
-                  <th scope="col" style="width: 180px;">Judul Materi</th>
-                  <th scope="col">Penjelasan Materi</th>
-                  <th scope="col" style="width: 180px;">Tip / Catatan</th>
-                  <th scope="col" style="width: 70px; text-align:center;">Aksi</th>
-                </tr>
-              </thead>
-              <tbody id="teacherMaterialsBody"></tbody>
-            </table>
+              <form id="singleMaterialForm">
+                <div class="form-group">
+                  <label for="matLevel">Level Pembelajaran</label>
+                  <select id="matLevel" class="select" required>
+                    <option value="1">Level 1 - Mengenal Jam Bulat (Pukul .00)</option>
+                    <option value="2">Level 2 - Mengenal Jam Setengah (.30)</option>
+                    <option value="3">Level 3 - Jam Seperempat (.15 & .45)</option>
+                    <option value="4">Level 4 - Menit Kelipatan 5 (.05 s.d .55)</option>
+                    <option value="5">Level 5 - Format Waktu 24 Jam (Siang/Malam)</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="matJudul">Judul Modul Materi</label>
+                  <input type="text" id="matJudul" class="input" required placeholder="Contoh: Mengenal Jarum Pendek & Panjang">
+                </div>
+
+                <div class="form-group">
+                  <label for="matIsi">Isi Penjelasan Materi</label>
+                  <textarea id="matIsi" class="input" rows="5" required placeholder="Tuliskan materi penjelasan konsep waktu dengan bahasa ramah anak..."></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="matTip">Tips Kunci Belajar / Cara Cepat (Opsional)</label>
+                  <input type="text" id="matTip" class="input" placeholder="Contoh: Jarum pendek = Jam, jarum panjang = Menit.">
+                </div>
+
+                <div style="display:flex;gap:10px;margin-top:14px;">
+                  <button type="submit" class="btn btn-primary" style="flex:1;">
+                    + Simpan & Terbitkan Materi
+                  </button>
+                  <button type="button" class="btn btn-outline" id="btnCancelMatCreate">
+                    Batal
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Live Student Preview -->
+            <div class="live-preview-box">
+              <div class="live-preview-header">
+                <span class="live-preview-badge">👁️ Pratinjau Tampilan Murid</span>
+                <span class="muted small">Real-time</span>
+              </div>
+              <p class="muted small" style="margin-bottom:14px;">Inilah tampilan kartu materi yang akan dipelajari murid di aplikasi:</p>
+
+              <article class="material-card" style="margin-bottom:0;box-shadow:none;border:1.5px solid var(--border);">
+                <div class="material-step-badge" id="previewMatStep">1</div>
+                <div class="material-text">
+                  <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap;">
+                    <h3 style="margin-bottom:0;" id="previewMatJudul">Mengenal Jam Analog</h3>
+                    <span class="badge badge-accent" style="font-size:0.75rem;" id="previewMatLevelBadge">Misi Level 1</span>
+                  </div>
+                  <p id="previewMatIsi" style="line-height:1.5;">Tuliskan materi pada formulir di sebelah kiri untuk melihat tampilan langsung di sini...</p>
+                  <div class="tip-banner" id="previewMatTipWrap">
+                    <img src="assets/icons/lightbulb.svg" width="18" height="18" alt="" style="vertical-align:-3px;margin-right:4px;">
+                    <strong>Kunci Belajar:</strong> <span id="previewMatTip">Jarum panjang ke angka 12 berarti menit 00.</span>
+                  </div>
+                </div>
+              </article>
+            </div>
           </div>
         </div>
+
+        <!-- SUBTAB 3: UPLOAD BULK EXCEL / CSV -->
+        <div id="matSubtabUpload" class="mat-subtab-view hidden">
+          <div class="excel-import-hub">
+            <!-- Dropzone Card -->
+            <div class="card">
+              <div class="section-heading">
+                <h2>Unggah Berkas Spreadsheet</h2>
+                <span class="badge badge-accent">Excel (.xlsx) / CSV</span>
+              </div>
+              <p class="muted small" style="margin-bottom:14px;">Impor modul materi massal langsung dari file spreadsheet tanpa perlu input satu per satu.</p>
+
+              <div class="dropzone-box" id="materialDropzone">
+                <input type="file" id="materialCsvInput" accept=".xlsx,.xls,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,text/csv" style="display:none;">
+                <img src="assets/icons/upload.svg" width="42" height="42" alt="" style="margin-bottom:10px;opacity:0.85;">
+                <p style="font-weight:800;font-size:1rem;margin-bottom:4px;">Pilih Berkas Excel / CSV Materi</p>
+                <p class="muted small">Tarik dan lepas (drag & drop) berkas Excel (.xlsx) ke kotak ini</p>
+                <button type="button" class="btn btn-outline btn-sm" style="margin-top:12px;" id="btnBrowseMaterialCsv">
+                  Pilih Berkas Spreadsheet
+                </button>
+                <div id="materialFileSelected" class="file-chosen-text hidden" style="margin-top:10px;font-weight:700;color:var(--primary);"></div>
+              </div>
+
+              <button type="button" id="btnUploadMaterialCsv" class="btn btn-green btn-sm" style="width:100%;margin-top:14px;padding:10px;">
+                <img src="assets/icons/upload.svg" width="16" height="16" alt=""> Upload Berkas Excel / CSV
+              </button>
+            </div>
+
+            <!-- Template & Panduan Card -->
+            <div class="card">
+              <div class="section-heading">
+                <h2>Format Template Excel</h2>
+                <span class="badge badge-green">Resmi</span>
+              </div>
+              <p class="muted small">Unduh template spreadsheet resmi berformat Excel (.xlsx) yang telah disesuaikan strukturnya.</p>
+
+              <button type="button" id="btnTemplateMaterialCsv" class="btn btn-primary btn-sm" style="width:100%;margin:12px 0;padding:10px;">
+                <img src="assets/icons/download.svg" width="16" height="16" alt=""> Unduh Template Excel Materi (.xlsx)
+              </button>
+
+              <div class="csv-format-help" style="margin-bottom:0;">
+                <p style="font-weight:800;margin-bottom:6px;color:var(--ink);">Susunan Kolom Excel:</p>
+                <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;">
+                  <span class="excel-col-badge">level</span>
+                  <span class="excel-col-badge">judul</span>
+                  <span class="excel-col-badge">isi</span>
+                  <span class="excel-col-badge">tip</span>
+                </div>
+                <ul class="template-features-list">
+                  <li><strong>level</strong>: Angka level materi (1 sampai 5).</li>
+                  <li><strong>judul</strong>: Nama judul modul pembelajaran.</li>
+                  <li><strong>isi</strong>: Penjelasan konsep materi waktu.</li>
+                  <li><strong>tip</strong>: Tips cara cepat atau kunci hafalan.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </section>
 
-      <!-- TAB 5: KELOLA SOAL KUIS (SATU PER SATU & BULK CSV) -->
+      <!-- TAB 5: KELOLA SOAL KUIS -->
       <section id="teacherQuestionsTab" class="teacher-tab-content hidden" role="tabpanel">
-        <div class="admin-content-grid">
-          <!-- Form Tambah Soal 1 per 1 -->
+
+        <!-- Sub-Nav Pill Bar -->
+        <div class="admin-subnav" role="tablist">
+          <button type="button" class="admin-subnav-btn active" data-subtab="q-list" id="btnQSubtabList">
+            <img src="assets/icons/clock.svg" width="16" height="16" alt=""> Bank Soal Kuis <span class="pill-badge" id="qCountBadge">0</span>
+          </button>
+          <button type="button" class="admin-subnav-btn" data-subtab="q-create" id="btnQSubtabCreate">
+            <span>➕</span> Buat Soal Baru
+          </button>
+          <button type="button" class="admin-subnav-btn" data-subtab="q-upload" id="btnQSubtabUpload">
+            <img src="assets/icons/upload.svg" width="16" height="16" alt=""> Upload Berkas Excel / CSV
+          </button>
+        </div>
+
+        <!-- SUBTAB 1: BANK SOAL KUIS (Tabel Utama) -->
+        <div id="qSubtabList" class="q-subtab-view">
           <div class="card">
             <div class="section-heading">
-              <h2>Tambah Soal Kuis Baru</h2>
-              <span class="badge badge-outline">Satu per Satu</span>
-            </div>
-            <p class="muted small" style="margin-bottom:14px;">Buat soal latihan interaktif untuk tingkatkan pemahaman murid.</p>
-
-            <form id="singleQuestionForm">
-              <div class="form-row-2">
-                <div class="form-group">
-                  <label for="qLevel">Level Kuis</label>
-                  <select id="qLevel" required>
-                    <option value="1">Level 1 - Jam Tepat (.00)</option>
-                    <option value="2">Level 2 - Jam Setengah (.30)</option>
-                    <option value="3">Level 3 - Jam Seperempat (.15/.45)</option>
-                    <option value="4">Level 4 - Kelipatan 5 Menit</option>
-                    <option value="5">Level 5 - Format 24 Jam</option>
-                  </select>
-                </div>
-
-                <div class="form-group">
-                  <label for="qType">Tipe Soal</label>
-                  <select id="qType" required>
-                    <option value="clock">Jarum Jam Analog</option>
-                    <option value="text">Pilihan Ganda Teks</option>
-                  </select>
-                </div>
+              <div>
+                <h2>Daftar Soal Kuis Aktif</h2>
+                <span class="muted small">Bank pertanyaan yang akan diujikan kepada murid saat kuis</span>
               </div>
-
-              <!-- Baris Pengaturan Jam Analog (Hanya tampil jika tipe = clock) -->
-              <div id="clockSettingsRow" class="form-row-2">
-                <div class="form-group">
-                  <label for="qClockHour">Jarum Jam (1 - 12)</label>
-                  <input type="number" id="qClockHour" min="1" max="12" value="3" placeholder="Contoh: 3">
-                </div>
-                <div class="form-group">
-                  <label for="qClockMinute">Jarum Menit (0 - 59)</label>
-                  <input type="number" id="qClockMinute" min="0" max="59" step="1" value="0" placeholder="Contoh: 0">
-                </div>
+              <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+                <input type="text" id="searchQuestionInput" class="admin-table-search" placeholder="🔍 Cari soal kuis...">
+                <select id="filterQuestionLevel" class="admin-table-select">
+                  <option value="all">Semua Level</option>
+                  <option value="1">Level 1</option>
+                  <option value="2">Level 2</option>
+                  <option value="3">Level 3</option>
+                  <option value="4">Level 4</option>
+                  <option value="5">Level 5</option>
+                </select>
+                <select id="filterQuestionType" class="admin-table-select">
+                  <option value="all">Semua Tipe</option>
+                  <option value="clock">Jam Analog</option>
+                  <option value="text">Pilihan Ganda Teks</option>
+                </select>
+                <button type="button" id="btnResetQuestions" class="btn btn-danger-outline btn-sm" title="Kembalikan ke bank soal bawaan">
+                  Reset Default
+                </button>
               </div>
-
-              <div class="form-group">
-                <label for="qText">Kalimat Pertanyaan</label>
-                <input type="text" id="qText" required placeholder="Contoh: Pukul berapakah yang ditunjukkan jam di atas?">
-              </div>
-
-              <div class="form-group">
-                <label>Pilihan Jawaban (A, B, C, D)</label>
-                <div class="option-input-group">
-                  <span class="option-letter-badge">A</span>
-                  <input type="text" id="qOptA" required placeholder="Teks opsi pilihan A">
-                </div>
-                <div class="option-input-group">
-                  <span class="option-letter-badge">B</span>
-                  <input type="text" id="qOptB" required placeholder="Teks opsi pilihan B">
-                </div>
-                <div class="option-input-group">
-                  <span class="option-letter-badge">C</span>
-                  <input type="text" id="qOptC" required placeholder="Teks opsi pilihan C">
-                </div>
-                <div class="option-input-group">
-                  <span class="option-letter-badge">D</span>
-                  <input type="text" id="qOptD" required placeholder="Teks opsi pilihan D">
-                </div>
-              </div>
-
-              <div class="form-row-2">
-                <div class="form-group">
-                  <label for="qCorrectKey">Kunci Jawaban Benar</label>
-                  <select id="qCorrectKey" required>
-                    <option value="A">Pilihan A</option>
-                    <option value="B">Pilihan B</option>
-                    <option value="C">Pilihan C</option>
-                    <option value="D">Pilihan D</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="qPoints">Poin Reward</label>
-                  <input type="number" id="qPoints" min="5" max="100" step="5" value="20">
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="qHint">Petunjuk / Bantuan Hint (Opsional)</label>
-                <input type="text" id="qHint" placeholder="Contoh: Lihat angka yang ditunjuk oleh jarum pendek.">
-              </div>
-
-              <div class="form-group">
-                <label for="qExplanation">Pembahasan Jawaban (Opsional)</label>
-                <input type="text" id="qExplanation" placeholder="Contoh: Jarum pendek di angka 3 dan panjang di 12 menunjukkan pukul 03.00.">
-              </div>
-
-              <button type="submit" class="btn btn-primary" style="width:100%;">
-                + Simpan Soal Kuis
-              </button>
-            </form>
-          </div>
-
-          <!-- Upload Bulk Excel / CSV Soal -->
-          <div class="card">
-            <div class="section-heading">
-              <h2>Upload Berkas Soal</h2>
-              <span class="badge badge-accent">Excel (.xlsx) / CSV</span>
-            </div>
-            <p class="muted small" style="margin-bottom:14px;">Impor puluhan soal sekaligus lengkap dengan pilihan dan kunci jawaban dari file Excel (.xlsx) atau CSV.</p>
-
-            <div class="dropzone-box" id="questionDropzone">
-              <input type="file" id="questionCsvInput" accept=".xlsx,.xls,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,text/csv" style="display:none;">
-              <img src="assets/icons/upload.svg" width="38" height="38" alt="" style="margin-bottom:8px;opacity:0.75;">
-              <p style="font-weight:700;margin-bottom:4px;">Pilih Berkas Excel / CSV Soal</p>
-              <p class="muted small">atau drag & drop berkas Excel (.xlsx) ke kotak ini</p>
-              <button type="button" class="btn btn-outline btn-sm" style="margin-top:10px;" id="btnBrowseQuestionCsv">
-                Pilih Berkas Excel / CSV
-              </button>
-              <div id="questionFileSelected" class="file-chosen-text hidden"></div>
             </div>
 
-            <button type="button" id="btnUploadQuestionCsv" class="btn btn-green btn-sm" style="width:100%;margin-top:12px;">
-              <img src="assets/icons/upload.svg" width="16" height="16" alt=""> Upload Berkas Excel / CSV
-            </button>
-
-            <div class="csv-format-help">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-                <span style="font-weight:700;">Format Kolom Header Excel:</span>
-              </div>
-              <code style="word-break:break-all;">level, pertanyaan, tipe, pilihan_a, pilihan_b, pilihan_c, pilihan_d, kunci, hint, penjelasan, poin, jam, menit</code>
-              <button type="button" id="btnTemplateQuestionCsv" class="btn btn-outline btn-sm" style="margin-top:8px;width:100%;">
-                <img src="assets/icons/download.svg" width="14" height="14" alt=""> Unduh Template Excel Soal (.xlsx)
-              </button>
+            <div class="table-scroll-container">
+              <table class="teacher-table">
+                <thead>
+                  <tr>
+                    <th scope="col" style="width: 45px;">No</th>
+                    <th scope="col" style="width: 75px;">Level</th>
+                    <th scope="col" style="width: 115px;">Tipe</th>
+                    <th scope="col">Pertanyaan & Petunjuk</th>
+                    <th scope="col" style="width: 170px;">Kunci Jawaban</th>
+                    <th scope="col" style="width: 75px;">Poin</th>
+                    <th scope="col" style="width: 70px; text-align:center;">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="teacherQuestionsBody"></tbody>
+              </table>
             </div>
           </div>
         </div>
 
-        <!-- Tabel Daftar Soal Tersimpan -->
-        <div class="card" style="margin-top:16px;">
-          <div class="section-heading">
-            <div>
-              <h2>Daftar Soal Kuis Aktif</h2>
-              <span class="muted small">Daftar soal yang akan diujikan kepada siswa</span>
-            </div>
-            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-              <select id="filterQuestionLevel" style="padding:6px 12px;font-size:0.88rem;">
-                <option value="all">Semua Level</option>
-                <option value="1">Level 1</option>
-                <option value="2">Level 2</option>
-                <option value="3">Level 3</option>
-                <option value="4">Level 4</option>
-                <option value="5">Level 5</option>
-              </select>
-              <button type="button" id="btnResetQuestions" class="btn btn-danger-outline btn-sm" title="Kembalikan ke soal bawaan">
-                Reset Default
-              </button>
-            </div>
-          </div>
+        <!-- SUBTAB 2: BUAT SOAL BARU (Studio dengan Live Preview) -->
+        <div id="qSubtabCreate" class="q-subtab-view hidden">
+          <div class="studio-grid">
+            <!-- Form Input Soal -->
+            <div class="card">
+              <div class="section-heading">
+                <h2>Studio Pembuat Soal</h2>
+                <span class="badge badge-primary">Satu per Satu</span>
+              </div>
+              <p class="muted small" style="margin-bottom:14px;">Buat soal latihan beranimasi dengan umpan balik visual seketika.</p>
 
-          <div class="table-scroll-container">
-            <table class="teacher-table">
-              <thead>
-                <tr>
-                  <th scope="col" style="width: 45px;">No</th>
-                  <th scope="col" style="width: 70px;">Level</th>
-                  <th scope="col" style="width: 80px;">Tipe</th>
-                  <th scope="col">Pertanyaan</th>
-                  <th scope="col" style="width: 140px;">Kunci Jawaban</th>
-                  <th scope="col" style="width: 65px;">Poin</th>
-                  <th scope="col" style="width: 70px; text-align:center;">Aksi</th>
-                </tr>
-              </thead>
-              <tbody id="teacherQuestionsBody"></tbody>
-            </table>
+              <form id="singleQuestionForm">
+                <div class="form-row-2">
+                  <div class="form-group">
+                    <label for="qLevel">Level Kuis</label>
+                    <select id="qLevel" class="select" required>
+                      <option value="1">Level 1 - Jam Tepat (.00)</option>
+                      <option value="2">Level 2 - Jam Setengah (.30)</option>
+                      <option value="3">Level 3 - Jam Seperempat (.15/.45)</option>
+                      <option value="4">Level 4 - Kelipatan 5 Menit</option>
+                      <option value="5">Level 5 - Format 24 Jam</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="qType">Tipe Pertanyaan</label>
+                    <select id="qType" class="select" required>
+                      <option value="clock">🕒 Jarum Jam Analog</option>
+                      <option value="text">📝 Pilihan Ganda Teks</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Pengaturan Jam Analog (Hanya tampil jika tipe = clock) -->
+                <div id="clockSettingsRow" class="form-group" style="background:var(--bg);padding:14px;border-radius:var(--radius-md);border:1.5px solid var(--border);margin-bottom:18px;">
+                  <label style="margin-bottom:8px;font-weight:800;display:block;">Waktu Jam Analog yang Ditampilkan:</label>
+                  <div class="form-row-2">
+                    <div>
+                      <label for="qClockHour" class="small muted" style="margin-bottom:4px;display:block;">Jarum Jam (1 - 12)</label>
+                      <input type="number" id="qClockHour" class="input" min="1" max="12" value="3" placeholder="Contoh: 3">
+                    </div>
+                    <div>
+                      <label for="qClockMinute" class="small muted" style="margin-bottom:4px;display:block;">Jarum Menit (0 - 59)</label>
+                      <input type="number" id="qClockMinute" class="input" min="0" max="59" step="1" value="0" placeholder="Contoh: 0">
+                    </div>
+                  </div>
+                  <div class="quick-presets" style="margin-top:10px;">
+                    <span class="small muted" style="font-size:0.78rem;font-weight:700;">Preset Menit Cepat:</span>
+                    <button type="button" class="preset-chip" data-min="0">:00 Tepat</button>
+                    <button type="button" class="preset-chip" data-min="15">:15 Seperempat</button>
+                    <button type="button" class="preset-chip" data-min="30">:30 Setengah</button>
+                    <button type="button" class="preset-chip" data-min="45">:45 Kurang Seperempat</button>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="qText">Kalimat Pertanyaan</label>
+                  <input type="text" id="qText" class="input" required placeholder="Contoh: Pukul berapakah yang ditunjukkan jam di atas?">
+                </div>
+
+                <!-- 4 Pilihan Jawaban dengan Click-to-Select Kunci Jawaban -->
+                <div class="form-group">
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                    <label style="margin-bottom:0;">Pilihan Jawaban (A, B, C, D)</label>
+                    <span class="muted small" style="font-size:0.75rem;">💡 Klik huruf untuk memilih kunci jawaban benar</span>
+                  </div>
+                  
+                  <div class="options-builder-grid">
+                    <!-- Opsi A -->
+                    <div class="option-builder-item is-correct" id="optItemA">
+                      <div class="option-radio-btn selected" data-key="A" title="Jadikan Kunci Jawaban">A</div>
+                      <input type="text" id="qOptA" class="option-builder-input" required placeholder="Jawaban A">
+                    </div>
+                    <!-- Opsi B -->
+                    <div class="option-builder-item" id="optItemB">
+                      <div class="option-radio-btn" data-key="B" title="Jadikan Kunci Jawaban">B</div>
+                      <input type="text" id="qOptB" class="option-builder-input" required placeholder="Jawaban B">
+                    </div>
+                    <!-- Opsi C -->
+                    <div class="option-builder-item" id="optItemC">
+                      <div class="option-radio-btn" data-key="C" title="Jadikan Kunci Jawaban">C</div>
+                      <input type="text" id="qOptC" class="option-builder-input" required placeholder="Jawaban C">
+                    </div>
+                    <!-- Opsi D -->
+                    <div class="option-builder-item" id="optItemD">
+                      <div class="option-radio-btn" data-key="D" title="Jadikan Kunci Jawaban">D</div>
+                      <input type="text" id="qOptD" class="option-builder-input" required placeholder="Jawaban D">
+                    </div>
+                  </div>
+
+                  <!-- Hidden select untuk tetap sinkron dengan kode yang sudah ada -->
+                  <select id="qCorrectKey" style="display:none;">
+                    <option value="A" selected>A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                  </select>
+                </div>
+
+                <div class="form-row-2">
+                  <div class="form-group">
+                    <label for="qPoints">Poin Reward</label>
+                    <input type="number" id="qPoints" class="input" min="5" max="100" step="5" value="20">
+                  </div>
+                  <div class="form-group">
+                    <label for="qHint">Petunjuk / Bantuan Hint (Opsional)</label>
+                    <input type="text" id="qHint" class="input" placeholder="Contoh: Perhatikan jarum pendek">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="qExplanation">Pembahasan Jawaban (Opsional)</label>
+                  <input type="text" id="qExplanation" class="input" placeholder="Contoh: Jarum pendek di 3 dan panjang di 12 adalah pukul 03.00.">
+                </div>
+
+                <div style="display:flex;gap:10px;margin-top:14px;">
+                  <button type="submit" class="btn btn-primary" style="flex:1;">
+                    + Simpan & Terbitkan Soal Kuis
+                  </button>
+                  <button type="button" class="btn btn-outline" id="btnCancelQCreate">
+                    Batal
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Live Quiz Student Preview -->
+            <div class="live-preview-box">
+              <div class="live-preview-header">
+                <span class="live-preview-badge">👁️ Pratinjau Kuis Murid</span>
+                <span class="badge badge-yellow" id="previewQPointsBadge">20 Poin</span>
+              </div>
+              <p class="muted small" style="margin-bottom:12px;">Tampilan interaktif seperti yang dilihat siswa saat kuis berlangsung:</p>
+
+              <!-- Pertanyaan Preview -->
+              <div class="preview-quiz-title" id="previewQText">
+                Pukul berapakah yang ditunjukkan jam di atas?
+              </div>
+
+              <!-- Jam Analog Preview (Jika tipe clock) -->
+              <div class="preview-clock-wrap" id="previewClockWrap">
+                <div class="preview-clock-face" id="previewClockFace">
+                  <div class="clock-number" style="--angle: 30deg;"><span>1</span></div>
+                  <div class="clock-number" style="--angle: 60deg;"><span>2</span></div>
+                  <div class="clock-number" style="--angle: 90deg;"><span>3</span></div>
+                  <div class="clock-number" style="--angle: 120deg;"><span>4</span></div>
+                  <div class="clock-number" style="--angle: 150deg;"><span>5</span></div>
+                  <div class="clock-number" style="--angle: 180deg;"><span>6</span></div>
+                  <div class="clock-number" style="--angle: 210deg;"><span>7</span></div>
+                  <div class="clock-number" style="--angle: 240deg;"><span>8</span></div>
+                  <div class="clock-number" style="--angle: 270deg;"><span>9</span></div>
+                  <div class="clock-number" style="--angle: 300deg;"><span>10</span></div>
+                  <div class="clock-number" style="--angle: 330deg;"><span>11</span></div>
+                  <div class="clock-number" style="--angle: 360deg;"><span>12</span></div>
+                  <div class="clock-hand hour-hand" id="previewHourHand" style="transform:translateX(-50%) rotate(90deg);height:40px;"></div>
+                  <div class="clock-hand minute-hand" id="previewMinuteHand" style="transform:translateX(-50%) rotate(0deg);height:58px;"></div>
+                  <div class="clock-center"></div>
+                </div>
+              </div>
+
+              <!-- Options Preview -->
+              <div class="preview-options-grid">
+                <div class="preview-opt-btn is-answer" id="previewOptA">
+                  <span class="preview-opt-badge">A</span>
+                  <span class="preview-opt-text" id="previewOptTextA">Opsi A</span>
+                </div>
+                <div class="preview-opt-btn" id="previewOptB">
+                  <span class="preview-opt-badge">B</span>
+                  <span class="preview-opt-text" id="previewOptTextB">Opsi B</span>
+                </div>
+                <div class="preview-opt-btn" id="previewOptC">
+                  <span class="preview-opt-badge">C</span>
+                  <span class="preview-opt-text" id="previewOptTextC">Opsi C</span>
+                </div>
+                <div class="preview-opt-btn" id="previewOptD">
+                  <span class="preview-opt-badge">D</span>
+                  <span class="preview-opt-text" id="previewOptTextD">Opsi D</span>
+                </div>
+              </div>
+
+              <div id="previewHintWrap" style="margin-top:14px;background:var(--bg);padding:8px 12px;border-radius:var(--radius-sm);font-size:0.8rem;color:var(--muted);display:none;">
+                💡 <strong>Hint:</strong> <span id="previewHintText"></span>
+              </div>
+            </div>
           </div>
         </div>
+
+        <!-- SUBTAB 3: UPLOAD BULK EXCEL / CSV -->
+        <div id="qSubtabUpload" class="q-subtab-view hidden">
+          <div class="excel-import-hub">
+            <!-- Dropzone Card -->
+            <div class="card">
+              <div class="section-heading">
+                <h2>Unggah Berkas Spreadsheet Soal</h2>
+                <span class="badge badge-accent">Excel (.xlsx) / CSV</span>
+              </div>
+              <p class="muted small" style="margin-bottom:14px;">Impor puluhan soal kuis sekaligus lengkap dengan pilihan dan kunci jawaban.</p>
+
+              <div class="dropzone-box" id="questionDropzone">
+                <input type="file" id="questionCsvInput" accept=".xlsx,.xls,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,text/csv" style="display:none;">
+                <img src="assets/icons/upload.svg" width="42" height="42" alt="" style="margin-bottom:10px;opacity:0.85;">
+                <p style="font-weight:800;font-size:1rem;margin-bottom:4px;">Pilih Berkas Excel / CSV Soal</p>
+                <p class="muted small">Tarik dan lepas (drag & drop) berkas Excel (.xlsx) ke kotak ini</p>
+                <button type="button" class="btn btn-outline btn-sm" style="margin-top:12px;" id="btnBrowseQuestionCsv">
+                  Pilih Berkas Spreadsheet
+                </button>
+                <div id="questionFileSelected" class="file-chosen-text hidden" style="margin-top:10px;font-weight:700;color:var(--primary);"></div>
+              </div>
+
+              <button type="button" id="btnUploadQuestionCsv" class="btn btn-green btn-sm" style="width:100%;margin-top:14px;padding:10px;">
+                <img src="assets/icons/upload.svg" width="16" height="16" alt=""> Upload Berkas Excel / CSV
+              </button>
+            </div>
+
+            <!-- Template & Panduan Card -->
+            <div class="card">
+              <div class="section-heading">
+                <h2>Format Template Soal Excel</h2>
+                <span class="badge badge-green">Resmi</span>
+              </div>
+              <p class="muted small">Unduh template Excel kuis siap pakai yang sudah memuat contoh soal jam analog dan teks.</p>
+
+              <button type="button" id="btnTemplateQuestionCsv" class="btn btn-primary btn-sm" style="width:100%;margin:12px 0;padding:10px;">
+                <img src="assets/icons/download.svg" width="16" height="16" alt=""> Unduh Template Excel Soal (.xlsx)
+              </button>
+
+              <div class="csv-format-help" style="margin-bottom:0;">
+                <p style="font-weight:800;margin-bottom:6px;color:var(--ink);">Susunan Kolom Excel:</p>
+                <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;">
+                  <span class="excel-col-badge">level</span>
+                  <span class="excel-col-badge">pertanyaan</span>
+                  <span class="excel-col-badge">tipe</span>
+                  <span class="excel-col-badge">pilihan_a</span>
+                  <span class="excel-col-badge">pilihan_b</span>
+                  <span class="excel-col-badge">pilihan_c</span>
+                  <span class="excel-col-badge">pilihan_d</span>
+                  <span class="excel-col-badge">kunci</span>
+                  <span class="excel-col-badge">hint</span>
+                  <span class="excel-col-badge">penjelasan</span>
+                  <span class="excel-col-badge">poin</span>
+                  <span class="excel-col-badge">jam</span>
+                  <span class="excel-col-badge">menit</span>
+                </div>
+                <ul class="template-features-list">
+                  <li><strong>tipe</strong>: Isi <code>clock</code> untuk jam analog atau <code>text</code> untuk teks.</li>
+                  <li><strong>kunci</strong>: Isi huruf jawaban benar: <code>A</code>, <code>B</code>, <code>C</code>, atau <code>D</code>.</li>
+                  <li><strong>jam & menit</strong>: Waktu jarum jam analog (1-12) dan menit (0-59).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </section>
 
       <!-- Catatan Panduan Pengajar -->
