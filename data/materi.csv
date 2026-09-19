@@ -1,0 +1,7 @@
+id,level_id,judul,isi,tip
+M001,L001,Mengenal Jam Analog,"Jam analog memiliki angka 1 sampai 12. Jarum pendek menunjukkan jam dan jarum panjang menunjukkan menit.","Jarum panjang ke angka 12 berarti menit 00."
+M002,L002,Membaca Jam Tepat,"Jika jarum panjang berada di angka 12, waktu menunjukkan tepat satu jam. Contoh: jarum pendek di 3 dan jarum panjang di 12 dibaca pukul 03.00.","Perhatikan posisi jarum pendek untuk menentukan jamnya."
+M003,L003,Membaca Setengah Jam,"Jika jarum panjang berada di angka 6, artinya telah berjalan 30 menit atau setengah jam. Contoh: pukul 04.30 dibaca setengah lima.","Angka 6 pada jarum panjang selalu bernilai 30 menit."
+M004,L004,Jam Digital,"Jam digital menampilkan angka secara langsung. Angka sebelum titik adalah jam dan setelah titik adalah menit. Contoh: 07.00.","07.00 berarti pukul tujuh tepat."
+M005,L005,Urutan Kegiatan,"Kegiatan sehari-hari berlangsung secara teratur: Pagi hari (sarapan & sekolah) → Siang hari (istirahat/makan siang) → Sore hari (bermain/mengaji) → Malam hari (tidur).","Matahari terbit di pagi hari dan terbenam di sore hari."
+M006,L005,Lama Kegiatan,"Durasi adalah selisih waktu selesai dikurangi waktu mulai. Contoh: Ani mulai belajar pukul 08.00 dan selesai pukul 09.00, maka lama belajar = 1 jam (60 menit).","Durasi = Waktu Selesai − Waktu Mulai."

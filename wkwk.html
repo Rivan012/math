@@ -1,0 +1,3555 @@
+  
+<!DOCTYPE html>  
+<html lang="id">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<meta name="description" content="TIME QUEST - Game matematika membaca jam dan durasi untuk anak SD.">  
+<title>⏰ TIME QUEST — Petualangan Penjaga Waktu</title>  
+  
+<style>  
+/* =========================================================  
+   TIME QUEST  
+   CSS - Tampilan game edukasi matematika SD  
+   ========================================================= */  
+  
+:root {  
+  --pink: #ff5c9d;  
+  --pink-dark: #e83d80;  
+  --purple: #7c5cff;  
+  --blue: #48a9ff;  
+  --yellow: #ffd45a;  
+  --green: #43c88b;  
+  --red: #f06464;  
+  --ink: #29264b;  
+  --muted: #76748d;  
+  --bg: #f6f5ff;  
+  --white: #ffffff;  
+  --border: #e9e6f5;  
+  --shadow: 0 12px 30px rgba(64, 45, 120, .10);  
+  --radius: 24px;  
+}  
+  
+* {  
+  box-sizing: border-box;  
+}  
+  
+html {  
+  scroll-behavior: smooth;  
+}  
+  
+body {  
+  margin: 0;  
+  font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;  
+  color: var(--ink);  
+  background:  
+    radial-gradient(circle at 10% 10%, #ffe6f2 0, transparent 28%),  
+    radial-gradient(circle at 90% 0%, #e7e1ff 0, transparent 30%),  
+    var(--bg);  
+  min-height: 100vh;  
+}  
+  
+button,  
+input,  
+select {  
+  font: inherit;  
+}  
+  
+button {  
+  cursor: pointer;  
+}  
+  
+button:disabled {  
+  cursor: not-allowed;  
+  opacity: .55;  
+}  
+  
+button:focus-visible,  
+input:focus-visible,  
+select:focus-visible {  
+  outline: 4px solid rgba(124, 92, 255, .25);  
+  outline-offset: 3px;  
+}  
+  
+.hidden {  
+  display: none !important;  
+}  
+  
+.screen {  
+  display: none;  
+  width: 100%;  
+}  
+  
+.screen.active {  
+  display: block;  
+}  
+  
+.container {  
+  width: min(1100px, calc(100% - 32px));  
+  margin: auto;  
+}  
+  
+.page-wrap {  
+  padding: 24px 0 50px;  
+}  
+  
+h1, h2, h3, p {  
+  margin-top: 0;  
+}  
+  
+h1, h2, h3 {  
+  line-height: 1.2;  
+}  
+  
+p {  
+  line-height: 1.65;  
+}  
+  
+.muted {  
+  color: var(--muted);  
+}  
+  
+.small {  
+  font-size: .88rem;  
+}  
+  
+.center {  
+  text-align: center;  
+}  
+  
+/* BUTTONS */  
+  
+.btn {  
+  border: 0;  
+  border-radius: 16px;  
+  padding: 13px 20px;  
+  font-weight: 800;  
+  transition: transform .18s, box-shadow .18s, background .18s;  
+  display: inline-flex;  
+  align-items: center;  
+  justify-content: center;  
+  gap: 8px;  
+}  
+  
+.btn:hover:not(:disabled) {  
+  transform: translateY(-2px);  
+}  
+  
+.btn-primary {  
+  background: linear-gradient(135deg, var(--pink), var(--purple));  
+  color: white;  
+  box-shadow: 0 7px 18px rgba(124, 92, 255, .22);  
+}  
+  
+.btn-secondary {  
+  background: #eeeaff;  
+  color: #5b43bf;  
+}  
+  
+.btn-green {  
+  background: #dff9eb;  
+  color: #168452;  
+}  
+  
+.btn-yellow {  
+  background: #fff2c9;  
+  color: #9a6a00;  
+}  
+  
+.btn-danger {  
+  background: #ffe2e5;  
+  color: #c4314c;  
+}  
+  
+.btn-light {  
+  background: white;  
+  color: var(--ink);  
+  border: 1px solid var(--border);  
+}  
+  
+.btn-block {  
+  width: 100%;  
+}  
+  
+.btn-sm {  
+  padding: 9px 13px;  
+  font-size: .88rem;  
+  border-radius: 12px;  
+}  
+  
+.btn-row {  
+  display: flex;  
+  flex-wrap: wrap;  
+  gap: 10px;  
+}  
+  
+/* BADGES */  
+  
+.badge {  
+  display: inline-flex;  
+  align-items: center;  
+  gap: 5px;  
+  padding: 6px 11px;  
+  border-radius: 999px;  
+  font-weight: 800;  
+  font-size: .8rem;  
+  background: #eeeaff;  
+  color: #654bd0;  
+}  
+  
+.badge-green {  
+  background: #ddf8e9;  
+  color: #168452;  
+}  
+  
+.badge-yellow {  
+  background: #fff1c6;  
+  color: #916300;  
+}  
+  
+.badge-blue {  
+  background: #e2f1ff;  
+  color: #2675c5;  
+}  
+  
+/* CARDS */  
+  
+.card {  
+  background: rgba(255, 255, 255, .96);  
+  border: 1px solid var(--border);  
+  border-radius: var(--radius);  
+  padding: 24px;  
+  box-shadow: var(--shadow);  
+}  
+  
+.card-soft {  
+  background: #f9f8ff;  
+  border: 1px solid var(--border);  
+  border-radius: 18px;  
+  padding: 18px;  
+}  
+  
+/* LOGIN */  
+  
+.login-screen {  
+  min-height: 100vh;  
+  display: flex;  
+  align-items: center;  
+  padding: 30px 0;  
+}  
+  
+.login-layout {  
+  display: grid;  
+  grid-template-columns: 1fr 1fr;  
+  gap: 24px;  
+  align-items: stretch;  
+}  
+  
+.login-hero {  
+  background: linear-gradient(145deg, #8064ef, #f15caa);  
+  color: white;  
+  border-radius: 32px;  
+  padding: 42px 34px;  
+  position: relative;  
+  overflow: hidden;  
+  display: flex;  
+  flex-direction: column;  
+  justify-content: center;  
+  min-height: 500px;  
+}  
+  
+.login-hero::before,  
+.login-hero::after {  
+  content: "";  
+  position: absolute;  
+  border-radius: 50%;  
+  background: rgba(255,255,255,.13);  
+}  
+  
+.login-hero::before {  
+  width: 260px;  
+  height: 260px;  
+  right: -100px;  
+  top: -80px;  
+}  
+  
+.login-hero::after {  
+  width: 200px;  
+  height: 200px;  
+  left: -80px;  
+  bottom: -80px;  
+}  
+  
+.brand {  
+  display: flex;  
+  align-items: center;  
+  gap: 10px;  
+  font-weight: 900;  
+  letter-spacing: .5px;  
+}  
+  
+.brand-icon {  
+  background: white;  
+  color: var(--purple);  
+  width: 48px;  
+  height: 48px;  
+  border-radius: 15px;  
+  display: grid;  
+  place-items: center;  
+  font-size: 1.7rem;  
+}  
+  
+.login-hero h1 {  
+  font-size: clamp(2.3rem, 5vw, 4.1rem);  
+  margin: 35px 0 12px;  
+  letter-spacing: -2px;  
+}  
+  
+.hero-clock {  
+  font-size: 8rem;  
+  text-align: center;  
+  margin: 25px 0 10px;  
+  filter: drop-shadow(0 12px 15px rgba(0,0,0,.12));  
+}  
+  
+.login-form {  
+  display: flex;  
+  flex-direction: column;  
+  justify-content: center;  
+}  
+  
+.login-form h2 {  
+  font-size: 1.8rem;  
+}  
+  
+.form-group {  
+  margin-bottom: 18px;  
+}  
+  
+.form-group label {  
+  display: block;  
+  font-weight: 800;  
+  margin-bottom: 8px;  
+}  
+  
+.input,  
+.select {  
+  width: 100%;  
+  padding: 14px 15px;  
+  border: 2px solid var(--border);  
+  border-radius: 14px;  
+  background: white;  
+  color: var(--ink);  
+  outline: none;  
+}  
+  
+.input:focus,  
+.select:focus {  
+  border-color: var(--purple);  
+}  
+  
+.avatar-grid {  
+  display: grid;  
+  grid-template-columns: repeat(6, 1fr);  
+  gap: 8px;  
+}  
+  
+.avatar-btn {  
+  border: 2px solid var(--border);  
+  background: white;  
+  border-radius: 14px;  
+  padding: 9px 0;  
+  font-size: 1.7rem;  
+  transition: .2s;  
+}  
+  
+.avatar-btn.selected {  
+  border-color: var(--pink);  
+  background: #fff0f6;  
+  transform: scale(1.04);  
+}  
+  
+/* APP HEADER */  
+  
+.app-header {  
+  background: white;  
+  border-bottom: 1px solid var(--border);  
+  padding: 14px 0;  
+  position: sticky;  
+  top: 0;  
+  z-index: 10;  
+}  
+  
+.header-inner {  
+  display: flex;  
+  justify-content: space-between;  
+  align-items: center;  
+  gap: 15px;  
+}  
+  
+.header-brand {  
+  color: var(--purple);  
+}  
+  
+.user-mini {  
+  display: flex;  
+  align-items: center;  
+  gap: 10px;  
+  min-width: 0;  
+}  
+  
+.user-avatar {  
+  width: 44px;  
+  height: 44px;  
+  display: grid;  
+  place-items: center;  
+  background: #fff0f6;  
+  border-radius: 14px;  
+  font-size: 1.6rem;  
+}  
+  
+.user-name {  
+  font-weight: 900;  
+  white-space: nowrap;  
+  overflow: hidden;  
+  text-overflow: ellipsis;  
+}  
+  
+.header-actions {  
+  display: flex;  
+  align-items: center;  
+  gap: 8px;  
+}  
+  
+/* TOP STATS */  
+  
+.stats-grid {  
+  display: grid;  
+  grid-template-columns: repeat(4, 1fr);  
+  gap: 14px;  
+  margin: 24px 0;  
+}  
+  
+.stat-card {  
+  background: white;  
+  border: 1px solid var(--border);  
+  border-radius: 20px;  
+  padding: 18px;  
+  box-shadow: var(--shadow);  
+}  
+  
+.stat-icon {  
+  font-size: 1.5rem;  
+}  
+  
+.stat-label {  
+  color: var(--muted);  
+  font-size: .82rem;  
+  margin-top: 8px;  
+}  
+  
+.stat-value {  
+  font-size: 1.55rem;  
+  font-weight: 900;  
+  margin-top: 4px;  
+}  
+  
+/* HOME */  
+  
+.welcome-banner {  
+  background: linear-gradient(120deg, #fff0f7, #f0ecff);  
+  border: 1px solid #f1dded;  
+  border-radius: 26px;  
+  padding: 28px;  
+  display: flex;  
+  justify-content: space-between;  
+  gap: 20px;  
+  align-items: center;  
+  overflow: hidden;  
+}  
+  
+.welcome-banner h1 {  
+  margin-bottom: 8px;  
+  font-size: clamp(1.5rem, 3vw, 2.2rem);  
+}  
+  
+.welcome-character {  
+  font-size: 7rem;  
+  line-height: 1;  
+}  
+  
+.progress-track {  
+  height: 12px;  
+  background: #eceaf5;  
+  border-radius: 99px;  
+  overflow: hidden;  
+}  
+  
+.progress-fill {  
+  height: 100%;  
+  width: 0%;  
+  background: linear-gradient(90deg, var(--pink), var(--purple));  
+  border-radius: 99px;  
+  transition: width .3s;  
+}  
+  
+.section-heading {  
+  display: flex;  
+  justify-content: space-between;  
+  align-items: center;  
+  gap: 15px;  
+  margin: 30px 0 16px;  
+}  
+  
+.section-heading h2 {  
+  margin: 0;  
+}  
+  
+/* LEVELS */  
+  
+.level-grid {  
+  display: grid;  
+  grid-template-columns: repeat(5, 1fr);  
+  gap: 14px;  
+}  
+  
+.level-card {  
+  background: white;  
+  border: 1px solid var(--border);  
+  border-radius: 20px;  
+  padding: 18px 12px;  
+  text-align: center;  
+  box-shadow: var(--shadow);  
+  transition: .2s;  
+}  
+  
+.level-card.unlocked {  
+  cursor: pointer;  
+}  
+  
+.level-card.unlocked:hover {  
+  transform: translateY(-4px);  
+  border-color: var(--purple);  
+}  
+  
+.level-card.locked {  
+  opacity: .6;  
+  filter: grayscale(.5);  
+}  
+  
+.level-number {  
+  color: var(--purple);  
+  font-weight: 900;  
+  font-size: .8rem;  
+}  
+  
+.level-emoji {  
+  font-size: 2.6rem;  
+  margin: 10px 0;  
+}  
+  
+.level-title {  
+  font-weight: 900;  
+  font-size: .9rem;  
+}  
+  
+.level-status {  
+  font-size: .75rem;  
+  color: var(--muted);  
+  margin-top: 8px;  
+}  
+  
+/* MATERIAL */  
+  
+.material-hero {  
+  background: linear-gradient(135deg, #e8e1ff, #ffe5f1);  
+  border-radius: 24px;  
+  padding: 26px;  
+  display: flex;  
+  align-items: center;  
+  gap: 20px;  
+}  
+  
+.material-hero-icon {  
+  font-size: 5rem;  
+}  
+  
+.material-list {  
+  display: grid;  
+  gap: 14px;  
+  margin: 20px 0;  
+}  
+  
+.material-item {  
+  display: flex;  
+  gap: 14px;  
+  align-items: flex-start;  
+  padding: 18px;  
+  background: white;  
+  border: 1px solid var(--border);  
+  border-radius: 18px;  
+}  
+  
+.material-number {  
+  width: 38px;  
+  height: 38px;  
+  flex-shrink: 0;  
+  background: #eeeaff;  
+  color: var(--purple);  
+  border-radius: 12px;  
+  display: grid;  
+  place-items: center;  
+  font-weight: 900;  
+}  
+  
+.material-item h3 {  
+  margin-bottom: 6px;  
+}  
+  
+.material-item p {  
+  margin-bottom: 0;  
+}  
+  
+.tip-box {  
+  background: #fff8db;  
+  border: 1px solid #f5e6a7;  
+  color: #765a00;  
+  padding: 16px;  
+  border-radius: 16px;  
+  margin: 16px 0;  
+}  
+  
+/* CLOCK */  
+  
+.clock-panel {  
+  display: grid;  
+  grid-template-columns: 1fr 1fr;  
+  gap: 24px;  
+  align-items: center;  
+}  
+  
+.clock-face {  
+  position: relative;  
+  width: min(100%, 290px);  
+  aspect-ratio: 1;  
+  margin: auto;  
+  background: white;  
+  border: 10px solid #ded8ff;  
+  border-radius: 50%;  
+  box-shadow: 0 10px 0 #c4b9ff, 0 18px 25px rgba(80,60,150,.12);  
+}  
+  
+.clock-face::before {  
+  content: "";  
+  position: absolute;  
+  inset: 8px;  
+  border: 2px solid #eeeaff;  
+  border-radius: 50%;  
+}  
+  
+.clock-number {  
+  position: absolute;  
+  inset: 0;  
+  display: flex;  
+  justify-content: center;  
+  align-items: flex-start;  
+  transform: rotate(var(--angle));  
+  padding-top: 17px;  
+  font-weight: 900;  
+  font-size: 1.15rem;  
+}  
+  
+.clock-number span {  
+  transform: rotate(calc(var(--angle) * -1));  
+}  
+  
+.clock-hand {  
+  position: absolute;  
+  bottom: 50%;  
+  left: 50%;  
+  transform-origin: bottom center;  
+  border-radius: 99px;  
+  z-index: 2;  
+}  
+  
+.hour-hand {  
+  height: 27%;  
+  width: 8px;  
+  background: #ff5c9d;  
+  transform: translateX(-50%) rotate(0deg);  
+}  
+  
+.minute-hand {  
+  height: 37%;  
+  width: 5px;  
+  background: #6e57df;  
+  transform: translateX(-50%) rotate(0deg);  
+}  
+  
+.clock-center {  
+  position: absolute;  
+  width: 17px;  
+  height: 17px;  
+  border-radius: 50%;  
+  background: #29264b;  
+  top: 50%;  
+  left: 50%;  
+  transform: translate(-50%, -50%);  
+  z-index: 3;  
+}  
+  
+.digital-clock {  
+  font-size: clamp(2rem, 6vw, 3.5rem);  
+  font-weight: 900;  
+  letter-spacing: 3px;  
+  text-align: center;  
+  color: var(--purple);  
+  margin: 15px 0;  
+}  
+  
+.clock-controls {  
+  display: flex;  
+  flex-wrap: wrap;  
+  gap: 8px;  
+  justify-content: center;  
+  margin: 16px 0;  
+}  
+  
+.clock-controls .btn {  
+  min-width: 45px;  
+}  
+  
+/* QUIZ */  
+  
+.quiz-top {  
+  display: flex;  
+  justify-content: space-between;  
+  gap: 15px;  
+  align-items: center;  
+  margin-bottom: 16px;  
+}  
+  
+.quiz-progress {  
+  flex: 1;  
+}  
+  
+.quiz-progress-label {  
+  display: flex;  
+  justify-content: space-between;  
+  gap: 10px;  
+  font-weight: 800;  
+  font-size: .85rem;  
+  margin-bottom: 8px;  
+}  
+  
+.quiz-question {  
+  font-size: clamp(1.2rem, 3vw, 1.65rem);  
+  font-weight: 900;  
+  line-height: 1.45;  
+  margin: 24px 0;  
+}  
+  
+.answer-grid {  
+  display: grid;  
+  grid-template-columns: repeat(2, 1fr);  
+  gap: 12px;  
+}  
+  
+.answer-btn {  
+  text-align: left;  
+  background: white;  
+  border: 2px solid var(--border);  
+  border-radius: 18px;  
+  padding: 18px;  
+  color: var(--ink);  
+  font-weight: 800;  
+  min-height: 70px;  
+  display: flex;  
+  gap: 12px;  
+  align-items: center;  
+  transition: .2s;  
+}  
+  
+.answer-btn:hover:not(:disabled) {  
+  border-color: var(--purple);  
+  background: #f8f6ff;  
+}  
+  
+.answer-letter {  
+  background: #eeeaff;  
+  color: var(--purple);  
+  border-radius: 10px;  
+  min-width: 34px;  
+  height: 34px;  
+  display: grid;  
+  place-items: center;  
+}  
+  
+.answer-btn.correct {  
+  border-color: var(--green);  
+  background: #e8fff2;  
+  color: #147a4b;  
+}  
+  
+.answer-btn.correct .answer-letter {  
+  background: var(--green);  
+  color: white;  
+}  
+  
+.answer-btn.wrong {  
+  border-color: var(--red);  
+  background: #fff0f1;  
+  color: #bd3145;  
+}  
+  
+.answer-btn.wrong .answer-letter {  
+  background: var(--red);  
+  color: white;  
+}  
+  
+.question-illustration {  
+  display: flex;  
+  justify-content: center;  
+  margin: 18px 0;  
+}  
+  
+.quiz-feedback {  
+  padding: 16px;  
+  border-radius: 16px;  
+  margin-top: 18px;  
+  font-weight: 800;  
+}  
+  
+.feedback-correct {  
+  background: #e3faed;  
+  color: #167b4c;  
+}  
+  
+.feedback-wrong {  
+  background: #fff0f1;  
+  color: #b93248;  
+}  
+  
+.hint-box {  
+  background: #fff8dc;  
+  border: 1px solid #f1df9d;  
+  border-radius: 16px;  
+  padding: 16px;  
+  margin-top: 16px;  
+  color: #705500;  
+}  
+  
+.quiz-bottom {  
+  display: flex;  
+  justify-content: space-between;  
+  align-items: center;  
+  gap: 12px;  
+  margin-top: 24px;  
+}  
+  
+/* RESULTS */  
+  
+.result-hero {  
+  text-align: center;  
+  background: linear-gradient(135deg, #f0eaff, #ffeaf4);  
+  border-radius: 26px;  
+  padding: 35px 20px;  
+}  
+  
+.result-trophy {  
+  font-size: 5rem;  
+}  
+  
+.result-score {  
+  font-size: 4rem;  
+  font-weight: 900;  
+  color: var(--purple);  
+  margin: 12px 0;  
+}  
+  
+.result-grid {  
+  display: grid;  
+  grid-template-columns: repeat(3, 1fr);  
+  gap: 12px;  
+  margin: 20px 0;  
+}  
+  
+.result-stat {  
+  background: white;  
+  border: 1px solid var(--border);  
+  border-radius: 18px;  
+  padding: 18px 10px;  
+  text-align: center;  
+}  
+  
+.result-stat strong {  
+  display: block;  
+  font-size: 1.5rem;  
+  margin-top: 6px;  
+}  
+  
+/* LEADERBOARD */  
+  
+.podium {  
+  display: grid;  
+  grid-template-columns: 1fr 1.2fr 1fr;  
+  gap: 12px;  
+  align-items: end;  
+  margin: 25px 0;  
+}  
+  
+.podium-card {  
+  text-align: center;  
+  background: white;  
+  border: 1px solid var(--border);  
+  border-radius: 20px 20px 8px 8px;  
+  padding: 20px 8px;  
+}  
+  
+.podium-card.first {  
+  background: linear-gradient(#fff7d2, #fff);  
+  padding-top: 32px;  
+}  
+  
+.podium-avatar {  
+  font-size: 2.7rem;  
+  margin: 8px 0;  
+}  
+  
+.podium-name {  
+  font-weight: 900;  
+  overflow-wrap: anywhere;  
+}  
+  
+.podium-points {  
+  color: var(--purple);  
+  font-weight: 900;  
+  font-size: .9rem;  
+}  
+  
+.rank-table {  
+  width: 100%;  
+  border-collapse: collapse;  
+}  
+  
+.rank-table th,  
+.rank-table td {  
+  padding: 14px 10px;  
+  border-bottom: 1px solid var(--border);  
+  text-align: left;  
+}  
+  
+.rank-table th {  
+  color: var(--muted);  
+  font-size: .8rem;  
+}  
+  
+.rank-table tr.current {  
+  background: #f2eeff;  
+  font-weight: 900;  
+}  
+  
+/* TEACHER */  
+  
+.teacher-hero {  
+  background: linear-gradient(135deg, #e6f2ff, #eeeaff);  
+  border-radius: 24px;  
+  padding: 25px;  
+}  
+  
+.teacher-tabs {  
+  display: flex;  
+  flex-wrap: wrap;  
+  gap: 8px;  
+  margin: 20px 0;  
+}  
+  
+.teacher-tab.active {  
+  background: var(--purple);  
+  color: white;  
+}  
+  
+.teacher-table-wrap {  
+  overflow-x: auto;  
+}  
+  
+.teacher-table {  
+  width: 100%;  
+  border-collapse: collapse;  
+  min-width: 650px;  
+}  
+  
+.teacher-table th,  
+.teacher-table td {  
+  padding: 14px 12px;  
+  text-align: left;  
+  border-bottom: 1px solid var(--border);  
+}  
+  
+.teacher-table th {  
+  color: var(--muted);  
+  font-size: .8rem;  
+  background: #faf9ff;  
+}  
+  
+.teacher-table tr:hover {  
+  background: #faf9ff;  
+}  
+  
+.status-dot {  
+  display: inline-flex;  
+  align-items: center;  
+  gap: 6px;  
+  font-size: .85rem;  
+  font-weight: 800;  
+}  
+  
+.status-dot::before {  
+  content: "";  
+  width: 8px;  
+  height: 8px;  
+  background: var(--green);  
+  border-radius: 50%;  
+}  
+  
+.teacher-summary {  
+  display: grid;  
+  grid-template-columns: repeat(3, 1fr);  
+  gap: 14px;  
+  margin: 20px 0;  
+}  
+  
+.empty-state {  
+  padding: 30px;  
+  text-align: center;  
+  background: #faf9ff;  
+  border: 1px dashed #d8d2ef;  
+  border-radius: 18px;  
+  color: var(--muted);  
+}  
+  
+/* TOAST */  
+  
+.toast {  
+  position: fixed;  
+  bottom: 24px;  
+  left: 50%;  
+  transform: translateX(-50%);  
+  background: #29264b;  
+  color: white;  
+  padding: 14px 20px;  
+  border-radius: 15px;  
+  box-shadow: 0 10px 30px rgba(0,0,0,.2);  
+  z-index: 100;  
+  font-weight: 800;  
+  max-width: calc(100% - 30px);  
+  text-align: center;  
+}  
+  
+.toast.success {  
+  background: #188655;  
+}  
+  
+.toast.error {  
+  background: #c13a50;  
+}  
+  
+/* RESPONSIVE */  
+  
+@media (max-width: 850px) {  
+  .login-layout {  
+    grid-template-columns: 1fr;  
+  }  
+  
+  .login-hero {  
+    min-height: auto;  
+    padding: 30px;  
+  }  
+  
+  .hero-clock {  
+    font-size: 5rem;  
+    margin: 15px 0 0;  
+  }  
+  
+  .login-hero h1 {  
+    margin: 20px 0 10px;  
+  }  
+  
+  .level-grid {  
+    grid-template-columns: repeat(3, 1fr);  
+  }  
+  
+  .clock-panel {  
+    grid-template-columns: 1fr;  
+  }  
+}  
+  
+@media (max-width: 600px) {  
+  .container {  
+    width: min(100% - 22px, 1100px);  
+  }  
+  
+  .page-wrap {  
+    padding-top: 18px;  
+  }  
+  
+  .card {  
+    padding: 18px;  
+    border-radius: 20px;  
+  }  
+  
+  .header-brand .brand-text {  
+    display: none;  
+  }  
+  
+  .header-actions .btn {  
+    padding: 9px 11px;  
+  }  
+  
+  .stats-grid {  
+    grid-template-columns: repeat(2, 1fr);  
+    gap: 10px;  
+  }  
+  
+  .stat-card {  
+    padding: 14px;  
+  }  
+  
+  .stat-value {  
+    font-size: 1.35rem;  
+  }  
+  
+  .welcome-banner {  
+    padding: 22px;  
+  }  
+  
+  .welcome-character {  
+    font-size: 4rem;  
+  }  
+  
+  .level-grid {  
+    grid-template-columns: repeat(2, 1fr);  
+  }  
+  
+  .answer-grid {  
+    grid-template-columns: 1fr;  
+  }  
+  
+  .result-grid,  
+  .teacher-summary {  
+    grid-template-columns: 1fr;  
+  }  
+  
+  .podium {  
+    gap: 6px;  
+  }  
+  
+  .podium-card {  
+    padding: 12px 5px;  
+  }  
+  
+  .podium-card.first {  
+    padding-top: 22px;  
+  }  
+  
+  .podium-avatar {  
+    font-size: 2rem;  
+  }  
+  
+  .material-hero {  
+    padding: 20px;  
+  }  
+  
+  .material-hero-icon {  
+    font-size: 3.5rem;  
+  }  
+  
+  .quiz-bottom {  
+    flex-direction: column;  
+    align-items: stretch;  
+  }  
+  
+  .quiz-bottom .btn {  
+    width: 100%;  
+  }  
+  
+  .hero-clock {  
+    font-size: 4rem;  
+  }  
+  
+  .login-hero {  
+    padding: 25px;  
+  }  
+  
+  .avatar-grid {  
+    grid-template-columns: repeat(6, 1fr);  
+  }  
+  
+  .avatar-btn {  
+    font-size: 1.35rem;  
+  }  
+}  
+  
+@media (prefers-reduced-motion: reduce) {  
+  *,  
+  *::before,  
+  *::after {  
+    animation-duration: .01ms !important;  
+    transition-duration: .01ms !important;  
+    scroll-behavior: auto !important;  
+  }  
+}  
+</style>  
+</head>  
+  
+<body>  
+  
+<!-- =========================================================  
+     LOGIN SCREEN  
+     ========================================================= -->  
+  
+<section id="loginScreen" class="screen active">  
+  <div class="login-screen">  
+    <div class="container">  
+      <div class="login-layout">  
+  
+        <div class="login-hero">  
+          <div class="brand">  
+            <div class="brand-icon">⏰</div>  
+            <div>TIME QUEST</div>  
+          </div>  
+  
+          <h1>Petualangan<br>Penjaga Waktu!</h1>  
+  
+          <p>  
+            Belajar membaca jam, menyelesaikan misi,  
+            mengumpulkan poin, dan menjadi penjaga waktu hebat!  
+          </p>  
+  
+          <div class="hero-clock">🕰️</div>  
+  
+          <div class="btn-row">  
+            <span class="badge" style="background:rgba(255,255,255,.2);color:white;">  
+              📚 Belajar  
+            </span>  
+            <span class="badge" style="background:rgba(255,255,255,.2);color:white;">  
+              🎮 Bermain  
+            </span>  
+            <span class="badge" style="background:rgba(255,255,255,.2);color:white;">  
+              🏆 Berprestasi  
+            </span>  
+          </div>  
+        </div>  
+  
+        <div class="card login-form">  
+          <div class="center">  
+            <div style="font-size:3rem;">🌈</div>  
+            <h2>Selamat Datang, Penjaga Waktu!</h2>  
+            <p class="muted">  
+              Isi data kamu untuk memulai petualangan.  
+            </p>  
+          </div>  
+  
+          <form id="loginForm">  
+  
+            <div class="form-group">  
+              <label for="studentName">👤 Nama kamu</label>  
+              <input  
+                id="studentName"  
+                class="input"  
+                type="text"  
+                placeholder="Masukkan nama kamu"  
+                maxlength="40"  
+                required  
+              >  
+            </div>  
+  
+            <div class="form-group">  
+              <label for="className">🏫 Kelas</label>  
+              <select id="className" class="select" required>  
+                <option value="">Pilih kelas</option>  
+                <option value="Kelas 2 SD">Kelas 2 SD</option>  
+                <option value="Kelas 3 SD">Kelas 3 SD</option>  
+                <option value="Kelas 4 SD">Kelas 4 SD</option>  
+              </select>  
+            </div>  
+  
+            <div class="form-group">  
+              <label>😊 Pilih avatar kamu</label>  
+  
+              <div id="avatarGrid" class="avatar-grid">  
+                <button type="button" class="avatar-btn selected" data-avatar="👦">👦</button>  
+                <button type="button" class="avatar-btn" data-avatar="👧">👧</button>  
+                <button type="button" class="avatar-btn" data-avatar="🧒">🧒</button>  
+                <button type="button" class="avatar-btn" data-avatar="🐰">🐰</button>  
+                <button type="button" class="avatar-btn" data-avatar="🐱">🐱</button>  
+                <button type="button" class="avatar-btn" data-avatar="🐼">🐼</button>  
+              </div>  
+            </div>  
+  
+            <button class="btn btn-primary btn-block" type="submit">  
+              🚀 Mulai Petualangan  
+            </button>  
+          </form>  
+  
+          <div style="margin-top:18px;">  
+            <button id="teacherLoginBtn" class="btn btn-secondary btn-block" type="button">  
+              👩‍🏫 Masuk sebagai Guru  
+            </button>  
+          </div>  
+  
+          <p class="muted small center" style="margin:18px 0 0;">  
+            Demo pembelajaran matematika SD  
+          </p>  
+        </div>  
+  
+      </div>  
+    </div>  
+  </div>  
+</section>  
+  
+<!-- =========================================================  
+     STUDENT APP  
+     ========================================================= -->  
+  
+<section id="studentApp" class="screen">  
+  
+  <header class="app-header">  
+    <div class="container header-inner">  
+  
+      <div class="brand header-brand">  
+        <div class="brand-icon">⏰</div>  
+        <div class="brand-text">TIME QUEST</div>  
+      </div>  
+  
+      <div class="header-actions">  
+        <div class="user-mini">  
+          <div id="headerAvatar" class="user-avatar">👦</div>  
+          <div>  
+            <div id="headerName" class="user-name">Penjaga Waktu</div>  
+            <div class="small muted">Petualang</div>  
+          </div>  
+        </div>  
+  
+        <button id="studentLogoutBtn" class="btn btn-light btn-sm" type="button">  
+          Keluar  
+        </button>  
+      </div>  
+  
+    </div>  
+  </header>  
+  
+  <main class="container page-wrap">  
+  
+    <!-- HOME -->  
+  
+    <section id="homeScreen" class="student-page">  
+  
+      <div class="welcome-banner">  
+        <div>  
+          <span class="badge">🌟 Selamat datang!</span>  
+          <h1 id="welcomeTitle">Halo, Penjaga Waktu!</h1>  
+          <p class="muted">  
+            Siap belajar dan menyelesaikan misi hari ini?  
+          </p>  
+  
+          <button id="continueLearningBtn" class="btn btn-primary" type="button">  
+            📚 Mulai Belajar  
+          </button>  
+        </div>  
+  
+        <div class="welcome-character">🧒⏰</div>  
+      </div>  
+  
+      <div class="stats-grid">  
+  
+        <div class="stat-card">  
+          <div class="stat-icon">⭐</div>  
+          <div class="stat-label">Total Poin</div>  
+          <div id="homePoints" class="stat-value">0</div>  
+        </div>  
+  
+        <div class="stat-card">  
+          <div class="stat-icon">🏆</div>  
+          <div class="stat-label">Bintang</div>  
+          <div id="homeStars" class="stat-value">0</div>  
+        </div>  
+  
+        <div class="stat-card">  
+          <div class="stat-icon">📚</div>  
+          <div class="stat-label">Materi</div>  
+          <div id="homeMaterial" class="stat-value">0%</div>  
+        </div>  
+  
+        <div class="stat-card">  
+          <div class="stat-icon">🎮</div>  
+          <div class="stat-label">Level</div>  
+          <div id="homeLevel" class="stat-value">1 / 5</div>  
+        </div>  
+  
+      </div>  
+  
+      <div class="card">  
+        <div class="section-heading" style="margin-top:0;">  
+          <h2>📈 Perjalanan Belajarmu</h2>  
+          <span id="homeProgressText" class="badge">0%</span>  
+        </div>  
+  
+        <div class="progress-track">  
+          <div id="homeProgress" class="progress-fill"></div>  
+        </div>  
+  
+        <p class="muted small" style="margin:10px 0 0;">  
+          Terus belajar dan selesaikan semua misi!  
+        </p>  
+      </div>  
+  
+      <div class="section-heading">  
+        <h2>🗺️ Peta Petualangan</h2>  
+        <span class="badge badge-blue">5 Misi</span>  
+      </div>  
+  
+      <div id="levelGrid" class="level-grid"></div>  
+  
+      <div class="section-heading">  
+        <h2>🏆 Papan Peringkat</h2>  
+        <button id="homeLeaderboardBtn" class="btn btn-secondary btn-sm" type="button">  
+          Lihat Semua  
+        </button>  
+      </div>  
+  
+      <div class="card">  
+        <div id="homeLeaderboardPreview"></div>  
+      </div>  
+  
+    </section>  
+  
+    <!-- MATERIAL -->  
+  
+    <section id="materialScreen" class="student-page hidden">  
+  
+      <div class="section-heading" style="margin-top:0;">  
+        <button id="materialBackBtn" class="btn btn-light btn-sm" type="button">  
+          ← Kembali  
+        </button>  
+        <span class="badge">📚 Materi</span>  
+      </div>  
+  
+      <div class="material-hero">  
+        <div class="material-hero-icon">⏰</div>  
+        <div>  
+          <span class="badge">Belajar Dulu</span>  
+          <h1 style="margin:10px 0 8px;">Mengenal Waktu</h1>  
+          <p class="muted" style="margin:0;">  
+            Pelajari materi sebelum memulai quiz.  
+          </p>  
+        </div>  
+      </div>  
+  
+      <div class="card" style="margin-top:20px;">  
+        <h2>🎯 Tujuan Pembelajaran</h2>  
+        <p>Setelah belajar, kamu diharapkan dapat:</p>  
+  
+        <ul style="line-height:2;">  
+          <li>Mengenal jam analog dan digital.</li>  
+          <li>Menentukan waktu tepat dan setengah jam.</li>  
+          <li>Menghubungkan jam analog dengan jam digital.</li>  
+          <li>Mengurutkan kegiatan berdasarkan waktu.</li>  
+          <li>Menghitung lama kegiatan sederhana.</li>  
+        </ul>  
+      </div>  
+  
+      <div class="section-heading">  
+        <h2>📖 Materi Pembelajaran</h2>  
+      </div>  
+  
+      <div class="material-list">  
+  
+        <div class="material-item">  
+          <div class="material-number">1</div>  
+          <div>  
+            <h3>⏰ Mengenal Jam Analog</h3>  
+            <p>  
+              Jam analog memiliki angka 1 sampai 12.  
+              Jarum pendek menunjukkan jam dan jarum panjang menunjukkan menit.  
+            </p>  
+  
+            <div class="tip-box">  
+              💡 Ingat: jarum panjang ke angka 12 berarti menit 00.  
+            </div>  
+          </div>  
+        </div>  
+  
+        <div class="material-item">  
+          <div class="material-number">2</div>  
+          <div>  
+            <h3>🕒 Membaca Jam Tepat</h3>  
+            <p>  
+              Jika jarum panjang menunjuk angka 12,  
+              maka waktu menunjukkan tepat satu jam.  
+            </p>  
+  
+            <div class="card-soft">  
+              <div class="clock-panel">  
+                <div>  
+                  <div class="clock-face" id="materialClock1">  
+                    <div class="clock-hand hour-hand" style="transform:translateX(-50%) rotate(90deg);"></div>  
+                    <div class="clock-hand minute-hand" style="transform:translateX(-50%) rotate(0deg);"></div>  
+                    <div class="clock-center"></div>  
+                  </div>  
+                </div>  
+  
+                <div class="center">  
+                  <h3>Contoh</h3>  
+                  <div class="digital-clock">03:00</div>  
+                  <p class="muted">  
+                    Jarum pendek di 3, jarum panjang di 12.  
+                  </p>  
+                </div>  
+              </div>  
+            </div>  
+          </div>  
+        </div>  
+  
+        <div class="material-item">  
+          <div class="material-number">3</div>  
+          <div>  
+            <h3>🕧 Membaca Setengah Jam</h3>  
+            <p>  
+              Jika jarum panjang menunjuk angka 6,  
+              artinya 30 menit atau setengah jam.  
+            </p>  
+  
+            <div class="tip-box">  
+              💡 Contoh: pukul 04.30 berarti setengah lima.  
+            </div>  
+          </div>  
+        </div>  
+  
+        <div class="material-item">  
+          <div class="material-number">4</div>  
+          <div>  
+            <h3>📱 Jam Digital</h3>  
+            <p>  
+              Jam digital ditulis menggunakan angka.  
+              Contoh: 07.00 berarti pukul tujuh tepat.  
+            </p>  
+  
+            <div class="card-soft center">  
+              <div class="digital-clock">07:00</div>  
+              <p class="muted" style="margin:0;">  
+                Pukul tujuh tepat  
+              </p>  
+            </div>  
+          </div>  
+        </div>  
+  
+        <div class="material-item">  
+          <div class="material-number">5</div>  
+          <div>  
+            <h3>🌞 Urutan Kegiatan</h3>  
+            <p>  
+              Kegiatan dapat diurutkan dari pagi, siang, sore,  
+              hingga malam.  
+            </p>  
+  
+            <div class="card-soft">  
+              🌅 Pagi → ☀️ Siang → 🌇 Sore → 🌙 Malam  
+            </div>  
+          </div>  
+        </div>  
+  
+        <div class="material-item">  
+          <div class="material-number">6</div>  
+          <div>  
+            <h3>🚂 Lama Kegiatan</h3>  
+            <p>  
+              Lama kegiatan adalah waktu yang digunakan  
+              dari awal sampai selesai.  
+            </p>  
+  
+            <div class="tip-box">  
+              Contoh: belajar pukul 08.00 sampai 09.00.  
+              Lama belajar adalah 1 jam.  
+            </div>  
+          </div>  
+        </div>  
+  
+      </div>  
+  
+      <div class="card center">  
+        <h2>🎉 Sudah selesai belajar?</h2>  
+        <p class="muted">  
+          Sekarang waktunya menguji kemampuanmu!  
+        </p>  
+  
+        <button id="startQuizBtn" class="btn btn-primary" type="button">  
+          🚀 Saya Sudah Belajar — Mulai Quiz  
+        </button>  
+      </div>  
+  
+    </section>  
+  
+    <!-- QUIZ -->  
+  
+    <section id="quizScreen" class="student-page hidden">  
+  
+      <div class="section-heading" style="margin-top:0;">  
+        <button id="quizHomeBtn" class="btn btn-light btn-sm" type="button">  
+          ← Beranda  
+        </button>  
+        <span class="badge badge-blue">🎮 Quiz</span>  
+      </div>  
+  
+      <div class="card">  
+  
+        <div class="quiz-top">  
+          <div class="quiz-progress">  
+            <div class="quiz-progress-label">  
+              <span id="quizProgressLabel">Soal 1 dari 15</span>  
+              <span id="quizProgressPercent">0%</span>  
+            </div>  
+  
+            <div class="progress-track">  
+              <div id="quizProgressFill" class="progress-fill"></div>  
+            </div>  
+          </div>  
+  
+          <div class="badge badge-yellow">  
+            ⭐ <span id="quizPoints">0</span>  
+          </div>  
+        </div>  
+  
+        <div class="btn-row" style="justify-content:space-between;align-items:center;">  
+          <span id="quizLevelBadge" class="badge">Level 1</span>  
+  
+          <button id="hintBtn" class="btn btn-yellow btn-sm" type="button">  
+            💡 Hint −30  
+          </button>  
+        </div>  
+  
+        <div id="quizQuestion" class="quiz-question">  
+          Pertanyaan akan muncul di sini.  
+        </div>  
+  
+        <div id="questionIllustration" class="question-illustration"></div>  
+  
+        <div id="answerGrid" class="answer-grid"></div>  
+  
+        <div id="hintBox" class="hint-box hidden"></div>  
+  
+        <div id="quizFeedback" class="quiz-feedback hidden"></div>  
+  
+        <div class="quiz-bottom">  
+          <span class="muted small">  
+            💪 Tidak ada hati atau nyawa. Terus mencoba!  
+          </span>  
+  
+          <button id="nextQuestionBtn" class="btn btn-primary hidden" type="button">  
+            Soal Berikutnya →  
+          </button>  
+        </div>  
+  
+      </div>  
+  
+    </section>  
+  
+    <!-- RESULT -->  
+  
+    <section id="resultScreen" class="student-page hidden">  
+  
+      <div class="section-heading" style="margin-top:0;">  
+        <button id="resultHomeBtn" class="btn btn-light btn-sm" type="button">  
+          ← Beranda  
+        </button>  
+        <span class="badge badge-green">Selesai</span>  
+      </div>  
+  
+      <div class="result-hero">  
+        <div class="result-trophy">🏆</div>  
+        <span class="badge badge-yellow">Misi Berhasil</span>  
+  
+        <h1 id="resultTitle" style="margin:16px 0 8px;">  
+          Hebat, Penjaga Waktu!  
+        </h1>  
+  
+        <p class="muted">  
+          Kamu sudah menyelesaikan quiz.  
+        </p>  
+  
+        <div id="resultScore" class="result-score">0</div>  
+        <div class="muted">Nilai Akhir</div>  
+        <div id="resultStars" style="font-size:2rem;margin-top:14px;">  
+          ⭐⭐⭐  
+        </div>  
+      </div>  
+  
+      <div class="result-grid">  
+  
+        <div class="result-stat">  
+          <span class="muted small">Jawaban benar</span>  
+          <strong id="resultCorrect">0 / 15</strong>  
+        </div>  
+  
+        <div class="result-stat">  
+          <span class="muted small">Total poin</span>  
+          <strong id="resultPoints">0</strong>  
+        </div>  
+  
+        <div class="result-stat">  
+          <span class="muted small">Hint digunakan</span>  
+          <strong id="resultHints">0</strong>  
+        </div>  
+  
+      </div>  
+  
+      <div class="card center">  
+        <h2>🌟 Perjalananmu</h2>  
+        <p id="resultMessage" class="muted">  
+          Terus berlatih dan jangan menyerah!  
+        </p>  
+  
+        <div class="btn-row" style="justify-content:center;">  
+          <button id="resultLeaderboardBtn" class="btn btn-primary" type="button">  
+            🏆 Lihat Peringkat  
+          </button>  
+  
+          <button id="retryQuizBtn" class="btn btn-secondary" type="button">  
+            🔄 Main Lagi  
+          </button>  
+        </div>  
+      </div>  
+  
+    </section>  
+  
+    <!-- LEADERBOARD -->  
+  
+    <section id="leaderboardScreen" class="student-page hidden">  
+  
+      <div class="section-heading" style="margin-top:0;">  
+        <button id="leaderboardBackBtn" class="btn btn-light btn-sm" type="button">  
+          ← Beranda  
+        </button>  
+        <span class="badge badge-yellow">🏆 Leaderboard</span>  
+      </div>  
+  
+      <div class="card center">  
+        <div style="font-size:3rem;">🏆</div>  
+        <h1>Papan Peringkat</h1>  
+        <p class="muted">  
+          Siapa Penjaga Waktu dengan poin terbanyak?  
+        </p>  
+  
+        <div id="podium" class="podium"></div>  
+      </div>  
+  
+      <div class="card" style="margin-top:20px;">  
+        <div class="section-heading" style="margin-top:0;">  
+          <h2>📊 Semua Peserta</h2>  
+          <span class="badge">Urut berdasarkan poin</span>  
+        </div>  
+  
+        <div class="teacher-table-wrap">  
+          <table class="rank-table">  
+            <thead>  
+              <tr>  
+                <th>Peringkat</th>  
+                <th>Nama</th>  
+                <th>Nilai</th>  
+                <th>Poin</th>  
+              </tr>  
+            </thead>  
+            <tbody id="leaderboardBody"></tbody>  
+          </table>  
+        </div>  
+      </div>  
+  
+    </section>  
+  
+  </main>  
+</section>  
+  
+<!-- =========================================================  
+     TEACHER APP  
+     ========================================================= -->  
+  
+<section id="teacherApp" class="screen">  
+  
+  <header class="app-header">  
+    <div class="container header-inner">  
+  
+      <div class="brand header-brand">  
+        <div class="brand-icon">👩‍🏫</div>  
+        <div class="brand-text">TIME QUEST GURU</div>  
+      </div>  
+  
+      <div class="header-actions">  
+        <span class="badge badge-blue">Dashboard Guru</span>  
+  
+        <button id="teacherLogoutBtn" class="btn btn-light btn-sm" type="button">  
+          Keluar  
+        </button>  
+      </div>  
+  
+    </div>  
+  </header>  
+  
+  <main class="container page-wrap">  
+  
+    <div class="teacher-hero">  
+      <span class="badge badge-blue">👩‍🏫 Ruang Guru</span>  
+      <h1 style="margin:12px 0 8px;">Dashboard Penilaian</h1>  
+      <p class="muted" style="margin:0;">  
+        Pantau siswa, nilai, poin, dan hasil belajar.  
+      </p>  
+    </div>  
+  
+    <div class="teacher-summary">  
+  
+      <div class="stat-card">  
+        <div class="stat-icon">👥</div>  
+        <div class="stat-label">Total Siswa</div>  
+        <div id="teacherTotalStudents" class="stat-value">0</div>  
+      </div>  
+  
+      <div class="stat-card">  
+        <div class="stat-icon">📝</div>  
+        <div class="stat-label">Sudah Quiz</div>  
+        <div id="teacherCompleted" class="stat-value">0</div>  
+      </div>  
+  
+      <div class="stat-card">  
+        <div class="stat-icon">📊</div>  
+        <div class="stat-label">Rata-rata Nilai</div>  
+        <div id="teacherAverage" class="stat-value">0</div>  
+      </div>  
+  
+    </div>  
+  
+    <div class="teacher-tabs">  
+      <button class="btn btn-secondary teacher-tab active" data-tab="students" type="button">  
+        👥 Daftar Siswa  
+      </button>  
+  
+      <button class="btn btn-secondary teacher-tab" data-tab="results" type="button">  
+        📊 Hasil Penilaian  
+      </button>  
+  
+      <button class="btn btn-secondary teacher-tab" data-tab="ranking" type="button">  
+        🏆 Peringkat  
+      </button>  
+    </div>  
+  
+    <!-- STUDENTS TAB -->  
+  
+    <section id="teacherStudentsTab" class="teacher-tab-content">  
+  
+      <div class="card">  
+        <div class="section-heading" style="margin-top:0;">  
+          <h2>👥 Daftar Siswa</h2>  
+          <span class="badge">Data tersimpan di browser</span>  
+        </div>  
+  
+        <p class="muted small">  
+          Daftar ini berisi siswa yang login melalui browser ini.  
+        </p>  
+  
+        <div class="teacher-table-wrap">  
+          <table class="teacher-table">  
+            <thead>  
+              <tr>  
+                <th>No</th>  
+                <th>Nama</th>  
+                <th>Kelas</th>  
+                <th>Status</th>  
+                <th>Poin</th>  
+                <th>Nilai</th>  
+              </tr>  
+            </thead>  
+            <tbody id="teacherStudentsBody"></tbody>  
+          </table>  
+        </div>  
+      </div>  
+  
+    </section>  
+  
+    <!-- RESULTS TAB -->  
+  
+    <section id="teacherResultsTab" class="teacher-tab-content hidden">  
+  
+      <div class="card">  
+        <div class="section-heading" style="margin-top:0;">  
+          <h2>📊 Hasil Penilaian</h2>  
+  
+          <button id="exportResultsBtn" class="btn btn-green btn-sm" type="button">  
+            📥 Export CSV  
+          </button>  
+        </div>  
+  
+        <div class="teacher-table-wrap">  
+          <table class="teacher-table">  
+            <thead>  
+              <tr>  
+                <th>Nama</th>  
+                <th>Benar</th>  
+                <th>Nilai</th>  
+                <th>Poin</th>  
+                <th>Hint</th>  
+                <th>Waktu</th>  
+              </tr>  
+            </thead>  
+            <tbody id="teacherResultsBody"></tbody>  
+          </table>  
+        </div>  
+      </div>  
+  
+    </section>  
+  
+    <!-- RANKING TAB -->  
+  
+    <section id="teacherRankingTab" class="teacher-tab-content hidden">  
+  
+      <div class="card">  
+        <div class="section-heading" style="margin-top:0;">  
+          <h2>🏆 Peringkat Kelas</h2>  
+          <span class="badge badge-yellow">Poin tertinggi</span>  
+        </div>  
+  
+        <div id="teacherRanking"></div>  
+      </div>  
+  
+    </section>  
+  
+    <div class="card" style="margin-top:20px;">  
+      <h3>ℹ️ Catatan untuk Guru</h3>  
+      <p class="muted small" style="margin-bottom:0;">  
+        Versi ini adalah demo lokal. Data siswa disimpan di browser  
+        menggunakan localStorage. Untuk penggunaan satu kelas dari  
+        perangkat berbeda, kita perlu menambahkan database online  
+        dan autentikasi guru/siswa.  
+      </p>  
+    </div>  
+  
+  </main>  
+</section>  
+  
+<!-- TOAST -->  
+  
+<div id="toast" class="toast hidden" role="status" aria-live="polite"></div>  
+  
+<script>  
+/* =========================================================  
+   TIME QUEST  
+   JAVASCRIPT - Logika game edukasi  
+   ========================================================= */  
+  
+"use strict";  
+  
+/* =========================================================  
+   1. DATA MATERI DAN LEVEL  
+   ========================================================= */  
+  
+const LEVELS = [  
+  {  
+    id: 1,  
+    title: "Desa Jam",  
+    emoji: "🏡",  
+    description: "Mengenal jam dan jarum jam"  
+  },  
+  {  
+    id: 2,  
+    title: "Menara Waktu",  
+    emoji: "🕰️",  
+    description: "Membaca jam analog dan digital"  
+  },  
+  {  
+    id: 3,  
+    title: "Stasiun Waktu",  
+    emoji: "🚂",  
+    description: "Mengenal jam dan menit"  
+  },  
+  {  
+    id: 4,  
+    title: "Sekolah",  
+    emoji: "🏫",  
+    description: "Urutan kegiatan berdasarkan waktu"  
+  },  
+  {  
+    id: 5,  
+    title: "Istana Waktu",  
+    emoji: "🏰",  
+    description: "Tantangan membaca durasi"  
+  }  
+];  
+  
+/* =========================================================  
+   2. BANK SOAL  
+   15 SOAL  
+   ========================================================= */  
+  
+const QUESTIONS = [  
+  
+  /* LEVEL 1 */  
+  
+  {  
+    level: 1,  
+    type: "mcq",  
+    question: "Jarum panjang pada jam menunjukkan angka 12. Apa artinya?",  
+    options: [  
+      "Menit 15",  
+      "Menit 30",  
+      "Menit 00",  
+      "Menit 45"  
+    ],  
+    correct: 2,  
+    hint: "Jarum panjang di angka 12 berarti tepat satu jam.",  
+    explanation: "Angka 12 pada jarum panjang menunjukkan menit 00."  
+  },  
+  
+  {  
+    level: 1,  
+    type: "clock",  
+    hour: 3,  
+    minute: 0,  
+    question: "Pukul berapakah waktu yang ditunjukkan jam berikut?",  
+    options: [  
+      "02.00",  
+      "03.00",  
+      "03.30",  
+      "12.03"  
+    ],  
+    correct: 1,  
+    hint: "Jarum panjang di 12 berarti menit 00.",  
+    explanation: "Jarum pendek di 3 dan jarum panjang di 12 menunjukkan pukul 03.00."  
+  },  
+  
+  {  
+    level: 1,  
+    type: "clock",  
+    hour: 6,  
+    minute: 0,  
+    question: "Jam menunjukkan jarum pendek di angka 6 dan jarum panjang di angka 12. Waktunya adalah...",  
+    options: [  
+      "06.00",  
+      "12.06",  
+      "06.30",  
+      "05.00"  
+    ],  
+    correct: 0,  
+    hint: "Jarum pendek menunjukkan jam.",  
+    explanation: "Jarum pendek di 6 dan jarum panjang di 12 berarti pukul 06.00."  
+  },  
+  
+  /* LEVEL 2 */  
+  
+  {  
+    level: 2,  
+    type: "clock",  
+    hour: 9,  
+    minute: 0,  
+    question: "Jam analog menunjukkan pukul berapa?",  
+    options: [  
+      "08.00",  
+      "09.00",  
+      "09.30",  
+      "12.09"  
+    ],  
+    correct: 1,  
+    hint: "Jarum panjang berada di 12.",  
+    explanation: "Jarum pendek di 9 menunjukkan pukul 09.00."  
+  },  
+  
+  {  
+    level: 2,  
+    type: "mcq",  
+    question: "Pukul 07.00 dibaca sebagai...",  
+    options: [  
+      "Setengah tujuh",  
+      "Pukul tujuh tepat",  
+      "Pukul delapan tepat",  
+      "Pukul tujuh lewat tiga puluh menit"  
+    ],  
+    correct: 1,  
+    hint: "Angka setelah titik menunjukkan menit.",  
+    explanation: "07.00 berarti pukul tujuh tepat."  
+  },  
+  
+  {  
+    level: 2,  
+    type: "clock",  
+    hour: 2,  
+    minute: 30,  
+    question: "Jarum panjang berada di angka 6 dan jarum pendek di antara 2 dan 3. Waktunya adalah...",  
+    options: [  
+      "02.00",  
+      "03.30",  
+      "02.30",  
+      "06.02"  
+    ],  
+    correct: 2,  
+    hint: "Angka 6 pada jarum panjang berarti 30 menit.",  
+    explanation: "Jarum pendek di antara 2 dan 3 menunjukkan pukul 02.30."  
+  },  
+  
+  /* LEVEL 3 */  
+  
+  {  
+    level: 3,  
+    type: "mcq",  
+    question: "Satu jam sama dengan berapa menit?",  
+    options: [  
+      "30 menit",  
+      "45 menit",  
+      "60 menit",  
+      "100 menit"  
+    ],  
+    correct: 2,  
+    hint: "Satu jam terdiri dari enam puluh menit.",  
+    explanation: "1 jam = 60 menit."  
+  },  
+  
+  {  
+    level: 3,  
+    type: "mcq",  
+    question: "Setengah jam sama dengan...",  
+    options: [  
+      "15 menit",  
+      "20 menit",  
+      "30 menit",  
+      "60 menit"  
+    ],  
+    correct: 2,  
+    hint: "Setengah dari 60 menit.",  
+    explanation: "60 ÷ 2 = 30 menit."  
+  },  
+  
+  {  
+    level: 3,  
+    type: "mcq",  
+    question: "Pukul 08.00 sampai 09.00 adalah berapa lama?",  
+    options: [  
+      "30 menit",  
+      "1 jam",  
+      "2 jam",  
+      "15 menit"  
+    ],  
+    correct: 1,  
+    hint: "Hitung selisih jam 8 dan jam 9.",  
+    explanation: "Dari pukul 08.00 sampai 09.00 adalah 1 jam."  
+  },  
+  
+  /* LEVEL 4 */  
+  
+  {  
+    level: 4,  
+    type: "mcq",  
+    question: "Kegiatan manakah yang biasanya dilakukan pada pagi hari?",  
+    options: [  
+      "Tidur malam",  
+      "Sarapan",  
+      "Makan malam",  
+      "Tidur tengah malam"  
+    ],  
+    correct: 1,  
+    hint: "Pagi hari biasanya sebelum berangkat sekolah.",  
+    explanation: "Sarapan biasanya dilakukan pada pagi hari."  
+  },  
+  
+  {  
+    level: 4,  
+    type: "mcq",  
+    question: "Urutan waktu yang benar adalah...",  
+    options: [  
+      "Malam → Pagi → Siang → Sore",  
+      "Pagi → Siang → Sore → Malam",  
+      "Siang → Malam → Pagi → Sore",  
+      "Sore → Pagi → Malam → Siang"  
+    ],  
+    correct: 1,  
+    hint: "Mulai dari saat matahari terbit.",  
+    explanation: "Urutan umum waktu adalah pagi, siang, sore, lalu malam."  
+  },  
+  
+  {  
+    level: 4,  
+    type: "mcq",  
+    question: "Ani mulai belajar pukul 07.00 dan selesai pukul 08.00. Berapa lama Ani belajar?",  
+    options: [  
+      "30 menit",  
+      "1 jam",  
+      "2 jam",  
+      "3 jam"  
+    ],  
+    correct: 1,  
+    hint: "08 dikurangi 07.",  
+    explanation: "08.00 − 07.00 = 1 jam."  
+  },  
+  
+  /* LEVEL 5 */  
+  
+  {  
+    level: 5,  
+    type: "mcq",  
+    question: "Budi bermain dari pukul 15.00 sampai 15.30. Lama bermain Budi adalah...",  
+    options: [  
+      "15 menit",  
+      "20 menit",  
+      "30 menit",  
+      "1 jam"  
+    ],  
+    correct: 2,  
+    hint: "Angka 30 menunjukkan setengah jam.",  
+    explanation: "Dari 15.00 sampai 15.30 adalah 30 menit."  
+  },  
+  
+  {  
+    level: 5,  
+    type: "mcq",  
+    question: "Siti mulai membaca pukul 09.00 selama 2 jam. Pukul berapa Siti selesai membaca?",  
+    options: [  
+      "09.30",  
+      "10.00",  
+      "11.00",  
+      "12.00"  
+    ],  
+    correct: 2,  
+    hint: "Tambahkan 2 jam dari pukul 09.00.",  
+    explanation: "09.00 + 2 jam = 11.00."  
+  },  
+  
+  {  
+    level: 5,  
+    type: "mcq",  
+    question: "Ayah berangkat pukul 06.30 dan tiba pukul 07.00. Berapa lama perjalanan Ayah?",  
+    options: [  
+      "15 menit",  
+      "30 menit",  
+      "1 jam",  
+      "2 jam"  
+    ],  
+    correct: 1,  
+    hint: "Hitung dari menit 30 ke menit 60.",  
+    explanation: "Dari 06.30 sampai 07.00 adalah 30 menit."  
+  }  
+  
+];  
+  
+/* =========================================================  
+   3. STATE GAME  
+   ========================================================= */  
+  
+const STORAGE_KEY = "timeQuestStudentsV1";  
+  
+let currentStudent = null;  
+let selectedAvatar = "👦";  
+  
+let currentQuestionIndex = 0;  
+let currentQuizQuestions = [];  
+let quizPoints = 0;  
+let quizCorrect = 0;  
+let quizHints = 0;  
+let quizAnswered = false;  
+let hintUsedThisQuestion = false;  
+  
+let lastResult = null;  
+  
+let currentTeacherTab = "students";  
+  
+/* =========================================================  
+   4. ELEMENT HELPER  
+   ========================================================= */  
+  
+function $(id) {  
+  return document.getElementById(id);  
+}  
+  
+function showScreen(id) {  
+  document.querySelectorAll(".screen").forEach(screen => {  
+    screen.classList.remove("active");  
+  });  
+  
+  $(id).classList.add("active");  
+}  
+  
+function showStudentPage(id) {  
+  document.querySelectorAll(".student-page").forEach(page => {  
+    page.classList.add("hidden");  
+  });  
+  
+  $(id).classList.remove("hidden");  
+}  
+  
+function showToast(message, type = "") {  
+  const toast = $("toast");  
+  
+  toast.textContent = message;  
+  toast.className = "toast";  
+  
+  if (type) {  
+    toast.classList.add(type);  
+  }  
+  
+  clearTimeout(showToast.timer);  
+  
+  showToast.timer = setTimeout(() => {  
+    toast.classList.add("hidden");  
+  }, 2800);  
+}  
+  
+function escapeHTML(value) {  
+  return String(value)  
+    .replaceAll("&", "&amp;")  
+    .replaceAll("<", "&lt;")  
+    .replaceAll(">", "&gt;")  
+    .replaceAll('"', "&quot;")  
+    .replaceAll("'", "&#039;");  
+}  
+  
+function formatDate(timestamp) {  
+  if (!timestamp) return "-";  
+  
+  return new Date(timestamp).toLocaleString("id-ID", {  
+    dateStyle: "short",  
+    timeStyle: "short"  
+  });  
+}  
+  
+/* =========================================================  
+   5. LOCAL STORAGE  
+   ========================================================= */  
+  
+function getStudents() {  
+  try {  
+    const raw = localStorage.getItem(STORAGE_KEY);  
+  
+    if (!raw) return [];  
+  
+    const parsed = JSON.parse(raw);  
+  
+    return Array.isArray(parsed) ? parsed : [];  
+  } catch (error) {  
+    console.error("Gagal membaca data siswa:", error);  
+    return [];  
+  }  
+}  
+  
+function saveStudents(students) {  
+  try {  
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(students));  
+  } catch (error) {  
+    console.error("Gagal menyimpan data siswa:", error);  
+    showToast("Data tidak dapat disimpan di browser.", "error");  
+  }  
+}  
+  
+function findStudentById(id) {  
+  return getStudents().find(student => student.id === id);  
+}  
+  
+function saveCurrentStudent() {  
+  if (!currentStudent) return;  
+  
+  const students = getStudents();  
+  
+  const index = students.findIndex(  
+    student => student.id === currentStudent.id  
+  );  
+  
+  if (index === -1) {  
+    students.push(currentStudent);  
+  } else {  
+    students[index] = currentStudent;  
+  }  
+  
+  saveStudents(students);  
+}  
+  
+function createStudent(name, className, avatar) {  
+  return {  
+    id: "student_" + Date.now() + "_" + Math.random().toString(36).slice(2, 8),  
+  
+    name: name,  
+    className: className,  
+    avatar: avatar,  
+  
+    points: 0,  
+    stars: 0,  
+    completedLevels: [],  
+    materialProgress: 0,  
+  
+    lastScore: null,  
+    lastCorrect: 0,  
+    lastTotal: 0,  
+    lastHints: 0,  
+    lastPlayed: null,  
+  
+    createdAt: Date.now()  
+  };  
+}  
+  
+/* =========================================================  
+   6. LOGIN SISWA  
+   ========================================================= */  
+  
+document.querySelectorAll(".avatar-btn").forEach(button => {  
+  button.addEventListener("click", () => {  
+  
+    document.querySelectorAll(".avatar-btn").forEach(btn => {  
+      btn.classList.remove("selected");  
+    });  
+  
+    button.classList.add("selected");  
+  
+    selectedAvatar = button.dataset.avatar;  
+  });  
+});  
+  
+$("loginForm").addEventListener("submit", event => {  
+  event.preventDefault();  
+  
+  const name = $("studentName").value.trim();  
+  const className = $("className").value;  
+  
+  if (!name) {  
+    showToast("Masukkan nama kamu terlebih dahulu.", "error");  
+    return;  
+  }  
+  
+  if (!className) {  
+    showToast("Pilih kelas terlebih dahulu.", "error");  
+    return;  
+  }  
+  
+  currentStudent = createStudent(name, className, selectedAvatar);  
+  
+  saveCurrentStudent();  
+  
+  openStudentApp();  
+});  
+  
+function openStudentApp() {  
+  if (!currentStudent) return;  
+  
+  $("headerName").textContent = currentStudent.name;  
+  $("headerAvatar").textContent = currentStudent.avatar;  
+  
+  $("welcomeTitle").textContent =  
+    "Halo, " + currentStudent.name + "! 👋";  
+  
+  showScreen("studentApp");  
+  
+  showStudentPage("homeScreen");  
+  
+  renderHome();  
+}  
+  
+$("studentLogoutBtn").addEventListener("click", () => {  
+  currentStudent = null;  
+  lastResult = null;  
+  
+  showScreen("loginScreen");  
+  resetLoginForm();  
+});  
+  
+function resetLoginForm() {  
+  $("loginForm").reset();  
+  
+  selectedAvatar = "👦";  
+  
+  document.querySelectorAll(".avatar-btn").forEach(button => {  
+    button.classList.toggle(  
+      "selected",  
+      button.dataset.avatar === "👦"  
+    );  
+  });  
+}  
+  
+/* =========================================================  
+   7. BERANDA DAN LEVEL  
+   ========================================================= */  
+  
+function renderHome() {  
+  if (!currentStudent) return;  
+  
+  const completed = currentStudent.completedLevels.length;  
+  
+  $("homePoints").textContent = currentStudent.points;  
+  $("homeStars").textContent = currentStudent.stars;  
+  $("homeMaterial").textContent =  
+    currentStudent.materialProgress + "%";  
+  
+  $("homeLevel").textContent =  
+    Math.min(completed + 1, 5) + " / 5";  
+  
+  const progress = Math.round((completed / LEVELS.length) * 100);  
+  
+  $("homeProgress").style.width = progress + "%";  
+  $("homeProgressText").textContent = progress + "%";  
+  
+  renderLevels();  
+  renderLeaderboardPreview();  
+}  
+  
+function renderLevels() {  
+  const grid = $("levelGrid");  
+  
+  grid.innerHTML = "";  
+  
+  LEVELS.forEach(level => {  
+  
+    const unlocked =  
+      level.id === 1 ||  
+      currentStudent.completedLevels.includes(level.id - 1);  
+  
+    const completed =  
+      currentStudent.completedLevels.includes(level.id);  
+  
+    const card = document.createElement("div");  
+  
+    card.className =  
+      "level-card " + (unlocked ? "unlocked" : "locked");  
+  
+    card.innerHTML = `  
+      <div class="level-number">LEVEL ${level.id}</div>  
+      <div class="level-emoji">${level.emoji}</div>  
+      <div class="level-title">${level.title}</div>  
+      <div class="level-status">  
+        ${  
+          completed  
+            ? "✅ Selesai"  
+            : unlocked  
+              ? "🚀 Mulai Misi"  
+              : "🔒 Terkunci"  
+        }  
+      </div>  
+    `;  
+  
+    if (unlocked) {  
+      card.addEventListener("click", () => {  
+        openMaterial(level.id);  
+      });  
+    }  
+  
+    grid.appendChild(card);  
+  });  
+}  
+  
+$("continueLearningBtn").addEventListener("click", () => {  
+  openMaterial(1);  
+});  
+  
+function openMaterial(levelId = 1) {  
+  currentMaterialLevel = levelId;  
+  
+  showStudentPage("materialScreen");  
+}  
+  
+/* =========================================================  
+   8. MATERI  
+   ========================================================= */  
+  
+let currentMaterialLevel = 1;  
+  
+$("materialBackBtn").addEventListener("click", () => {  
+  showStudentPage("homeScreen");  
+  renderHome();  
+});  
+  
+$("startQuizBtn").addEventListener("click", () => {  
+  startQuiz(currentMaterialLevel);  
+});  
+  
+/* =========================================================  
+   9. QUIZ  
+   ========================================================= */  
+  
+function startQuiz(levelId = 1) {  
+  
+  currentQuizQuestions = QUESTIONS.filter(  
+    question => question.level <= levelId  
+  );  
+  
+  /*  
+   * Jika level 1 dipilih, ambil soal level 1.  
+   * Jika level lebih tinggi dipilih, ambil soal  
+   * dari level 1 sampai level tersebut.  
+   */  
+  if (levelId === 1) {  
+    currentQuizQuestions = QUESTIONS.filter(  
+      question => question.level === 1  
+    );  
+  }  
+  
+  if (levelId === 2) {  
+    currentQuizQuestions = QUESTIONS.filter(  
+      question => question.level <= 2  
+    );  
+  }  
+  
+  if (levelId === 3) {  
+    currentQuizQuestions = QUESTIONS.filter(  
+      question => question.level <= 3  
+    );  
+  }  
+  
+  if (levelId === 4) {  
+    currentQuizQuestions = QUESTIONS.filter(  
+      question => question.level <= 4  
+    );  
+  }  
+  
+  if (levelId === 5) {  
+    currentQuizQuestions = QUESTIONS;  
+  }  
+  
+  currentQuestionIndex = 0;  
+  quizPoints = 0;  
+  quizCorrect = 0;  
+  quizHints = 0;  
+  quizAnswered = false;  
+  hintUsedThisQuestion = false;  
+  
+  showStudentPage("quizScreen");  
+  
+  renderQuestion();  
+}  
+  
+function renderQuestion() {  
+  
+  const question = currentQuizQuestions[currentQuestionIndex];  
+  
+  if (!question) {  
+    finishQuiz();  
+    return;  
+  }  
+  
+  quizAnswered = false;  
+  hintUsedThisQuestion = false;  
+  
+  $("quizProgressLabel").textContent =  
+    "Soal " + (currentQuestionIndex + 1) +  
+    " dari " + currentQuizQuestions.length;  
+  
+  const progress =  
+    (currentQuestionIndex / currentQuizQuestions.length) * 100;  
+  
+  $("quizProgressFill").style.width = progress + "%";  
+  $("quizProgressPercent").textContent =  
+    Math.round(progress) + "%";  
+  
+  $("quizPoints").textContent = quizPoints;  
+  
+  $("quizLevelBadge").textContent =  
+    "Level " + question.level;  
+  
+  $("quizQuestion").textContent = question.question;  
+  
+  $("hintBox").classList.add("hidden");  
+  $("hintBox").textContent = "";  
+  
+  $("quizFeedback").className = "quiz-feedback hidden";  
+  $("quizFeedback").textContent = "";  
+  
+  $("nextQuestionBtn").classList.add("hidden");  
+  
+  $("hintBtn").disabled = false;  
+  
+  renderQuestionIllustration(question);  
+  renderAnswers(question);  
+}  
+  
+function renderQuestionIllustration(question) {  
+  
+  const illustration = $("questionIllustration");  
+  
+  illustration.innerHTML = "";  
+  
+  if (question.type !== "clock") {  
+    return;  
+  }  
+  
+  const clock = createClock(  
+    question.hour,  
+    question.minute,  
+    250  
+  );  
+  
+  illustration.appendChild(clock);  
+}  
+  
+function createClock(hour, minute, size = 250) {  
+  
+  const face = document.createElement("div");  
+  
+  face.className = "clock-face";  
+  
+  face.style.width = size + "px";  
+  face.style.maxWidth = "100%";  
+  
+  for (let number = 1; number <= 12; number++) {  
+  
+    const wrapper = document.createElement("div");  
+  
+    wrapper.className = "clock-number";  
+  
+    wrapper.style.setProperty(  
+      "--angle",  
+      (number * 30) + "deg"  
+    );  
+  
+    const span = document.createElement("span");  
+  
+    span.textContent = number;  
+  
+    wrapper.appendChild(span);  
+  
+    face.appendChild(wrapper);  
+  }  
+  
+  const hourHand = document.createElement("div");  
+  
+  hourHand.className = "clock-hand hour-hand";  
+  
+  const minuteHand = document.createElement("div");  
+  
+  minuteHand.className = "clock-hand minute-hand";  
+  
+  const center = document.createElement("div");  
+  
+  center.className = "clock-center";  
+  
+  const hourAngle =  
+    ((hour % 12) + minute / 60) * 30;  
+  
+  const minuteAngle = minute * 6;  
+  
+  hourHand.style.transform =  
+    "translateX(-50%) rotate(" + hourAngle + "deg)";  
+  
+  minuteHand.style.transform =  
+    "translateX(-50%) rotate(" + minuteAngle + "deg)";  
+  
+  face.appendChild(hourHand);  
+  face.appendChild(minuteHand);  
+  face.appendChild(center);  
+  
+  return face;  
+}  
+  
+function renderAnswers(question) {  
+  
+  const grid = $("answerGrid");  
+  
+  grid.innerHTML = "";  
+  
+  const letters = ["A", "B", "C", "D"];  
+  
+  question.options.forEach((option, index) => {  
+  
+    const button = document.createElement("button");  
+  
+    button.type = "button";  
+    button.className = "answer-btn";  
+  
+    button.innerHTML = `  
+      <span class="answer-letter">${letters[index]}</span>  
+      <span>${escapeHTML(option)}</span>  
+    `;  
+  
+    button.addEventListener("click", () => {  
+      answerQuestion(index);  
+    });  
+  
+    grid.appendChild(button);  
+  });  
+}  
+  
+function answerQuestion(selectedIndex) {  
+  
+  if (quizAnswered) return;  
+  
+  const question =  
+    currentQuizQuestions[currentQuestionIndex];  
+  
+  quizAnswered = true;  
+  
+  const isCorrect =  
+    selectedIndex === question.correct;  
+  
+  const buttons =  
+    document.querySelectorAll("#answerGrid .answer-btn");  
+  
+  buttons.forEach((button, index) => {  
+  
+    button.disabled = true;  
+  
+    if (index === question.correct) {  
+      button.classList.add("correct");  
+    }  
+  
+    if (index === selectedIndex && !isCorrect) {  
+      button.classList.add("wrong");  
+    }  
+  });  
+  
+  if (isCorrect) {  
+  
+    quizCorrect++;  
+  
+    const earned =  
+      hintUsedThisQuestion ? 70 : 100;  
+  
+    quizPoints += earned;  
+  
+    showFeedback(  
+      "🎉 Hebat! Jawaban kamu benar. +" + earned + " poin!",  
+      "correct"  
+    );  
+  
+  } else {  
+  
+    showFeedback(  
+      "💪 Belum tepat. Tidak apa-apa, terus belajar! " +  
+      question.explanation,  
+      "wrong"  
+    );  
+  }  
+  
+  $("quizPoints").textContent = quizPoints;  
+  
+  $("hintBtn").disabled = true;  
+  
+  $("nextQuestionBtn").textContent =  
+    currentQuestionIndex === currentQuizQuestions.length - 1  
+      ? "🏆 Lihat Hasil"  
+      : "Soal Berikutnya →";  
+  
+  $("nextQuestionBtn").classList.remove("hidden");  
+}  
+  
+function showFeedback(message, type) {  
+  
+  const feedback = $("quizFeedback");  
+  
+  feedback.textContent = message;  
+  
+  feedback.className =  
+    "quiz-feedback " +  
+    (type === "correct"  
+      ? "feedback-correct"  
+      : "feedback-wrong");  
+}  
+  
+$("hintBtn").addEventListener("click", () => {  
+  
+  if (quizAnswered || hintUsedThisQuestion) return;  
+  
+  const question =  
+    currentQuizQuestions[currentQuestionIndex];  
+  
+  hintUsedThisQuestion = true;  
+  quizHints++;  
+  
+  quizPoints = Math.max(0, quizPoints - 30);  
+  
+  $("quizPoints").textContent = quizPoints;  
+  
+  $("hintBox").textContent =  
+    "💡 Petunjuk: " + question.hint +  
+    " (−30 poin)";  
+  
+  $("hintBox").classList.remove("hidden");  
+  
+  $("hintBtn").disabled = true;  
+});  
+  
+$("nextQuestionBtn").addEventListener("click", () => {  
+  
+  currentQuestionIndex++;  
+  
+  renderQuestion();  
+});  
+  
+$("quizHomeBtn").addEventListener("click", () => {  
+  
+  if (quizAnswered || currentQuestionIndex > 0) {  
+  
+    const confirmLeave = confirm(  
+      "Jika kembali sekarang, progres quiz ini akan hilang. Lanjut?"  
+    );  
+  
+    if (!confirmLeave) return;  
+  }  
+  
+  showStudentPage("homeScreen");  
+  renderHome();  
+});  
+  
+/* =========================================================  
+   10. HASIL QUIZ  
+   ========================================================= */  
+  
+function finishQuiz() {  
+  
+  const total = currentQuizQuestions.length;  
+  
+  const score = Math.round((quizCorrect / total) * 100);  
+  
+  const stars =  
+    score >= 90 ? 3 :  
+    score >= 70 ? 2 :  
+    score >= 50 ? 1 : 0;  
+  
+  const bonus = 50;  
+  
+  quizPoints += bonus;  
+  
+  const levelIds = [  
+    ...new Set(  
+      currentQuizQuestions.map(question => question.level)  
+    )  
+  ];  
+  
+  levelIds.forEach(levelId => {  
+  
+    if (!currentStudent.completedLevels.includes(levelId)) {  
+  
+      currentStudent.completedLevels.push(levelId);  
+  
+      currentStudent.stars += stars;  
+    }  
+  });  
+  
+  currentStudent.points += quizPoints;  
+  
+  currentStudent.lastScore = score;  
+  currentStudent.lastCorrect = quizCorrect;  
+  currentStudent.lastTotal = total;  
+  currentStudent.lastHints = quizHints;  
+  currentStudent.lastPlayed = Date.now();  
+  
+  currentStudent.materialProgress = 100;  
+  
+  lastResult = {  
+    score: score,  
+    points: quizPoints,  
+    correct: quizCorrect,  
+    total: total,  
+    hints: quizHints,  
+    stars: stars  
+  };  
+  
+  saveCurrentStudent();  
+  
+  renderResult();  
+  
+  showStudentPage("resultScreen");  
+}  
+  
+function renderResult() {  
+  
+  if (!lastResult) return;  
+  
+  const result = lastResult;  
+  
+  $("resultTitle").textContent =  
+    "Hebat, " + currentStudent.name + "! 🎉";  
+  
+  $("resultScore").textContent = result.score;  
+  
+  $("resultCorrect").textContent =  
+    result.correct + " / " + result.total;  
+  
+  $("resultPoints").textContent = result.points;  
+  
+  $("resultHints").textContent = result.hints;  
+  
+  $("resultStars").textContent =  
+    "⭐".repeat(result.stars) +  
+    "☆".repeat(3 - result.stars);  
+  
+  if (result.score >= 90) {  
+  
+    $("resultMessage").textContent =  
+      "Luar biasa! Kamu sangat hebat membaca waktu!";  
+  
+  } else if (result.score >= 70) {  
+  
+    $("resultMessage").textContent =  
+      "Bagus sekali! Terus berlatih agar semakin jago!";  
+  
+  } else {  
+  
+    $("resultMessage").textContent =  
+      "Tetap semangat! Baca materi lagi dan coba kembali.";  
+  }  
+}  
+  
+$("resultHomeBtn").addEventListener("click", () => {  
+  
+  showStudentPage("homeScreen");  
+  renderHome();  
+});  
+  
+$("retryQuizBtn").addEventListener("click", () => {  
+  
+  startQuiz(currentMaterialLevel);  
+});  
+  
+$("resultLeaderboardBtn").addEventListener("click", () => {  
+  
+  renderLeaderboard();  
+  showStudentPage("leaderboardScreen");  
+});  
+  
+/* =========================================================  
+   11. LEADERBOARD  
+   ========================================================= */  
+  
+function getSortedStudents() {  
+  
+  return getStudents().sort((a, b) => {  
+  
+    if (b.points !== a.points) {  
+      return b.points - a.points;  
+    }  
+  
+    return (b.lastScore || 0) - (a.lastScore || 0);  
+  });  
+}  
+  
+function renderLeaderboard() {  
+  
+  const students = getSortedStudents();  
+  
+  renderPodium(students);  
+  
+  const body = $("leaderboardBody");  
+  
+  body.innerHTML = "";  
+  
+  if (students.length === 0) {  
+  
+    body.innerHTML = `  
+      <tr>  
+        <td colspan="4" class="center muted">  
+          Belum ada peserta.  
+        </td>  
+      </tr>  
+    `;  
+  
+    return;  
+  }  
+  
+  students.forEach((student, index) => {  
+  
+    const row = document.createElement("tr");  
+  
+    if (  
+      currentStudent &&  
+      student.id === currentStudent.id  
+    ) {  
+      row.classList.add("current");  
+    }  
+  
+    row.innerHTML = `  
+      <td>${index + 1}</td>  
+      <td>  
+        ${escapeHTML(student.avatar)}  
+        ${escapeHTML(student.name)}  
+      </td>  
+      <td>${student.lastScore ?? "-"}</td>  
+      <td>⭐ ${student.points}</td>  
+    `;  
+  
+    body.appendChild(row);  
+  });  
+}  
+  
+function renderPodium(students) {  
+  
+  const podium = $("podium");  
+  
+  podium.innerHTML = "";  
+  
+  const topThree = students.slice(0, 3);  
+  
+  if (topThree.length === 0) {  
+  
+    podium.innerHTML = `  
+      <div class="empty-state" style="grid-column:1/-1;">  
+        Belum ada siswa yang menyelesaikan quiz.  
+      </div>  
+    `;  
+  
+    return;  
+  }  
+  
+  /*  
+   * Urutan podium:  
+   * posisi 2 - posisi 1 - posisi 3  
+   */  
+  
+  const order = [1, 0, 2];  
+  
+  order.forEach(index => {  
+  
+    const student = topThree[index];  
+  
+    if (!student) return;  
+  
+    const rank = index + 1;  
+  
+    const card = document.createElement("div");  
+  
+    card.className =  
+      "podium-card " + (rank === 1 ? "first" : "");  
+  
+    card.innerHTML = `  
+      <div style="font-size:1.5rem;">  
+        ${rank === 1 ? "🥇" : rank === 2 ? "🥈" : "🥉"}  
+      </div>  
+  
+      <div class="podium-avatar">  
+        ${escapeHTML(student.avatar)}  
+      </div>  
+  
+      <div class="podium-name">  
+        ${escapeHTML(student.name)}  
+      </div>  
+  
+      <div class="podium-points">  
+        ⭐ ${student.points} poin  
+      </div>  
+    `;  
+  
+    podium.appendChild(card);  
+  });  
+}  
+  
+function renderLeaderboardPreview() {  
+  
+  const students = getSortedStudents().slice(0, 3);  
+  
+  const container = $("homeLeaderboardPreview");  
+  
+  container.innerHTML = "";  
+  
+  if (students.length === 0) {  
+  
+    container.innerHTML = `  
+      <div class="empty-state">  
+        Belum ada siswa yang menyelesaikan quiz.  
+        <br>  
+        Jadilah yang pertama!  
+      </div>  
+    `;  
+  
+    return;  
+  }  
+  
+  students.forEach((student, index) => {  
+  
+    const row = document.createElement("div");  
+  
+    row.style.display = "flex";  
+    row.style.alignItems = "center";  
+    row.style.gap = "12px";  
+    row.style.padding = "10px 0";  
+    row.style.borderBottom = "1px solid var(--border)";  
+  
+    row.innerHTML = `  
+      <strong>${index + 1}</strong>  
+      <span style="font-size:1.5rem;">  
+        ${escapeHTML(student.avatar)}  
+      </span>  
+      <span style="flex:1;font-weight:800;">  
+        ${escapeHTML(student.name)}  
+      </span>  
+      <span style="font-weight:900;color:var(--purple);">  
+        ⭐ ${student.points}  
+      </span>  
+    `;  
+  
+    container.appendChild(row);  
+  });  
+}  
+  
+$("leaderboardBackBtn").addEventListener("click", () => {  
+  
+  showStudentPage("homeScreen");  
+  renderHome();  
+});  
+  
+$("homeLeaderboardBtn").addEventListener("click", () => {  
+  
+  renderLeaderboard();  
+  showStudentPage("leaderboardScreen");  
+});  
+  
+/* =========================================================  
+   12. LOGIN GURU  
+   ========================================================= */  
+  
+$("teacherLoginBtn").addEventListener("click", () => {  
+  
+  const pin = prompt(  
+    "Masukkan PIN Guru untuk demo:\nPIN: 1234"  
+  );  
+  
+  if (pin === null) return;  
+  
+  if (pin !== "1234") {  
+  
+    showToast("PIN guru salah.", "error");  
+  
+    return;  
+  }  
+  
+  openTeacherApp();  
+});  
+  
+function openTeacherApp() {  
+  
+  showScreen("teacherApp");  
+  
+  currentTeacherTab = "students";  
+  
+  setTeacherTab("students");  
+  
+  renderTeacherDashboard();  
+}  
+  
+$("teacherLogoutBtn").addEventListener("click", () => {  
+  
+  showScreen("loginScreen");  
+  resetLoginForm();  
+});  
+  
+/* =========================================================  
+   13. DASHBOARD GURU  
+   ========================================================= */  
+  
+document.querySelectorAll(".teacher-tab").forEach(button => {  
+  
+  button.addEventListener("click", () => {  
+  
+    setTeacherTab(button.dataset.tab);  
+  });  
+});  
+  
+function setTeacherTab(tab) {  
+  
+  currentTeacherTab = tab;  
+  
+  document.querySelectorAll(".teacher-tab").forEach(button => {  
+  
+    button.classList.toggle(  
+      "active",  
+      button.dataset.tab === tab  
+    );  
+  });  
+  
+  $("teacherStudentsTab").classList.toggle(  
+    "hidden",  
+    tab !== "students"  
+  );  
+  
+  $("teacherResultsTab").classList.toggle(  
+    "hidden",  
+    tab !== "results"  
+  );  
+  
+  $("teacherRankingTab").classList.toggle(  
+    "hidden",  
+    tab !== "ranking"  
+  );  
+  
+  renderTeacherDashboard();  
+}  
+  
+function renderTeacherDashboard() {  
+  
+  const students = getStudents();  
+  
+  const completed = students.filter(  
+    student => student.lastScore !== null  
+  );  
+  
+  const average = completed.length  
+    ? Math.round(  
+        completed.reduce(  
+          (sum, student) => sum + student.lastScore,  
+          0  
+        ) / completed.length  
+      )  
+    : 0;  
+  
+  $("teacherTotalStudents").textContent = students.length;  
+  $("teacherCompleted").textContent = completed.length;  
+  $("teacherAverage").textContent = average;  
+  
+  renderTeacherStudents();  
+  renderTeacherResults();  
+  renderTeacherRanking();  
+}  
+  
+function renderTeacherStudents() {  
+  
+  const body = $("teacherStudentsBody");  
+  
+  body.innerHTML = "";  
+  
+  const students = getStudents();  
+  
+  if (students.length === 0) {  
+  
+    body.innerHTML = `  
+      <tr>  
+        <td colspan="6">  
+          <div class="empty-state">  
+            Belum ada siswa yang login di browser ini.  
+          </div>  
+        </td>  
+      </tr>  
+    `;  
+  
+    return;  
+  }  
+  
+  students.forEach((student, index) => {  
+  
+    const row = document.createElement("tr");  
+  
+    row.innerHTML = `  
+      <td>${index + 1}</td>  
+  
+      <td>  
+        ${escapeHTML(student.avatar)}  
+        <strong>${escapeHTML(student.name)}</strong>  
+      </td>  
+  
+      <td>${escapeHTML(student.className)}</td>  
+  
+      <td>  
+        <span class="status-dot">  
+          ${student.lastScore === null ? "Belum quiz" : "Selesai"}  
+        </span>  
+      </td>  
+  
+      <td>⭐ ${student.points}</td>  
+  
+      <td>${student.lastScore ?? "-"}</td>  
+    `;  
+  
+    body.appendChild(row);  
+  });  
+}  
+  
+function renderTeacherResults() {  
+  
+  const body = $("teacherResultsBody");  
+  
+  body.innerHTML = "";  
+  
+  const students = getStudents().filter(  
+    student => student.lastScore !== null  
+  );  
+  
+  if (students.length === 0) {  
+  
+    body.innerHTML = `  
+      <tr>  
+        <td colspan="6">  
+          <div class="empty-state">  
+            Belum ada hasil quiz.  
+          </div>  
+        </td>  
+      </tr>  
+    `;  
+  
+    return;  
+  }  
+  
+  students.sort((a, b) => b.lastScore - a.lastScore);  
+  
+  students.forEach(student => {  
+  
+    const row = document.createElement("tr");  
+  
+    row.innerHTML = `  
+      <td>  
+        ${escapeHTML(student.avatar)}  
+        <strong>${escapeHTML(student.name)}</strong>  
+      </td>  
+  
+      <td>  
+        ${student.lastCorrect} / ${student.lastTotal}  
+      </td>  
+  
+      <td>  
+        <strong>${student.lastScore}</strong>  
+      </td>  
+  
+      <td>⭐ ${student.points}</td>  
+  
+      <td>${student.lastHints}</td>  
+  
+      <td>${formatDate(student.lastPlayed)}</td>  
+    `;  
+  
+    body.appendChild(row);  
+  });  
+}  
+  
+function renderTeacherRanking() {  
+  
+  const container = $("teacherRanking");  
+  
+  container.innerHTML = "";  
+  
+  const students = getSortedStudents();  
+  
+  if (students.length === 0) {  
+  
+    container.innerHTML = `  
+      <div class="empty-state">  
+        Belum ada siswa.  
+      </div>  
+    `;  
+  
+    return;  
+  }  
+  
+  students.forEach((student, index) => {  
+  
+    const row = document.createElement("div");  
+  
+    row.style.display = "flex";  
+    row.style.alignItems = "center";  
+    row.style.gap = "12px";  
+    row.style.padding = "14px 0";  
+    row.style.borderBottom = "1px solid var(--border)";  
+  
+    row.innerHTML = `  
+      <strong style="width:30px;">${index + 1}</strong>  
+  
+      <span style="font-size:1.6rem;">  
+        ${escapeHTML(student.avatar)}  
+      </span>  
+  
+      <div style="flex:1;">  
+        <strong>${escapeHTML(student.name)}</strong>  
+        <div class="muted small">  
+          ${escapeHTML(student.className)}  
+        </div>  
+      </div>  
+  
+      <div style="text-align:right;">  
+        <strong style="color:var(--purple);">  
+          ⭐ ${student.points}  
+        </strong>  
+        <div class="muted small">  
+          Nilai: ${student.lastScore ?? "-"}  
+        </div>  
+      </div>  
+    `;  
+  
+    container.appendChild(row);  
+  });  
+}  
+  
+/* =========================================================  
+   14. EXPORT CSV UNTUK GURU  
+   ========================================================= */  
+  
+$("exportResultsBtn").addEventListener("click", () => {  
+  
+  const students = getStudents();  
+  
+  if (students.length === 0) {  
+  
+    showToast("Belum ada data siswa untuk diekspor.", "error");  
+  
+    return;  
+  }  
+  
+  const headers = [  
+    "Nama",  
+    "Kelas",  
+    "Poin",  
+    "Nilai",  
+    "Jawaban Benar",  
+    "Total Soal",  
+    "Hint",  
+    "Waktu Quiz"  
+  ];  
+  
+  const rows = students.map(student => [  
+  
+    student.name,  
+    student.className,  
+    student.points,  
+    student.lastScore ?? "",  
+    student.lastCorrect,  
+    student.lastTotal,  
+    student.lastHints,  
+    formatDate(student.lastPlayed)  
+  
+  ]);  
+  
+  const csv = [  
+    headers,  
+    ...rows  
+  ].map(row => row.map(value => {  
+  
+    const text = String(value ?? "");  
+  
+    return '"' + text.replaceAll('"', '""') + '"';  
+  
+  }).join(",")).join("\n");  
+  
+  const blob = new Blob(  
+    ["\uFEFF" + csv],  
+    { type: "text/csv;charset=utf-8;" }  
+  );  
+  
+  const url = URL.createObjectURL(blob);  
+  
+  const link = document.createElement("a");  
+  
+  link.href = url;  
+  link.download = "hasil-time-quest.csv";  
+  
+  document.body.appendChild(link);  
+  
+  link.click();  
+  
+  link.remove();  
+  
+  URL.revokeObjectURL(url);  
+  
+  showToast("File hasil berhasil dibuat.", "success");  
+});  
+  
+/* =========================================================  
+   15. INITIALIZATION  
+   ========================================================= */  
+  
+function initialize() {  
+  
+  showScreen("loginScreen");  
+  
+  showStudentPage("homeScreen");  
+  
+  renderHome();  
+  
+  console.log("TIME QUEST berhasil dijalankan.");  
+}  
+  
+initialize();  
+  
+</script>  
+  
+</body>  
+</html>  

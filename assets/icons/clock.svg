@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+  <!-- Rim -->
+  <circle cx="12" cy="12" r="10" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.2"/>
+  <!-- Tick marks -->
+  <line x1="12" y1="4" x2="12" y2="5.5" stroke="#1D4ED8" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="20" y1="12" x2="18.5" y2="12" stroke="#1D4ED8" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="12" y1="20" x2="12" y2="18.5" stroke="#1D4ED8" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="4" y1="12" x2="5.5" y2="12" stroke="#1D4ED8" stroke-width="1.8" stroke-linecap="round"/>
+  <!-- Hour hand (Coral Red) -->
+  <line x1="12" y1="12" x2="12" y2="7.5" stroke="#EF4444" stroke-width="2.4" stroke-linecap="round"/>
+  <!-- Minute hand (Royal Blue) -->
+  <line x1="12" y1="12" x2="16.5" y2="12" stroke="#1E40AF" stroke-width="2" stroke-linecap="round"/>
+  <!-- Center cap (Gold) -->
+  <circle cx="12" cy="12" r="1.8" fill="#F59E0B"/>
+</svg>

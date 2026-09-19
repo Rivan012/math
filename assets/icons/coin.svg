@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+  <!-- Outer Rim with 3D drop depth -->
+  <circle cx="12" cy="13" r="9" fill="#B45309"/>
+  <circle cx="12" cy="12" r="9" fill="#F59E0B" stroke="#D97706" stroke-width="1.8"/>
+  <!-- Inner ring -->
+  <circle cx="12" cy="12" r="6.2" fill="#FBBF24" stroke="#D97706" stroke-width="1.2"/>
+  <!-- Star in center -->
+  <polygon points="12,8.2 13.1,10.6 15.6,11 13.8,12.7 14.3,15.2 12,13.9 9.7,15.2 10.2,12.7 8.4,11 10.9,10.6" fill="#FFFBEB"/>
+</svg>

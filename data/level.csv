@@ -1,0 +1,6 @@
+id,nomor,nama,deskripsi,icon,materi_id,unlock_score
+L001,1,Mengenal Jam,Belajar membaca jam analog,clock,M001,0
+L002,2,Jam Tepat,Mengenal waktu tepat,clock,M002,70
+L003,3,Setengah Jam,Belajar membaca setengah jam,clock,M003,70
+L004,4,Jam Digital,Menghubungkan analog dan digital,phone,M004,75
+L005,5,Lama Kegiatan,Menghitung durasi kegiatan,timer,M005,80

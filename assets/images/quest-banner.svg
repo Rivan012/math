@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="morningSky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#BAE6FD"/>
+    </linearGradient>
+  </defs>
+  <!-- Sky background -->
+  <rect width="600" height="200" rx="24" fill="url(#morningSky)"/>
+
+  <!-- Fluffy White Clouds -->
+  <g fill="#FFFFFF" opacity="0.85">
+    <ellipse cx="90" cy="55" rx="36" ry="24"/>
+    <ellipse cx="125" cy="48" rx="42" ry="28"/>
+    <ellipse cx="160" cy="56" rx="30" ry="22"/>
+
+    <ellipse cx="460" cy="65" rx="34" ry="22"/>
+    <ellipse cx="495" cy="58" rx="40" ry="26"/>
+    <ellipse cx="530" cy="66" rx="28" ry="20"/>
+  </g>
+
+  <!-- Rolling Green Hills -->
+  <path d="M-20 200 Q150 140 320 180 T620 160 L620 200 Z" fill="#4ADE80" opacity="0.7"/>
+  <path d="M-20 200 Q200 150 420 170 T620 180 L620 200 Z" fill="#22C55E"/>
+
+  <!-- Storybook Clock Tower Silhouette -->
+  <rect x="420" y="80" width="48" height="120" fill="#1D4ED8" rx="4"/>
+  <polygon points="415,80 444,38 473,80" fill="#EF4444"/>
+  <circle cx="444" cy="106" r="14" fill="#FFFFFF"/>
+  <circle cx="444" cy="106" r="11" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+  <line x1="444" y1="106" x2="444" y2="99" stroke="#EF4444" stroke-width="2"/>
+  <line x1="444" y1="106" x2="449" y2="106" stroke="#1E40AF" stroke-width="1.8"/>
+
+  <!-- Golden Stars -->
+  <polygon points="260,32 264,42 275,43 267,50 269,61 260,55 251,61 253,50 245,43 256,42" fill="#FBBF24"/>
+  <polygon points="340,65 342,72 350,73 344,78 346,86 340,81 334,86 336,78 330,73 338,72" fill="#FBBF24" opacity="0.9"/>
+  <polygon points="200,85 202,90 208,91 204,95 205,101 200,98 195,101 196,95 192,91 198,90" fill="#FDE68A"/>
+</svg>

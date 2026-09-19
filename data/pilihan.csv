@@ -1,0 +1,61 @@
+id,soal_id,label,teks
+P001,Q001,A,Menit 15
+P002,Q001,B,Menit 30
+P003,Q001,C,Menit 00
+P004,Q001,D,Menit 45
+P005,Q002,A,02.00
+P006,Q002,B,03.00
+P007,Q002,C,03.30
+P008,Q002,D,12.03
+P009,Q003,A,06.00
+P010,Q003,B,12.06
+P011,Q003,C,06.30
+P012,Q003,D,05.00
+P013,Q004,A,08.00
+P014,Q004,B,09.00
+P015,Q004,C,09.30
+P016,Q004,D,12.09
+P017,Q005,A,Setengah tujuh
+P018,Q005,B,Pukul tujuh tepat
+P019,Q005,C,Pukul delapan tepat
+P020,Q005,D,Pukul tujuh lewat tiga puluh menit
+P021,Q006,A,02.00
+P022,Q006,B,03.30
+P023,Q006,C,02.30
+P024,Q006,D,06.02
+P025,Q007,A,30 menit
+P026,Q007,B,45 menit
+P027,Q007,C,60 menit
+P028,Q007,D,100 menit
+P029,Q008,A,15 menit
+P030,Q008,B,20 menit
+P031,Q008,C,30 menit
+P032,Q008,D,60 menit
+P033,Q009,A,30 menit
+P034,Q009,B,1 jam
+P035,Q009,C,2 jam
+P036,Q009,D,15 menit
+P037,Q010,A,Tidur malam
+P038,Q010,B,Sarapan
+P039,Q010,C,Makan malam
+P040,Q010,D,Tidur tengah malam
+P041,Q011,A,Malam → Pagi → Siang → Sore
+P042,Q011,B,Pagi → Siang → Sore → Malam
+P043,Q011,C,Siang → Malam → Pagi → Sore
+P044,Q011,D,Sore → Pagi → Malam → Siang
+P045,Q012,A,30 menit
+P046,Q012,B,1 jam
+P047,Q012,C,2 jam
+P048,Q012,D,3 jam
+P049,Q013,A,15 menit
+P050,Q013,B,20 menit
+P051,Q013,C,30 menit
+P052,Q013,D,1 jam
+P053,Q014,A,09.30
+P054,Q014,B,10.00
+P055,Q014,C,11.00
+P056,Q014,D,12.00
+P057,Q015,A,15 menit
+P058,Q015,B,30 menit
+P059,Q015,C,1 jam
+P060,Q015,D,2 jam

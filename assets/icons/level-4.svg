@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none">
+  <!-- School building -->
+  <rect x="5" y="12" width="22" height="15" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.8"/>
+  <polygon points="16,3 2,12 30,12" fill="#EF4444" stroke="#B91C1C" stroke-width="1.5"/>
+  <!-- Front door -->
+  <rect x="13" y="19" width="6" height="8" fill="#1D4ED8"/>
+  <!-- Windows -->
+  <rect x="7" y="15" width="4" height="4" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/>
+  <rect x="21" y="15" width="4" height="4" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/>
+  <!-- School clock in pediment -->
+  <circle cx="16" cy="8" r="2.5" fill="#FFFFFF" stroke="#F59E0B" stroke-width="1"/>
+</svg>

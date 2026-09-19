@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none">
+  <!-- Spire roof -->
+  <polygon points="16,2 10,10 22,10" fill="#2563EB" stroke="#1D4ED8" stroke-width="1.8"/>
+  <!-- Tower body -->
+  <rect x="10" y="10" width="12" height="18" fill="#EFF6FF" stroke="#2563EB" stroke-width="2"/>
+  <!-- Clock on tower -->
+  <circle cx="16" cy="16" r="4" fill="#FFFFFF" stroke="#F59E0B" stroke-width="1.5"/>
+  <line x1="16" y1="16" x2="16" y2="13.8" stroke="#EF4444" stroke-width="1.2"/>
+  <line x1="16" y1="16" x2="18" y2="16" stroke="#2563EB" stroke-width="1.2"/>
+  <!-- Base arch door -->
+  <path d="M14 28v-4a2 2 0 0 1 4 0v4" fill="#1E40AF"/>
+</svg>

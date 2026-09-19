@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+  <!-- Ribbon Left (Navy Blue) -->
+  <path d="M7 2 L10 12 L7 12 L4 2 Z" fill="#2563EB"/>
+  <!-- Ribbon Right (Coral Red) -->
+  <path d="M17 2 L14 12 L17 12 L20 2 Z" fill="#EF4444"/>
+  <!-- Medal Disc (Gold) -->
+  <circle cx="12" cy="15" r="7" fill="#F59E0B" stroke="#D97706" stroke-width="1.8"/>
+  <circle cx="12" cy="15" r="5" fill="#FBBF24"/>
+  <!-- Number 1 or Star in center -->
+  <polygon points="12,12 12.8,13.8 14.8,14.1 13.3,15.5 13.7,17.5 12,16.5 10.3,17.5 10.7,15.5 9.2,14.1 11.2,13.8" fill="#FFFBEB"/>
+</svg>

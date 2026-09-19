@@ -1,0 +1,455 @@
+/* =========================================================
+   TIME QUEST
+   css/responsive.css - Tata Letak Mobile & Tablet Bebas Slop
+   Sesuai Prinsip antislop-layoutmobile (R-03, R-05, R-06, R-35)
+   ========================================================= */
+
+/* =========================================================
+   1. TABLET (max-width: 850px)
+   ========================================================= */
+@media (max-width: 850px) {
+  .login-layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .login-hero {
+    padding: 32px 24px;
+    text-align: center;
+  }
+
+  .login-hero .brand {
+    justify-content: center;
+  }
+
+  .hero-title {
+    margin: 16px 0 10px;
+  }
+
+  .hero-desc {
+    margin-inline: auto;
+  }
+
+  .hero-feature-tags {
+    justify-content: center;
+  }
+
+  /* Grid Karakter Tablet */
+  .character-picker-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  /* Peta Level Tablet */
+  .level-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Statistik Tablet */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .teacher-metrics-grid,
+  .teacher-summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .admin-content-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .material-hero-card {
+    padding: 24px;
+  }
+
+  .clock-demo-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+    justify-items: center;
+  }
+}
+
+/* =========================================================
+   2. SMARTPHONE & MOBILE (max-width: 600px)
+   ========================================================= */
+@media (max-width: 600px) {
+  .container {
+    width: calc(100% - 24px);
+  }
+
+  .page-wrap {
+    padding-top: 16px;
+    padding-bottom: 48px;
+  }
+
+  .card {
+    padding: 20px 16px;
+    border-radius: var(--radius-md);
+  }
+
+  /* Login Screen Mobile */
+  .login-screen {
+    padding: 16px 0 32px;
+    min-height: auto;
+  }
+
+  .login-layout {
+    gap: 16px;
+  }
+
+  .login-hero {
+    padding: 22px 18px;
+    border-radius: var(--radius-md);
+  }
+
+  .hero-title {
+    font-size: 1.45rem;
+  }
+
+  .hero-clock-img {
+    width: 86px;
+    height: 86px;
+  }
+
+  .character-picker-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+
+  .login-card {
+    padding: 20px 16px;
+    border-radius: var(--radius-md);
+  }
+
+  /* Header & Game HUD Mobile */
+  .app-header {
+    padding: 8px 0;
+  }
+
+  .header-inner {
+    gap: 8px;
+  }
+
+  .brand-title {
+    font-size: 1.05rem;
+  }
+
+  .hud-pill {
+    padding: 4px 10px;
+    font-size: 0.85rem;
+    gap: 5px;
+  }
+
+  .hud-pill img {
+    width: 15px;
+    height: 15px;
+  }
+
+  .user-pill {
+    padding: 3px 8px 3px 3px;
+  }
+
+  .user-avatar-wrap {
+    width: 32px;
+    height: 32px;
+  }
+
+  .user-name {
+    max-width: 80px;
+    font-size: 0.82rem;
+  }
+
+  .user-role {
+    display: none;
+  }
+
+  /* Welcome Banner Mobile */
+  .welcome-box {
+    flex-direction: column;
+    text-align: center;
+    padding: 22px 16px;
+  }
+
+  .welcome-action-row {
+    display: flex;
+    justify-content: center;
+  }
+
+  .welcome-action-row .btn {
+    width: 100%;
+  }
+
+  .welcome-clock-mascot {
+    order: -1;
+    margin-bottom: 8px;
+  }
+
+  .welcome-clock-mascot img {
+    width: 84px;
+    height: 84px;
+  }
+
+  /* Statistik Mobile */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .stat-card {
+    padding: 12px 10px;
+    gap: 10px;
+  }
+
+  .stat-icon-wrapper {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+  }
+
+  .stat-icon-wrapper img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .stat-value {
+    font-size: 1.2rem;
+  }
+
+  /* Level Grid Mobile: Stack 1 Kolom Vertikal */
+  .level-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .level-card {
+    padding: 14px 16px;
+  }
+
+  /* Reflow Kuis: Opsi Jawaban Vertikal 1 Kolom */
+  .answer-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .answer-btn {
+    min-height: 52px;
+    padding: 12px 14px;
+    font-size: 0.95rem;
+  }
+
+  .quiz-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .quiz-meta-right {
+    align-self: flex-start;
+  }
+
+  .quiz-footer {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .quiz-footer .btn {
+    width: 100%;
+  }
+
+  .safe-info {
+    text-align: center;
+  }
+
+  /* Jam Analog Responsif Mobile */
+  .clock-face {
+    width: 190px;
+    height: 190px;
+  }
+
+  .clock-number {
+    font-size: 0.9rem;
+    padding-top: 6px;
+  }
+
+  .clock-tick {
+    transform-origin: 50% 87px;
+  }
+
+  .hour-hand {
+    height: 46px;
+  }
+
+  .minute-hand {
+    height: 66px;
+  }
+
+  /* Materi Screen Mobile */
+  .material-card {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 18px 16px;
+  }
+
+  .material-step-badge {
+    width: 36px;
+    height: 36px;
+    font-size: 1.05rem;
+  }
+
+  /* Hasil Kuis Mobile */
+  .result-hero-card {
+    padding: 24px 16px;
+  }
+
+  .result-score-value {
+    font-size: 3.2rem;
+  }
+
+  .result-stats-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .result-cta-row {
+    flex-direction: column;
+  }
+
+  .result-cta-row .btn {
+    width: 100%;
+  }
+
+  /* Podium 3 Besar Mobile */
+  .podium-layout {
+    gap: 8px;
+  }
+
+  .podium-card {
+    padding: 16px 6px 12px;
+  }
+
+  .podium-avatar img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .podium-name {
+    font-size: 0.82rem;
+    max-width: 85px;
+  }
+
+  .podium-points {
+    font-size: 0.85rem;
+  }
+
+  /* Teacher Dashboard Mobile */
+  .teacher-metrics-grid,
+  .teacher-summary-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .summary-metric-card {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .metric-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+  }
+
+  .metric-value {
+    font-size: 1.3rem;
+  }
+
+  .teacher-hero-banner {
+    padding: 20px 16px;
+  }
+
+  .teacher-nav-tabs {
+    flex-direction: column;
+  }
+
+  .teacher-tab {
+    width: 100%;
+    text-align: center;
+  }
+
+  .section-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .section-heading .btn {
+    width: 100%;
+  }
+
+  /* Material Hero Mobile */
+  .material-hero-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px 16px;
+  }
+
+  .material-hero-icon {
+    width: 64px;
+    height: 64px;
+  }
+
+  .material-hero-icon img {
+    width: 36px;
+    height: 36px;
+  }
+
+  /* Quiz Status Mobile */
+  .quiz-status-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .quiz-score-pill {
+    align-self: flex-start;
+  }
+
+  .quiz-control-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .quiz-control-row .btn {
+    width: 100%;
+  }
+
+  /* Modal Mobile */
+  .modal-backdrop {
+    padding: 12px;
+  }
+
+  .modal-card {
+    border-radius: 18px;
+  }
+
+  .modal-header {
+    padding: 16px;
+  }
+
+  .modal-body {
+    padding: 16px;
+  }
+
+  .modal-footer {
+    padding: 14px 16px;
+  }
+
+  .modal-footer .btn {
+    width: 100%;
+  }
+}
