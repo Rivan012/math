@@ -511,7 +511,7 @@ function updateStreakBanner() {
   if (!banner || !countText) return;
 
   if (quizStreak >= 2) {
-    countText.textContent = `Streak x${quizStreak}`;
+    countText.textContent = `🔥 ${quizStreak}x Benar!`;
     banner.classList.remove("hidden");
     banner.classList.remove("anim-streak-pop");
     void banner.offsetWidth;
@@ -645,24 +645,11 @@ function createDigitalAlarmClockWidget(question) {
   wrap.className = "digital-alarm-widget-wrap";
 
   wrap.innerHTML = `
-    <svg class="digital-alarm-diagram-svg" viewBox="0 0 420 220" width="100%" height="auto" aria-hidden="true">
-      <!-- Petunjuk Jam (Atas) -->
-      <path d="M 85,62 L 85,52 L 175,52 L 175,62" fill="none" stroke="#334155" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-      <path d="M 130,52 L 130,28 L 315,28" fill="none" stroke="#334155" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-      <circle cx="315" cy="28" r="4" fill="#334155" />
-      <text x="326" y="34" font-family="'Nunito', sans-serif" font-size="18" font-weight="900" fill="#0F172A">Jam</text>
-
-      <!-- Petunjuk Menit (Bawah) -->
-      <path d="M 215,148 L 215,158 L 305,158 L 305,148" fill="none" stroke="#334155" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-      <path d="M 260,158 L 260,185 L 315,185" fill="none" stroke="#334155" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-      <circle cx="315" cy="185" r="4" fill="#334155" />
-      <text x="326" y="191" font-family="'Nunito', sans-serif" font-size="18" font-weight="900" fill="#0F172A">Menit</text>
-    </svg>
-
     <div class="digital-alarm-body-container">
-      <div class="digital-alarm-top-studs">
-        <span class="alarm-stud"></span>
-        <span class="alarm-stud"></span>
+      <!-- Label Panduan Jam & Menit Sesuai Buku Pelajaran -->
+      <div class="digital-clock-labels-row" aria-hidden="true">
+        <span class="digital-label-tag">👈 Jam</span>
+        <span class="digital-label-tag">Menit 👉</span>
       </div>
 
       <div class="digital-alarm-chassis" id="alarmClockChassis">
@@ -673,7 +660,7 @@ function createDigitalAlarmClockWidget(question) {
             <span class="slot-mini-label">Jam</span>
           </div>
 
-          <!-- Titik Dua Pemisah (Blinking Colon) -->
+          <!-- Titik Dua Pemisah -->
           <div class="digital-screen-colon">:</div>
 
           <!-- Slot Angka Menit -->
@@ -682,11 +669,6 @@ function createDigitalAlarmClockWidget(question) {
             <span class="slot-mini-label">Menit</span>
           </div>
         </div>
-      </div>
-
-      <div class="digital-alarm-feet-row">
-        <span class="alarm-foot foot-left"></span>
-        <span class="alarm-foot foot-right"></span>
       </div>
     </div>
   `;

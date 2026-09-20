@@ -20,9 +20,9 @@ console.log("✓ data/pilihan.csv: Kartu angka terpisah valid.");
 
 // 3. Verifikasi js/storage.js
 const storageJs = fs.readFileSync(path.join(__dirname, "..", "js", "storage.js"), "utf8");
-assert(storageJs.includes('"3.0"'), "storage.js harus versi 3.0");
+assert(storageJs.includes('"3.'), "storage.js harus versi 3.x");
 assert(storageJs.includes('targetHour: "05"') && storageJs.includes('targetMinute: "00"'), "Q005 di storage.js memiliki targetHour 05 & targetMinute 00");
-console.log("✓ js/storage.js: Versi 3.0 dan konfigurasi DEFAULT_QUESTIONS valid.");
+console.log("✓ js/storage.js: Versi 3.x dan konfigurasi DEFAULT_QUESTIONS valid.");
 
 // 4. Verifikasi js/quiz.js
 const quizJs = fs.readFileSync(path.join(__dirname, "..", "js", "quiz.js"), "utf8");

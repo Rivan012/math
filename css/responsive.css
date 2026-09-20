@@ -1,29 +1,25 @@
 /* =========================================================
-   TIME QUEST
-   css/responsive.css - Tata Letak Mobile & Tablet Bebas Slop
-   Sesuai Prinsip antislop-layoutmobile (R-03, R-05, R-06, R-35)
+   TIME QUEST - MATEMATIKA KELAS 2 SD
+   css/responsive.css - Tata Letak Responsif Bebas AI-Slop
+   Berdasarkan Prinsip antislop-layoutmobile (R-03, R-05, R-06, R-35)
    ========================================================= */
 
 /* =========================================================
-   1. TABLET (max-width: 850px)
+   1. TABLET (max-width: 860px)
    ========================================================= */
-@media (max-width: 850px) {
+@media (max-width: 860px) {
   .login-layout {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 28px;
   }
 
   .login-hero {
-    padding: 32px 24px;
     text-align: center;
+    padding: 10px 0;
   }
 
   .login-hero .brand {
     justify-content: center;
-  }
-
-  .hero-title {
-    margin: 16px 0 10px;
   }
 
   .hero-desc {
@@ -34,375 +30,119 @@
     justify-content: center;
   }
 
-  /* Grid Karakter Tablet */
-  .character-picker-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-  }
-
-  /* Peta Level Tablet (2x2 Grid) */
-  .level-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
-  }
-
-  /* Statistik Tablet */
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 
-  .teacher-metrics-grid,
+  .level-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
   .teacher-summary-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .admin-content-grid,
-  .studio-grid,
-  .excel-import-hub {
-    grid-template-columns: 1fr;
-    gap: 18px;
+  .clock-anatomy-wrapper {
+    flex-direction: column;
+    gap: 16px;
   }
 
-  .live-preview-box {
-    position: static;
-  }
-
-  .material-hero-card {
-    padding: 24px;
-  }
-
-  .clock-demo-card {
-    grid-template-columns: 1fr;
+  .clock-callout {
+    max-width: 100%;
     text-align: center;
-    justify-items: center;
   }
 }
 
 /* =========================================================
-   2. SMARTPHONE & MOBILE (max-width: 600px)
+   2. MOBILE & SMARTPHONE (max-width: 600px)
    ========================================================= */
 @media (max-width: 600px) {
   .container {
-    width: calc(100% - 24px);
+    padding-inline: 14px;
   }
 
   .page-wrap {
-    padding-top: 16px;
-    padding-bottom: 48px;
+    padding-top: 14px;
+    padding-bottom: 40px;
   }
 
   .card {
-    padding: 20px 16px;
+    padding: 16px;
     border-radius: var(--radius-md);
   }
 
-  /* Login Screen Mobile */
-  .login-screen {
-    padding: 16px 0 32px;
-    min-height: auto;
-  }
-
-  .login-layout {
-    gap: 16px;
-  }
-
-  .login-hero {
-    padding: 22px 18px;
-    border-radius: var(--radius-md);
-  }
-
-  .hero-title {
-    font-size: 1.45rem;
-  }
-
-  .hero-clock-img {
-    width: 86px;
-    height: 86px;
-  }
-
-  .character-picker-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
-  }
-
-  .login-card {
-    padding: 20px 16px;
-    border-radius: var(--radius-md);
-  }
-
-  /* Header & Game HUD Mobile Reflow (Bebas Overflow & Terpotong) */
+  /* Header Aplikasi di Mobile */
   .app-header {
-    padding: 8px 0 10px;
+    padding: 8px 0;
   }
 
   .header-inner {
-    display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px 12px;
-  }
-
-  /* Baris 1 Kiri: Brand */
-  .app-header .brand {
-    order: 1;
-    flex-shrink: 0;
+    gap: 8px;
   }
 
   .brand-title {
     font-size: 1rem;
-    letter-spacing: -0.2px;
   }
 
-  /* Baris 1 Kanan: Profil Siswa + Tombol Keluar */
-  .header-user-section {
-    order: 2;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-left: auto;
-  }
-
-  .user-pill {
-    padding: 3px 8px 3px 3px;
-    gap: 6px;
-  }
-
-  .user-avatar-wrap {
-    width: 28px;
-    height: 28px;
-  }
-
-  .user-name {
-    max-width: 80px;
-    font-size: 0.8rem;
-  }
-
-  .user-role {
-    display: none;
-  }
-
-  #studentLogoutBtn {
-    padding: 5px 10px;
-    font-size: 0.78rem;
-    min-height: 32px;
-    line-height: 1;
-    white-space: nowrap;
-    border-radius: var(--radius-sm);
-  }
-
-  /* Baris 2 Penuh: Game HUD (Poin & Bintang) */
   .game-hud {
-    order: 3;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    padding-top: 6px;
-    border-top: 1px solid var(--border-light, #F1F5F9);
+    gap: 6px;
   }
 
   .hud-pill {
-    flex: 1;
-    max-width: 140px;
-    justify-content: center;
-    padding: 5px 12px;
-    font-size: 0.88rem;
-    gap: 6px;
-  }
-
-  .hud-pill img {
-    width: 16px;
-    height: 16px;
-  }
-
-  /* Header Ruang Guru Mobile */
-  .teacher-header .header-inner {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-  }
-
-  .teacher-header .brand {
-    justify-content: space-between;
-    width: 100%;
-  }
-
-  .teacher-header .header-actions {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    width: 100%;
-  }
-
-  .teacher-header .badge {
-    font-size: 0.74rem;
     padding: 4px 8px;
+    font-size: 0.78rem;
   }
 
-  #teacherLogoutBtn {
-    padding: 5px 12px;
-    font-size: 0.8rem;
-    min-height: 32px;
+  .user-pill {
+    display: none; /* Sembunyikan profil mini di baris sempit agar tidak menabrak */
   }
 
-  /* Welcome Banner Mobile */
+  /* Beranda Siswa */
   .welcome-box {
     flex-direction: column;
-    text-align: center;
-    padding: 22px 16px;
+    align-items: flex-start;
+    padding: 18px;
+    gap: 14px;
+  }
+
+  .welcome-clock-mascot {
+    display: none;
   }
 
   .welcome-action-row {
-    display: flex;
+    width: 100%;
     flex-direction: column;
-    gap: 8px;
-    align-items: stretch;
   }
 
   .welcome-action-row .btn {
     width: 100%;
   }
 
-  /* 2 Tombol Aksi di Kartu Level - Mobile */
-  .level-card-actions-2 {
-    grid-template-columns: 1fr 1fr;
-    gap: 6px;
-  }
-
-  .btn-card-action {
-    font-size: 0.72rem;
-    padding: 7px 6px;
-    min-height: 42px;
-  }
-
-  /* Reader Navbar Mobile */
-  .reader-navbar {
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-
-  .reader-quiz-top-btn span {
-    display: none;
-  }
-
-  .reader-quiz-top-btn::after {
-    content: "Kuis →";
-    font-size: 0.72rem;
-  }
-
-  /* Quiz Navbar Mobile */
-  .quiz-top-left-actions {
-    gap: 4px;
-  }
-
-  #quizReviewMaterialBtn span {
-    display: none;
-  }
-
-  #quizReviewMaterialBtn::after {
-    content: "Materi";
-    font-size: 0.72rem;
-  }
-
-  .welcome-clock-mascot {
-    order: -1;
-    margin-bottom: 8px;
-  }
-
-  .welcome-clock-mascot img {
-    width: 84px;
-    height: 84px;
-  }
-
-  /* Statistik Mobile */
   .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     gap: 10px;
-    margin-bottom: 18px;
   }
 
   .stat-card {
-    padding: 12px 10px;
-    gap: 10px;
+    padding: 12px 14px;
   }
 
-  .stat-icon-wrapper {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-  }
-
-  .stat-icon-wrapper img {
-    width: 20px;
-    height: 20px;
-  }
-
-  .stat-value {
-    font-size: 1.2rem;
-  }
-
-  /* Level Grid Mobile: Stack 1 Kolom Vertikal */
-  .level-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .level-card {
-    padding: 14px 16px;
-  }
-
-  /* Reflow Kuis: Opsi Jawaban Vertikal 1 Kolom Ala Quizizz */
-  .answer-grid,
-  .quizizz-answer-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .answer-btn {
-    min-height: 54px;
-    padding: 12px 16px;
-    font-size: 0.96rem;
-  }
-
-  .quizizz-answer-grid .answer-btn {
-    min-height: 60px;
-    padding: 12px 16px;
-    font-size: 0.98rem;
-  }
-
-  .quiz-streak-badge {
-    padding: 4px 10px;
-    font-size: 0.8rem;
-  }
-
-  .floating-score-tag {
-    font-size: 1.05rem;
-    padding: 8px 16px;
-  }
-
-  /* Reader/Flipbook Responsif Mobile */
-  .reader-navbar {
-    flex-direction: column;
-    align-items: flex-start;
+  .character-picker-grid {
+    grid-template-columns: repeat(3, 1fr);
     gap: 8px;
   }
 
-  .reader-meta-group {
-    flex-wrap: wrap;
-    font-size: 0.85rem;
+  .avatar-btn {
+    padding: 8px 4px;
   }
 
-  .flipbook-container {
-    gap: 12px;
-  }
-
-  .flipbook-page-sheet {
-    padding: 20px 18px;
-    border-radius: 14px;
+  /* Lembaran Materi (Buku Pembaca) */
+  .flipbook-book {
+    padding: 20px 14px;
+    min-height: auto;
   }
 
   .reader-page-title {
@@ -410,245 +150,172 @@
   }
 
   .reader-body-text {
-    font-size: 0.98rem;
+    font-size: 0.95rem;
     line-height: 1.6;
+  }
+
+  .reader-meta-group {
+    font-size: 0.78rem;
+    flex-wrap: wrap;
   }
 
   .flipbook-toolbar {
     flex-direction: column-reverse;
-    gap: 10px;
-    padding: 10px 14px;
+    gap: 14px;
   }
 
   .flipbook-nav-btn {
     width: 100%;
-    justify-content: center;
   }
 
-  .flipbook-dots {
-    justify-content: center;
-  }
-
-  .material-dynamic-clock {
-    width: 170px;
-    height: 170px;
-  }
-
-  .digital-badge {
-    font-size: 1.3rem;
-    padding: 4px 14px;
-  }
-
-  .quiz-header {
-    flex-direction: column;
-    align-items: flex-start;
+  /* Kuis Interaktif Mobile */
+  .quiz-top-nav {
+    flex-wrap: wrap;
     gap: 8px;
   }
 
-  .quiz-meta-right {
-    align-self: flex-start;
+  .quiz-top-left-actions .btn {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    min-height: 36px;
   }
 
-  .quiz-footer {
-    flex-direction: column;
-    gap: 12px;
-    align-items: stretch;
+  .quiz-card {
+    padding: 16px 12px;
   }
 
-  .quiz-footer .btn {
-    width: 100%;
+  .quiz-question-title {
+    font-size: 1.1rem;
   }
 
-  .safe-info {
-    text-align: center;
-  }
-
-  /* Jam Analog Responsif Mobile */
+  /* Jam Analog di HP */
   .clock-face {
-    width: 190px;
-    height: 190px;
+    width: 210px;
+    height: 210px;
   }
 
   .clock-number {
-    font-size: 0.9rem;
-    padding-top: 6px;
-  }
-
-  .clock-tick {
-    transform-origin: 50% 87px;
-  }
-
-  .hour-hand {
-    height: 46px;
-  }
-
-  .minute-hand {
-    height: 66px;
-  }
-
-  /* Materi Screen Mobile */
-  .material-card {
-    grid-template-columns: 1fr;
-    gap: 12px;
-    padding: 18px 16px;
-  }
-
-  .material-step-badge {
-    width: 36px;
-    height: 36px;
     font-size: 1.05rem;
   }
 
-  /* Hasil Kuis Mobile */
-  .result-hero-card {
-    padding: 24px 16px;
+  .hour-hand {
+    height: 56px;
+    width: 7px;
   }
 
-  .result-score-value {
-    font-size: 3.2rem;
+  .minute-hand {
+    height: 80px;
+    width: 5px;
   }
 
-  .result-stats-grid {
-    grid-template-columns: 1fr;
-    gap: 10px;
+  /* Jam Digital di HP (Level 2) */
+  .digital-alarm-body-container {
+    max-width: 100%;
   }
 
-  .result-cta-row {
-    flex-direction: column;
+  .digital-alarm-chassis {
+    padding: 12px 14px;
+    border-width: 3px;
+    box-shadow: 0 4px 0 #3B0764;
   }
 
-  .result-cta-row .btn {
-    width: 100%;
-  }
-
-  /* Podium 3 Besar Mobile */
-  .podium-layout {
+  .digital-screen-inner {
+    padding: 10px 12px;
     gap: 8px;
   }
 
-  .podium-card {
-    padding: 16px 6px 12px;
+  .digital-drop-slot {
+    width: 76px;
+    height: 72px;
   }
 
-  .podium-avatar img {
-    width: 48px;
-    height: 48px;
+  .slot-display-val {
+    font-size: 1.8rem;
   }
 
-  .podium-name {
-    font-size: 0.82rem;
-    max-width: 85px;
+  .digital-screen-colon {
+    font-size: 2rem;
   }
 
-  .podium-points {
-    font-size: 0.85rem;
-  }
-
-  /* Teacher Dashboard Mobile */
-  .teacher-metrics-grid,
-  .teacher-summary-grid {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-
-  .summary-metric-card {
-    padding: 16px;
+  /* Level 3: Time Compare di HP (Susun Menumpuk Rapi) */
+  .time-compare-container {
+    flex-direction: column;
     gap: 12px;
   }
 
-  .metric-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 10px;
-  }
-
-  .metric-value {
-    font-size: 1.3rem;
-  }
-
-  .teacher-hero-banner {
-    padding: 20px 16px;
-  }
-
-  .teacher-nav-tabs {
-    flex-direction: column;
-  }
-
-  .teacher-tab {
+  .time-compare-card {
     width: 100%;
-    text-align: center;
+    padding: 14px;
   }
 
-  .section-heading {
+  .time-compare-img {
+    max-width: 220px;
+    height: 120px;
+  }
+
+  .time-compare-divider {
+    padding: 2px 0;
+  }
+
+  /* Level 4: Clock Activity Drop di HP (Susun Menumpuk Rapi) */
+  .clock-activity-widget-wrap {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-
-  .section-heading .btn {
+    gap: 16px;
     width: 100%;
   }
 
-  /* Material Hero Mobile */
-  .material-hero-card {
-    flex-direction: column;
-    text-align: center;
-    padding: 20px 16px;
+  .clock-activity-card {
+    max-width: 100%;
   }
 
-  .material-hero-icon {
-    width: 64px;
-    height: 64px;
+  .clock-activity-img {
+    max-width: 260px;
   }
 
-  .material-hero-icon img {
-    width: 36px;
-    height: 36px;
+  .clock-activity-drop-slot {
+    width: 100%;
+    min-width: unset;
+    min-height: 64px;
+    padding: 12px 16px;
   }
 
-  /* Quiz Status Mobile */
-  .quiz-status-header {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
+  .clock-activity-slot-text {
+    font-size: 1.1rem;
   }
 
-  .quiz-score-pill {
-    align-self: flex-start;
-  }
-
-  .quiz-control-row {
-    flex-direction: column;
-    align-items: stretch;
+  /* Tombol Aksi Kuis di HP */
+  .quiz-answers-grid {
     gap: 8px;
   }
 
-  .quiz-control-row .btn {
+  .draggable-number-chip,
+  .activity-time-chip {
+    padding: 10px 16px;
+    font-size: 1rem;
+    min-height: 44px;
+  }
+
+  .quiz-action-footer .btn {
     width: 100%;
   }
 
-  /* Modal Mobile */
-  .modal-backdrop {
-    padding: 12px;
+  .quiz-feedback-banner {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
   }
 
-  .modal-card {
-    border-radius: 18px;
+  /* Dashboard Guru di HP */
+  .teacher-summary-grid {
+    grid-template-columns: 1fr;
   }
 
-  .modal-header {
-    padding: 16px;
+  .teacher-table-card {
+    padding: 14px;
+    overflow-x: auto;
   }
 
-  .modal-body {
-    padding: 16px;
-  }
-
-  .modal-footer {
-    padding: 14px 16px;
-  }
-
-  .modal-footer .btn {
-    width: 100%;
+  .teacher-table {
+    min-width: 500px; /* Izinkan tabel bergulir di dalam card tabel tanpa merusak lebar halaman */
   }
 }
