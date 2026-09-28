@@ -400,33 +400,273 @@ function updateMaterialLivePreview() {
       tipWrap.style.display = "none";
     }
   }
+
+  // Pratinjau Gambar / SVG Materi yang Diunggah
+  const matImg = $("matImg") ? $("matImg").value : "";
+  const matImgWrap = $("previewMatImgWrap");
+  const matImgEl = $("previewMatImg");
+  if (matImgWrap && matImgEl) {
+    if (matImg) {
+      matImgWrap.style.display = "block";
+      matImgEl.src = matImg;
+    } else {
+      matImgWrap.style.display = "none";
+    }
+  }
 }
 
 /**
  * Memperbarui Pratinjau Langsung (Live Preview) Kuis Murid & Animasi Jam Analog
  */
 function updateQuestionLivePreview() {
-  const tipe = $("qType") ? $("qType").value : "clock";
+  const level = $("qLevel") ? $("qLevel").value : "1";
+  const tipe = $("qType") ? $("qType").value : "clock_drag";
   const qText = $("qText") ? $("qText").value.trim() : "";
-  const points = $("qPoints") ? $("qPoints").value : "20";
+  const isClockDrag = tipe === "clock_drag";
+  const isClockDrop = tipe === "clock_drop";
+  const isTimeCompare = tipe === "time_compare";
+  const isActivityDrop = tipe === "clock_activity_drop";
+  const isClock = tipe === "clock";
+
+  const defaultPoints = (isClockDrag || isClockDrop || isTimeCompare || isActivityDrop) ? 100 : 20;
+  const points = $("qPoints") ? $("qPoints").value : defaultPoints;
   const hint = $("qHint") ? $("qHint").value.trim() : "";
 
-  const hour = parseInt($("qClockHour") ? $("qClockHour").value : 3, 10) || 12;
+  const hour = parseInt($("qClockHour") ? $("qClockHour").value : 5, 10) || 12;
   const minute = parseInt($("qClockMinute") ? $("qClockMinute").value : 0, 10) || 0;
 
-  const optA = $("qOptA") ? $("qOptA").value.trim() : "";
-  const optB = $("qOptB") ? $("qOptB").value.trim() : "";
-  const optC = $("qOptC") ? $("qOptC").value.trim() : "";
-  const optD = $("qOptD") ? $("qOptD").value.trim() : "";
+  const digiH = ($("qDigitalHour") ? $("qDigitalHour").value.trim() : "05").padStart(2, "0");
+  const digiM = ($("qDigitalMinute") ? $("qDigitalMinute").value.trim() : "00").padStart(2, "0");
+  const chip1 = ($("qChip1") ? $("qChip1").value.trim() : digiH).padStart(2, "0");
+  const chip2 = ($("qChip2") ? $("qChip2").value.trim() : digiM).padStart(2, "0");
+  const chip3 = ($("qChip3") ? $("qChip3").value.trim() : "07").padStart(2, "0");
+  const chip4 = ($("qChip4") ? $("qChip4").value.trim() : "30").padStart(2, "0");
 
-  const correctKey = $("qCorrectKey") ? $("qCorrectKey").value : "A";
+  // Sinkronisasi baris pengaturan jam & opsi builder
+  const clockSettingsRow = $("clockSettingsRow");
+  const clockSettingsLabel = $("clockSettingsLabel");
+  const clockSettingsBadge = $("clockSettingsBadge");
+  const clockSettingsDesc = $("clockSettingsDesc");
+  const digitalClockSettingsRow = $("digitalClockSettingsRow");
+  const timeCompareSettingsRow = $("timeCompareSettingsRow");
+  const activityDropSettingsRow = $("activityDropSettingsRow");
+  const optionsBuilderGroup = $("optionsBuilderGroup");
+  const questionImageUploadRow = $("questionImageUploadRow");
 
-  // Elements
+  if (clockSettingsRow) {
+    clockSettingsRow.classList.toggle("hidden", !isClockDrag && !isClock);
+    if (clockSettingsLabel) {
+      clockSettingsLabel.textContent = isClockDrag
+        ? "Target Waktu Jam Analog (Kunci Jawaban):"
+        : "Waktu Jam Analog yang Ditampilkan:";
+    }
+    if (clockSettingsBadge) {
+      clockSettingsBadge.textContent = isClockDrag ? "Mode Siswa: Putar Jam (L1)" : "Mode Pilihan Ganda";
+    }
+    if (clockSettingsDesc) {
+      clockSettingsDesc.innerHTML = isClockDrag
+        ? 'Murid akan memutar/mengarahkan jarum jam dan menit ke posisi target waktu ini, lalu menekan tombol <strong>"Jawab"</strong>.'
+        : 'Jam analog statis akan menampilkan waktu ini di soal, dan murid memilih salah satu opsi A, B, C, atau D.';
+    }
+  }
+
+  if (digitalClockSettingsRow) {
+    digitalClockSettingsRow.style.display = isClockDrop ? "block" : "none";
+  }
+
+  if (timeCompareSettingsRow) {
+    timeCompareSettingsRow.style.display = isTimeCompare ? "block" : "none";
+  }
+
+  if (activityDropSettingsRow) {
+    activityDropSettingsRow.style.display = isActivityDrop ? "block" : "none";
+  }
+
+  if (optionsBuilderGroup) {
+    optionsBuilderGroup.style.display = (isClockDrag || isClockDrop || isTimeCompare || isActivityDrop) ? "none" : "block";
+  }
+
+  // Tampilkan uploader gambar kustom untuk soal pilihan ganda / teks
+  if (questionImageUploadRow) {
+    questionImageUploadRow.style.display = (!isClockDrag && !isClockDrop && !isTimeCompare && !isActivityDrop) ? "block" : "none";
+  }
+
+  // Pratinjau Gambar Ilustrasi Soal Kustom (Opsional)
+  const qCustomImg = $("qCustomImg") ? $("qCustomImg").value : "";
+  const previewQuestionImgWrap = $("previewQuestionImgWrap");
+  const previewQuestionCustomImg = $("previewQuestionCustomImg");
+  if (previewQuestionImgWrap && previewQuestionCustomImg) {
+    if (qCustomImg && !isClockDrag && !isClockDrop && !isTimeCompare && !isActivityDrop) {
+      previewQuestionImgWrap.style.display = "block";
+      previewQuestionCustomImg.src = qCustomImg;
+    } else {
+      previewQuestionImgWrap.style.display = "none";
+    }
+  }
+
+  // Elements Pratinjau Langsung
   const previewQPointsBadge = $("previewQPointsBadge");
   const previewQText = $("previewQText");
   const previewClockWrap = $("previewClockWrap");
   const previewHourHand = $("previewHourHand");
   const previewMinuteHand = $("previewMinuteHand");
+  const previewDigitalClockWrap = $("previewDigitalClockWrap");
+  const previewSlotHourText = $("previewSlotHourText");
+  const previewSlotMinuteText = $("previewSlotMinuteText");
+  const previewClockDropAction = $("previewClockDropAction");
+  const previewTimeCompareWrap = $("previewTimeCompareWrap");
+  const previewTimeCompareAction = $("previewTimeCompareAction");
+  const previewActivityDropWrap = $("previewActivityDropWrap");
+  const previewActivityDropAction = $("previewActivityDropAction");
+  const previewOptionsGrid = $("previewOptionsGrid");
+  const previewClockDragAction = $("previewClockDragAction");
+
+  if (previewQPointsBadge) previewQPointsBadge.textContent = `${points || defaultPoints} Poin`;
+
+  const targetStr = `${String(hour).padStart(2, "0")}.${String(minute).padStart(2, "0")}`;
+  if (previewQText) {
+    if (qText) {
+      previewQText.textContent = qText;
+    } else if (isClockDrag) {
+      previewQText.textContent = `Halim bangun tidur pukul ${hour} pagi. Arahkan jarum jam ke pukul ${targetStr}!`;
+    } else if (isClockDrop) {
+      previewQText.textContent = `Halim bangun tidur pukul ${parseInt(digiH, 10) || 5} pagi. Pasangkan angka (jam) dan (menit) yang tepat pada jam digital!`;
+    } else if (isTimeCompare) {
+      previewQText.textContent = "Beri tanda centang (✓) pada kegiatan yang lebih lama!";
+    } else if (isActivityDrop) {
+      previewQText.textContent = "Amati gambar dan jam analog berikut! Pasangkan keterangan waktu kegiatan yang tepat:";
+    } else {
+      previewQText.textContent = "Pukul berapakah yang ditunjukkan jam di atas?";
+    }
+  }
+
+  // Tampilkan atau sembunyikan jam analog
+  if (previewClockWrap) {
+    previewClockWrap.style.display = (isClockDrag || isClock) ? "flex" : "none";
+  }
+
+  if ((isClockDrag || isClock) && previewHourHand && previewMinuteHand) {
+    const safeHour = Math.min(Math.max(hour, 1), 12);
+    const safeMin = Math.min(Math.max(minute, 0), 59);
+    const hDeg = ((safeHour % 12) * 30) + (safeMin * 0.5);
+    const mDeg = safeMin * 6;
+    previewHourHand.style.transform = `translateX(-50%) rotate(${hDeg}deg)`;
+    previewMinuteHand.style.transform = `translateX(-50%) rotate(${mDeg}deg)`;
+  }
+
+  // Tampilkan atau sembunyikan jam digital alarm (L2)
+  if (previewDigitalClockWrap) {
+    previewDigitalClockWrap.style.display = isClockDrop ? "block" : "none";
+    if (previewSlotHourText) previewSlotHourText.textContent = digiH;
+    if (previewSlotMinuteText) previewSlotMinuteText.textContent = digiM;
+  }
+
+  // Visibilitas tombol Jawab (clock_drag / clock_drop) vs Opsi Pilihan Ganda (MCQ)
+  if (previewClockDragAction) {
+    previewClockDragAction.style.display = isClockDrag ? "block" : "none";
+  }
+
+  if (previewClockDropAction) {
+    previewClockDropAction.style.display = isClockDrop ? "block" : "none";
+    if ($("previewChip1")) $("previewChip1").innerHTML = `<span>${escapeHTML(chip1)}</span>`;
+    if ($("previewChip2")) $("previewChip2").innerHTML = `<span>${escapeHTML(chip2)}</span>`;
+    if ($("previewChip3")) $("previewChip3").innerHTML = `<span>${escapeHTML(chip3)}</span>`;
+    if ($("previewChip4")) $("previewChip4").innerHTML = `<span>${escapeHTML(chip4)}</span>`;
+  }
+
+  // Pratinjau Level 3: Perbandingan Kegiatan (time_compare)
+  if (previewTimeCompareWrap) {
+    previewTimeCompareWrap.style.display = isTimeCompare ? "flex" : "none";
+    if (isTimeCompare) {
+      const label1 = $("qCompareLabel1") ? $("qCompareLabel1").value.trim() || "Kegiatan 1" : "Menyisir rambut";
+      const img1 = $("qCompareImg1") ? $("qCompareImg1").value.trim() || "assets/images/activity_combing.png" : "assets/images/activity_combing.png";
+      const label2 = $("qCompareLabel2") ? $("qCompareLabel2").value.trim() || "Kegiatan 2" : "Mandi";
+      const img2 = $("qCompareImg2") ? $("qCompareImg2").value.trim() || "assets/images/activity_bathing.png" : "assets/images/activity_bathing.png";
+
+      const radio = document.querySelector('input[name="qTimeCompareCorrect"]:checked');
+      const correctIdx = radio ? parseInt(radio.value, 10) : 1;
+
+      if ($("previewCompareLabel0")) $("previewCompareLabel0").textContent = label1;
+      if ($("previewCompareImg0")) $("previewCompareImg0").src = img1;
+      if ($("previewCompareLabel1")) $("previewCompareLabel1").textContent = label2;
+      if ($("previewCompareImg1")) $("previewCompareImg1").src = img2;
+
+      const card0 = $("previewCompareCard0");
+      const card1 = $("previewCompareCard1");
+      const chk0 = $("previewCompareChk0");
+      const chk1 = $("previewCompareChk1");
+
+      if (card0) {
+        card0.classList.toggle("selected", correctIdx === 0);
+        card0.classList.toggle("card-correct", correctIdx === 0);
+      }
+      if (card1) {
+        card1.classList.toggle("selected", correctIdx === 1);
+        card1.classList.toggle("card-correct", correctIdx === 1);
+      }
+      if (chk0) chk0.textContent = correctIdx === 0 ? "✓" : "...";
+      if (chk1) chk1.textContent = correctIdx === 1 ? "✓" : "...";
+    }
+  }
+
+  if (previewTimeCompareAction) {
+    previewTimeCompareAction.style.display = isTimeCompare ? "block" : "none";
+  }
+
+  // Pratinjau Level 4: Waktu Kegiatan (clock_activity_drop)
+  if (previewActivityDropWrap) {
+    previewActivityDropWrap.style.display = isActivityDrop ? "flex" : "none";
+    if (isActivityDrop) {
+      const actCorrectAns = $("qActivityCorrectAnswer") ? $("qActivityCorrectAnswer").value.trim() || "Pukul 7 pagi" : "Pukul 7 pagi";
+      const actImg = ($("qActivityImg") && $("qActivityImg").dataset.customUrl && ($("qActivityImg").value === "custom" || $("qActivityImg").value.startsWith("data:")))
+        ? $("qActivityImg").dataset.customUrl
+        : ($("qActivityImg") ? $("qActivityImg").value : "assets/images/time_activity_school.png");
+      const actChip1 = $("qActChip1") ? $("qActChip1").value.trim() || actCorrectAns : "Pukul 7 pagi";
+      const actChip2 = $("qActChip2") ? $("qActChip2").value.trim() || "Pukul 7 malam" : "Pukul 7 malam";
+      const actChip3 = $("qActChip3") ? $("qActChip3").value.trim() || "Pukul 8 pagi" : "Pukul 8 pagi";
+      const actChip4 = $("qActChip4") ? $("qActChip4").value.trim() || "Pukul 12 siang" : "Pukul 12 siang";
+
+      if ($("previewActivityImg")) $("previewActivityImg").src = actImg;
+      if ($("previewActivitySlotText")) $("previewActivitySlotText").textContent = actCorrectAns;
+
+      const c1El = $("previewActChip1");
+      const c2El = $("previewActChip2");
+      const c3El = $("previewActChip3");
+      const c4El = $("previewActChip4");
+
+      if (c1El) {
+        c1El.innerHTML = `<span>${escapeHTML(actChip1)}</span>`;
+        c1El.classList.toggle("is-placed-slot", actChip1.toLowerCase() === actCorrectAns.toLowerCase());
+      }
+      if (c2El) {
+        c2El.innerHTML = `<span>${escapeHTML(actChip2)}</span>`;
+        c2El.classList.toggle("is-placed-slot", actChip2.toLowerCase() === actCorrectAns.toLowerCase());
+      }
+      if (c3El) {
+        c3El.innerHTML = `<span>${escapeHTML(actChip3)}</span>`;
+        c3El.classList.toggle("is-placed-slot", actChip3.toLowerCase() === actCorrectAns.toLowerCase());
+      }
+      if (c4El) {
+        c4El.innerHTML = `<span>${escapeHTML(actChip4)}</span>`;
+        c4El.classList.toggle("is-placed-slot", actChip4.toLowerCase() === actCorrectAns.toLowerCase());
+      }
+    }
+  }
+
+  if (previewActivityDropAction) {
+    previewActivityDropAction.style.display = isActivityDrop ? "block" : "none";
+  }
+
+  if (previewOptionsGrid) {
+    previewOptionsGrid.style.display = (isClockDrag || isClockDrop || isTimeCompare || isActivityDrop) ? "none" : "grid";
+  }
+
+  // Teks Opsi Jawaban MCQ
+  const optA = $("qOptA") ? $("qOptA").value.trim() : "";
+  const optB = $("qOptB") ? $("qOptB").value.trim() : "";
+  const optC = $("qOptC") ? $("qOptC").value.trim() : "";
+  const optD = $("qOptD") ? $("qOptD").value.trim() : "";
+  const correctKey = $("qCorrectKey") ? $("qCorrectKey").value : "A";
 
   const previewOptTextA = $("previewOptTextA");
   const previewOptTextB = $("previewOptTextB");
@@ -438,39 +678,19 @@ function updateQuestionLivePreview() {
   const previewOptC = $("previewOptC");
   const previewOptD = $("previewOptD");
 
-  const previewHintWrap = $("previewHintWrap");
-  const previewHintText = $("previewHintText");
-
-  if (previewQPointsBadge) previewQPointsBadge.textContent = `${points || 20} Poin`;
-  if (previewQText) previewQText.textContent = qText || "Pukul berapakah yang ditunjukkan jam di atas?";
-
-  // Tampilkan atau sembunyikan jam analog berdasarkan tipe soal
-  if (previewClockWrap) {
-    previewClockWrap.style.display = tipe === "clock" ? "flex" : "none";
-  }
-
-  if (tipe === "clock" && previewHourHand && previewMinuteHand) {
-    const safeHour = Math.min(Math.max(hour, 1), 12);
-    const safeMin = Math.min(Math.max(minute, 0), 59);
-    const hDeg = ((safeHour % 12) * 30) + (safeMin * 0.5);
-    const mDeg = safeMin * 6;
-    previewHourHand.style.transform = `translateX(-50%) rotate(${hDeg}deg)`;
-    previewMinuteHand.style.transform = `translateX(-50%) rotate(${mDeg}deg)`;
-  }
-
-  // Teks Opsi Jawaban
   if (previewOptTextA) previewOptTextA.textContent = optA || "Pilihan A";
   if (previewOptTextB) previewOptTextB.textContent = optB || "Pilihan B";
   if (previewOptTextC) previewOptTextC.textContent = optC || "Pilihan C";
   if (previewOptTextD) previewOptTextD.textContent = optD || "Pilihan D";
 
-  // Penanda Jawaban Benar
   if (previewOptA) previewOptA.classList.toggle("is-answer", correctKey === "A");
   if (previewOptB) previewOptB.classList.toggle("is-answer", correctKey === "B");
   if (previewOptC) previewOptC.classList.toggle("is-answer", correctKey === "C");
   if (previewOptD) previewOptD.classList.toggle("is-answer", correctKey === "D");
 
   // Petunjuk Hint
+  const previewHintWrap = $("previewHintWrap");
+  const previewHintText = $("previewHintText");
   if (previewHintWrap && previewHintText) {
     if (hint) {
       previewHintWrap.style.display = "block";
@@ -490,14 +710,36 @@ function renderTeacherMaterials() {
 
   const allMaterials = typeof getMaterials === "function" ? getMaterials() : [];
 
-  // Update badge count
+  // Update badge count utama & badge per level
   const badge = $("matCountBadge");
   if (badge) badge.textContent = allMaterials.length;
 
-  body.innerHTML = "";
+  const countAll = allMaterials.length;
+  const countL1 = allMaterials.filter(m => String(m.level) === "1").length;
+  const countL2 = allMaterials.filter(m => String(m.level) === "2").length;
+  const countL3 = allMaterials.filter(m => String(m.level) === "3").length;
+  const countL4 = allMaterials.filter(m => String(m.level) === "4").length;
+
+  if ($("pillMatCountAll")) $("pillMatCountAll").textContent = countAll;
+  if ($("pillMatCountL1")) $("pillMatCountL1").textContent = countL1;
+  if ($("pillMatCountL2")) $("pillMatCountL2").textContent = countL2;
+  if ($("pillMatCountL3")) $("pillMatCountL3").textContent = countL3;
+  if ($("pillMatCountL4")) $("pillMatCountL4").textContent = countL4;
+
   const filterVal = $("filterMaterialLevel") ? $("filterMaterialLevel").value : "all";
   const searchVal = $("searchMaterialInput") ? $("searchMaterialInput").value.trim().toLowerCase() : "";
 
+  // Sinkronisasi status aktif tombol pill bar level materi
+  document.querySelectorAll("#matLevelPillsBar .level-pill-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.level === filterVal);
+  });
+
+  const quickAddMatBtn = $("btnQuickAddMatForLevel");
+  if (quickAddMatBtn) {
+    quickAddMatBtn.textContent = filterVal === "all" ? "➕ Tambah Materi Baru" : `➕ Tambah Materi Level ${filterVal}`;
+  }
+
+  body.innerHTML = "";
   let filtered = allMaterials;
 
   if (filterVal !== "all") {
@@ -568,15 +810,37 @@ function renderTeacherQuestions() {
 
   const allQuestions = typeof getQuestions === "function" ? getQuestions() : [];
 
-  // Update badge count
+  // Update badge count utama & badge per level
   const badge = $("qCountBadge");
   if (badge) badge.textContent = allQuestions.length;
 
-  body.innerHTML = "";
+  const countAll = allQuestions.length;
+  const countL1 = allQuestions.filter(q => String(q.level) === "1").length;
+  const countL2 = allQuestions.filter(q => String(q.level) === "2").length;
+  const countL3 = allQuestions.filter(q => String(q.level) === "3").length;
+  const countL4 = allQuestions.filter(q => String(q.level) === "4").length;
+
+  if ($("pillQCountAll")) $("pillQCountAll").textContent = countAll;
+  if ($("pillQCountL1")) $("pillQCountL1").textContent = countL1;
+  if ($("pillQCountL2")) $("pillQCountL2").textContent = countL2;
+  if ($("pillQCountL3")) $("pillQCountL3").textContent = countL3;
+  if ($("pillQCountL4")) $("pillQCountL4").textContent = countL4;
+
   const filterVal = $("filterQuestionLevel") ? $("filterQuestionLevel").value : "all";
   const filterType = $("filterQuestionType") ? $("filterQuestionType").value : "all";
   const searchVal = $("searchQuestionInput") ? $("searchQuestionInput").value.trim().toLowerCase() : "";
 
+  // Sinkronisasi status aktif tombol pill bar level kuis
+  document.querySelectorAll("#qLevelPillsBar .level-pill-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.level === filterVal);
+  });
+
+  const quickAddQBtn = $("btnQuickAddQForLevel");
+  if (quickAddQBtn) {
+    quickAddQBtn.textContent = filterVal === "all" ? "➕ Buat Soal Baru" : `➕ Buat Soal Level ${filterVal}`;
+  }
+
+  body.innerHTML = "";
   let filtered = allQuestions;
 
   if (filterVal !== "all") {
@@ -584,15 +848,15 @@ function renderTeacherQuestions() {
   }
 
   if (filterType !== "all") {
-    filtered = filtered.filter(q => (q.tipe || "clock") === filterType);
+    filtered = filtered.filter(q => (q.type || q.tipe || "clock") === filterType);
   }
 
   if (searchVal) {
     filtered = filtered.filter(q => {
-      const qText = (q.pertanyaan || "").toLowerCase();
+      const qText = (q.pertanyaan || q.question || "").toLowerCase();
       const hint = (q.hint || "").toLowerCase();
-      const explanation = (q.penjelasan || "").toLowerCase();
-      const optionsText = Array.isArray(q.pilihan) ? q.pilihan.join(" ").toLowerCase() : "";
+      const explanation = (q.penjelasan || q.explanation || "").toLowerCase();
+      const optionsText = Array.isArray(q.pilihan || q.options) ? (q.pilihan || q.options).join(" ").toLowerCase() : "";
       return qText.includes(searchVal) || hint.includes(searchVal) || explanation.includes(searchVal) || optionsText.includes(searchVal);
     });
   }
@@ -614,26 +878,68 @@ function renderTeacherQuestions() {
 
   filtered.forEach((q, index) => {
     const row = document.createElement("tr");
-    const isClock = q.tipe === "clock";
-    const clockLabel = isClock
-      ? `<div class="muted small" style="margin-top:2px;">🕒 Pukul ${String(q.jam ?? 12).padStart(2, "0")}.${String(q.menit ?? 0).padStart(2, "0")}</div>`
-      : "";
+    const qType = q.type || q.tipe || (q.level === 1 ? "clock_drag" : "text");
+    const isClockDrag = qType === "clock_drag";
+    const isClock = qType === "clock";
+    const isClockDrop = qType === "clock_drop";
+    const isTimeCompare = qType === "time_compare";
+    const isActivityDrop = qType === "clock_activity_drop";
 
-    const typeBadge = isClock
-      ? `<span class="badge badge-accent">Analog</span>`
-      : `<span class="badge badge-outline">Teks</span>`;
+    let typeBadge = `<span class="badge badge-outline">Teks</span>`;
+    let targetLabel = "";
+    let answerHtml = "";
 
-    let correctKeyLetter = "A";
-    let correctText = "";
-    if (typeof q.kunci === "number") {
-      correctKeyLetter = letters[q.kunci] || "A";
-      correctText = Array.isArray(q.pilihan) && q.pilihan[q.kunci] ? q.pilihan[q.kunci] : "";
-    } else if (typeof q.kunci === "string") {
-      correctKeyLetter = q.kunci.toUpperCase();
-      const idx = letters.indexOf(correctKeyLetter);
-      if (idx !== -1 && Array.isArray(q.pilihan)) {
-        correctText = q.pilihan[idx] || "";
+    if (isClockDrag) {
+      typeBadge = `<span class="badge badge-accent">🕒 Putar Jam (L1)</span>`;
+      const h = q.targetHour ?? q.jam ?? 12;
+      const m = q.targetMinute ?? q.menit ?? 0;
+      const targetStr = `${String(h).padStart(2, "0")}.${String(m).padStart(2, "0")}`;
+      targetLabel = `<div class="muted small" style="margin-top:2px;">🎯 Target: <strong>Pukul ${targetStr}</strong></div>`;
+      answerHtml = `<span class="badge badge-green" style="font-weight:900;">Pukul ${targetStr}</span>`;
+    } else if (isClockDrop) {
+      typeBadge = `<span class="badge badge-blue">🔢 Jam Digital (L2)</span>`;
+      const h = q.targetHour ?? "05";
+      const m = q.targetMinute ?? "00";
+      targetLabel = `<div class="muted small" style="margin-top:2px;">🎯 Jam: ${h} : ${m}</div>`;
+      answerHtml = `<span class="badge badge-green" style="font-weight:900;">${h}:${m}</span>`;
+    } else if (isTimeCompare) {
+      typeBadge = `<span class="badge badge-yellow">⏱️ Perbandingan (L3)</span>`;
+      const ansText = Array.isArray(q.options) && q.correct !== undefined ? q.options[q.correct] : (q.options ? q.options[0] : "-");
+      answerHtml = `<span class="badge badge-green" style="font-weight:900;">${escapeHTML(ansText)}</span>`;
+    } else if (isActivityDrop) {
+      typeBadge = `<span class="badge badge-accent">📅 Waktu Kegiatan (L4)</span>`;
+      answerHtml = `<span class="badge badge-green" style="font-weight:900;">${escapeHTML(q.targetAnswer || "-")}</span>`;
+    } else if (isClock) {
+      typeBadge = `<span class="badge badge-accent">🕒 Analog (MCQ)</span>`;
+      const h = q.jam ?? 12;
+      const m = q.menit ?? 0;
+      targetLabel = `<div class="muted small" style="margin-top:2px;">🕒 Pukul ${String(h).padStart(2, "0")}.${String(m).padStart(2, "0")}</div>`;
+      let correctKeyLetter = "A";
+      let correctText = "";
+      const opts = q.pilihan || q.options || [];
+      if (typeof q.kunci === "number") {
+        correctKeyLetter = letters[q.kunci] || "A";
+        correctText = opts[q.kunci] || "";
+      } else if (typeof q.kunci === "string") {
+        correctKeyLetter = q.kunci.toUpperCase();
+        const idx = letters.indexOf(correctKeyLetter);
+        if (idx !== -1) correctText = opts[idx] || "";
       }
+      answerHtml = `<span class="badge badge-green" style="font-weight:900;">${correctKeyLetter}</span> <span class="small" style="margin-left:4px;font-weight:600;">${escapeHTML(correctText)}</span>`;
+    } else {
+      let correctKeyLetter = "A";
+      let correctText = "";
+      const opts = q.pilihan || q.options || [];
+      if (typeof q.kunci === "number" || typeof q.correct === "number") {
+        const kIdx = q.kunci !== undefined ? q.kunci : q.correct;
+        correctKeyLetter = letters[kIdx] || "A";
+        correctText = opts[kIdx] || "";
+      } else if (typeof q.kunci === "string") {
+        correctKeyLetter = q.kunci.toUpperCase();
+        const idx = letters.indexOf(correctKeyLetter);
+        if (idx !== -1) correctText = opts[idx] || "";
+      }
+      answerHtml = `<span class="badge badge-green" style="font-weight:900;">${correctKeyLetter}</span> <span class="small" style="margin-left:4px;font-weight:600;">${escapeHTML(correctText)}</span>`;
     }
 
     row.innerHTML = `
@@ -641,15 +947,12 @@ function renderTeacherQuestions() {
       <td><span class="badge badge-primary">Lvl ${q.level}</span></td>
       <td>${typeBadge}</td>
       <td style="line-height:1.4;">
-        <strong>${escapeHTML(q.pertanyaan)}</strong>
-        ${clockLabel}
+        <strong>${escapeHTML(q.pertanyaan || q.question || "")}</strong>
+        ${targetLabel}
         ${q.hint ? `<div class="muted small" style="margin-top:2px;">💡 <em>Hint:</em> ${escapeHTML(q.hint)}</div>` : ""}
       </td>
-      <td>
-        <span class="badge badge-green" style="font-weight:900;">${correctKeyLetter}</span>
-        <span class="small" style="margin-left:4px;font-weight:600;">${escapeHTML(correctText)}</span>
-      </td>
-      <td><span class="badge badge-yellow" style="font-weight:900;">${q.poin ?? 20}</span></td>
+      <td>${answerHtml}</td>
+      <td><span class="badge badge-yellow" style="font-weight:900;">${q.poin ?? q.points ?? (isClockDrag ? 100 : 20)}</span></td>
       <td style="text-align:center;">
         <button type="button" class="btn btn-outline btn-sm" style="padding:4px 8px;color:var(--pink);border-color:var(--pink);font-size:0.8rem;" onclick="handleDeleteQuestion('${escapeHTML(q.id)}')">
           Hapus
@@ -902,6 +1205,7 @@ function initTeacherEvents() {
       const judul = $("matJudul").value.trim();
       const isi = $("matIsi").value.trim();
       const tip = $("matTip") ? $("matTip").value.trim() : "";
+      const img = $("matImg") ? $("matImg").value : "";
 
       if (!judul || !isi) {
         showToast("Judul dan penjelasan materi wajib diisi.", "error");
@@ -914,7 +1218,8 @@ function initTeacherEvents() {
         level,
         judul,
         isi,
-        tip
+        tip,
+        img: img || undefined
       };
 
       materials.push(newMaterial);
@@ -923,6 +1228,12 @@ function initTeacherEvents() {
       }
 
       singleMaterialForm.reset();
+      if ($("matImg")) $("matImg").value = "";
+      if ($("thumbMatImg")) $("thumbMatImg").src = "assets/icons/book-open.svg";
+      if ($("labelUploadedMat")) { $("labelUploadedMat").style.display = "none"; $("labelUploadedMat").textContent = ""; }
+      if ($("btnClearMatImg")) $("btnClearMatImg").style.display = "none";
+      if ($("fileMatImg")) $("fileMatImg").value = "";
+
       $("matLevel").value = String(level);
       updateMaterialLivePreview();
       showToast("Materi baru berhasil disimpan & diterbitkan!", "success");
@@ -979,6 +1290,7 @@ function initTeacherEvents() {
   }
 
   // 3. Tombol Eksekusi Upload Bulk Excel / CSV Materi
+  // 3. Tombol Eksekusi Upload Bulk Excel / CSV Materi (Mendukung Target Level & Mode Ganti/Tambah)
   const btnUploadMatCsv = $("btnUploadMaterialCsv");
   if (btnUploadMatCsv && matFileInput) {
     btnUploadMatCsv.addEventListener("click", async () => {
@@ -988,6 +1300,8 @@ function initTeacherEvents() {
       }
 
       const file = matFileInput.files[0];
+      const targetLevelVal = $("uploadMaterialTargetLevel") ? $("uploadMaterialTargetLevel").value : "all";
+      const importMode = document.querySelector('input[name="matImportMode"]:checked')?.value || "append";
 
       try {
         const parsedRows = await readSpreadsheetFile(file);
@@ -996,18 +1310,27 @@ function initTeacherEvents() {
           return;
         }
 
-        const currentMaterials = typeof getMaterials === "function" ? getMaterials() : [];
-        let addedCount = 0;
+        let currentMaterials = typeof getMaterials === "function" ? getMaterials() : [];
 
+        // Jika mode replace, hapus materi lama pada level target atau semua level
+        if (importMode === "replace") {
+          if (targetLevelVal !== "all") {
+            currentMaterials = currentMaterials.filter(m => String(m.level) !== targetLevelVal);
+          } else {
+            currentMaterials = [];
+          }
+        }
+
+        let addedCount = 0;
         parsedRows.forEach((row, idx) => {
-          // Normalisasi key (case-insensitive)
           const keys = Object.keys(row);
           const getVal = keyName => {
             const found = keys.find(k => k.trim().toLowerCase() === keyName.toLowerCase());
             return found ? String(row[found]).trim() : "";
           };
 
-          const level = parseInt(getVal("level"), 10) || 1;
+          const rawLevel = parseInt(getVal("level"), 10) || 1;
+          const finalLevel = targetLevelVal !== "all" ? parseInt(targetLevelVal, 10) : Math.min(Math.max(rawLevel, 1), 4);
           const judul = getVal("judul") || getVal("title");
           const isi = getVal("isi") || getVal("penjelasan") || getVal("content");
           const tip = getVal("tip") || getVal("tips") || "";
@@ -1015,7 +1338,7 @@ function initTeacherEvents() {
           if (judul && isi) {
             currentMaterials.push({
               id: "mat_bulk_" + Date.now() + "_" + idx,
-              level: Math.min(Math.max(level, 1), 5),
+              level: finalLevel,
               judul,
               isi,
               tip
@@ -1028,11 +1351,15 @@ function initTeacherEvents() {
           if (typeof saveMaterials === "function") {
             saveMaterials(currentMaterials);
           }
-          showToast(`Berhasil menambahkan ${addedCount} materi baru dari berkas spreadsheet!`, "success");
+          const levelInfo = targetLevelVal !== "all" ? `Level ${targetLevelVal}` : "Semua Level";
+          showToast(`Berhasil menambahkan ${addedCount} materi baru untuk ${levelInfo}!`, "success");
           matFileInput.value = "";
           if (matFileLabel) {
             matFileLabel.textContent = "";
             matFileLabel.classList.add("hidden");
+          }
+          if (targetLevelVal !== "all" && $("filterMaterialLevel")) {
+            $("filterMaterialLevel").value = targetLevelVal;
           }
           setMaterialSubtab("mat-list");
         } else {
@@ -1040,42 +1367,60 @@ function initTeacherEvents() {
         }
       } catch (err) {
         console.error("Gagal membaca berkas materi:", err);
-        showToast("Terjadi kesalahan saat memproses berkas spreadsheet.", "error");
+        showToast("Terjadi kesalahan saat memproses berkas spreadsheet materi.", "error");
       }
     });
   }
 
-  // 4. Unduh Template Excel Materi (.xlsx)
+  // 4. Unduh Template Excel Materi (.xlsx) Mendukung per Level
+  function downloadMaterialTemplate(targetLevel = "all") {
+    const allRows = [
+      ["level", "judul", "isi", "tip"],
+      [1, "Mengenal Jarum Jam Pendek & Panjang", "Jarum pendek menunjukkan jam dan jarum panjang menunjukkan menit. Pada jam tepat, jarum panjang selalu di angka 12.", "Jarum pendek = Jam, jarum panjang = Menit."],
+      [1, "Membaca Jam Bulat Tepat", "Jika jarum pendek di angka 5 dan jarum panjang di angka 12, maka dibaca pukul 5 tepat (05.00).", "Angka 12 pada jarum panjang selalu bernilai menit 00."],
+      [2, "Mengenal Format Jam Digital", "Jam digital menampilkan waktu menggunakan angka. Dua angka di depan menunjukkan jam, dan dua angka di belakang menunjukkan menit.", "Format: [JAM] : [MENIT]"],
+      [2, "Membaca Waktu 05:00 pada Jam Digital", "Angka 05 di depan adalah jam 5, dan angka 00 di belakang adalah menit 00 (tepat).", "05:00 dibaca pukul lima tepat."],
+      [3, "Arti Waktu Lama dan Sebentar", "Kegiatan yang memerlukan waktu banyak disebut waktu lama (contoh: tidur malam, belajar di sekolah). Kegiatan yang cepat selesai disebut waktu sebentar (contoh: minum, menggosok gigi).", "Lama = butuh banyak waktu, Sebentar = butuh sedikit waktu."],
+      [3, "Membandingkan Durasi Dua Kegiatan", "Memasak sup memerlukan waktu lebih lama daripada mencuci tangan. Mencuci tangan memerlukan waktu lebih sebentar daripada memasak.", "Bandingkan berapa lama kegiatan biasanya berlangsung."],
+      [4, "Mengenal Waktu Pagi, Siang, Sore, dan Malam", "Pukul 6 pagi waktu sarapan dan bersiap sekolah. Pukul 1 siang pulang sekolah. Pukul 4 sore bermain di taman. Pukul 8 malam belajar dan tidur.", "Perhatikan posisi jarum jam dan kondisi waktu kegiatan."],
+      [4, "Menuliskan Keterangan Waktu Kegiatan", "Tuliskan keterangan lengkap seperti 'Pukul 7 pagi' atau 'Pukul 8 malam' sesuai dengan gambar kegiatan.", "Bedakan pagi (berangkat sekolah) dan malam (tidur)."]
+    ];
+
+    let rows = [allRows[0]];
+    if (targetLevel !== "all") {
+      rows.push(...allRows.slice(1).filter(r => String(r[0]) === String(targetLevel)));
+    } else {
+      rows = allRows;
+    }
+
+    const fileName = targetLevel === "all" ? "template_materi_semua_level.xlsx" : `template_materi_level_${targetLevel}.xlsx`;
+
+    if (typeof XLSX !== "undefined") {
+      const wb = XLSX.utils.book_new();
+      const ws = XLSX.utils.aoa_to_sheet(rows);
+      ws["!cols"] = [{ wch: 8 }, { wch: 35 }, { wch: 60 }, { wch: 40 }];
+      XLSX.utils.book_append_sheet(wb, ws, "Template Materi");
+      XLSX.writeFile(wb, fileName);
+      showToast(`Template Excel materi (${targetLevel === "all" ? "Semua Level" : "Level " + targetLevel}) berhasil diunduh!`, "success");
+    } else if (typeof CSV !== "undefined" && typeof CSV.stringify === "function") {
+      const headers = rows[0];
+      const dataRows = rows.slice(1).map(r => r.map(String));
+      const csvContent = CSV.stringify(headers, dataRows);
+      CSV.download(fileName.replace(".xlsx", ".csv"), csvContent);
+      showToast("Template CSV materi berhasil diunduh!", "success");
+    }
+  }
+
   const btnTemplateMat = $("btnTemplateMaterialCsv");
   if (btnTemplateMat) {
-    btnTemplateMat.addEventListener("click", () => {
-      if (typeof XLSX !== "undefined") {
-        const wb = XLSX.utils.book_new();
-        const rows = [
-          ["level", "judul", "isi", "tip"],
-          [1, "Mengenal Jarum Jam Pendek & Panjang", "Jarum pendek menunjukkan jam dan jarum panjang menunjukkan menit. Pada jam bulat, jarum panjang selalu tepat di angka 12.", "Jarum pendek = Jam, jarum panjang = Menit."],
-          [2, "Membaca Jam Setengah (Menit 30)", "Jika jarum panjang berada di angka 6, artinya waktu telah lewat 30 menit atau setengah jam.", "Angka 6 pada jarum panjang selalu bernilai 30 menit."],
-          [3, "Membaca Jam Seperempat (Menit 15 & 45)", "Jarum panjang di angka 3 artinya lewat 15 menit (seperempat jam). Jarum panjang di angka 9 artinya lewat 45 menit atau kurang 15 menit.", "15 menit = seperempat jam."],
-          [4, "Menit Kelipatan 5", "Setiap angka pada jam analog mewakili kelipatan 5 menit. Angka 1 = 5 menit, angka 2 = 10 menit, dst.", "Kalikan angka yang ditunjuk jarum panjang dengan 5."],
-          [5, "Waktu 24 Jam & Durasi Kegiatan", "Pukul 1 siang ditulis 13.00, pukul 8 malam ditulis 20.00. Durasi kegiatan dihitung dari waktu selesai dikurangi waktu mulai.", "Format 24 jam: Jam siang/malam ditambah 12."]
-        ];
-        const ws = XLSX.utils.aoa_to_sheet(rows);
-        ws["!cols"] = [{ wch: 8 }, { wch: 35 }, { wch: 60 }, { wch: 40 }];
-        XLSX.utils.book_append_sheet(wb, ws, "Template Materi");
-        XLSX.writeFile(wb, "template_materi_timequest.xlsx");
-        showToast("Template Excel materi (.xlsx) berhasil diunduh!", "success");
-      } else if (typeof CSV !== "undefined" && typeof CSV.stringify === "function") {
-        const headers = ["level", "judul", "isi", "tip"];
-        const rows = [
-          ["1", "Mengenal Jarum Jam Pendek dan Panjang", "Jarum pendek menunjukkan jam dan jarum panjang menunjukkan menit. Pada jam bulat, jarum panjang tepat di angka 12.", "Jarum pendek bergerak lambat, jarum panjang bergerak lebih cepat."],
-          ["2", "Membaca Waktu Setengah Jam", "Jika jarum panjang menunjuk tepat ke angka 6, artinya waktu telah lewat 30 menit atau setengah jam.", "Pukul 02.30 sama dengan setengah tiga."]
-        ];
-        const csvContent = CSV.stringify(headers, rows);
-        CSV.download("template_materi_timequest.csv", csvContent);
-        showToast("Template CSV materi berhasil diunduh!", "success");
-      }
-    });
+    btnTemplateMat.addEventListener("click", () => downloadMaterialTemplate("all"));
   }
+
+  document.querySelectorAll(".btn-template-mat-level").forEach(btn => {
+    btn.addEventListener("click", () => {
+      downloadMaterialTemplate(btn.dataset.level);
+    });
+  });
 
   // 5. Reset Materi ke Data Awal
   const btnResetMat = $("btnResetMaterials");
@@ -1097,16 +1442,80 @@ function initTeacherEvents() {
     filterMatLevel.addEventListener("change", renderTeacherMaterials);
   }
 
+  // 6b. Filter Pill Bar Level Materi & Tombol Cepat Tambah Materi Level Ini
+  document.querySelectorAll("#matLevelPillsBar .level-pill-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const level = btn.dataset.level || "all";
+      if ($("filterMaterialLevel")) {
+        $("filterMaterialLevel").value = level;
+      }
+      renderTeacherMaterials();
+    });
+  });
+
+  const btnQuickAddMat = $("btnQuickAddMatForLevel");
+  if (btnQuickAddMat) {
+    btnQuickAddMat.addEventListener("click", () => {
+      const currentLevel = $("filterMaterialLevel") ? $("filterMaterialLevel").value : "all";
+      if (currentLevel !== "all" && $("matLevel")) {
+        $("matLevel").value = currentLevel;
+      }
+      setMaterialSubtab("mat-create");
+      updateMaterialLivePreview();
+      const inputJudul = $("matJudul");
+      if (inputJudul) inputJudul.focus();
+    });
+  }
+
   // =========================================================
   // KELOLA SOAL KUIS (FORM SATU PER SATU & BULK CSV)
   // =========================================================
 
-  // 1. Toggle Jam Analog saat Tipe Soal Berubah
+  // 1. Toggle Jam Analog & Visibilitas Opsi saat Tipe Soal Berubah
   const qTypeSelect = $("qType");
-  const clockSettingsRow = $("clockSettingsRow");
-  if (qTypeSelect && clockSettingsRow) {
+  if (qTypeSelect) {
     qTypeSelect.addEventListener("change", () => {
-      clockSettingsRow.classList.toggle("hidden", qTypeSelect.value !== "clock");
+      updateQuestionLivePreview();
+    });
+  }
+
+  // 1b. Otomatisasi pemilihan tipe soal saat level kuis diubah
+  const qLevelSelect = $("qLevel");
+  if (qLevelSelect) {
+    qLevelSelect.addEventListener("change", () => {
+      const selectedLvl = qLevelSelect.value;
+      if (qTypeSelect) {
+        if (selectedLvl === "1") {
+          qTypeSelect.value = "clock_drag";
+        } else if (selectedLvl === "2") {
+          qTypeSelect.value = "clock_drop";
+        } else if (selectedLvl === "3") {
+          qTypeSelect.value = "time_compare";
+        } else if (selectedLvl === "4") {
+          qTypeSelect.value = "clock_activity_drop";
+        } else {
+          qTypeSelect.value = "text";
+        }
+      }
+      const pointsInput = $("qPoints");
+      if (pointsInput) {
+        pointsInput.value = (selectedLvl === "1" || selectedLvl === "2" || selectedLvl === "3" || selectedLvl === "4") ? "100" : "20";
+      }
+      const qTextInput = $("qText");
+      if (qTextInput && !qTextInput.value.trim()) {
+        if (selectedLvl === "1") {
+          qTextInput.placeholder = "Contoh: Halim bangun tidur pukul 5 pagi. Arahkan jarum jam ke pukul 05.00!";
+        } else if (selectedLvl === "2") {
+          qTextInput.placeholder = "Contoh: Halim bangun tidur pukul 5 pagi. Pasangkan angka (jam) dan (menit) yang tepat pada jam digital!";
+        } else if (selectedLvl === "3") {
+          qTextInput.placeholder = "Contoh: Beri tanda centang (✓) pada kegiatan yang lebih lama!";
+        } else if (selectedLvl === "4") {
+          qTextInput.placeholder = "Contoh: Amati gambar dan jam analog berikut! Pasangkan keterangan waktu kegiatan yang tepat:";
+        } else {
+          qTextInput.placeholder = "Contoh: Kalimat pertanyaan soal kuis...";
+        }
+      }
+      updateQuestionLivePreview();
     });
   }
 
@@ -1119,43 +1528,183 @@ function initTeacherEvents() {
       const level = parseInt($("qLevel").value, 10) || 1;
       const tipe = $("qType").value;
       const pertanyaan = $("qText").value.trim();
-      const optA = $("qOptA").value.trim();
-      const optB = $("qOptB").value.trim();
-      const optC = $("qOptC").value.trim();
-      const optD = $("qOptD").value.trim();
-      const correctKeyLetter = $("qCorrectKey").value;
-      const poin = parseInt($("qPoints").value, 10) || 20;
+      const isClockDrag = tipe === "clock_drag";
+      const isClockDrop = tipe === "clock_drop";
+      const isTimeCompare = tipe === "time_compare";
+      const isActivityDrop = tipe === "clock_activity_drop";
+      const poin = parseInt($("qPoints").value, 10) || ((isClockDrag || isClockDrop || isTimeCompare || isActivityDrop) ? 100 : 20);
       const hint = $("qHint") ? $("qHint").value.trim() : "";
       const penjelasan = $("qExplanation") ? $("qExplanation").value.trim() : "";
 
-      if (!pertanyaan || !optA || !optB || !optC || !optD) {
-        showToast("Pertanyaan dan semua pilihan (A, B, C, D) wajib diisi.", "error");
+      if (!pertanyaan) {
+        showToast("Kalimat pertanyaan soal kuis wajib diisi.", "error");
         return;
       }
 
-      const letterMap = { "A": 0, "B": 1, "C": 2, "D": 3 };
-      const keyIndex = letterMap[correctKeyLetter] ?? 0;
+      let newQuestion;
 
-      let jam = 12;
-      let menit = 0;
-      if (tipe === "clock") {
-        jam = parseInt($("qClockHour").value, 10) || 12;
-        menit = parseInt($("qClockMinute").value, 10) || 0;
+      if (isClockDrag) {
+        // Tipe Level 1: Putar Jarum Jam Analog (clock_drag)
+        const jam = parseInt($("qClockHour").value, 10) || 5;
+        const menit = parseInt($("qClockMinute").value, 10) || 0;
+        const targetStr = `${String(jam).padStart(2, "0")}.${String(menit).padStart(2, "0")}`;
+
+        newQuestion = {
+          id: "Q" + String(Date.now()).slice(-4),
+          level,
+          type: "clock_drag",
+          tipe: "clock_drag",
+          targetHour: jam,
+          targetMinute: menit,
+          targetTime: targetStr,
+          question: pertanyaan,
+          pertanyaan: pertanyaan,
+          hint: hint || `Arahkan jarum pendek merah ke angka ${jam}, dan jarum panjang biru ke angka ${menit === 0 ? 12 : Math.round(menit / 5)}.`,
+          explanation: penjelasan || `Pukul ${targetStr} artinya jarum pendek (merah) menunjuk angka ${jam} dan jarum panjang (biru) menunjuk angka ${menit === 0 ? 12 : Math.round(menit / 5)}.`,
+          penjelasan: penjelasan || `Pukul ${targetStr} artinya jarum pendek (merah) menunjuk angka ${jam} dan jarum panjang (biru) menunjuk angka ${menit === 0 ? 12 : Math.round(menit / 5)}.`,
+          points: poin,
+          poin: poin,
+          jam,
+          menit
+        };
+      } else if (isClockDrop) {
+        // Tipe Level 2: Drag & Drop Angka Jam Digital (clock_drop)
+        const digiH = ($("qDigitalHour") ? $("qDigitalHour").value.trim() : "05").padStart(2, "0");
+        const digiM = ($("qDigitalMinute") ? $("qDigitalMinute").value.trim() : "00").padStart(2, "0");
+        const chip1 = ($("qChip1") ? $("qChip1").value.trim() : digiH).padStart(2, "0");
+        const chip2 = ($("qChip2") ? $("qChip2").value.trim() : digiM).padStart(2, "0");
+        const chip3 = ($("qChip3") ? $("qChip3").value.trim() : "07").padStart(2, "0");
+        const chip4 = ($("qChip4") ? $("qChip4").value.trim() : "30").padStart(2, "0");
+        const chips = [chip1, chip2, chip3, chip4];
+
+        newQuestion = {
+          id: "Q" + String(Date.now()).slice(-4),
+          level,
+          type: "clock_drop",
+          tipe: "clock_drop",
+          targetHour: digiH,
+          targetMinute: digiM,
+          targetTime: `${digiH}:${digiM}`,
+          question: pertanyaan,
+          pertanyaan: pertanyaan,
+          options: chips,
+          pilihan: chips,
+          hint: hint || `Pasangkan angka ${digiH} pada kotak Jam dan angka ${digiM} pada kotak Menit.`,
+          explanation: penjelasan || `Pukul ${digiH}:${digiM} pada jam digital: angka jam diisi ${digiH} dan angka menit diisi ${digiM} (${digiH}:${digiM}).`,
+          penjelasan: penjelasan || `Pukul ${digiH}:${digiM} pada jam digital: angka jam diisi ${digiH} dan angka menit diisi ${digiM} (${digiH}:${digiM}).`,
+          points: poin,
+          poin: poin
+        };
+      } else if (isTimeCompare) {
+        // Tipe Level 3: Perbandingan Durasi Kegiatan (time_compare)
+        const label1 = ($("qCompareLabel1") ? $("qCompareLabel1").value.trim() : "Menyisir rambut") || "Menyisir rambut";
+        const img1 = ($("qCompareImg1") ? $("qCompareImg1").value.trim() : "assets/images/activity_combing.png") || "assets/images/activity_combing.png";
+        const label2 = ($("qCompareLabel2") ? $("qCompareLabel2").value.trim() : "Mandi") || "Mandi";
+        const img2 = ($("qCompareImg2") ? $("qCompareImg2").value.trim() : "assets/images/activity_bathing.png") || "assets/images/activity_bathing.png";
+        const correctRadio = document.querySelector('input[name="qTimeCompareCorrect"]:checked');
+        const correctIdx = correctRadio ? parseInt(correctRadio.value, 10) : 1;
+        const correctLabel = correctIdx === 0 ? label1 : label2;
+
+        newQuestion = {
+          id: "Q" + String(Date.now()).slice(-4),
+          level: 3,
+          type: "time_compare",
+          tipe: "time_compare",
+          question: pertanyaan,
+          pertanyaan: pertanyaan,
+          items: [
+            { label: label1, img: img1 },
+            { label: label2, img: img2 }
+          ],
+          options: [label1, label2],
+          pilihan: [label1, label2],
+          correct: correctIdx,
+          kunci: correctIdx === 0 ? "A" : "B",
+          hint: hint || `Bandingkan durasi waktu antara kegiatan ${label1} dan ${label2}.`,
+          explanation: penjelasan || `Kegiatan ${correctLabel} adalah jawaban yang benar.`,
+          penjelasan: penjelasan || `Kegiatan ${correctLabel} adalah jawaban yang benar.`,
+          points: poin,
+          poin: poin
+        };
+      } else if (isActivityDrop) {
+        // Tipe Level 4: Pasangkan Waktu Kegiatan (clock_activity_drop)
+        const targetAns = ($("qActivityCorrectAnswer") ? $("qActivityCorrectAnswer").value.trim() : "Pukul 7 pagi") || "Pukul 7 pagi";
+        const actImg = ($("qActivityImg") && $("qActivityImg").dataset.customUrl && ($("qActivityImg").value === "custom" || $("qActivityImg").value.startsWith("data:")))
+          ? $("qActivityImg").dataset.customUrl
+          : (($("qActivityImg") ? $("qActivityImg").value : "assets/images/time_activity_school.png") || "assets/images/time_activity_school.png");
+        const chip1 = ($("qActChip1") ? $("qActChip1").value.trim() : targetAns) || targetAns;
+        const chip2 = ($("qActChip2") ? $("qActChip2").value.trim() : "Pukul 7 malam") || "Pukul 7 malam";
+        const chip3 = ($("qActChip3") ? $("qActChip3").value.trim() : "Pukul 8 pagi") || "Pukul 8 pagi";
+        const chip4 = ($("qActChip4") ? $("qActChip4").value.trim() : "Pukul 12 siang") || "Pukul 12 siang";
+        const chips = [chip1, chip2, chip3, chip4];
+        let correctIdx = chips.findIndex(c => c.toLowerCase() === targetAns.toLowerCase());
+        if (correctIdx === -1) correctIdx = 0;
+
+        newQuestion = {
+          id: "Q" + String(Date.now()).slice(-4),
+          level: 4,
+          type: "clock_activity_drop",
+          tipe: "clock_activity_drop",
+          img: actImg,
+          targetAnswer: targetAns,
+          question: pertanyaan,
+          pertanyaan: pertanyaan,
+          options: chips,
+          pilihan: chips,
+          correct: correctIdx,
+          kunci: ["A", "B", "C", "D"][correctIdx],
+          hint: hint || `Perhatikan gambar kegiatan dan cocokkan dengan pilihan waktu ${targetAns}.`,
+          explanation: penjelasan || `Kegiatan pada gambar berlangsung tepat pada ${targetAns}.`,
+          penjelasan: penjelasan || `Kegiatan pada gambar berlangsung tepat pada ${targetAns}.`,
+          points: poin,
+          poin: poin
+        };
+      } else {
+        // Tipe Pilihan Ganda (clock atau text)
+        const optA = $("qOptA") ? $("qOptA").value.trim() : "";
+        const optB = $("qOptB") ? $("qOptB").value.trim() : "";
+        const optC = $("qOptC") ? $("qOptC").value.trim() : "";
+        const optD = $("qOptD") ? $("qOptD").value.trim() : "";
+        const correctKeyLetter = $("qCorrectKey") ? $("qCorrectKey").value : "A";
+
+        if (!optA || !optB || !optC || !optD) {
+          showToast("Untuk tipe pilihan ganda, semua opsi (A, B, C, D) wajib diisi.", "error");
+          return;
+        }
+
+        const letterMap = { "A": 0, "B": 1, "C": 2, "D": 3 };
+        const keyIndex = letterMap[correctKeyLetter] ?? 0;
+
+        let jam = 12;
+        let menit = 0;
+        if (tipe === "clock") {
+          jam = parseInt($("qClockHour").value, 10) || 12;
+          menit = parseInt($("qClockMinute").value, 10) || 0;
+        }
+
+        const qCustomImg = $("qCustomImg") ? $("qCustomImg").value : "";
+
+        newQuestion = {
+          id: "q_" + Date.now() + "_" + Math.floor(Math.random() * 1000),
+          level,
+          type: tipe,
+          tipe,
+          img: qCustomImg || undefined,
+          question: pertanyaan,
+          pertanyaan,
+          options: [optA, optB, optC, optD],
+          pilihan: [optA, optB, optC, optD],
+          correct: keyIndex,
+          kunci: keyIndex,
+          hint,
+          explanation: penjelasan,
+          penjelasan: penjelasan,
+          points: poin,
+          poin: poin,
+          jam: tipe === "clock" ? jam : undefined,
+          menit: tipe === "clock" ? menit : undefined
+        };
       }
-
-      const newQuestion = {
-        id: "q_" + Date.now() + "_" + Math.floor(Math.random() * 1000),
-        level,
-        tipe,
-        pertanyaan,
-        pilihan: [optA, optB, optC, optD],
-        kunci: keyIndex,
-        hint,
-        penjelasan,
-        poin,
-        jam: tipe === "clock" ? jam : undefined,
-        menit: tipe === "clock" ? menit : undefined
-      };
 
       const questions = typeof getQuestions === "function" ? getQuestions() : [];
       questions.push(newQuestion);
@@ -1164,17 +1713,44 @@ function initTeacherEvents() {
       }
 
       singleQuestionForm.reset();
+
+      // Reset state upload gambar / SVG untuk Level 3, Level 4, dan Soal Umum
+      if ($("qCompareImg1")) $("qCompareImg1").value = "assets/images/activity_combing.png";
+      if ($("thumbCompareImg1")) $("thumbCompareImg1").src = "assets/images/activity_combing.png";
+      if ($("selectCompareImg1Preset")) $("selectCompareImg1Preset").value = "assets/images/activity_combing.png";
+      if ($("labelUploadedCompare1")) { $("labelUploadedCompare1").style.display = "none"; $("labelUploadedCompare1").textContent = ""; }
+      if ($("fileCompareImg1")) $("fileCompareImg1").value = "";
+
+      if ($("qCompareImg2")) $("qCompareImg2").value = "assets/images/activity_bathing.png";
+      if ($("thumbCompareImg2")) $("thumbCompareImg2").src = "assets/images/activity_bathing.png";
+      if ($("selectCompareImg2Preset")) $("selectCompareImg2Preset").value = "assets/images/activity_bathing.png";
+      if ($("labelUploadedCompare2")) { $("labelUploadedCompare2").style.display = "none"; $("labelUploadedCompare2").textContent = ""; }
+      if ($("fileCompareImg2")) $("fileCompareImg2").value = "";
+
+      if ($("qActivityImg")) {
+        $("qActivityImg").value = "assets/images/time_activity_school.png";
+        delete $("qActivityImg").dataset.customUrl;
+      }
+      if ($("thumbActivityImg")) $("thumbActivityImg").src = "assets/images/time_activity_school.png";
+      if ($("labelUploadedActivity")) { $("labelUploadedActivity").style.display = "none"; $("labelUploadedActivity").textContent = ""; }
+      if ($("fileActivityImg")) $("fileActivityImg").value = "";
+
+      if ($("qCustomImg")) $("qCustomImg").value = "";
+      if ($("thumbQuestionImg")) $("thumbQuestionImg").src = "assets/icons/clock.svg";
+      if ($("labelUploadedQuestionImg")) { $("labelUploadedQuestionImg").style.display = "none"; $("labelUploadedQuestionImg").textContent = ""; }
+      if ($("btnClearQuestionImg")) $("btnClearQuestionImg").style.display = "none";
+      if ($("fileQuestionImg")) $("fileQuestionImg").value = "";
       $("qLevel").value = String(level);
-      $("qType").value = "clock";
-      if (clockSettingsRow) clockSettingsRow.classList.remove("hidden");
-      $("qPoints").value = "20";
+      $("qType").value = level === 1 ? "clock_drag" : (level === 2 ? "clock_drop" : (level === 3 ? "time_compare" : (level === 4 ? "clock_activity_drop" : "text")));
+      $("qPoints").value = (level >= 1 && level <= 4) ? "100" : "20";
       document.querySelectorAll(".option-radio-btn").forEach(b => b.classList.toggle("selected", b.dataset.key === "A"));
       document.querySelectorAll(".option-builder-item").forEach(item => {
         item.classList.toggle("is-correct", item.id === "optItemA");
       });
       if ($("qCorrectKey")) $("qCorrectKey").value = "A";
       updateQuestionLivePreview();
-      showToast("Soal kuis baru berhasil disimpan & diterbitkan!", "success");
+      const typeLabel = isClockDrag ? "Putar Jam" : (isClockDrop ? "Jam Digital" : (isTimeCompare ? "Perbandingan Waktu" : (isActivityDrop ? "Waktu Kegiatan" : "Pilihan Ganda")));
+      showToast(`Soal kuis level ${level} (${typeLabel}) berhasil disimpan & diterbitkan!`, "success");
       setQuestionSubtab("q-list");
     });
   }
@@ -1227,7 +1803,7 @@ function initTeacherEvents() {
     });
   }
 
-  // 4. Tombol Eksekusi Upload Bulk Excel / CSV Soal
+  // 4. Tombol Eksekusi Upload Bulk Excel / CSV Soal (Mendukung Target Level & Mode Ganti/Tambah)
   const btnUploadQCsv = $("btnUploadQuestionCsv");
   if (btnUploadQCsv && qFileInput) {
     btnUploadQCsv.addEventListener("click", async () => {
@@ -1237,6 +1813,8 @@ function initTeacherEvents() {
       }
 
       const file = qFileInput.files[0];
+      const targetLevelVal = $("uploadQuestionTargetLevel") ? $("uploadQuestionTargetLevel").value : "all";
+      const importMode = document.querySelector('input[name="qImportMode"]:checked')?.value || "append";
 
       try {
         const parsedRows = await readSpreadsheetFile(file);
@@ -1245,7 +1823,17 @@ function initTeacherEvents() {
           return;
         }
 
-        const currentQuestions = typeof getQuestions === "function" ? getQuestions() : [];
+        let currentQuestions = typeof getQuestions === "function" ? getQuestions() : [];
+
+        // Jika mode replace, hapus soal kuis lama pada level target atau semua level
+        if (importMode === "replace") {
+          if (targetLevelVal !== "all") {
+            currentQuestions = currentQuestions.filter(q => String(q.level) !== targetLevelVal);
+          } else {
+            currentQuestions = [];
+          }
+        }
+
         let addedCount = 0;
         const letterMap = { "A": 0, "B": 1, "C": 2, "D": 3 };
 
@@ -1256,10 +1844,27 @@ function initTeacherEvents() {
             return found ? String(row[found]).trim() : "";
           };
 
-          const level = parseInt(getVal("level"), 10) || 1;
+          const rawLevel = parseInt(getVal("level"), 10) || 1;
+          const finalLevel = targetLevelVal !== "all" ? parseInt(targetLevelVal, 10) : Math.min(Math.max(rawLevel, 1), 4);
           const pertanyaan = getVal("pertanyaan") || getVal("soal") || getVal("question");
-          const tipeRaw = getVal("tipe") || getVal("type");
-          const tipe = tipeRaw.toLowerCase() === "text" || tipeRaw.toLowerCase() === "teks" ? "text" : "clock";
+          const tipeRaw = (getVal("tipe") || getVal("type")).toLowerCase();
+          
+          let tipe = "clock_drag";
+          if (tipeRaw === "text" || tipeRaw === "teks") {
+            tipe = "text";
+          } else if (tipeRaw.includes("drag")) {
+            tipe = "clock_drag";
+          } else if (tipeRaw.includes("drop") || tipeRaw.includes("digital")) {
+            tipe = "clock_drop";
+          } else if (tipeRaw.includes("compare") || tipeRaw.includes("lama")) {
+            tipe = "time_compare";
+          } else if (tipeRaw.includes("activity")) {
+            tipe = "clock_activity_drop";
+          } else if (finalLevel === 1) {
+            tipe = "clock_drag";
+          } else {
+            tipe = "text";
+          }
 
           const optA = getVal("pilihan_a") || getVal("opsi_a") || getVal("a");
           const optB = getVal("pilihan_b") || getVal("opsi_b") || getVal("b");
@@ -1276,22 +1881,149 @@ function initTeacherEvents() {
 
           const hint = getVal("hint") || getVal("petunjuk") || "";
           const penjelasan = getVal("penjelasan") || getVal("pembahasan") || "";
-          const poin = parseInt(getVal("poin") || getVal("points"), 10) || 20;
+          const poin = parseInt(getVal("poin") || getVal("points"), 10) || (finalLevel === 1 || tipe === "clock_drag" ? 100 : 25);
 
           const jam = parseInt(getVal("jam") || getVal("hour"), 10) || 12;
           const menit = parseInt(getVal("menit") || getVal("minute"), 10) || 0;
 
-          if (pertanyaan && optA && optB && optC && optD) {
+          if (tipe === "clock_drag" || finalLevel === 1) {
+            if (pertanyaan) {
+              const targetStr = `${String(jam).padStart(2, "0")}.${String(menit).padStart(2, "0")}`;
+              currentQuestions.push({
+                id: "q_bulk_" + Date.now() + "_" + idx,
+                level: 1,
+                type: "clock_drag",
+                tipe: "clock_drag",
+                targetHour: jam,
+                targetMinute: menit,
+                targetTime: targetStr,
+                question: pertanyaan,
+                pertanyaan: pertanyaan,
+                hint: hint || `Arahkan jarum pendek merah ke angka ${jam}, dan jarum panjang biru ke angka ${menit === 0 ? 12 : Math.round(menit / 5)}.`,
+                explanation: penjelasan || `Pukul ${targetStr} artinya jarum pendek (merah) di angka ${jam} dan jarum panjang (biru) di angka ${menit === 0 ? 12 : Math.round(menit / 5)}.`,
+                penjelasan: penjelasan || `Pukul ${targetStr} artinya jarum pendek (merah) di angka ${jam} dan jarum panjang (biru) di angka ${menit === 0 ? 12 : Math.round(menit / 5)}.`,
+                points: poin,
+                poin: poin,
+                jam,
+                menit
+              });
+              addedCount++;
+            }
+          } else if (tipe === "clock_drop" || finalLevel === 2) {
+            if (pertanyaan) {
+              const digiH = String(jam || 5).padStart(2, "0");
+              const digiM = String(menit !== undefined && menit !== "" ? menit : 0).padStart(2, "0");
+              const chip1 = optA ? String(optA).padStart(2, "0") : digiH;
+              const chip2 = optB ? String(optB).padStart(2, "0") : digiM;
+              const chip3 = optC ? String(optC).padStart(2, "0") : "07";
+              const chip4 = optD ? String(optD).padStart(2, "0") : "30";
+              const chips = [chip1, chip2, chip3, chip4];
+
+              currentQuestions.push({
+                id: "q_bulk_" + Date.now() + "_" + idx,
+                level: 2,
+                type: "clock_drop",
+                tipe: "clock_drop",
+                targetHour: digiH,
+                targetMinute: digiM,
+                targetTime: `${digiH}:${digiM}`,
+                question: pertanyaan,
+                pertanyaan: pertanyaan,
+                options: chips,
+                pilihan: chips,
+                hint: hint || `Pasangkan angka ${digiH} pada kotak Jam dan angka ${digiM} pada kotak Menit.`,
+                explanation: penjelasan || `Pukul ${digiH}:${digiM} pada jam digital: angka jam diisi ${digiH} dan angka menit diisi ${digiM} (${digiH}:${digiM}).`,
+                penjelasan: penjelasan || `Pukul ${digiH}:${digiM} pada jam digital: angka jam diisi ${digiH} dan angka menit diisi ${digiM} (${digiH}:${digiM}).`,
+                points: poin || 100,
+                poin: poin || 100
+              });
+              addedCount++;
+            }
+          } else if (tipe === "time_compare" || finalLevel === 3) {
+            if (pertanyaan) {
+              const label1 = optA || "Menyisir rambut";
+              const label2 = optB || "Mandi";
+              const correctIdx = (keyIndex === 0 || keyIndex === 1) ? keyIndex : 1;
+              const img1 = getVal("gambar_a") || "assets/images/activity_combing.png";
+              const img2 = getVal("gambar_b") || "assets/images/activity_bathing.png";
+
+              currentQuestions.push({
+                id: "q_bulk_" + Date.now() + "_" + idx,
+                level: 3,
+                type: "time_compare",
+                tipe: "time_compare",
+                question: pertanyaan,
+                pertanyaan: pertanyaan,
+                items: [
+                  { label: label1, img: img1 },
+                  { label: label2, img: img2 }
+                ],
+                options: [label1, label2],
+                pilihan: [label1, label2],
+                correct: correctIdx,
+                kunci: correctIdx === 0 ? "A" : "B",
+                hint: hint || `Bandingkan durasi waktu antara ${label1} dan ${label2}.`,
+                explanation: penjelasan || `Kegiatan ${correctIdx === 0 ? label1 : label2} adalah jawaban yang benar.`,
+                penjelasan: penjelasan || `Kegiatan ${correctIdx === 0 ? label1 : label2} adalah jawaban yang benar.`,
+                points: poin || 100,
+                poin: poin || 100
+              });
+              addedCount++;
+            }
+          } else if (tipe === "clock_activity_drop" || finalLevel === 4) {
+            if (pertanyaan) {
+              const targetAns = rawKunci.length > 1 ? rawKunci : (optA || "Pukul 7 pagi");
+              const actImg = getVal("gambar") || "assets/images/time_activity_school.png";
+              const chip1 = optA || targetAns;
+              const chip2 = optB || "Pukul 7 malam";
+              const chip3 = optC || "Pukul 8 pagi";
+              const chip4 = optD || "Pukul 12 siang";
+              const chips = [chip1, chip2, chip3, chip4];
+              let correctIdx = chips.findIndex(c => c.toLowerCase() === targetAns.toLowerCase());
+              if (correctIdx === -1) correctIdx = (keyIndex >= 0 && keyIndex < 4) ? keyIndex : 0;
+
+              currentQuestions.push({
+                id: "q_bulk_" + Date.now() + "_" + idx,
+                level: 4,
+                type: "clock_activity_drop",
+                tipe: "clock_activity_drop",
+                img: actImg,
+                targetAnswer: targetAns,
+                question: pertanyaan,
+                pertanyaan: pertanyaan,
+                options: chips,
+                pilihan: chips,
+                correct: correctIdx,
+                kunci: ["A", "B", "C", "D"][correctIdx],
+                hint: hint || `Perhatikan gambar kegiatan dan pasangkan keterangan waktu kegiatan yang tepat (${targetAns}).`,
+                explanation: penjelasan || `Kegiatan pada gambar berlangsung tepat pada ${targetAns}.`,
+                penjelasan: penjelasan || `Kegiatan pada gambar berlangsung tepat pada ${targetAns}.`,
+                points: poin || 100,
+                poin: poin || 100
+              });
+              addedCount++;
+            }
+          } else if (pertanyaan && optA && optB) {
+            const options = [optA, optB];
+            if (optC) options.push(optC);
+            if (optD) options.push(optD);
+
             currentQuestions.push({
               id: "q_bulk_" + Date.now() + "_" + idx,
-              level: Math.min(Math.max(level, 1), 5),
+              level: finalLevel,
+              type: tipe,
               tipe,
               pertanyaan,
-              pilihan: [optA, optB, optC, optD],
+              question: pertanyaan,
+              pilihan: options,
+              options,
               kunci: keyIndex,
+              correct: keyIndex,
               hint,
               penjelasan,
+              explanation: penjelasan,
               poin,
+              points: poin,
               jam: tipe === "clock" ? jam : undefined,
               menit: tipe === "clock" ? menit : undefined
             });
@@ -1303,15 +2035,19 @@ function initTeacherEvents() {
           if (typeof saveQuestions === "function") {
             saveQuestions(currentQuestions);
           }
-          showToast(`Berhasil menambahkan ${addedCount} soal kuis baru dari berkas spreadsheet!`, "success");
+          const levelInfo = targetLevelVal !== "all" ? `Level ${targetLevelVal}` : "Semua Level";
+          showToast(`Berhasil menambahkan ${addedCount} soal kuis baru untuk ${levelInfo}!`, "success");
           qFileInput.value = "";
           if (qFileLabel) {
             qFileLabel.textContent = "";
             qFileLabel.classList.add("hidden");
           }
+          if (targetLevelVal !== "all" && $("filterQuestionLevel")) {
+            $("filterQuestionLevel").value = targetLevelVal;
+          }
           setQuestionSubtab("q-list");
         } else {
-          showToast("Tidak ada baris soal yang valid. Pastikan kolom pertanyaan dan opsi A, B, C, D terisi.", "error");
+          showToast("Tidak ada baris soal yang valid. Pastikan kolom pertanyaan dan opsi pilihan terisi.", "error");
         }
       } catch (err) {
         console.error("Gagal membaca berkas soal:", err);
@@ -1320,51 +2056,56 @@ function initTeacherEvents() {
     });
   }
 
-  // 5. Unduh Template Excel Soal Kuis (.xlsx)
+  // 5. Unduh Template Excel Soal Kuis (.xlsx) Mendukung per Level
+  function downloadQuestionTemplate(targetLevel = "all") {
+    const headers = ["level", "pertanyaan", "tipe", "pilihan_a", "pilihan_b", "pilihan_c", "pilihan_d", "kunci", "hint", "penjelasan", "poin", "jam", "menit"];
+    const allRows = [
+      headers,
+      [1, "Halim bangun tidur pukul 5 pagi. Arahkan jarum jam ke pukul 05.00!", "clock_drag", "", "", "", "", "05.00", "Arahkan jarum pendek merah ke angka 5, dan jarum panjang biru ke 12.", "Pukul 05.00 artinya jarum pendek di angka 5 dan jarum panjang di angka 12.", 100, 5, 0],
+      [1, "Nando pulang sekolah pukul 1 siang. Arahkan jarum jam ke pukul 01.00!", "clock_drag", "", "", "", "", "01.00", "Arahkan jarum pendek merah ke angka 1, dan jarum panjang biru ke 12.", "Pukul 01.00 artinya jarum pendek di angka 1 dan jarum panjang di angka 12.", 100, 1, 0],
+      [2, "Halim bangun tidur pukul 5 pagi. Pasangkan angka (jam) dan (menit) yang tepat pada jam digital!", "clock_drop", "05", "00", "07", "30", "05:00", "Pasangkan angka 05 pada kotak Jam dan angka 00 pada kotak Menit.", "Pukul 5 pagi pada jam digital: jam diisi 05 dan menit diisi 00 (05:00).", 100, 5, 0],
+      [2, "Tika berangkat ke sekolah pukul 7 pagi. Pasangkan angka (jam) dan (menit) yang tepat pada jam digital!", "clock_drop", "07", "00", "05", "30", "07:00", "Pasangkan angka 07 pada kotak Jam dan angka 00 pada kotak Menit.", "Pukul 7 pagi pada jam digital: jam diisi 07 dan menit diisi 00 (07:00).", 100, 7, 0],
+      [3, "Beri tanda centang (✓) pada kegiatan yang lebih lama!", "time_compare", "Menyisir rambut", "Mandi", "", "", "B", "Bandingkan waktu menyisir rambut dengan mandi.", "Mandi memerlukan waktu lebih lama (sekitar 15 menit) dibandingkan menyisir rambut (1 menit).", 100, 0, 0],
+      [3, "Beri tanda centang (✓) pada kegiatan yang lebih sebentar (lebih cepat)!", "time_compare", "Memasak", "Meminum air", "", "", "B", "Meminum air hanya butuh beberapa tegukan sebentar saja.", "Meminum segelas air memerlukan waktu lebih sebentar / lebih cepat (beberapa detik hingga 1 menit).", 100, 0, 0],
+      [4, "Amati gambar dan jam analog berikut! Pasangkan keterangan waktu kegiatan yang tepat:", "clock_activity_drop", "Pukul 7 pagi", "Pukul 7 malam", "Pukul 8 pagi", "Pukul 12 siang", "A", "Jarum pendek menunjuk angka 7 pada pagi hari saat berangkat sekolah.", "Jarum jam menunjuk angka 7 tepat di pagi hari saat anak-anak berangkat sekolah, yaitu Pukul 7 pagi.", 100, 7, 0],
+      [4, "Amati gambar dan jam analog berikut! Pasangkan keterangan waktu kegiatan yang tepat:", "clock_activity_drop", "Pukul 8 pagi", "Pukul 8 malam", "Pukul 7 pagi", "Pukul 1 siang", "A", "Jarum pendek menunjuk angka 8 pada pagi hari saat belajar di kelas.", "Jarum jam menunjuk angka 8 tepat saat murid belajar di sekolah di pagi hari, yaitu Pukul 8 pagi.", 100, 8, 0]
+    ];
+
+    let rows = [allRows[0]];
+    if (targetLevel !== "all") {
+      rows.push(...allRows.slice(1).filter(r => String(r[0]) === String(targetLevel)));
+    } else {
+      rows = allRows;
+    }
+
+    const fileName = targetLevel === "all" ? "template_soal_kuis_semua_level.xlsx" : `template_soal_kuis_level_${targetLevel}.xlsx`;
+
+    if (typeof XLSX !== "undefined") {
+      const wb = XLSX.utils.book_new();
+      const ws = XLSX.utils.aoa_to_sheet(rows);
+      ws["!cols"] = [{ wch: 8 }, { wch: 45 }, { wch: 12 }, { wch: 20 }, { wch: 20 }, { wch: 20 }, { wch: 20 }, { wch: 8 }, { wch: 28 }, { wch: 40 }, { wch: 8 }, { wch: 8 }, { wch: 8 }];
+      XLSX.utils.book_append_sheet(wb, ws, "Template Soal");
+      XLSX.writeFile(wb, fileName);
+      showToast(`Template Excel kuis (${targetLevel === "all" ? "Semua Level" : "Level " + targetLevel}) berhasil diunduh!`, "success");
+    } else if (typeof CSV !== "undefined" && typeof CSV.stringify === "function") {
+      const headers = rows[0];
+      const dataRows = rows.slice(1).map(r => r.map(String));
+      const csvContent = CSV.stringify(headers, dataRows);
+      CSV.download(fileName.replace(".xlsx", ".csv"), csvContent);
+      showToast("Template CSV kuis berhasil diunduh!", "success");
+    }
+  }
+
   const btnTemplateQ = $("btnTemplateQuestionCsv");
   if (btnTemplateQ) {
-    btnTemplateQ.addEventListener("click", () => {
-      if (typeof XLSX !== "undefined") {
-        const wb = XLSX.utils.book_new();
-        const rows = [
-          ["level", "pertanyaan", "tipe", "pilihan_a", "pilihan_b", "pilihan_c", "pilihan_d", "kunci", "hint", "penjelasan", "poin", "jam", "menit"],
-          [1, "Pukul berapakah yang ditunjukkan oleh jam analog ini?", "clock", "Pukul 02.00", "Pukul 03.00", "Pukul 04.00", "Pukul 12.00", "B", "Lihat angka yang ditunjuk oleh jarum pendek.", "Jarum pendek di angka 3 dan jarum panjang di angka 12 menunjukkan pukul 03.00 tepat.", 20, 3, 0],
-          [1, "Jika jarum pendek di angka 7 dan jarum panjang tepat di 12, maka waktu menunjukkan...", "text", "Pukul 07.00", "Pukul 12.00", "Pukul 06.00", "Pukul 08.00", "A", "Jarum panjang di angka 12 berarti menit 00.", "Jarum pendek di angka 7 berarti pukul 07.00 tepat.", 20, "", ""],
-          [2, "Pukul berapakah yang ditunjukkan pada jam analog ini?", "clock", "Pukul 01.30", "Pukul 02.30", "Pukul 03.30", "Pukul 06.00", "B", "Jarum panjang di angka 6 berarti lewat 30 menit.", "Jarum pendek di antara 2 dan 3, jarum panjang di 6 berarti pukul 02.30.", 20, 2, 30],
-          [2, "Pukul setengah lima sore jika ditulis dengan angka adalah...", "text", "04.15", "04.30", "05.30", "04.50", "B", "Setengah jam sama dengan 30 menit.", "Pukul setengah lima ditulis 04.30.", 20, "", ""],
-          [3, "Pukul berapakah yang ditunjukkan jam analog ini?", "clock", "Pukul 08.15", "Pukul 08.45", "Pukul 03.40", "Pukul 09.15", "A", "Jarum panjang di angka 3 berarti menit ke-15.", "Jarum pendek di angka 8 lewat sedikit dan jarum panjang di 3 adalah pukul 08.15.", 20, 8, 15]
-        ];
-        const ws = XLSX.utils.aoa_to_sheet(rows);
-        ws["!cols"] = [{ wch: 8 }, { wch: 45 }, { wch: 10 }, { wch: 16 }, { wch: 16 }, { wch: 16 }, { wch: 16 }, { wch: 8 }, { wch: 35 }, { wch: 45 }, { wch: 8 }, { wch: 6 }, { wch: 6 }];
-        XLSX.utils.book_append_sheet(wb, ws, "Template Soal");
-        XLSX.writeFile(wb, "template_soal_timequest.xlsx");
-        showToast("Template Excel soal kuis (.xlsx) berhasil diunduh!", "success");
-      } else if (typeof CSV !== "undefined" && typeof CSV.stringify === "function") {
-        const headers = [
-          "level",
-          "pertanyaan",
-          "tipe",
-          "pilihan_a",
-          "pilihan_b",
-          "pilihan_c",
-          "pilihan_d",
-          "kunci",
-          "hint",
-          "penjelasan",
-          "poin",
-          "jam",
-          "menit"
-        ];
-        const rows = [
-          ["1", "Pukul berapakah yang ditunjukkan jam analog ini?", "clock", "02.00", "03.00", "04.00", "12.00", "B", "Lihat arah jarum pendek", "Jarum pendek di 3 dan panjang di 12 adalah pukul 03.00", "20", "3", "0"],
-          ["1", "Jika jarum pendek di angka 8 dan jarum panjang di angka 12, maka waktu adalah...", "text", "08.00", "12.00", "07.00", "09.00", "A", "Jarum panjang di 12 menunjukkan jam tepat", "Jarum pendek di angka 8 berarti pukul 08.00 tepat", "20", "", ""]
-        ];
-        const csvContent = CSV.stringify(headers, rows);
-        CSV.download("template_soal_timequest.csv", csvContent);
-        showToast("Template CSV soal kuis berhasil diunduh!", "success");
-      }
-    });
+    btnTemplateQ.addEventListener("click", () => downloadQuestionTemplate("all"));
   }
+
+  document.querySelectorAll(".btn-template-q-level").forEach(btn => {
+    btn.addEventListener("click", () => {
+      downloadQuestionTemplate(btn.dataset.level);
+    });
+  });
 
   // 6. Reset Soal ke Data Awal
   const btnResetQ = $("btnResetQuestions");
@@ -1384,6 +2125,31 @@ function initTeacherEvents() {
   const filterQLevel = $("filterQuestionLevel");
   if (filterQLevel) {
     filterQLevel.addEventListener("change", renderTeacherQuestions);
+  }
+
+  // 7b. Filter Pill Bar Level Kuis & Tombol Cepat Buat Soal Level Ini
+  document.querySelectorAll("#qLevelPillsBar .level-pill-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const level = btn.dataset.level || "all";
+      if ($("filterQuestionLevel")) {
+        $("filterQuestionLevel").value = level;
+      }
+      renderTeacherQuestions();
+    });
+  });
+
+  const btnQuickAddQ = $("btnQuickAddQForLevel");
+  if (btnQuickAddQ) {
+    btnQuickAddQ.addEventListener("click", () => {
+      const currentLevel = $("filterQuestionLevel") ? $("filterQuestionLevel").value : "all";
+      if (currentLevel !== "all" && $("qLevel")) {
+        $("qLevel").value = currentLevel;
+      }
+      setQuestionSubtab("q-create");
+      updateQuestionLivePreview();
+      const inputPertanyaan = $("qText");
+      if (inputPertanyaan) inputPertanyaan.focus();
+    });
   }
 
   // 8. Filter Tipe Soal Kuis (Analog vs Teks)
@@ -1435,7 +2201,7 @@ function initTeacherEvents() {
   }
 
   // 13. Sinkronisasi Real-Time Live Preview Materi
-  ["matLevel", "matJudul", "matIsi", "matTip"].forEach(fieldId => {
+  ["matLevel", "matJudul", "matIsi", "matTip", "matImg"].forEach(fieldId => {
     const el = $(fieldId);
     if (el) {
       el.addEventListener("input", updateMaterialLivePreview);
@@ -1443,13 +2209,17 @@ function initTeacherEvents() {
     }
   });
 
-  // 14. Sinkronisasi Real-Time Live Preview Soal Kuis & Jam Analog
-  ["qLevel", "qType", "qClockHour", "qClockMinute", "qText", "qOptA", "qOptB", "qOptC", "qOptD", "qPoints", "qHint"].forEach(fieldId => {
+  // 14. Sinkronisasi Real-Time Live Preview Soal Kuis (L1, L2, L3, L4, MCQ)
+  ["qLevel", "qType", "qClockHour", "qClockMinute", "qDigitalHour", "qDigitalMinute", "qChip1", "qChip2", "qChip3", "qChip4", "qCompareLabel1", "qCompareImg1", "qCompareLabel2", "qCompareImg2", "qActivityCorrectAnswer", "qActivityImg", "qActChip1", "qActChip2", "qActChip3", "qActChip4", "qText", "qCustomImg", "qOptA", "qOptB", "qOptC", "qOptD", "qPoints", "qHint"].forEach(fieldId => {
     const el = $(fieldId);
     if (el) {
       el.addEventListener("input", updateQuestionLivePreview);
       el.addEventListener("change", updateQuestionLivePreview);
     }
+  });
+
+  document.querySelectorAll('input[name="qTimeCompareCorrect"]').forEach(radio => {
+    radio.addEventListener("change", updateQuestionLivePreview);
   });
 
   // 15. Pemilihan Kunci Jawaban dengan Tombol Bulat A, B, C, D
@@ -1485,6 +2255,214 @@ function initTeacherEvents() {
         updateQuestionLivePreview();
       }
     });
+  });
+
+  // 16b. Tombol Cepat Preset Menit Jam Digital (:00, :15, :30, :45)
+  const presetDigitalChips = document.querySelectorAll(".preset-digital-chip");
+  presetDigitalChips.forEach(chip => {
+    chip.addEventListener("click", () => {
+      const minVal = chip.dataset.min || "00";
+      const minInput = $("qDigitalMinute");
+      if (minInput) {
+        minInput.value = minVal;
+        if ($("qChip2")) $("qChip2").value = minVal;
+        updateQuestionLivePreview();
+      }
+    });
+  });
+
+  // 16c. Tombol Otomatis Generate 4 Kartu Angka Digital dari Target Jam & Menit
+  const btnAutoGenerateChips = $("btnAutoGenerateChips");
+  if (btnAutoGenerateChips) {
+    btnAutoGenerateChips.addEventListener("click", () => {
+      const h = ($("qDigitalHour") ? $("qDigitalHour").value.trim() : "05").padStart(2, "0");
+      const m = ($("qDigitalMinute") ? $("qDigitalMinute").value.trim() : "00").padStart(2, "0");
+      const hNum = parseInt(h, 10) || 5;
+      const distractorH = String(((hNum + 1) % 12) + 1).padStart(2, "0");
+      const distractorM = m === "00" ? "30" : "00";
+
+      if ($("qChip1")) $("qChip1").value = h;
+      if ($("qChip2")) $("qChip2").value = m;
+      if ($("qChip3")) $("qChip3").value = distractorH;
+      if ($("qChip4")) $("qChip4").value = distractorM;
+
+      updateQuestionLivePreview();
+      showToast("Pilihan kartu angka digital berhasil diisi otomatis!", "info");
+    });
+  }
+
+  // 17. Handler Upload Gambar / SVG Kustom untuk Materi & Soal Kuis (L3, L4, MCQ)
+  function setupImageUploader({ btnId, fileInputId, thumbId, targetHiddenId, selectPresetId, customOptId, labelId, clearBtnId, isActivitySelect, isMaterial }) {
+    const btn = $(btnId);
+    const fileInput = $(fileInputId);
+    const thumb = $(thumbId);
+    const targetHidden = targetHiddenId ? $(targetHiddenId) : null;
+    const selectPreset = selectPresetId ? $(selectPresetId) : null;
+    const customOpt = customOptId ? $(customOptId) : null;
+    const label = labelId ? $(labelId) : null;
+    const clearBtn = clearBtnId ? $(clearBtnId) : null;
+
+    if (btn && fileInput) {
+      btn.addEventListener("click", () => fileInput.click());
+    }
+
+    if (fileInput) {
+      fileInput.addEventListener("change", () => {
+        if (!fileInput.files || fileInput.files.length === 0) return;
+        const file = fileInput.files[0];
+
+        // Validasi ekstensi/tipe berkas (SVG, PNG, JPG, JPEG, WEBP)
+        const isSvg = file.type === "image/svg+xml" || file.name.toLowerCase().endsWith(".svg");
+        const isImg = file.type.startsWith("image/") || /\.(png|jpe?g|webp|gif|svg)$/i.test(file.name);
+
+        if (!isSvg && !isImg) {
+          showToast("Mohon pilih berkas gambar/SVG yang valid (.svg, .png, .jpg, .webp).", "error");
+          fileInput.value = "";
+          return;
+        }
+
+        if (file.size > 5 * 1024 * 1024) {
+          showToast("Ukuran berkas maksimal 5 MB.", "error");
+          fileInput.value = "";
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const dataUrl = e.target.result;
+
+          if (thumb) thumb.src = dataUrl;
+          if (targetHidden) targetHidden.value = dataUrl;
+
+          if (customOpt) {
+            customOpt.hidden = false;
+            customOpt.disabled = false;
+            customOpt.value = dataUrl;
+            customOpt.textContent = `📁 ${file.name.length > 18 ? file.name.slice(0, 15) + "..." : file.name}`;
+          }
+
+          if (selectPreset) {
+            selectPreset.value = dataUrl;
+            if (isActivitySelect) {
+              selectPreset.dataset.customUrl = dataUrl;
+            }
+          }
+
+          if (label) {
+            label.textContent = `✓ Berhasil diunggah: ${file.name}`;
+            label.style.display = "block";
+          }
+
+          if (clearBtn) {
+            clearBtn.style.display = "inline-flex";
+          }
+
+          if (isMaterial) {
+            updateMaterialLivePreview();
+          } else {
+            updateQuestionLivePreview();
+          }
+          showToast(`Gambar/SVG "${file.name}" berhasil diunggah!`, "success");
+        };
+
+        reader.onerror = () => {
+          showToast("Gagal membaca berkas gambar/SVG.", "error");
+        };
+
+        reader.readAsDataURL(file);
+      });
+    }
+
+    if (clearBtn) {
+      clearBtn.addEventListener("click", () => {
+        if (thumb) thumb.src = isMaterial ? "assets/icons/book-open.svg" : "assets/icons/clock.svg";
+        if (targetHidden) targetHidden.value = "";
+        if (fileInput) fileInput.value = "";
+        if (label) {
+          label.style.display = "none";
+          label.textContent = "";
+        }
+        clearBtn.style.display = "none";
+        if (isMaterial) {
+          updateMaterialLivePreview();
+        } else {
+          updateQuestionLivePreview();
+        }
+      });
+    }
+
+    if (selectPreset) {
+      selectPreset.addEventListener("change", () => {
+        const val = selectPreset.value;
+        if (thumb) thumb.src = val;
+        if (targetHidden) targetHidden.value = val;
+        if (!val.startsWith("data:") && label) {
+          label.style.display = "none";
+        }
+        updateQuestionLivePreview();
+      });
+    }
+  }
+
+  // Pasang uploader Materi
+  setupImageUploader({
+    btnId: "btnUploadMatImg",
+    fileInputId: "fileMatImg",
+    thumbId: "thumbMatImg",
+    targetHiddenId: "matImg",
+    clearBtnId: "btnClearMatImg",
+    labelId: "labelUploadedMat",
+    isMaterial: true
+  });
+
+  // Pasang uploader Soal Umum / Pilihan Ganda
+  setupImageUploader({
+    btnId: "btnUploadQuestionImg",
+    fileInputId: "fileQuestionImg",
+    thumbId: "thumbQuestionImg",
+    targetHiddenId: "qCustomImg",
+    clearBtnId: "btnClearQuestionImg",
+    labelId: "labelUploadedQuestionImg",
+    isMaterial: false
+  });
+
+  // Pasang uploader Level 3 Kegiatan 1
+  setupImageUploader({
+    btnId: "btnUploadCompareImg1",
+    fileInputId: "fileCompareImg1",
+    thumbId: "thumbCompareImg1",
+    targetHiddenId: "qCompareImg1",
+    selectPresetId: "selectCompareImg1Preset",
+    customOptId: "optCustomCompare1",
+    labelId: "labelUploadedCompare1",
+    isActivitySelect: false,
+    isMaterial: false
+  });
+
+  // Pasang uploader Level 3 Kegiatan 2
+  setupImageUploader({
+    btnId: "btnUploadCompareImg2",
+    fileInputId: "fileCompareImg2",
+    thumbId: "thumbCompareImg2",
+    targetHiddenId: "qCompareImg2",
+    selectPresetId: "selectCompareImg2Preset",
+    customOptId: "optCustomCompare2",
+    labelId: "labelUploadedCompare2",
+    isActivitySelect: false,
+    isMaterial: false
+  });
+
+  // Pasang uploader Level 4 Ilustrasi Kegiatan
+  setupImageUploader({
+    btnId: "btnUploadActivityImg",
+    fileInputId: "fileActivityImg",
+    thumbId: "thumbActivityImg",
+    targetHiddenId: null,
+    selectPresetId: "qActivityImg",
+    customOptId: "optCustomActivityImg",
+    labelId: "labelUploadedActivity",
+    isActivitySelect: true,
+    isMaterial: false
   });
 
   // Inisialisasi awal preview kartu

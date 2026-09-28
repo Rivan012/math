@@ -44,6 +44,17 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .excel-import-hub {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .studio-grid,
+  .admin-studio-grid {
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 16px;
+  }
+
   .clock-anatomy-wrapper {
     flex-direction: column;
     gap: 16px;
@@ -71,6 +82,16 @@
   .card {
     padding: 16px;
     border-radius: var(--radius-md);
+  }
+
+  .studio-grid,
+  .admin-studio-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .live-preview-box {
+    position: static;
   }
 
   /* Header Aplikasi di Mobile */
@@ -196,6 +217,7 @@
 
   .clock-number {
     font-size: 1.05rem;
+    padding-top: 10px;
   }
 
   .hour-hand {
@@ -318,4 +340,72 @@
   .teacher-table {
     min-width: 500px; /* Izinkan tabel bergulir di dalam card tabel tanpa merusak lebar halaman */
   }
+
+  /* Bar Pill Level di HP */
+  .level-pills-bar {
+    gap: 6px;
+    padding: 6px 8px;
+  }
+
+  .level-pill-btn {
+    padding: 5px 10px;
+    font-size: 0.78rem;
+  }
+
+  #btnQuickAddMatForLevel,
+  #btnQuickAddQForLevel {
+    width: 100%;
+    margin-left: 0 !important;
+    justify-content: center;
+    margin-top: 4px;
+  }
+
+  .level-card-actions-2 {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  /* Hasil Kuis & Leaderboard di HP */
+  #resultScreen,
+  #leaderboardScreen {
+    max-width: 100%;
+  }
+
+  .result-hero-card {
+    padding: 24px 16px 20px;
+  }
+
+  .result-score-box {
+    padding: 16px 24px 14px;
+    min-width: 160px;
+  }
+
+  .result-score-value {
+    font-size: 3rem;
+  }
+
+  .result-stats-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .result-cta-row {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .result-cta-row .btn {
+    width: 100%;
+  }
+
+  .podium-layout {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .podium-card.first {
+    transform: none;
+  }
 }
+

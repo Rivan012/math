@@ -5,6 +5,11 @@
 
 "use strict";
 
+const ICON_BOOK = `<svg class="action-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>`;
+const ICON_TROPHY = `<svg class="action-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.45 1-1 1H7v4h10v-4h-2c-.55 0-1-.45-1-1v-2.34"></path><path d="M6 2h12v7a6 6 0 0 1-12 0V2z"></path></svg>`;
+const ICON_LOCK = `<svg class="action-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>`;
+const ICON_CHECK = `<svg class="action-svg-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+
 const LEVELS = [
   {
     id: 1,
@@ -176,40 +181,40 @@ function renderLevels() {
 
     // Status pill
     const statusHtml = completed
-      ? `<span class="level-status-pill done"><img src="assets/icons/check-circle.svg" width="14" height="14" alt=""> Tuntas</span>`
+      ? `<span class="level-status-pill done">${ICON_CHECK} Tuntas</span>`
       : studied
         ? `<span class="level-status-pill studying">Sudah Belajar</span>`
         : unlocked
           ? `<span class="level-status-pill ready">Buka Misi</span>`
-          : `<span class="level-status-pill locked"><img src="assets/icons/lock.svg" width="14" height="14" alt=""> Terkunci</span>`;
+          : `<span class="level-status-pill locked">${ICON_LOCK} Terkunci</span>`;
 
     // Tombol Materi
     let materiClass, materiLabel;
     if (!unlocked) {
       materiClass = "btn-card-action btn-materi is-locked";
-      materiLabel = `<img src="assets/icons/lock.svg" width="14" height="14" alt=""> Terkunci`;
+      materiLabel = `${ICON_LOCK} Terkunci`;
     } else if (studied || completed) {
       materiClass = "btn-card-action btn-materi is-understood";
-      materiLabel = `<img src="assets/icons/book.svg" width="14" height="14" alt=""> Baca Ulang`;
+      materiLabel = `${ICON_BOOK} Baca Ulang`;
     } else {
       materiClass = "btn-card-action btn-materi is-primary";
-      materiLabel = `<img src="assets/icons/book.svg" width="14" height="14" alt=""> Materi`;
+      materiLabel = `${ICON_BOOK} Baca Materi`;
     }
 
     // Tombol Kuis
     let quizClass, quizLabel;
     if (!unlocked) {
       quizClass = "btn-card-action btn-quiz is-locked";
-      quizLabel = `<img src="assets/icons/lock.svg" width="14" height="14" alt=""> Terkunci`;
+      quizLabel = `${ICON_LOCK} Terkunci`;
     } else if (completed) {
       quizClass = "btn-card-action btn-quiz is-completed";
-      quizLabel = `<img src="assets/icons/trophy.svg" width="14" height="14" alt=""> Kuis Ulang`;
+      quizLabel = `${ICON_TROPHY} Kuis Ulang`;
     } else if (studied) {
       quizClass = "btn-card-action btn-quiz is-ready";
-      quizLabel = `<img src="assets/icons/trophy.svg" width="14" height="14" alt=""> Mulai Kuis`;
+      quizLabel = `${ICON_TROPHY} Mulai Kuis`;
     } else {
       quizClass = "btn-card-action btn-quiz is-need-study";
-      quizLabel = `<img src="assets/icons/trophy.svg" width="14" height="14" alt=""> Kuis`;
+      quizLabel = `${ICON_TROPHY} Mulai Kuis`;
     }
 
     card.innerHTML = `
@@ -394,6 +399,12 @@ function renderFlipbook() {
       <div class="reader-body-text">
         <p>${escapeHTML(currentItem.isi || currentItem.content || "")}</p>
       </div>
+
+      ${currentItem.img ? `
+        <div class="reader-custom-img-wrap" style="text-align:center;margin:16px 0;">
+          <img src="${currentItem.img}" alt="${escapeHTML(currentItem.judul || 'Materi')}" style="max-width:100%;max-height:260px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.08);object-fit:contain;background:#fff;border:1px solid var(--border);">
+        </div>
+      ` : ""}
 
       ${demoHtml}
       ${tipHtml}

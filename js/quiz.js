@@ -348,7 +348,7 @@ function handleQuestionTimeout() {
   }
 
   // Handle clock_activity_drop timeout
-  if (question && question.type === "clock_activity_drop") {
+  if (question && (question.type === "clock_activity_drop" || question.tipe === "clock_activity_drop")) {
     const submitBtn = $("btnActivityDropSubmit");
     if (submitBtn) submitBtn.disabled = true;
 
@@ -357,7 +357,7 @@ function handleQuestionTimeout() {
       if (c.removeAttribute) c.removeAttribute("draggable");
     });
 
-    const targetVal = question.targetAnswer || (question.options && question.options[question.correct]);
+    const targetVal = question.targetAnswer || (question.options && question.options[question.correct]) || (question.pilihan && question.pilihan[question.correct]);
     const slot = $("timeActivityDropSlot");
     if (slot) {
       slot.className = "clock-activity-drop-slot slot-wrong has-value";
@@ -372,13 +372,13 @@ function handleQuestionTimeout() {
           <div>
             <h4>Waktu Menjawab Habis</h4>
             <p>Jawaban yang benar: <strong>${escapeHTML(targetVal || "")}</strong></p>
-            <div class="feedback-explanation">${escapeHTML(question.explanation)}</div>
+            <div class="feedback-explanation">${escapeHTML(question.explanation || question.penjelasan || "")}</div>
           </div>
         </div>
       `;
       feedback.classList.remove("hidden");
     }
-  } else if (question && question.type === "time_compare") {
+  } else if (question && (question.type === "time_compare" || question.tipe === "time_compare")) {
     const submitBtn = $("btnTimeCompareSubmit");
     if (submitBtn) submitBtn.disabled = true;
 
@@ -393,7 +393,7 @@ function handleQuestionTimeout() {
       });
     }
 
-    const correctItem = (question.items && question.items[question.correct]) || { label: (question.options && question.options[question.correct]) || "" };
+    const correctItem = (question.items && question.items[question.correct]) || { label: (question.options && question.options[question.correct]) || (question.pilihan && question.pilihan[question.correct]) || "" };
 
     if (feedback) {
       feedback.className = "quiz-feedback-quizizz feedback-timeout";
@@ -403,13 +403,13 @@ function handleQuestionTimeout() {
           <div>
             <h4>Waktu Menjawab Habis</h4>
             <p>Kegiatan yang benar: <strong>${escapeHTML(correctItem.label)}</strong></p>
-            <div class="feedback-explanation">${escapeHTML(question.explanation)}</div>
+            <div class="feedback-explanation">${escapeHTML(question.explanation || question.penjelasan || "")}</div>
           </div>
         </div>
       `;
       feedback.classList.remove("hidden");
     }
-  } else if (question && question.type === "clock_drop") {
+  } else if (question && (question.type === "clock_drop" || question.tipe === "clock_drop")) {
     const submitBtn = $("btnClockDropSubmit");
     if (submitBtn) submitBtn.disabled = true;
 
@@ -419,16 +419,29 @@ function handleQuestionTimeout() {
       c.removeAttribute("draggable");
     });
 
-    const targetVal = question.targetAnswer || (question.options && question.options[question.correct]);
-    const slot = $("clockDropTargetSlot");
-    if (slot) {
-      slot.className = "clock-drop-target-box slot-wrong";
-      slot.innerHTML = `
-        <div class="dropped-chip-badge" style="background:#FEE2E2; border-color:#EF4444; color:#991B1B;">
-          <span>${escapeHTML(targetVal || "")}</span>
-        </div>
-      `;
+    const expHour = String(question.targetHour || (question.hour !== undefined ? String(question.hour).padStart(2, "0") : "05")).padStart(2, "0");
+    const expMinute = String(question.targetMinute !== undefined ? String(question.targetMinute).padStart(2, "0") : (question.minute !== undefined ? String(question.minute).padStart(2, "0") : "00")).padStart(2, "0");
+
+    const slotH = $("slotHour");
+    const slotM = $("slotMinute");
+    if (slotH) {
+      slotH.className = "digital-drop-slot hour-slot slot-wrong has-value";
+      const valEl = slotH.querySelector(".slot-display-val");
+      if (valEl) {
+        valEl.textContent = expHour;
+        valEl.classList.remove("is-empty");
+      }
     }
+    if (slotM) {
+      slotM.className = "digital-drop-slot minute-slot slot-wrong has-value";
+      const valEl = slotM.querySelector(".slot-display-val");
+      if (valEl) {
+        valEl.textContent = expMinute;
+        valEl.classList.remove("is-empty");
+      }
+    }
+
+    const expl = question.explanation || question.penjelasan || `Pukul ${expHour}:${expMinute} pada jam digital: angka jam diisi ${expHour} dan angka menit diisi ${expMinute}.`;
 
     if (feedback) {
       feedback.className = "quiz-feedback-quizizz feedback-timeout";
@@ -437,25 +450,29 @@ function handleQuestionTimeout() {
           <img src="assets/icons/clock.svg" width="24" height="24" alt="" class="feedback-icon-svg" style="flex-shrink:0;">
           <div>
             <h4>Waktu Menjawab Habis</h4>
-            <p>Jawaban yang benar: <strong>${escapeHTML(targetVal || "")}</strong></p>
-            <div class="feedback-explanation">${escapeHTML(question.explanation)}</div>
+            <p>Jawaban yang benar: <strong>${expHour}:${expMinute}</strong> (Jam ${expHour} dan Menit ${expMinute})</p>
+            <div class="feedback-explanation">${escapeHTML(expl)}</div>
           </div>
         </div>
       `;
       feedback.classList.remove("hidden");
     }
-  } else if (question && question.type === "clock_drag") {
+  } else if (question && (question.type === "clock_drag" || question.tipe === "clock_drag")) {
     const submitBtn = document.querySelector(".btn-clock-submit");
     if (submitBtn) submitBtn.disabled = true;
+
+    const rawTargetH = question.targetHour ?? question.jam ?? question.hour ?? 12;
+    const rawTargetM = question.targetMinute ?? question.menit ?? question.minute ?? 0;
 
     // Animasikan jarum ke posisi yang benar
     if (currentQuizClock && currentQuizClock.setClockTime) {
       setTimeout(() => {
-        currentQuizClock.setClockTime(question.targetHour, question.targetMinute, true);
+        currentQuizClock.setClockTime(rawTargetH, rawTargetM, true);
       }, 400);
     }
 
-    const targetStr = `${String(question.targetHour).padStart(2, "0")}.${String(question.targetMinute).padStart(2, "0")}`;
+    const targetStr = `${String(rawTargetH).padStart(2, "0")}.${String(rawTargetM).padStart(2, "0")}`;
+    const expl = question.explanation || question.penjelasan || `Pukul ${targetStr} artinya jarum pendek menunjuk angka ${rawTargetH} dan jarum panjang di angka ${rawTargetM === 0 ? 12 : Math.round(rawTargetM / 5)}.`;
 
     if (feedback) {
       feedback.className = "quiz-feedback-quizizz feedback-timeout";
@@ -465,7 +482,7 @@ function handleQuestionTimeout() {
           <div>
             <h4>Waktu Menjawab Habis</h4>
             <p>Posisi jarum yang benar: <strong>Pukul ${targetStr}</strong></p>
-            <div class="feedback-explanation">${escapeHTML(question.explanation)}</div>
+            <div class="feedback-explanation">${escapeHTML(expl)}</div>
           </div>
         </div>
       `;
@@ -612,7 +629,7 @@ function renderQuestion() {
   if (quizProgressPercent) quizProgressPercent.textContent = Math.round(progress) + "%";
   if (quizPointsEl) quizPointsEl.textContent = quizPoints;
   if (quizLevelBadge) quizLevelBadge.textContent = `Level ${question.level}`;
-  if (quizQuestionEl) quizQuestionEl.textContent = question.question;
+  if (quizQuestionEl) quizQuestionEl.textContent = question.question || question.pertanyaan || "";
 
   if (hintBox) {
     hintBox.classList.add("hidden");
@@ -994,7 +1011,7 @@ function renderQuestionIllustration(question) {
   currentQuizClock = null;
 
   // 0a. Tipe clock_activity_drop: Menampilkan gambar jam analog + kegiatan + slot drop keterangan waktu (Level 4)
-  if (question.type === "clock_activity_drop") {
+  if (question.type === "clock_activity_drop" || question.tipe === "clock_activity_drop") {
     currentDroppedActivityTime = null;
     illustration.appendChild(createClockActivityDropWidget(question));
     setupActivityDropSlot(question);
@@ -1002,14 +1019,14 @@ function renderQuestionIllustration(question) {
   }
 
   // 0b. Tipe time_compare: Menampilkan 2 kartu kegiatan berdampingan dengan gambar dan checkbox centang
-  if (question.type === "time_compare") {
+  if (question.type === "time_compare" || question.tipe === "time_compare") {
     currentSelectedCompareIndex = null;
     illustration.appendChild(createTimeCompareWidget(question));
     return;
   }
 
   // 0b. Tipe clock_drop: Menampilkan jam digital alarm interaktif dengan drop slot Jam dan Menit
-  if (question.type === "clock_drop") {
+  if (question.type === "clock_drop" || question.tipe === "clock_drop") {
     currentDroppedHour = null;
     currentDroppedMinute = null;
     illustration.appendChild(createDigitalAlarmClockWidget(question));
@@ -1018,7 +1035,7 @@ function renderQuestionIllustration(question) {
   }
 
   // 0b. Tipe clock_drag: Siswa menggeser / mengarahkan jarum jam ke waktu target
-  if (question.type === "clock_drag") {
+  if (question.type === "clock_drag" || question.tipe === "clock_drag") {
     // Tampilan jam analog bersih tanpa petunjuk/tombol di bawahnya
     currentQuizClock = createClock(12, 0, 280, true, false);
     illustration.appendChild(currentQuizClock);
@@ -1038,6 +1055,20 @@ function renderQuestionIllustration(question) {
       <div class="digital-badge large">${escapeHTML(dTime)}</div>
     `;
     illustration.appendChild(digiBox);
+    return;
+  }
+
+  // 1b. Tampilan Gambar / SVG Kustom yang Diunggah Guru
+  if (question.img || question.gambar) {
+    const imgWrap = document.createElement("div");
+    imgWrap.className = "quiz-custom-img-wrap";
+    imgWrap.style.cssText = "text-align:center;margin:12px auto;max-width:340px;";
+    const img = document.createElement("img");
+    img.src = question.img || question.gambar;
+    img.alt = question.question || question.pertanyaan || "Ilustrasi soal";
+    img.style.cssText = "max-width:100%;max-height:220px;border-radius:12px;object-fit:contain;background:#fff;border:1.5px solid var(--border);box-shadow:0 4px 12px rgba(0,0,0,0.06);";
+    imgWrap.appendChild(img);
+    illustration.appendChild(imgWrap);
     return;
   }
 
@@ -1375,7 +1406,7 @@ function renderAnswers(question) {
   grid.innerHTML = "";
 
   // === Tipe clock_drop: Pilihan Kartu Angka Waktu Draggable & Clickable ===
-  if (question.type === "clock_drop") {
+  if (question.type === "clock_drop" || question.tipe === "clock_drop") {
     grid.className = "clock-drop-answers-area";
 
     const banner = document.createElement("div");
@@ -1451,7 +1482,7 @@ function renderAnswers(question) {
   }
 
   // === Tipe clock_activity_drop: Drag & Drop Pilihan Waktu Kegiatan (Level 4) ===
-  if (question.type === "clock_activity_drop") {
+  if (question.type === "clock_activity_drop" || question.tipe === "clock_activity_drop") {
     grid.className = "clock-drop-answers-area";
 
     const banner = document.createElement("div");
@@ -1467,7 +1498,8 @@ function renderAnswers(question) {
 
     const colorClasses = ["chip-blue", "chip-green", "chip-amber", "chip-red"];
 
-    question.options.forEach((opt, idx) => {
+    const rawOptions = question.options || question.pilihan || [];
+    rawOptions.forEach((opt, idx) => {
       const chip = document.createElement("div");
       chip.className = `clock-drag-chip activity-time-chip ${colorClasses[idx % 4]}`;
       chip.draggable = true;
@@ -1515,7 +1547,7 @@ function renderAnswers(question) {
   }
 
   // === Tipe time_compare: Tombol "Jawab" tunggal dengan pilihan centang kegiatan ===
-  if (question.type === "time_compare") {
+  if (question.type === "time_compare" || question.tipe === "time_compare") {
     grid.className = "quizizz-answer-grid clock-drag-answer-grid";
 
     const submitBtn = document.createElement("button");
@@ -1537,7 +1569,7 @@ function renderAnswers(question) {
   }
 
   // === Tipe clock_drag: Tombol "Jawab" tunggal ===
-  if (question.type === "clock_drag") {
+  if (question.type === "clock_drag" || question.tipe === "clock_drag") {
     grid.className = "quizizz-answer-grid clock-drag-answer-grid";
 
     const submitBtn = document.createElement("button");
@@ -1883,7 +1915,7 @@ function submitClockDropAnswer(question) {
 
     const speedBonus = Math.min(40, Math.round(questionTimeRemaining * 1.6));
     const streakBonus = quizStreak >= 2 ? (quizStreak - 1) * 20 : 0;
-    const earnedPoints = 100 + speedBonus + streakBonus;
+    const earnedPoints = (question.points || question.poin || 100) + speedBonus + streakBonus;
     quizPoints += earnedPoints;
 
     if (quizStreak >= 2) {
@@ -1905,6 +1937,8 @@ function submitClockDropAnswer(question) {
 
     showFloatingScore(`+${earnedPoints}`, bonusMsg);
 
+    const expl = question.explanation || question.penjelasan || `Pukul ${targetStr} pada jam digital: angka jam diisi ${expHour} dan angka menit diisi ${expMinute}.`;
+
     if (feedback) {
       feedback.className = "quiz-feedback-quizizz feedback-correct";
       feedback.innerHTML = `
@@ -1913,7 +1947,7 @@ function submitClockDropAnswer(question) {
           <div>
             <h4>Hebat! Pasangan Angka Jam dan Menit Tepat (+${earnedPoints} Poin)</h4>
             <p>Jam digital menunjukkan <strong>${answerStr}</strong> (Jam ${expHour} dan Menit ${expMinute}) — benar!</p>
-            <div class="feedback-explanation">${escapeHTML(question.explanation)}</div>
+            <div class="feedback-explanation">${escapeHTML(expl)}</div>
           </div>
         </div>
       `;
@@ -1944,6 +1978,8 @@ function submitClockDropAnswer(question) {
 
     if (typeof playSound === "function") playSound("wrong");
 
+    const expl = question.explanation || question.penjelasan || `Pukul ${targetStr} pada jam digital: angka jam diisi ${expHour} dan angka menit diisi ${expMinute}.`;
+
     if (feedback) {
       feedback.className = "quiz-feedback-quizizz feedback-wrong";
       feedback.innerHTML = `
@@ -1952,7 +1988,7 @@ function submitClockDropAnswer(question) {
           <div>
             <h4>Angka Belum Tepat</h4>
             <p>Kamu memasang: <strong>${answerStr}</strong> — waktu yang benar: <strong>${targetStr}</strong> (Jam ${expHour} dan Menit ${expMinute})</p>
-            <div class="feedback-explanation">${escapeHTML(question.explanation)}</div>
+            <div class="feedback-explanation">${escapeHTML(expl)}</div>
           </div>
         </div>
       `;
@@ -2015,7 +2051,8 @@ function submitTimeCompareAnswer(question) {
 
     const speedBonus = Math.min(40, Math.round(questionTimeRemaining * 1.6));
     const streakBonus = quizStreak >= 2 ? (quizStreak - 1) * 20 : 0;
-    const earnedPoints = 100 + speedBonus + streakBonus;
+    const basePts = question.points || question.poin || 100;
+    const earnedPoints = basePts + speedBonus + streakBonus;
     quizPoints += earnedPoints;
 
     if (quizStreak >= 2) {
@@ -2045,7 +2082,7 @@ function submitTimeCompareAnswer(question) {
           <div>
             <h4>Pilihan Tepat! (+${earnedPoints} Poin)</h4>
             <p>Kegiatan <strong>${escapeHTML(correctItem.label)}</strong> adalah jawaban yang benar.</p>
-            <div class="feedback-explanation">${escapeHTML(question.explanation)}</div>
+            <div class="feedback-explanation">${escapeHTML(question.explanation || question.penjelasan || "")}</div>
           </div>
         </div>
       `;
@@ -2072,7 +2109,7 @@ function submitTimeCompareAnswer(question) {
           <div>
             <h4>Jawaban Belum Tepat</h4>
             <p>Kamu memilih: <strong>${escapeHTML(selectedItem.label)}</strong> — Jawaban yang benar: <strong>${escapeHTML(correctItem.label)}</strong></p>
-            <div class="feedback-explanation">${escapeHTML(question.explanation)}</div>
+            <div class="feedback-explanation">${escapeHTML(question.explanation || question.penjelasan || "")}</div>
           </div>
         </div>
       `;
@@ -2098,7 +2135,7 @@ function submitActivityDropAnswer(question) {
   quizAnswered = true;
   stopQuestionTimer();
 
-  const expAnswer = question.targetAnswer || (question.options && question.options[question.correct]);
+  const expAnswer = question.targetAnswer || (question.options && question.options[question.correct]) || (question.pilihan && question.pilihan[question.correct]);
   const isCorrect = currentDroppedActivityTime === expAnswer;
 
   const slot = $("timeActivityDropSlot");
@@ -2126,7 +2163,8 @@ function submitActivityDropAnswer(question) {
 
     const speedBonus = Math.min(40, Math.round(questionTimeRemaining * 1.6));
     const streakBonus = quizStreak >= 2 ? (quizStreak - 1) * 20 : 0;
-    const earnedPoints = 100 + speedBonus + streakBonus;
+    const basePts = question.points || question.poin || 100;
+    const earnedPoints = basePts + speedBonus + streakBonus;
     quizPoints += earnedPoints;
 
     if (quizStreak >= 2) {
@@ -2156,7 +2194,7 @@ function submitActivityDropAnswer(question) {
           <div>
             <h4>Tepat Sekali! (+${earnedPoints} Poin)</h4>
             <p>Waktu kegiatan adalah <strong>${escapeHTML(expAnswer)}</strong> — benar!</p>
-            <div class="feedback-explanation">${escapeHTML(question.explanation)}</div>
+            <div class="feedback-explanation">${escapeHTML(question.explanation || question.penjelasan || "")}</div>
           </div>
         </div>
       `;
@@ -2184,7 +2222,7 @@ function submitActivityDropAnswer(question) {
           <div>
             <h4>Pilihan Waktu Belum Tepat</h4>
             <p>Kamu memasang: <strong>${escapeHTML(currentDroppedActivityTime)}</strong> — waktu yang benar: <strong>${escapeHTML(expAnswer)}</strong></p>
-            <div class="feedback-explanation">${escapeHTML(question.explanation)}</div>
+            <div class="feedback-explanation">${escapeHTML(question.explanation || question.penjelasan || "")}</div>
           </div>
         </div>
       `;
@@ -2213,8 +2251,10 @@ function submitClockDragAnswer(question) {
   stopQuestionTimer();
 
   const { hour, minute } = currentQuizClock.getClockTime();
-  const targetH = (question.targetHour % 12) || 12;
-  const targetM = question.targetMinute;
+  const rawTargetH = question.targetHour ?? question.jam ?? question.hour ?? 12;
+  const rawTargetM = question.targetMinute ?? question.menit ?? question.minute ?? 0;
+  const targetH = (Number(rawTargetH) % 12) || 12;
+  const targetM = Number(rawTargetM);
   const currentH = (hour % 12) || 12;
 
   const isCorrect = (currentH === targetH) && (minute === targetM);
@@ -2229,8 +2269,9 @@ function submitClockDragAnswer(question) {
   if (submitBtn) submitBtn.disabled = true;
 
   // Format waktu target & jawaban siswa
-  const targetStr = `${String(question.targetHour).padStart(2, "0")}.${String(targetM).padStart(2, "0")}`;
+  const targetStr = `${String(rawTargetH).padStart(2, "0")}.${String(targetM).padStart(2, "0")}`;
   const answerStr = `${String(currentH).padStart(2, "0")}.${String(minute).padStart(2, "0")}`;
+  const expl = question.explanation || question.penjelasan || `Pukul ${targetStr} artinya jarum pendek menunjuk angka ${rawTargetH} dan jarum panjang di angka ${targetM === 0 ? 12 : Math.round(targetM / 5)}.`;
 
   if (isCorrect) {
     if (submitBtn) submitBtn.className = "btn btn-game-primary btn-clock-submit clock-correct";
@@ -2240,7 +2281,7 @@ function submitClockDragAnswer(question) {
 
     const speedBonus = Math.min(40, Math.round(questionTimeRemaining * 1.6));
     const streakBonus = quizStreak >= 2 ? (quizStreak - 1) * 20 : 0;
-    const earnedPoints = 100 + speedBonus + streakBonus;
+    const earnedPoints = (question.points || question.poin || 100) + speedBonus + streakBonus;
     quizPoints += earnedPoints;
 
     if (quizStreak >= 2) {
@@ -2270,7 +2311,7 @@ function submitClockDragAnswer(question) {
           <div>
             <h4>Posisi Jarum Tepat! (+${earnedPoints} Poin)</h4>
             <p>Kamu mengatur jarum ke <strong>${answerStr}</strong> — benar!</p>
-            <div class="feedback-explanation">${escapeHTML(question.explanation)}</div>
+            <div class="feedback-explanation">${escapeHTML(expl)}</div>
           </div>
         </div>
       `;
@@ -2292,7 +2333,7 @@ function submitClockDragAnswer(question) {
     // Animasikan jarum ke posisi yang benar
     if (currentQuizClock && currentQuizClock.setClockTime) {
       setTimeout(() => {
-        currentQuizClock.setClockTime(question.targetHour, question.targetMinute, true);
+        currentQuizClock.setClockTime(rawTargetH, targetM, true);
       }, 600);
     }
 
@@ -2304,7 +2345,7 @@ function submitClockDragAnswer(question) {
           <div>
             <h4>Posisi Jarum Belum Tepat</h4>
             <p>Kamu mengatur: <strong>${answerStr}</strong> — jawaban yang benar: <strong>${targetStr}</strong></p>
-            <div class="feedback-explanation">${escapeHTML(question.explanation)}</div>
+            <div class="feedback-explanation">${escapeHTML(expl)}</div>
           </div>
         </div>
       `;
@@ -2538,8 +2579,21 @@ function renderResult() {
   const resStars = $("resultStars");
   const resMsg = $("resultMessage");
 
-  if (resTitle) resTitle.textContent = "Hebat, " + currentStudent.name + "!";
-  if (resScore) resScore.textContent = result.score;
+  if (resTitle) {
+    if (result.score >= 80) {
+      resTitle.textContent = "Hebat Sekali, " + currentStudent.name + "!";
+    } else if (result.score >= 60) {
+      resTitle.textContent = "Bagus, " + currentStudent.name + "!";
+    } else {
+      resTitle.textContent = "Tetap Semangat, " + currentStudent.name + "!";
+    }
+  }
+
+  if (resScore) {
+    resScore.textContent = result.score;
+    resScore.className = "result-score-value " + (result.score >= 80 ? "score-high" : result.score >= 60 ? "score-med" : "score-low");
+  }
+
   if (resCorrect) resCorrect.textContent = result.correct + " / " + result.total;
   if (resPoints) resPoints.textContent = result.points;
   if (resHints) resHints.textContent = result.hints;
@@ -2548,9 +2602,9 @@ function renderResult() {
     let starsHtml = "";
     for (let i = 0; i < 3; i++) {
       if (i < result.stars) {
-        starsHtml += `<img src="assets/icons/star-gold.svg" class="result-star" width="40" height="40" alt="Bintang Emas">`;
+        starsHtml += `<img src="assets/icons/star-gold.svg" class="result-star" width="44" height="44" alt="Bintang Emas">`;
       } else {
-        starsHtml += `<img src="assets/icons/star-empty.svg" class="result-star empty" width="40" height="40" alt="Bintang Kosong">`;
+        starsHtml += `<img src="assets/icons/star-empty.svg" class="result-star empty" width="44" height="44" alt="Bintang Kosong">`;
       }
     }
     resStars.innerHTML = starsHtml;
