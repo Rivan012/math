@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <base href="../">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preview Kuis Level 5</title>
+  <link rel="stylesheet" href="../css/style.css?v=4.0">
+  <link rel="stylesheet" href="../css/responsive.css?v=4.0">
+  <style>
+    body {
+      background: #F0FDF4;
+      padding: 24px;
+      font-family: 'Nunito', 'Segoe UI', system-ui, sans-serif;
+    }
+    .preview-container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #FFFFFF;
+      border-radius: 28px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+    }
+  </style>
+</head>
+<body>
+  <div class="preview-container">
+    <div id="quizScreen">
+      <div id="quizCard">
+        <div id="questionIllustration"></div>
+        <div id="answerGrid" style="margin-top: 24px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/storage.js?v=4.0"></script>
+  <script src="../js/quiz.js?v=4.0"></script>
+  <script>
+    window.showStudentPage = () => {};
+    window.playSound = () => {};
+    window.showToast = () => {};
+    window.showFloatingScore = () => {};
+    window.updateStreakBanner = () => {};
+    window.currentStudent = { name: "Budi", points: 0, completedLevels: [] };
+
+    document.addEventListener("DOMContentLoaded", () => {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const step = parseInt(params.get("step") || "0", 10);
+        
+        startQuiz(5);
+        currentQuestionIndex = step;
+        renderQuestion();
+      } catch (err) {
+        document.body.innerHTML += '<pre style="color:red;padding:20px;background:#fff;">' + err.stack + '</pre>';
+      }
+    });
+  </script>
+</body>
+</html>

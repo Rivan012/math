@@ -12,8 +12,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Stylesheet Utama & Responsif -->
-  <link rel="stylesheet" href="css/style.css?v=3.5">
-  <link rel="stylesheet" href="css/responsive.css?v=3.5">
+  <link rel="stylesheet" href="css/style.css?v=4.0">
+  <link rel="stylesheet" href="css/responsive.css?v=4.0">
 </head>
 <body>
 
@@ -689,27 +689,35 @@
 
                   <div style="margin-top:14px;border-top:1px dashed var(--border);padding-top:12px;">
                     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                      <label class="small muted" style="font-weight:700;margin-bottom:0;">4 Kartu Angka Pilihan Siswa (Drag & Drop):</label>
+                      <label class="small muted" style="font-weight:700;margin-bottom:0;">6 Kartu Angka Pilihan Siswa (Drag & Drop):</label>
                       <button type="button" class="btn btn-outline btn-sm" id="btnAutoGenerateChips" style="padding:2px 8px;font-size:0.75rem;">
-                        ⚡ Isi Otomatis Pilihan Kartu
+                        ⚡ Isi & Acak 6 Pilihan Kartu
                       </button>
                     </div>
-                    <div class="form-row-4" style="display:grid;grid-template-columns:repeat(4, 1fr);gap:8px;">
+                    <div class="form-row-6" style="display:grid;grid-template-columns:repeat(6, 1fr);gap:8px;">
                       <div>
-                        <span class="small muted" style="font-size:0.75rem;display:block;margin-bottom:2px;">Kartu 1 (Kunci Jam)</span>
-                        <input type="text" id="qChip1" class="input" value="05" maxlength="2" style="text-align:center;font-weight:800;font-family:monospace;">
+                        <span class="small muted" style="font-size:0.72rem;display:block;margin-bottom:2px;">Kartu 1</span>
+                        <input type="text" id="qChip1" class="input" value="07" maxlength="2" style="text-align:center;font-weight:800;font-family:monospace;">
                       </div>
                       <div>
-                        <span class="small muted" style="font-size:0.75rem;display:block;margin-bottom:2px;">Kartu 2 (Kunci Menit)</span>
-                        <input type="text" id="qChip2" class="input" value="00" maxlength="2" style="text-align:center;font-weight:800;font-family:monospace;">
+                        <span class="small muted" style="font-size:0.72rem;display:block;margin-bottom:2px;">Kartu 2</span>
+                        <input type="text" id="qChip2" class="input" value="30" maxlength="2" style="text-align:center;font-weight:800;font-family:monospace;">
                       </div>
                       <div>
-                        <span class="small muted" style="font-size:0.75rem;display:block;margin-bottom:2px;">Kartu 3 (Pengecoh)</span>
-                        <input type="text" id="qChip3" class="input" value="07" maxlength="2" style="text-align:center;font-weight:800;font-family:monospace;">
+                        <span class="small muted" style="font-size:0.72rem;display:block;margin-bottom:2px;">Kartu 3</span>
+                        <input type="text" id="qChip3" class="input" value="05" maxlength="2" style="text-align:center;font-weight:800;font-family:monospace;">
                       </div>
                       <div>
-                        <span class="small muted" style="font-size:0.75rem;display:block;margin-bottom:2px;">Kartu 4 (Pengecoh)</span>
-                        <input type="text" id="qChip4" class="input" value="30" maxlength="2" style="text-align:center;font-weight:800;font-family:monospace;">
+                        <span class="small muted" style="font-size:0.72rem;display:block;margin-bottom:2px;">Kartu 4</span>
+                        <input type="text" id="qChip4" class="input" value="12" maxlength="2" style="text-align:center;font-weight:800;font-family:monospace;">
+                      </div>
+                      <div>
+                        <span class="small muted" style="font-size:0.72rem;display:block;margin-bottom:2px;">Kartu 5</span>
+                        <input type="text" id="qChip5" class="input" value="00" maxlength="2" style="text-align:center;font-weight:800;font-family:monospace;">
+                      </div>
+                      <div>
+                        <span class="small muted" style="font-size:0.72rem;display:block;margin-bottom:2px;">Kartu 6</span>
+                        <input type="text" id="qChip6" class="input" value="06" maxlength="2" style="text-align:center;font-weight:800;font-family:monospace;">
                       </div>
                     </div>
                   </div>
@@ -1003,23 +1011,48 @@
                 <div class="muted small" style="margin-top:8px;">💡 Siswa memutar jarum jam analog, lalu menekan tombol <strong>Jawab</strong>.</div>
               </div>
 
-              <!-- Jam Digital Preview (Untuk Level 2 Siswa) -->
+              <!-- Jam Digital Preview (Untuk Level 2 Siswa) Sesuai Modul -->
               <div class="digital-alarm-widget-wrap" id="previewDigitalClockWrap" style="display:none;margin:16px auto;">
-                <div class="digital-alarm-body-container" style="max-width:320px;margin:0 auto;">
-                  <div class="digital-clock-labels-row" aria-hidden="true">
-                    <span class="digital-label-tag">👈 Jam</span>
-                    <span class="digital-label-tag">Menit 👉</span>
-                  </div>
-                  <div class="digital-alarm-chassis" style="padding:14px 18px;">
-                    <div class="digital-screen-inner" style="gap:12px;">
-                      <div class="digital-drop-slot hour-slot has-value" id="previewSlotHour" style="pointer-events:none;">
-                        <span class="slot-display-val" id="previewSlotHourText">05</span>
-                        <span class="slot-mini-label">Jam</span>
+                <div class="digital-diagram-wrap">
+                  <div class="digital-clock-pill-header">Jam Digital</div>
+                  <div class="digital-diagram-stage">
+                    <svg class="digital-arrows-svg" viewBox="0 0 360 195" aria-hidden="true">
+                      <path d="M 70 123 L 70 34 L 115 34" stroke="#B91C1C" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+                      <polygon points="112,29 122,34 112,39" fill="#B91C1C" />
+                      <path d="M 290 123 L 290 34 L 245 34" stroke="#B91C1C" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+                      <polygon points="248,29 238,34 248,39" fill="#B91C1C" />
+                    </svg>
+
+                    <div class="digital-clock-center-unit">
+                      <div class="digital-alarm-chassis">
+                        <div class="digital-screen-inner">
+                          <div class="digital-screen-digit-drop" style="pointer-events:none;">
+                            <span class="screen-digit screen-hour" id="previewScreenHourVal">05</span>
+                          </div>
+                          <div class="digital-screen-colon">:</div>
+                          <div class="digital-screen-digit-drop" style="pointer-events:none;">
+                            <span class="screen-digit screen-minute" id="previewScreenMinuteVal">00</span>
+                          </div>
+                        </div>
                       </div>
-                      <div class="digital-screen-colon">:</div>
-                      <div class="digital-drop-slot minute-slot has-value" id="previewSlotMinute" style="pointer-events:none;">
-                        <span class="slot-display-val" id="previewSlotMinuteText">00</span>
-                        <span class="slot-mini-label">Menit</span>
+                      <div class="digital-clock-feet-row" aria-hidden="true">
+                        <span class="digital-clock-foot"></span>
+                        <span class="digital-clock-foot"></span>
+                      </div>
+                    </div>
+
+                    <div class="digital-answer-slots-row">
+                      <div class="digital-drop-slot hour-slot has-value" style="pointer-events:none;">
+                        <div class="slot-content-wrap">
+                          <span class="slot-display-val" id="previewSlotHourText">05</span>
+                          <span class="slot-box-label">Jam</span>
+                        </div>
+                      </div>
+                      <div class="digital-drop-slot minute-slot has-value" style="pointer-events:none;">
+                        <div class="slot-content-wrap">
+                          <span class="slot-display-val" id="previewSlotMinuteText">00</span>
+                          <span class="slot-box-label">Menit</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1029,13 +1062,15 @@
               <!-- Chips Drag & Drop + Jawab Button Preview (Untuk clock_drop Level 2 Siswa) -->
               <div id="previewClockDropAction" style="margin:16px 0 10px 0;display:none;text-align:center;">
                 <div class="clock-drop-instruction-banner" style="margin-bottom:10px;font-size:0.82rem;">
-                  <span>Tarik angka (Jam) dan (Menit) ke jam digital di atas:</span>
+                  <span>Tarik angka (Jam) dan (Menit) ke kotak jawaban di atas:</span>
                 </div>
                 <div class="clock-draggable-chips-row" id="previewChipsRow" style="justify-content:center;margin-bottom:14px;gap:8px;display:flex;flex-wrap:wrap;">
-                  <div class="clock-drag-chip digital-chip chip-blue" id="previewChip1"><span>05</span></div>
-                  <div class="clock-drag-chip digital-chip chip-green" id="previewChip2"><span>00</span></div>
-                  <div class="clock-drag-chip digital-chip chip-amber" id="previewChip3"><span>07</span></div>
-                  <div class="clock-drag-chip digital-chip chip-red" id="previewChip4"><span>30</span></div>
+                  <div class="clock-drag-chip digital-chip chip-blue" id="previewChip1"><span>07</span></div>
+                  <div class="clock-drag-chip digital-chip chip-green" id="previewChip2"><span>30</span></div>
+                  <div class="clock-drag-chip digital-chip chip-amber" id="previewChip3"><span>05</span></div>
+                  <div class="clock-drag-chip digital-chip chip-purple" id="previewChip4"><span>12</span></div>
+                  <div class="clock-drag-chip digital-chip chip-cyan" id="previewChip5"><span>00</span></div>
+                  <div class="clock-drag-chip digital-chip chip-red" id="previewChip6"><span>06</span></div>
                 </div>
                 <button type="button" class="btn btn-game-primary btn-clock-submit" style="pointer-events:none;min-width:170px;">
                   <img src="assets/icons/check-circle.svg" width="20" height="20" alt="">
@@ -1266,9 +1301,9 @@
   <!-- =========================================================
        JAVASCRIPT MODULES KHUSUS GURU / ADMIN
        ========================================================= -->
-  <script src="js/storage.js?v=2.2"></script>
+  <script src="js/storage.js?v=4.0"></script>
   <script src="js/xlsx.full.min.js"></script>
-  <script src="js/csv.js?v=2.2"></script>
-  <script src="js/teacher.js?v=2.2"></script>
+  <script src="js/csv.js?v=3.2"></script>
+  <script src="js/teacher.js?v=4.0"></script>
 </body>
 </html>

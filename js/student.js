@@ -34,6 +34,12 @@ const LEVELS = [
     title: "Mengenal Waktu Kegiatan",
     icon: "assets/icons/level-4.svg",
     description: "Mengenal waktu pagi, siang, sore, dan malam"
+  },
+  {
+    id: 5,
+    title: "Kuis Campuran Waktu",
+    icon: "assets/icons/level-5.svg",
+    description: "Uji kemampuanmu mengenal jam dan waktu!"
   }
 ];
 
@@ -77,7 +83,7 @@ function renderHome() {
   if (hudPoints) hudPoints.textContent = currentStudent.points || 0;
   if (hudStars) hudStars.textContent = currentStudent.stars || 0;
   if (homeMaterial) homeMaterial.textContent = (currentStudent.materialProgress || 0) + "%";
-  if (homeLevel) homeLevel.textContent = Math.min(completed + 1, 4) + " / 4";
+  if (homeLevel) homeLevel.textContent = Math.min(completed + 1, LEVELS.length) + " / " + LEVELS.length;
 
   const progress = Math.round((completed / LEVELS.length) * 100);
   if (homeProgress) homeProgress.style.width = progress + "%";
@@ -152,8 +158,8 @@ function tryStartQuizForLevel(levelId) {
   const unlocked = levelId === 1 || completedLevels.includes(levelId - 1);
   if (!unlocked) return;
 
-  // Jika belum baca materi, tampilkan modal reminder
-  if (!hasStudiedLevel(levelId) && !completedLevels.includes(levelId)) {
+  // Jika belum baca materi, tampilkan modal reminder (skip untuk level quiz-only)
+  if (levelId !== 5 && !hasStudiedLevel(levelId) && !completedLevels.includes(levelId)) {
     showNeedStudyModal(levelId);
     return;
   }
@@ -188,9 +194,13 @@ function renderLevels() {
           ? `<span class="level-status-pill ready">Buka Misi</span>`
           : `<span class="level-status-pill locked">${ICON_LOCK} Terkunci</span>`;
 
-    // Tombol Materi
+    // Tombol Materi (hidden for quiz-only levels)
     let materiClass, materiLabel;
-    if (!unlocked) {
+    const isQuizOnly = level.id === 5;
+    if (isQuizOnly) {
+      materiClass = "btn-card-action btn-materi hidden";
+      materiLabel = "";
+    } else if (!unlocked) {
       materiClass = "btn-card-action btn-materi is-locked";
       materiLabel = `${ICON_LOCK} Terkunci`;
     } else if (studied || completed) {
@@ -231,7 +241,7 @@ function renderLevels() {
       </div>
       <div class="level-card-actions-2">
         <button class="${materiClass}" data-level="${level.id}" data-action="materi" type="button">${materiLabel}</button>
-        <button class="${quizClass}" data-level="${level.id}" data-action="quiz" type="button">${quizLabel}</button>
+        <button class="${quizClass}${isQuizOnly ? ' btn-full-width' : ''}" data-level="${level.id}" data-action="quiz" type="button">${quizLabel}</button>
       </div>
     `;
 
@@ -608,7 +618,7 @@ function getMaterialExhibitHtml(item) {
         <div class="dual-clock-comparison">
           <div class="dual-clock-item">
             <span class="dual-clock-title">Jam Analog</span>
-            <div class="clock-face material-dynamic-clock mini interactive-clock-face" id="flipbookDualAnalog">
+            <div class="clock-face material-dynamic-clock interactive-clock-face" id="flipbookDualAnalog">
               ${generateClockTicks()}
               ${generateClockNumbers()}
               <div class="clock-hand hour-hand red-hand draggable-hand" id="dualHourHand" style="transform:translateX(-50%) rotate(210deg);">
@@ -658,183 +668,104 @@ function getMaterialExhibitHtml(item) {
   // UNIT 3: LEBIH LAMA ATAU LEBIH CEPAT (SEBENTAR)
   // =========================================================
   if (levelNum === 3) {
-    if (itemId === "M005" || itemId.includes("5")) {
-      // Lama dan Sebentarnya Waktu (Cerita Olahraga Minggu Kira - Buku Hal. 182 & 185)
-      return `
-        <div class="interactive-duration-container">
-          <!-- Cerita Olahraga Minggu Kira (Hal. 182) -->
-          <div class="kira-story-card">
-            <div class="kira-story-header">
-              <span class="story-badge">Cerita Buku Matematika Hal. 182</span>
-              <h4>Olahraga Minggu Bersama Kira</h4>
+    // Lama dan Sebentarnya Waktu (Buku Teks Kurikulum Merdeka Matematika Kelas 2)
+    return `
+        <div class="materi3-container">
+          <!-- 1. Header Banner Asli Buku Teks: "Lama dan sebentarnya waktu" -->
+          <div class="materi3-header-card">
+            <img src="assets/images/materi3_header.png" alt="Lama dan sebentarnya waktu" class="materi3-header-img">
+          </div>
+
+          <!-- 2. Bilah Filter & Mode Poster Buku Asli -->
+          <div class="materi3-controls-bar">
+            <div class="materi3-filter-group" role="group" aria-label="Filter Durasi Waktu">
+              <button type="button" class="materi3-filter-btn active" data-filter="all">Semua (4)</button>
+              <button type="button" class="materi3-filter-btn" data-filter="sebentar">⏱️ Sebentar (2)</button>
+              <button type="button" class="materi3-filter-btn" data-filter="lama">⏳ Lama (2)</button>
             </div>
-            <p class="kira-story-text">
-              Kira berolahraga lari mengelilingi taman mulai <strong>pukul 6 sampai pukul 7 pagi (1 jam)</strong>. 
-              Setelah berolahraga, Kira mandi agar badan segar kembali <strong>(15 menit)</strong>.
-            </p>
+            <button type="button" class="materi3-toggle-poster-btn" id="btnTogglePoster">
+              📖 Lihat Lembar Buku Asli
+            </button>
+          </div>
 
-            <!-- Visual Bar Durasi Real-Time -->
-            <div class="duration-bars-simulator">
-              <div class="sim-row">
-                <div class="sim-label">
-                  <span class="sim-name">Kira Berolahraga Lari</span>
-                  <span class="sim-time-val">1 Jam (60 Menit)</span>
-                </div>
-                <div class="sim-track">
-                  <div class="sim-fill fill-long" id="barOlahraga" style="width: 100%;">
-                    <span class="fill-text">LEBIH LAMA</span>
-                  </div>
-                </div>
+          <!-- Tampilan Lembar Buku Lengkap (Bisa Dibuka/Ditutup) -->
+          <div class="materi3-poster-view hidden" id="materi3PosterView">
+            <img src="assets/images/materi3_full.png" alt="Lembar Buku Matematika Asli: Lama dan Sebentarnya Waktu" class="materi3-poster-img">
+          </div>
+
+          <!-- 3. Grid 4 Kartu Panel Ilustrasi Asli (2x2 Persis Seperti Gambar Buku) -->
+          <div class="materi3-grid" id="materi3Grid">
+            <!-- Panel 1: Meminum (Sebentar) -->
+            <div class="materi3-card" data-category="sebentar" data-act="minum" tabindex="0" role="button" aria-label="Meminum memerlukan waktu sebentar">
+              <div class="materi3-card-badge sebentar">
+                <span class="badge-icon">⏱️</span> SEBENTAR
               </div>
-
-              <div class="sim-row">
-                <div class="sim-label">
-                  <span class="sim-name">Kira Mandi Segar</span>
-                  <span class="sim-time-val">15 Menit</span>
-                </div>
-                <div class="sim-track">
-                  <div class="sim-fill fill-short" id="barMandi" style="width: 25%;">
-                    <span class="fill-text">LEBIH SEBENTAR</span>
-                  </div>
-                </div>
+              <div class="materi3-img-wrap">
+                <img src="assets/images/materi3_minum.png" alt="Meminum memerlukan waktu sebentar" class="materi3-card-img">
               </div>
-            </div>
-
-            <div class="sim-action-row">
-              <button type="button" class="btn-sim-play" id="btnPlayKiraSim">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                <span>Mulai Simulasi Waktu Kira</span>
-              </button>
+              <div class="materi3-card-footer">
+                <h4 class="materi3-card-title">Meminum</h4>
+                <p class="materi3-card-caption">Meminum memerlukan waktu <strong>sebentar</strong>.</p>
+                <span class="materi3-card-time">Durasi: beberapa detik hingga 1 menit</span>
+              </div>
             </div>
 
-            <!-- Kesimpulan Resmi Buku Teks -->
-            <div class="kira-verdict-box" id="kiraVerdictBox">
-              <div class="verdict-item primary">
-                <span class="verdict-check">✓</span>
-                <span><strong>Berolahraga</strong> LEBIH LAMA dari <strong>mandi</strong>.</span>
+            <!-- Panel 2: Memasak (Lama) -->
+            <div class="materi3-card" data-category="lama" data-act="memasak" tabindex="0" role="button" aria-label="Memasak memerlukan waktu lama">
+              <div class="materi3-card-badge lama">
+                <span class="badge-icon">⏳</span> LAMA
               </div>
-              <div class="verdict-item secondary">
-                <span class="verdict-check">✓</span>
-                <span><strong>Mandi</strong> LEBIH SEBENTAR dari <strong>berolahraga</strong>.</span>
+              <div class="materi3-img-wrap">
+                <img src="assets/images/materi3_memasak.png" alt="Memasak memerlukan waktu lama" class="materi3-card-img">
+              </div>
+              <div class="materi3-card-footer">
+                <h4 class="materi3-card-title">Memasak</h4>
+                <p class="materi3-card-caption">Memasak memerlukan waktu <strong>lama</strong>.</p>
+                <span class="materi3-card-time">Durasi: 30 menit hingga berjam-jam</span>
+              </div>
+            </div>
+
+            <!-- Panel 3: Tidur (Lama) -->
+            <div class="materi3-card" data-category="lama" data-act="tidur" tabindex="0" role="button" aria-label="Tidur memerlukan waktu lama">
+              <div class="materi3-card-badge lama">
+                <span class="badge-icon">⏳</span> LAMA
+              </div>
+              <div class="materi3-img-wrap">
+                <img src="assets/images/materi3_tidur.png" alt="Tidur memerlukan waktu lama" class="materi3-card-img">
+              </div>
+              <div class="materi3-card-footer">
+                <h4 class="materi3-card-title">Tidur Malam</h4>
+                <p class="materi3-card-caption">Tidur memerlukan waktu <strong>lama</strong>.</p>
+                <span class="materi3-card-time">Durasi: sekitar 8 jam dari malam ke pagi</span>
+              </div>
+            </div>
+
+            <!-- Panel 4: Gosok Gigi (Sebentar) -->
+            <div class="materi3-card" data-category="sebentar" data-act="gosok" tabindex="0" role="button" aria-label="Gosok gigi memerlukan waktu sebentar">
+              <div class="materi3-card-badge sebentar">
+                <span class="badge-icon">⏱️</span> SEBENTAR
+              </div>
+              <div class="materi3-img-wrap">
+                <img src="assets/images/materi3_gosok_gigi.png" alt="Gosok gigi memerlukan waktu sebentar" class="materi3-card-img">
+              </div>
+              <div class="materi3-card-footer">
+                <h4 class="materi3-card-title">Gosok Gigi</h4>
+                <p class="materi3-card-caption">Gosok gigi memerlukan waktu <strong>sebentar</strong>.</p>
+                <span class="materi3-card-time">Durasi: sekitar 2 menit di wastafel</span>
               </div>
             </div>
           </div>
 
-          <!-- Permainan Sortir Keranjang Taktil: Sebentar vs Lama -->
-          <div class="sort-game-card">
-            <div class="sort-header">
-              <h4>Permainan Edukasi: Kelompokkan Kegiatan</h4>
-              <p>Sentuh salah satu kegiatan di bawah untuk melihat kelompok durasinya!</p>
-            </div>
-
-            <div class="activity-chips-pool" id="activityChipsPool">
-              <button type="button" class="chip-act" data-type="sebentar" data-dur="~ 1 Menit">Meminum Segelas Air</button>
-              <button type="button" class="chip-act" data-type="lama" data-dur="~ 8 Jam">Tidur Malam</button>
-              <button type="button" class="chip-act" data-type="sebentar" data-dur="~ 2 Menit">Menyikat Gigi</button>
-              <button type="button" class="chip-act" data-type="lama" data-dur="~ 5 Jam">Belajar di Sekolah</button>
-              <button type="button" class="chip-act" data-type="sebentar" data-dur="~ 30 Detik">Mencuci Tangan</button>
-              <button type="button" class="chip-act" data-type="lama" data-dur="~ 2 Jam">Memasak Rendang</button>
-            </div>
-
-            <div class="baskets-grid">
-              <div class="basket-card basket-sebentar" id="basketSebentar">
-                <div class="basket-badge green">Kegiatan Sebentar (Menit / Detik)</div>
-                <div class="basket-items" id="basketSebentarItems">
-                  <span class="basket-placeholder">Sentuh kegiatan sebentar di atas</span>
-                </div>
-              </div>
-              <div class="basket-card basket-lama" id="basketLama">
-                <div class="basket-badge purple">Kegiatan Lama (Berjam-jam)</div>
-                <div class="basket-items" id="basketLamaItems">
-                  <span class="basket-placeholder">Sentuh kegiatan lama di atas</span>
-                </div>
-              </div>
+          <!-- 4. Papan Edukasi Interaktif Dinamis saat Kartu Disentuh -->
+          <div class="materi3-info-banner" id="materi3InfoBanner">
+            <div class="info-icon">💡</div>
+            <div class="info-text" id="materi3InfoText">
+              <strong>Sentuh salah satu kartu kegiatan di atas</strong> untuk melihat penjelasan konsep waktu!
             </div>
           </div>
+
         </div>
       `;
-    }
-
-    // M006: Membandingkan Durasi Kegiatan
-    return `
-      <div class="compare-arena-container">
-        <div class="arena-header">
-          <span class="arena-badge">Ayo Berlatih Hal. 185–186 Soal 3</span>
-          <h4>Tantangan: Mana yang Lebih Lama?</h4>
-          <p>Pilihlah kegiatan yang membutuhkan waktu <strong>LEBIH LAMA</strong> pada setiap ronde!</p>
-        </div>
-
-        <div class="battle-rounds-list">
-          <!-- Ronde 1: Menyisir Rambut vs Mandi (Hal. 185 3a) -->
-          <div class="battle-card" data-round="1" data-winner="b">
-            <div class="battle-num">Ronde 1 (Hal. 185 Soal 3a)</div>
-            <div class="battle-versus-grid">
-              <button type="button" class="battle-btn" data-choice="a">
-                <span class="choice-title">Menyisir Rambut</span>
-                <span class="choice-time">~ 1 Menit</span>
-              </button>
-              <span class="vs-badge">VS</span>
-              <button type="button" class="battle-btn" data-choice="b">
-                <span class="choice-title">Mandi</span>
-                <span class="choice-time">~ 15 Menit</span>
-              </button>
-            </div>
-            <div class="battle-feedback"></div>
-          </div>
-
-          <!-- Ronde 2: Tidur Malam vs Menyikat Gigi (Hal. 185 3b) -->
-          <div class="battle-card" data-round="2" data-winner="a">
-            <div class="battle-num">Ronde 2 (Hal. 185 Soal 3b)</div>
-            <div class="battle-versus-grid">
-              <button type="button" class="battle-btn" data-choice="a">
-                <span class="choice-title">Tidur Malam</span>
-                <span class="choice-time">~ 8 Jam</span>
-              </button>
-              <span class="vs-badge">VS</span>
-              <button type="button" class="battle-btn" data-choice="b">
-                <span class="choice-title">Menyikat Gigi</span>
-                <span class="choice-time">~ 2 Menit</span>
-              </button>
-            </div>
-            <div class="battle-feedback"></div>
-          </div>
-
-          <!-- Ronde 3: Belajar di Sekolah vs Sarapan (Hal. 185 3c) -->
-          <div class="battle-card" data-round="3" data-winner="a">
-            <div class="battle-num">Ronde 3 (Hal. 185 Soal 3c)</div>
-            <div class="battle-versus-grid">
-              <button type="button" class="battle-btn" data-choice="a">
-                <span class="choice-title">Belajar di Sekolah</span>
-                <span class="choice-time">~ 5 Jam</span>
-              </button>
-              <span class="vs-badge">VS</span>
-              <button type="button" class="battle-btn" data-choice="b">
-                <span class="choice-title">Sarapan Pagi</span>
-                <span class="choice-time">~ 15 Menit</span>
-              </button>
-            </div>
-            <div class="battle-feedback"></div>
-          </div>
-
-          <!-- Ronde 4: Mencuci Tangan vs Bermain Bola (Hal. 186 3d) -->
-          <div class="battle-card" data-round="4" data-winner="b">
-            <div class="battle-num">Ronde 4 (Hal. 186 Soal 3d)</div>
-            <div class="battle-versus-grid">
-              <button type="button" class="battle-btn" data-choice="a">
-                <span class="choice-title">Mencuci Tangan</span>
-                <span class="choice-time">~ 30 Detik</span>
-              </button>
-              <span class="vs-badge">VS</span>
-              <button type="button" class="battle-btn" data-choice="b">
-                <span class="choice-title">Bermain Bola</span>
-                <span class="choice-time">~ 1 Jam</span>
-              </button>
-            </div>
-            <div class="battle-feedback"></div>
-          </div>
-        </div>
-      </div>
-    `;
   }
 
   // =========================================================
@@ -844,32 +775,53 @@ function getMaterialExhibitHtml(item) {
     if (itemId === "M007" || itemId.includes("7")) {
       // Pembagian 4 Waktu Langit & Tanda Alam (Buku Hal. 183 - 184)
       return `
-        <div class="sky-simulator-card">
+        <div class="sky-simulator-card materi4-poster-container">
+          <!-- Poster Header Banner -->
+          <div class="materi4-poster-header">
+            <img src="assets/images/waktu_header_full.png" alt="Pagi, siang, sore dan malam" class="materi4-header-img">
+          </div>
+
           <!-- Pilihan 4 Fase Waktu -->
           <div class="sky-phase-tabs" role="tablist">
             <button type="button" class="phase-tab active" data-phase="pagi">
-              <span class="phase-tab-badge">Fajar</span>
+              <span class="phase-tab-badge">05.00</span>
               <span class="phase-name">Pagi Hari</span>
             </button>
             <button type="button" class="phase-tab" data-phase="siang">
-              <span class="phase-tab-badge">Terik</span>
+              <span class="phase-tab-badge">01.00</span>
               <span class="phase-name">Siang Hari</span>
             </button>
             <button type="button" class="phase-tab" data-phase="sore">
-              <span class="phase-tab-badge">Senja</span>
+              <span class="phase-tab-badge">04.00</span>
               <span class="phase-name">Sore Hari</span>
             </button>
             <button type="button" class="phase-tab" data-phase="malam">
-              <span class="phase-tab-badge">Gelap</span>
+              <span class="phase-tab-badge">09.00</span>
               <span class="phase-name">Malam Hari</span>
             </button>
+          </div>
+
+          <!-- Poster 2x2 Grid (4 Waktu Kegiatan) -->
+          <div class="materi4-grid">
+            <div class="materi4-card active" data-phase="pagi" tabindex="0" role="button" aria-label="Aku bangun tidur pukul 5 pagi">
+              <img src="assets/images/waktu_pagi.png" alt="Aku bangun tidur pukul 5 pagi." class="materi4-img">
+            </div>
+            <div class="materi4-card" data-phase="siang" tabindex="0" role="button" aria-label="Nando pulang sekolah pukul 1 siang">
+              <img src="assets/images/waktu_siang.png" alt="Nando pulang sekolah pukul 1 siang." class="materi4-img">
+            </div>
+            <div class="materi4-card" data-phase="sore" tabindex="0" role="button" aria-label="Aku bermain di taman pukul 4 sore">
+              <img src="assets/images/waktu_sore.png" alt="Aku bermain di taman pukul 4 sore." class="materi4-img">
+            </div>
+            <div class="materi4-card" data-phase="malam" tabindex="0" role="button" aria-label="Nando belajar pukul 9 malam">
+              <img src="assets/images/waktu_malam.png" alt="Nando belajar pukul 9 malam." class="materi4-img">
+            </div>
           </div>
 
           <!-- Viewport Langit yang Berubah Warna & Suasana Dinamis -->
           <div class="sky-viewport sky-pagi" id="skyViewport">
             <div class="sky-info-overlay">
-              <div class="sky-clock-badge" id="skyClockBadge">Pukul 06.00 Pagi</div>
-              <h3 class="sky-headline" id="skyHeadline">Matahari Baru Terbit</h3>
+              <div class="sky-clock-badge" id="skyClockBadge">Pukul 05.00 Pagi</div>
+              <h3 class="sky-headline" id="skyHeadline">Aku bangun tidur pukul 5 pagi.</h3>
               <p class="sky-nature-desc" id="skyNatureDesc">Udara masih sejuk, langit berwarna cerah fajar, ayam berkokok menyambut hari.</p>
             </div>
           </div>
@@ -884,13 +836,13 @@ function getMaterialExhibitHtml(item) {
 
           <!-- Alur Runtut 4 Waktu Buku Teks (Hal. 183) -->
           <div class="timeline-sequence-banner">
-            <span class="seq-step active" id="seqPagi">Pagi Hari</span>
+            <span class="seq-step active" id="seqPagi">Pagi (05.00)</span>
             <span class="seq-arrow">→</span>
-            <span class="seq-step" id="seqSiang">Siang Hari</span>
+            <span class="seq-step" id="seqSiang">Siang (01.00)</span>
             <span class="seq-arrow">→</span>
-            <span class="seq-step" id="seqSore">Sore Hari</span>
+            <span class="seq-step" id="seqSore">Sore (04.00)</span>
             <span class="seq-arrow">→</span>
-            <span class="seq-step" id="seqMalam">Malam Hari</span>
+            <span class="seq-step" id="seqMalam">Malam (09.00)</span>
           </div>
         </div>
       `;
@@ -1214,112 +1166,66 @@ function initFlipbookInteractiveEvents(container) {
     });
   }
 
-  // 2. Kira Duration Simulator & Sorting Game (Unit 3 - M005)
-  const btnKira = container.querySelector("#btnPlayKiraSim");
-  if (btnKira) {
-    const barOlahraga = container.querySelector("#barOlahraga");
-    const barMandi = container.querySelector("#barMandi");
-    const verdictBox = container.querySelector("#kiraVerdictBox");
+  // 2. Materi 3 Interaktif: 4 Panel Durasi Buku Teks (M005)
+  const mat3Cards = container.querySelectorAll(".materi3-card");
+  const mat3InfoText = container.querySelector("#materi3InfoText");
+  const mat3FilterBtns = container.querySelectorAll(".materi3-filter-btn");
+  const btnTogglePoster = container.querySelector("#btnTogglePoster");
+  const posterView = container.querySelector("#materi3PosterView");
 
-    btnKira.addEventListener("click", () => {
-      btnKira.disabled = true;
-      if (barOlahraga) barOlahraga.style.width = "0%";
-      if (barMandi) barMandi.style.width = "0%";
-      if (verdictBox) verdictBox.style.opacity = "0.3";
+  if (mat3Cards.length > 0) {
+    const actDetails = {
+      minum: "💧 <strong>Meminum air</strong> memerlukan waktu <strong>SEBENTAR</strong> (hanya beberapa detik hingga 1 menit).",
+      memasak: "🍳 <strong>Memasak makanan</strong> memerlukan waktu <strong>LAMA</strong> (harus menunggu matang di kompor sekitar 30 menit hingga berjam-jam).",
+      tidur: "🌙 <strong>Tidur malam</strong> memerlukan waktu <strong>LAMA</strong> (tubuh kita beristirahat sepanjang malam sekitar 8 jam hingga pagi hari).",
+      gosok: "🪥 <strong>Gosok gigi</strong> memerlukan waktu <strong>SEBENTAR</strong> (cukup menyikat gigi secara merata sekitar 2 menit di wastafel)."
+    };
 
-      if (typeof playSound === "function") playSound("tick");
-
-      setTimeout(() => {
-        if (barMandi) {
-          barMandi.style.transition = "width 0.8s ease";
-          barMandi.style.width = "25%";
+    mat3Cards.forEach(card => {
+      card.addEventListener("click", () => {
+        mat3Cards.forEach(c => c.classList.remove("active"));
+        card.classList.add("active");
+        const act = card.getAttribute("data-act");
+        if (mat3InfoText && actDetails[act]) {
+          mat3InfoText.innerHTML = actDetails[act];
         }
-      }, 200);
+        if (typeof playSound === "function") playSound("tick");
+      });
 
-      setTimeout(() => {
-        if (barOlahraga) {
-          barOlahraga.style.transition = "width 1.6s ease";
-          barOlahraga.style.width = "100%";
-        }
-      }, 300);
-
-      setTimeout(() => {
-        if (verdictBox) {
-          verdictBox.style.transition = "opacity 0.4s ease";
-          verdictBox.style.opacity = "1";
-        }
-        btnKira.disabled = false;
-        if (typeof playSound === "function") playSound("correct");
-      }, 1900);
-    });
-  }
-
-  // Permainan Sortir Keranjang (Sebentar vs Lama)
-  const chipsPool = container.querySelector("#activityChipsPool");
-  if (chipsPool) {
-    const basketSebentarItems = container.querySelector("#basketSebentarItems");
-    const basketLamaItems = container.querySelector("#basketLamaItems");
-
-    chipsPool.querySelectorAll(".chip-act").forEach(chip => {
-      chip.addEventListener("click", () => {
-        const type = chip.getAttribute("data-type");
-        const dur = chip.getAttribute("data-dur");
-        const text = chip.textContent;
-
-        const targetBasket = type === "sebentar" ? basketSebentarItems : basketLamaItems;
-        if (targetBasket) {
-          // Hapus placeholder jika ada
-          const placeholder = targetBasket.querySelector(".basket-placeholder");
-          if (placeholder) placeholder.remove();
-
-          const itemPill = document.createElement("div");
-          itemPill.className = `basket-pill ${type}`;
-          itemPill.innerHTML = `<span>${text}</span> <small>${dur}</small>`;
-          targetBasket.appendChild(itemPill);
-
-          chip.style.display = "none";
-          if (typeof playSound === "function") playSound("tick");
-
-          const remaining = chipsPool.querySelectorAll(".chip-act:not([style*='display: none'])");
-          if (remaining.length === 0) {
-            chipsPool.innerHTML = `<div class="praise-banner">🎉 Hebat! Kamu sudah mengelompokkan semua kegiatan dengan benar!</div>`;
-            if (typeof playSound === "function") playSound("correct");
-          }
+      card.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          card.click();
         }
       });
     });
-  }
 
-  // 3. Duration Battle Rounds (Unit 3 - M006)
-  const battleCards = container.querySelectorAll(".battle-card");
-  battleCards.forEach(card => {
-    const winner = card.getAttribute("data-winner");
-    const btns = card.querySelectorAll(".battle-btn");
-    const feedback = card.querySelector(".battle-feedback");
-
-    btns.forEach(btn => {
+    mat3FilterBtns.forEach(btn => {
       btn.addEventListener("click", () => {
-        const choice = btn.getAttribute("data-choice");
-        btns.forEach(b => b.classList.remove("choice-correct", "choice-wrong"));
+        mat3FilterBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        const filter = btn.getAttribute("data-filter");
 
-        if (choice === winner) {
-          btn.classList.add("choice-correct");
-          if (feedback) {
-            const winnerTitle = btn.querySelector(".choice-title")?.textContent || "";
-            const winnerTime = btn.querySelector(".choice-time")?.textContent || "";
-            feedback.innerHTML = `<span class="fb-success">✓ Benar! <strong>${winnerTitle} (${winnerTime})</strong> membutuhkan waktu LEBIH LAMA!</span>`;
+        mat3Cards.forEach(card => {
+          const cat = card.getAttribute("data-category");
+          if (filter === "all" || cat === filter) {
+            card.style.display = "";
+          } else {
+            card.style.display = "none";
           }
-          if (typeof playSound === "function") playSound("correct");
-        } else {
-          btn.classList.add("choice-wrong");
-          if (feedback) {
-            feedback.innerHTML = `<span class="fb-hint">Kurang tepat. Pilihlah kegiatan yang butuh waktu berjam-jam atau lebih panjang!</span>`;
-          }
-          if (typeof playSound === "function") playSound("wrong");
-        }
+        });
+        if (typeof playSound === "function") playSound("tick");
       });
     });
-  });
+
+    if (btnTogglePoster && posterView) {
+      btnTogglePoster.addEventListener("click", () => {
+        const isHidden = posterView.classList.toggle("hidden");
+        btnTogglePoster.textContent = isHidden ? "📖 Lihat Lembar Buku Asli" : "✕ Tutup Lembar Buku";
+        if (typeof playSound === "function") playSound("tick");
+      });
+    }
+  }
 
   // 4. Sky & 4 Time Phases Simulator (Unit 4 - M007)
   const phaseTabs = container.querySelectorAll(".sky-phase-tabs .phase-tab");
@@ -1330,69 +1236,79 @@ function initFlipbookInteractiveEvents(container) {
     const skyNatureDesc = container.querySelector("#skyNatureDesc");
     const skyActKicker = container.querySelector("#skyActKicker");
     const skyActContent = container.querySelector("#skyActContent");
+    const posterCards = container.querySelectorAll(".materi4-card");
 
     const phaseData = {
       pagi: {
         skyClass: "sky-pagi",
-        badge: "Pukul 06.00 Pagi",
-        headline: "Matahari Baru Terbit",
-        nature: "Udara masih sejuk, ayam jantan berkokok, langit berwarna fajar keemasan menyambut hari.",
-        actKicker: "Kegiatan Pagi Hari (Hal. 179 Buku Teks):",
-        actContent: "Halim bangun tidur pukul 05.00, mandi, Tika sarapan pagi pukul 06.00, lalu berangkat sekolah pukul 07.00.",
+        badge: "Pukul 05.00 Pagi",
+        headline: "Aku bangun tidur pukul 5 pagi.",
+        nature: "Matahari mulai terbit di ufuk timur, udara sejuk fajar menyapa saat bangun pagi.",
+        actKicker: "Kegiatan Pagi Hari:",
+        actContent: "Halim dan Tika bangun tidur pukul 05.00 pagi, merapikan kasur, mandi, sarapan, dan bersiap sekolah.",
         seqId: "#seqPagi"
       },
       siang: {
         skyClass: "sky-siang",
-        badge: "Pukul 12.00 Siang",
-        headline: "Matahari Terik di Puncak Langit",
-        nature: "Matahari berada tepat di atas kepala, suasana sangat terang benderang dan udara terasa hangat.",
-        actKicker: "Kegiatan Siang Hari (Hal. 180 Buku Teks):",
-        actContent: "Tika dan teman-teman belajar di kelas, lalu istirahat dan makan siang bersama di Kantin Sehat pukul 12.00 siang.",
+        badge: "Pukul 01.00 Siang",
+        headline: "Nando pulang sekolah pukul 1 siang.",
+        nature: "Matahari berada tinggi di atas kepala, suasana hangat dan terang benderang di siang hari.",
+        actKicker: "Kegiatan Siang Hari:",
+        actContent: "Nando dan teman-teman selesai belajar di sekolah dan berjalan pulang ke rumah pukul 1 siang (13.00).",
         seqId: "#seqSiang"
       },
       sore: {
         skyClass: "sky-sore",
-        badge: "Pukul 16.00 Sore",
-        headline: "Matahari Mulai Condong ke Barat",
-        nature: "Sinar matahari mulai redup, langit berubah warna jingga keemasan menjelang waktu senja.",
-        actKicker: "Kegiatan Sore Hari (Hal. 180 Buku Teks):",
-        actContent: "Tika bermain bersama adik di taman dekat rumah pukul 4 sore (16.00), setelah itu mandi sore agar badan segar.",
+        badge: "Pukul 04.00 Sore",
+        headline: "Aku bermain di taman pukul 4 sore.",
+        nature: "Sinar matahari mulai teduh dan condong ke barat, waktu yang pas untuk bermain di luar rumah.",
+        actKicker: "Kegiatan Sore Hari:",
+        actContent: "Bermain perosotan di taman bersama teman-teman pukul 4 sore (16.00), lalu mandi sore.",
         seqId: "#seqSore"
       },
       malam: {
         skyClass: "sky-malam",
-        badge: "Pukul 21.00 Malam",
-        headline: "Langit Gelap Berbintang",
-        nature: "Matahari telah terbenam, rembulan dan ribuan bintang bersinar menerangi kegelapan malam yang tenang.",
-        actKicker: "Kegiatan Malam Hari (Hal. 181 Buku Teks):",
-        actContent: "Makan malam bersama keluarga, mengulang pelajaran sekolah, dan Tika tidur malam sejak pukul 9 malam (21.00).",
+        badge: "Pukul 09.00 Malam",
+        headline: "Nando belajar pukul 9 malam.",
+        nature: "Langit gelap dihiasi bulan dan bintang, suasana tenang untuk belajar dan beristirahat malam.",
+        actKicker: "Kegiatan Malam Hari:",
+        actContent: "Nando mengulang pelajaran sekolah di meja belajar hingga pukul 9 malam (21.00) sebelum tidur nyenyak.",
         seqId: "#seqMalam"
       }
     };
 
+    function selectPhase(phase) {
+      phaseTabs.forEach(t => t.classList.toggle("active", t.getAttribute("data-phase") === phase));
+      posterCards.forEach(c => c.classList.toggle("active", c.getAttribute("data-phase") === phase));
+
+      const data = phaseData[phase];
+      if (!data) return;
+
+      if (skyViewport) {
+        skyViewport.className = `sky-viewport ${data.skyClass}`;
+      }
+      if (skyClockBadge) skyClockBadge.textContent = data.badge;
+      if (skyHeadline) skyHeadline.textContent = data.headline;
+      if (skyNatureDesc) skyNatureDesc.textContent = data.nature;
+      if (skyActKicker) skyActKicker.textContent = data.actKicker;
+      if (skyActContent) skyActContent.textContent = data.actContent;
+
+      container.querySelectorAll(".timeline-sequence-banner .seq-step").forEach(s => s.classList.remove("active"));
+      const activeSeq = container.querySelector(data.seqId);
+      if (activeSeq) activeSeq.classList.add("active");
+
+      if (typeof playSound === "function") playSound("tick");
+    }
+
     phaseTabs.forEach(tab => {
       tab.addEventListener("click", () => {
-        phaseTabs.forEach(t => t.classList.remove("active"));
-        tab.classList.add("active");
+        selectPhase(tab.getAttribute("data-phase"));
+      });
+    });
 
-        const phase = tab.getAttribute("data-phase");
-        const data = phaseData[phase];
-        if (!data) return;
-
-        if (skyViewport) {
-          skyViewport.className = `sky-viewport ${data.skyClass}`;
-        }
-        if (skyClockBadge) skyClockBadge.textContent = data.badge;
-        if (skyHeadline) skyHeadline.textContent = data.headline;
-        if (skyNatureDesc) skyNatureDesc.textContent = data.nature;
-        if (skyActKicker) skyActKicker.textContent = data.actKicker;
-        if (skyActContent) skyActContent.textContent = data.actContent;
-
-        container.querySelectorAll(".timeline-sequence-banner .seq-step").forEach(s => s.classList.remove("active"));
-        const activeSeq = container.querySelector(data.seqId);
-        if (activeSeq) activeSeq.classList.add("active");
-
-        if (typeof playSound === "function") playSound("tick");
+    posterCards.forEach(card => {
+      card.addEventListener("click", () => {
+        selectPhase(card.getAttribute("data-phase"));
       });
     });
   }
@@ -1519,7 +1435,7 @@ function initStudentEvents() {
       // Cari level pertama yang belum selesai
       const completedLevels = currentStudent ? (currentStudent.completedLevels || []) : [];
       let targetLevel = 1;
-      for (let i = 1; i <= 4; i++) {
+      for (let i = 1; i <= LEVELS.length; i++) {
         if (!completedLevels.includes(i)) {
           targetLevel = i;
           break;

@@ -12,21 +12,11 @@ const requiredCss = [
   '.btn-digi-step',
   '.read-aloud-banner',
   '.preset-digi-btn',
-  '.interactive-duration-container',
-  '.kira-story-card',
-  '.duration-bars-simulator',
-  '.btn-sim-play',
-  '.kira-verdict-box',
-  '.sort-game-card',
-  '.activity-chips-pool',
-  '.chip-act',
-  '.baskets-grid',
-  '.basket-pill',
-  '.compare-arena-container',
-  '.battle-card',
-  '.battle-versus-grid',
-  '.battle-btn',
-  '.battle-btn.choice-correct',
+  '.materi3-container',
+  '.materi3-header-card',
+  '.materi3-grid',
+  '.materi3-card',
+  '.materi3-info-banner',
   '.sky-simulator-card',
   '.sky-phase-tabs',
   '.phase-tab',
@@ -59,26 +49,15 @@ const requiredTokens = [
   'btn-digi-step',
   'read-aloud-banner',
   'preset-digi-btn',
-  // M005 Kira Duration Simulator & Sort Game
-  'kira-story-card',
-  'barOlahraga',
-  'barMandi',
-  'btnPlayKiraSim',
-  'kiraVerdictBox',
-  'sort-game-card',
-  'activityChipsPool',
-  'basketSebentarItems',
-  'basketLamaItems',
-  // M006 Battle Rounds (Hal. 185-186)
-  'compare-arena-container',
-  'data-round="1"',
-  'data-round="2"',
-  'data-round="3"',
-  'data-round="4"',
-  'Menyisir Rambut',
-  'Tidur Malam',
-  'Belajar di Sekolah',
-  'Mencuci Tangan',
+  // M005 4 Panel Buku Teks & Sort Game
+  'materi3-container',
+  'materi3_header.png',
+  'materi3_minum.png',
+  'materi3_memasak.png',
+  'materi3_tidur.png',
+  'materi3_gosok_gigi.png',
+  'materi3-grid',
+  'materi3InfoBanner',
   // M007 Sky Simulator (Hal. 183-184)
   'sky-simulator-card',
   'sky-phase-tabs',
@@ -102,17 +81,11 @@ requiredTokens.forEach(tok => {
 console.log(`✓ Seluruh ${requiredTokens.length} modul peraga interaktif buku teks terverifikasi di js/student.js.`);
 
 // 3. Verifikasi Logika Interaksi Flipbook
-if (!studentJs.includes('function renderDigi(') || !studentJs.includes('btnKira.addEventListener')) {
-  console.error("❌ Event handler digital console atau simulator Kira hilang");
+if (!studentJs.includes('function renderDigi(') || !studentJs.includes('mat3Cards.forEach')) {
+  console.error("❌ Event handler digital console atau materi 3 interaktif hilang");
   process.exit(1);
 }
-console.log("✓ Event listener simulator digital & durasi waktu Kira terpasang.");
-
-if (!studentJs.includes('battleCards.forEach') || !studentJs.includes('choice === winner')) {
-  console.error("❌ Logika evaluasi timbangan durasi 4 ronde hilang");
-  process.exit(1);
-}
-console.log("✓ Logika interaksi timbangan durasi 4 ronde (Hal. 185–186) terpasang.");
+console.log("✓ Event listener simulator digital & peraga materi 3 terpasang.");
 
 if (!studentJs.includes('phaseTabs.forEach') || !studentJs.includes('skyViewport.className =')) {
   console.error("❌ Logika pergantian 4 fase waktu langit hilang");

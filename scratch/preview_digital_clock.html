@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preview Jam Digital</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #F8FAFC;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  .card-wrap {
+    background: #FFFFFF;
+    border-radius: 24px;
+    padding: 28px 24px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    max-width: 460px;
+    width: 100%;
+  }
+
+  /* Widget Wrap */
+  .digital-alarm-widget-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .digital-diagram-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+  }
+
+  /* Header Pill: Jam Digital */
+  .digital-clock-pill-header {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #FFFFFF;
+    border: 2px solid #FDBA74;    /* Border peach / oranye lembut sesuai gambar */
+    color: #1E293B;
+    font-size: 1.05rem;
+    font-weight: 800;
+    padding: 6px 28px;
+    border-radius: 9999px;
+    box-shadow: 0 2px 6px rgba(249, 115, 22, 0.08);
+    margin-bottom: 20px;
+  }
+
+  /* Diagram Stage: Clock + Arrows + Answer Slots */
+  .digital-diagram-stage {
+    position: relative;
+    width: 360px;
+    height: 195px;
+  }
+
+  /* SVG Connecting Arrows (Red 90-degree Elbow Arrows with Arrowheads) */
+  .digital-arrows-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 360px;
+    height: 195px;
+    pointer-events: none;
+    z-index: 4;                  /* Di atas chassis agar garis terlihat melintas ke layar */
+  }
+
+  /* Clock Unit */
+  .digital-clock-center-unit {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 190px;
+  }
+
+  /* Orange Clock Body */
+  .digital-alarm-chassis {
+    background: #FF8500;          /* Oranye cerah sesuai gambar */
+    border: 3.5px solid #EA580C;
+    border-radius: 20px;
+    padding: 10px 14px;
+    box-shadow: 0 5px 0 #C2410C;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Cream / Ivory Screen */
+  .digital-screen-inner {
+    background: #FFFDF5;          /* Krem / ivory terang sesuai gambar */
+    border: 2px solid #FCD34D;
+    border-radius: 12px;
+    padding: 6px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    position: relative;
+    z-index: 5;
+  }
+
+  .digital-screen-digit-drop {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    padding: 2px 4px;
+    border-radius: 6px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s ease;
+  }
+
+  .digital-screen-digit-drop:hover {
+    background: rgba(234, 88, 12, 0.08);
+  }
+
+  .digital-screen-digit-drop.drag-hover {
+    background: rgba(234, 88, 12, 0.2);
+    outline: 2px dashed #EA580C;
+  }
+
+  .screen-digit {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 2.1rem;
+    font-weight: 900;
+    color: #DC2626;               /* Merah cerah digital sesuai gambar */
+    line-height: 1;
+    letter-spacing: 1px;
+  }
+
+  .digital-screen-colon {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 2.1rem;
+    font-weight: 900;
+    color: #DC2626;
+    line-height: 1;
+    user-select: none;
+    margin-bottom: 4px;
+  }
+
+  /* Red Feet */
+  .digital-clock-feet-row {
+    display: flex;
+    justify-content: space-between;
+    width: 130px;
+    margin-top: -2px;
+  }
+
+  .digital-clock-foot {
+    display: block;
+    width: 24px;
+    height: 8px;
+    background: #DC2626;          /* Kaki merah sesuai gambar */
+    border-radius: 0 0 5px 5px;
+  }
+
+  /* Answer Boxes ("Tempat Jawabnya") */
+  .digital-answer-slots-row {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    z-index: 2;
+  }
+
+  .digital-drop-slot {
+    width: 140px;
+    min-height: 72px;
+    background: #FFFFFF;
+    border: 2.5px solid #FDBA74;  /* Border peach / oranye lembut sesuai gambar */
+    border-radius: 16px;
+    padding: 8px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+    transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  }
+
+  .digital-drop-slot * {
+    pointer-events: none;
+  }
+
+  .digital-drop-slot:hover {
+    transform: translateY(-2px);
+    border-color: #FB923C;
+    box-shadow: 0 6px 14px rgba(249, 115, 22, 0.12);
+  }
+
+  .digital-drop-slot.drag-hover {
+    border-color: #EA580C;
+    border-style: dashed;
+    background: #FFF7ED;
+    transform: scale(1.03);
+  }
+
+  .digital-drop-slot.has-value {
+    border-color: #10B981;
+    background: #F0FDF4;
+  }
+
+  .slot-content-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .slot-display-val {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 2rem;
+    font-weight: 900;
+    color: #1F2937;
+    line-height: 1.1;
+  }
+
+  .slot-display-val.is-empty {
+    display: none;
+  }
+
+  .slot-dotted-line {
+    font-family: monospace;
+    color: #94A3B8;
+    letter-spacing: 2px;
+    font-size: 1.1rem;
+    user-select: none;
+    line-height: 1;
+    margin: 4px 0;
+  }
+
+  .digital-drop-slot.has-value .slot-dotted-line {
+    display: none;
+  }
+
+  .slot-box-label {
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: #64748B;
+    letter-spacing: 0.3px;
+    margin-top: 2px;
+  }
+
+  .digital-drop-slot.has-value .slot-box-label {
+    color: #059669;
+  }
+</style>
+</head>
+<body>
+
+<div class="card-wrap">
+  <div class="digital-alarm-widget-wrap">
+    <div class="digital-diagram-wrap">
+      <!-- 1. Header Pill: Jam Digital -->
+      <div class="digital-clock-pill-header">Jam Digital</div>
+
+      <!-- 2. Diagram Stage: Clock + Arrows + Answer Slots -->
+      <div class="digital-diagram-stage">
+        <!-- SVG Connecting Arrows (Red 90-degree Elbow Arrows) -->
+        <svg class="digital-arrows-svg" viewBox="0 0 360 195" aria-hidden="true">
+          <!-- Left Arrow: dari atas kotak jam (x=70, y=123) naik ke y=34, belok kanan ke tepi layar x=115 -->
+          <path d="M 70 123 L 70 34 L 115 34" stroke="#B91C1C" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          <!-- Arrowhead Kiri (menunjuk ke angka 07) -->
+          <polygon points="112,29 122,34 112,39" fill="#B91C1C" />
+
+          <!-- Right Arrow: dari atas kotak menit (x=290, y=123) naik ke y=34, belok kiri ke tepi layar x=245 -->
+          <path d="M 290 123 L 290 34 L 245 34" stroke="#B91C1C" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          <!-- Arrowhead Kanan (menunjuk ke angka 00) -->
+          <polygon points="248,29 238,34 248,39" fill="#B91C1C" />
+        </svg>
+
+        <!-- Digital Clock: Orange body, cream screen, red digits, red feet -->
+        <div class="digital-clock-center-unit">
+          <div class="digital-alarm-chassis" id="alarmClockChassis">
+            <div class="digital-screen-inner" id="digitalScreenInner">
+              <div class="digital-screen-digit-drop" id="screenHourDrop" data-slot-type="hour" title="Klik atau tarik angka ke Jam">
+                <span class="screen-digit screen-hour" id="screenHourVal">07</span>
+              </div>
+              <div class="digital-screen-colon">:</div>
+              <div class="digital-screen-digit-drop" id="screenMinuteDrop" data-slot-type="minute" title="Klik atau tarik angka ke Menit">
+                <span class="screen-digit screen-minute" id="screenMinuteVal">00</span>
+              </div>
+            </div>
+          </div>
+          <!-- Dua Kaki Jam Merah -->
+          <div class="digital-clock-feet-row" aria-hidden="true">
+            <span class="digital-clock-foot"></span>
+            <span class="digital-clock-foot"></span>
+          </div>
+        </div>
+
+        <!-- Dua Tempat Jawab di Bawah Jam ("Tempat Jawabnya") -->
+        <div class="digital-answer-slots-row">
+          <!-- Kotak Jawaban Jam (Kiri) -->
+          <div id="slotHour" class="digital-drop-slot hour-slot" data-slot-type="hour" role="region" aria-label="Kotak Jawaban Jam" tabindex="0">
+            <div class="slot-content-wrap">
+              <span class="slot-display-val is-empty">--</span>
+              <span class="slot-dotted-line">.....................</span>
+              <span class="slot-box-label">Jam</span>
+            </div>
+          </div>
+
+          <!-- Kotak Jawaban Menit (Kanan) -->
+          <div id="slotMinute" class="digital-drop-slot minute-slot" data-slot-type="minute" role="region" aria-label="Kotak Jawaban Menit" tabindex="0">
+            <div class="slot-content-wrap">
+              <span class="slot-display-val is-empty">--</span>
+              <span class="slot-dotted-line">.....................</span>
+              <span class="slot-box-label">Menit</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

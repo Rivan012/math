@@ -437,10 +437,12 @@ function updateQuestionLivePreview() {
 
   const digiH = ($("qDigitalHour") ? $("qDigitalHour").value.trim() : "05").padStart(2, "0");
   const digiM = ($("qDigitalMinute") ? $("qDigitalMinute").value.trim() : "00").padStart(2, "0");
-  const chip1 = ($("qChip1") ? $("qChip1").value.trim() : digiH).padStart(2, "0");
-  const chip2 = ($("qChip2") ? $("qChip2").value.trim() : digiM).padStart(2, "0");
-  const chip3 = ($("qChip3") ? $("qChip3").value.trim() : "07").padStart(2, "0");
-  const chip4 = ($("qChip4") ? $("qChip4").value.trim() : "30").padStart(2, "0");
+  const chip1 = ($("qChip1") ? $("qChip1").value.trim() : "07").padStart(2, "0");
+  const chip2 = ($("qChip2") ? $("qChip2").value.trim() : "30").padStart(2, "0");
+  const chip3 = ($("qChip3") ? $("qChip3").value.trim() : digiH).padStart(2, "0");
+  const chip4 = ($("qChip4") ? $("qChip4").value.trim() : "12").padStart(2, "0");
+  const chip5 = ($("qChip5") ? $("qChip5").value.trim() : digiM).padStart(2, "0");
+  const chip6 = ($("qChip6") ? $("qChip6").value.trim() : "06").padStart(2, "0");
 
   // Sinkronisasi baris pengaturan jam & opsi builder
   const clockSettingsRow = $("clockSettingsRow");
@@ -559,6 +561,10 @@ function updateQuestionLivePreview() {
     previewDigitalClockWrap.style.display = isClockDrop ? "block" : "none";
     if (previewSlotHourText) previewSlotHourText.textContent = digiH;
     if (previewSlotMinuteText) previewSlotMinuteText.textContent = digiM;
+    const prevScrH = $("previewScreenHourVal");
+    const prevScrM = $("previewScreenMinuteVal");
+    if (prevScrH) prevScrH.textContent = digiH;
+    if (prevScrM) prevScrM.textContent = digiM;
   }
 
   // Visibilitas tombol Jawab (clock_drag / clock_drop) vs Opsi Pilihan Ganda (MCQ)
@@ -572,6 +578,8 @@ function updateQuestionLivePreview() {
     if ($("previewChip2")) $("previewChip2").innerHTML = `<span>${escapeHTML(chip2)}</span>`;
     if ($("previewChip3")) $("previewChip3").innerHTML = `<span>${escapeHTML(chip3)}</span>`;
     if ($("previewChip4")) $("previewChip4").innerHTML = `<span>${escapeHTML(chip4)}</span>`;
+    if ($("previewChip5")) $("previewChip5").innerHTML = `<span>${escapeHTML(chip5)}</span>`;
+    if ($("previewChip6")) $("previewChip6").innerHTML = `<span>${escapeHTML(chip6)}</span>`;
   }
 
   // Pratinjau Level 3: Perbandingan Kegiatan (time_compare)
@@ -1571,11 +1579,13 @@ function initTeacherEvents() {
         // Tipe Level 2: Drag & Drop Angka Jam Digital (clock_drop)
         const digiH = ($("qDigitalHour") ? $("qDigitalHour").value.trim() : "05").padStart(2, "0");
         const digiM = ($("qDigitalMinute") ? $("qDigitalMinute").value.trim() : "00").padStart(2, "0");
-        const chip1 = ($("qChip1") ? $("qChip1").value.trim() : digiH).padStart(2, "0");
-        const chip2 = ($("qChip2") ? $("qChip2").value.trim() : digiM).padStart(2, "0");
-        const chip3 = ($("qChip3") ? $("qChip3").value.trim() : "07").padStart(2, "0");
-        const chip4 = ($("qChip4") ? $("qChip4").value.trim() : "30").padStart(2, "0");
-        const chips = [chip1, chip2, chip3, chip4];
+        const chip1 = ($("qChip1") ? $("qChip1").value.trim() : "07").padStart(2, "0");
+        const chip2 = ($("qChip2") ? $("qChip2").value.trim() : "30").padStart(2, "0");
+        const chip3 = ($("qChip3") ? $("qChip3").value.trim() : digiH).padStart(2, "0");
+        const chip4 = ($("qChip4") ? $("qChip4").value.trim() : "12").padStart(2, "0");
+        const chip5 = ($("qChip5") ? $("qChip5").value.trim() : digiM).padStart(2, "0");
+        const chip6 = ($("qChip6") ? $("qChip6").value.trim() : "06").padStart(2, "0");
+        const chips = [chip1, chip2, chip3, chip4, chip5, chip6];
 
         newQuestion = {
           id: "Q" + String(Date.now()).slice(-4),
@@ -2210,7 +2220,7 @@ function initTeacherEvents() {
   });
 
   // 14. Sinkronisasi Real-Time Live Preview Soal Kuis (L1, L2, L3, L4, MCQ)
-  ["qLevel", "qType", "qClockHour", "qClockMinute", "qDigitalHour", "qDigitalMinute", "qChip1", "qChip2", "qChip3", "qChip4", "qCompareLabel1", "qCompareImg1", "qCompareLabel2", "qCompareImg2", "qActivityCorrectAnswer", "qActivityImg", "qActChip1", "qActChip2", "qActChip3", "qActChip4", "qText", "qCustomImg", "qOptA", "qOptB", "qOptC", "qOptD", "qPoints", "qHint"].forEach(fieldId => {
+  ["qLevel", "qType", "qClockHour", "qClockMinute", "qDigitalHour", "qDigitalMinute", "qChip1", "qChip2", "qChip3", "qChip4", "qChip5", "qChip6", "qCompareLabel1", "qCompareImg1", "qCompareLabel2", "qCompareImg2", "qActivityCorrectAnswer", "qActivityImg", "qActChip1", "qActChip2", "qActChip3", "qActChip4", "qText", "qCustomImg", "qOptA", "qOptB", "qOptC", "qOptD", "qPoints", "qHint"].forEach(fieldId => {
     const el = $(fieldId);
     if (el) {
       el.addEventListener("input", updateQuestionLivePreview);
@@ -2271,23 +2281,39 @@ function initTeacherEvents() {
     });
   });
 
-  // 16c. Tombol Otomatis Generate 4 Kartu Angka Digital dari Target Jam & Menit
+  // 16c. Tombol Otomatis Generate 6 Kartu Angka Digital dari Target Jam & Menit (Diacak)
   const btnAutoGenerateChips = $("btnAutoGenerateChips");
   if (btnAutoGenerateChips) {
     btnAutoGenerateChips.addEventListener("click", () => {
       const h = ($("qDigitalHour") ? $("qDigitalHour").value.trim() : "05").padStart(2, "0");
       const m = ($("qDigitalMinute") ? $("qDigitalMinute").value.trim() : "00").padStart(2, "0");
       const hNum = parseInt(h, 10) || 5;
-      const distractorH = String(((hNum + 1) % 12) + 1).padStart(2, "0");
-      const distractorM = m === "00" ? "30" : "00";
 
-      if ($("qChip1")) $("qChip1").value = h;
-      if ($("qChip2")) $("qChip2").value = m;
-      if ($("qChip3")) $("qChip3").value = distractorH;
-      if ($("qChip4")) $("qChip4").value = distractorM;
+      const dH1 = String(((hNum + 2) % 12) || 12).padStart(2, "0");
+      const dH2 = String(((hNum + 6) % 12) || 12).padStart(2, "0");
+      const dM1 = m === "00" ? "30" : "00";
+      const dM2 = m === "15" ? "45" : (m === "30" ? "15" : "45");
+
+      let generated = [h, m, dH1, dH2, dM1, dM2];
+
+      // Acak (shuffle) agar jam dan menit tidak berada di posisi 1 & 2
+      for (let i = generated.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [generated[i], generated[j]] = [generated[j], generated[i]];
+      }
+      if (generated[0] === h && generated[1] === m) {
+        [generated[0], generated[3]] = [generated[3], generated[0]];
+      }
+
+      if ($("qChip1")) $("qChip1").value = generated[0];
+      if ($("qChip2")) $("qChip2").value = generated[1];
+      if ($("qChip3")) $("qChip3").value = generated[2];
+      if ($("qChip4")) $("qChip4").value = generated[3];
+      if ($("qChip5")) $("qChip5").value = generated[4];
+      if ($("qChip6")) $("qChip6").value = generated[5];
 
       updateQuestionLivePreview();
-      showToast("Pilihan kartu angka digital berhasil diisi otomatis!", "info");
+      showToast("6 Pilihan kartu angka digital berhasil diisi & diacak!", "info");
     });
   }
 

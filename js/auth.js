@@ -36,10 +36,11 @@ function initAuth() {
       event.preventDefault();
 
       const nameInput = $("studentName");
+      const checkedClass = document.querySelector('input[name="className"]:checked');
       const classSelect = $("className");
 
       const name = nameInput ? nameInput.value.trim() : "";
-      const className = classSelect ? classSelect.value : "";
+      const className = checkedClass ? checkedClass.value : (classSelect ? classSelect.value : "");
 
       if (!name) {
         showToast("Masukkan nama kamu terlebih dahulu.", "error");
@@ -49,7 +50,9 @@ function initAuth() {
 
       if (!className) {
         showToast("Pilih kelas terlebih dahulu.", "error");
-        if (classSelect) classSelect.focus();
+        const firstRadio = document.querySelector('input[name="className"]');
+        if (firstRadio) firstRadio.focus();
+        else if (classSelect) classSelect.focus();
         return;
       }
 

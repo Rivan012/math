@@ -14,9 +14,10 @@ console.log("✓ data/soal.csv: Instruksi soal Level 2 valid.");
 
 // 2. Verifikasi data/pilihan.csv
 const pilihanCsv = fs.readFileSync(path.join(__dirname, "..", "data", "pilihan.csv"), "utf8");
-assert(pilihanCsv.includes('P017,Q005,A,05'), "P017 opsi 05");
-assert(pilihanCsv.includes('P018,Q005,B,00'), "P018 opsi 00");
-console.log("✓ data/pilihan.csv: Kartu angka terpisah valid.");
+assert(pilihanCsv.includes('Q005,A') && pilihanCsv.includes('Q005,F'), "Q005 harus memiliki 6 opsi (A-F)");
+assert(pilihanCsv.includes(',Q005,C,05'), "P019 opsi 05");
+assert(pilihanCsv.includes(',Q005,E,00'), "P020E opsi 00");
+console.log("✓ data/pilihan.csv: Kartu angka 6 pilihan teracak valid.");
 
 // 3. Verifikasi js/storage.js
 const storageJs = fs.readFileSync(path.join(__dirname, "..", "js", "storage.js"), "utf8");

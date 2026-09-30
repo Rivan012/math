@@ -3,3 +3,4 @@ L001,1,Mengenal Jam Analog,Anatomi jam dan membaca jarum jam,clock,M001,0
 L002,2,Mengenal Jam Digital,Membaca angka jam dan menit,digital,M002,70
 L003,3,Lebih Lama atau Lebih Cepat,Membandingkan durasi kegiatan sehari-hari,timer,M003,70
 L004,4,Mengenal Waktu Kegiatan,Waktu pagi siang sore dan malam,calendar,M004,75
+L005,5,Kuis Campuran Waktu,Uji kemampuanmu mengenal jam dan waktu,quiz,none,75

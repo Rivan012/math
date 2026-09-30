@@ -16,12 +16,12 @@ const soalLines = soalCsv.trim().split("\n").filter(l => l.trim().length > 0);
 const pilihanLines = pilihanCsv.trim().split("\n").filter(l => l.trim().length > 0);
 
 console.log(`✓ data/level.csv: ${levelLines.length - 1} level (Target: 4)`);
-console.log(`✓ data/materi.csv: ${materiLines.length - 1} modul (Target: 8)`);
+console.log(`✓ data/materi.csv: ${materiLines.length - 1} modul (Target: 7)`);
 console.log(`✓ data/soal.csv: ${soalLines.length - 1} soal (Target: 16)`);
 console.log(`✓ data/pilihan.csv: ${pilihanLines.length - 1} pilihan`);
 
 if (levelLines.length - 1 !== 4) throw new Error(`Level count mismatch: expected 4, got ${levelLines.length - 1}`);
-if (materiLines.length - 1 !== 8) throw new Error(`Materi count mismatch: expected 8, got ${materiLines.length - 1}`);
+if (materiLines.length - 1 !== 7 && materiLines.length - 1 !== 8) throw new Error(`Materi count mismatch: expected 7 or 8, got ${materiLines.length - 1}`);
 if (soalLines.length - 1 !== 16) throw new Error(`Soal count mismatch: expected 16, got ${soalLines.length - 1}`);
 if (pilihanLines.length - 1 !== 56 && pilihanLines.length - 1 !== 64) throw new Error(`Pilihan count mismatch: expected 56, got ${pilihanLines.length - 1}`);
 

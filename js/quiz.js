@@ -11,45 +11,73 @@ const QUESTIONS = [
     id: "Q001",
     level: 1,
     type: "clock_drag",
-    targetHour: 5,
-    targetMinute: 0,
-    question: "Halim bangun tidur pukul 5 pagi. Arahkan jarum jam ke pukul 05.00!",
+    targetHour: 7,
+    targetMinute: 35,
+    targetTime: "07.35",
+    question: "Arahkan jarum jam ke pukul 07.35!",
     points: 100,
-    hint: "Arahkan jarum pendek merah ke angka 5, dan jarum panjang biru ke angka 12.",
-    explanation: "Pukul 05.00 artinya jarum pendek (merah) di angka 5 dan jarum panjang (biru) di angka 12."
+    hint: "Arahkan jarum pendek (merah) melewati angka 7, dan jarum panjang (biru) ke angka 7 (menit 35).",
+    explanation: "Pukul 07.35 artinya jarum pendek berada di antara angka 7 dan 8, sedangkan jarum panjang menunjuk angka 7 (35 menit)."
   },
   {
     id: "Q002",
     level: 1,
     type: "clock_drag",
-    targetHour: 7,
+    targetHour: 12,
     targetMinute: 0,
-    question: "Tika berangkat ke sekolah pukul 7 pagi. Arahkan jarum jam ke pukul 07.00!",
+    targetTime: "12.00",
+    question: "Arahkan jarum jam ke pukul 12.00!",
     points: 100,
-    hint: "Arahkan jarum pendek merah ke angka 7, dan jarum panjang biru ke angka 12.",
-    explanation: "Pukul 07.00 artinya jarum pendek (merah) di angka 7 dan jarum panjang (biru) di angka 12."
+    hint: "Arahkan kedua jarum jam (pendek merah dan panjang biru) lurus ke atas pada angka 12.",
+    explanation: "Pukul 12.00 artinya kedua jarum jam sama-sama tegak lurus menunjuk angka 12."
   },
   {
     id: "Q003",
     level: 1,
     type: "clock_drag",
-    targetHour: 12,
-    targetMinute: 0,
-    question: "Jam istirahat dan makan siang di sekolah. Arahkan jarum jam ke pukul 12.00!",
+    targetHour: 1,
+    targetMinute: 45,
+    targetTime: "01.45",
+    question: "Arahkan jarum jam ke pukul 01.45!",
     points: 100,
-    hint: "Arahkan kedua jarum jam (pendek dan panjang) tegak lurus ke atas menunjuk angka 12.",
-    explanation: "Pukul 12.00 artinya kedua jarum sama-sama tegak lurus menunjuk angka 12."
+    hint: "Arahkan jarum pendek (merah) mendekati angka 2, dan jarum panjang (biru) ke angka 9 (menit 45).",
+    explanation: "Pukul 01.45 artinya jarum pendek mendekati angka 2 dan jarum panjang menunjuk angka 9 (45 menit)."
   },
   {
     id: "Q004",
     level: 1,
     type: "clock_drag",
-    targetHour: 9,
+    targetHour: 8,
     targetMinute: 0,
-    question: "Kira bersiap tidur malam pukul 9 malam. Arahkan jarum jam ke pukul 09.00!",
+    targetTime: "08.00",
+    question: "Arahkan jarum jam ke pukul 08.00!",
     points: 100,
-    hint: "Arahkan jarum pendek merah ke angka 9, dan jarum panjang biru ke angka 12.",
-    explanation: "Pukul 09.00 artinya jarum pendek (merah) di angka 9 dan jarum panjang (biru) di angka 12."
+    hint: "Arahkan jarum pendek (merah) ke angka 8, dan jarum panjang (biru) ke angka 12 (menit 00).",
+    explanation: "Pukul 08.00 artinya jarum pendek menunjuk angka 8 dan jarum panjang menunjuk angka 12."
+  },
+  {
+    id: "Q004A",
+    level: 1,
+    type: "clock_drag",
+    targetHour: 4,
+    targetMinute: 30,
+    targetTime: "04.30",
+    question: "Arahkan jarum jam ke pukul 04.30!",
+    points: 100,
+    hint: "Arahkan jarum pendek (merah) di antara angka 4 dan 5, dan jarum panjang (biru) ke angka 6 (menit 30).",
+    explanation: "Pukul 04.30 (setengah lima) artinya jarum pendek di tengah angka 4 dan 5, sedangkan jarum panjang menunjuk angka 6 (30 menit)."
+  },
+  {
+    id: "Q004B",
+    level: 1,
+    type: "clock_drag",
+    targetHour: 11,
+    targetMinute: 20,
+    targetTime: "11.20",
+    question: "Arahkan jarum jam ke pukul 11.20!",
+    points: 100,
+    hint: "Arahkan jarum pendek (merah) sedikit melewati angka 11, dan jarum panjang (biru) ke angka 4 (menit 20).",
+    explanation: "Pukul 11.20 artinya jarum pendek melewati angka 11 dan jarum panjang menunjuk angka 4 (20 menit)."
   },
 
   /* UNIT 2: MENGENAL JAM DIGITAL — Drag & Drop Angka (Jam) dan (Menit) ke Jam Digital */
@@ -60,7 +88,7 @@ const QUESTIONS = [
     targetHour: "05",
     targetMinute: "00",
     question: "Halim bangun tidur pukul 5 pagi. Pasangkan angka (jam) dan (menit) yang tepat pada jam digital!",
-    options: ["05", "00", "07", "30"],
+    options: ["07", "30", "05", "12", "00", "06"],
     points: 100,
     hint: "Pasangkan angka 05 pada kotak Jam dan angka 00 pada kotak Menit.",
     explanation: "Pukul 5 pagi pada jam digital: angka jam diisi 05 dan angka menit diisi 00 (05:00)."
@@ -72,7 +100,7 @@ const QUESTIONS = [
     targetHour: "07",
     targetMinute: "00",
     question: "Tika berangkat ke sekolah pukul 7 pagi. Pasangkan angka (jam) dan (menit) yang tepat pada jam digital!",
-    options: ["07", "00", "05", "30"],
+    options: ["30", "07", "05", "00", "08", "15"],
     points: 100,
     hint: "Pasangkan angka 07 pada kotak Jam dan angka 00 pada kotak Menit.",
     explanation: "Pukul 7 pagi pada jam digital: angka jam diisi 07 dan angka menit diisi 00 (07:00)."
@@ -84,7 +112,7 @@ const QUESTIONS = [
     targetHour: "12",
     targetMinute: "00",
     question: "Jam istirahat dan makan siang di sekolah pukul 12 siang. Pasangkan angka (jam) dan (menit) yang tepat!",
-    options: ["12", "00", "06", "30"],
+    options: ["06", "30", "12", "01", "00", "10"],
     points: 100,
     hint: "Pasangkan angka 12 pada kotak Jam dan angka 00 pada kotak Menit.",
     explanation: "Pukul 12 siang pada jam digital: angka jam diisi 12 dan angka menit diisi 00 (12:00)."
@@ -96,7 +124,7 @@ const QUESTIONS = [
     targetHour: "09",
     targetMinute: "30",
     question: "Belajar malam pada pukul setengah sepuluh (09.30). Pasangkan angka (jam) dan (menit) yang tepat!",
-    options: ["09", "30", "00", "08"],
+    options: ["00", "09", "15", "08", "30", "12"],
     points: 100,
     hint: "Pasangkan angka 09 pada kotak Jam dan angka 30 pada kotak Menit.",
     explanation: "Pukul setengah sepuluh malam pada jam digital: angka jam diisi 09 dan angka menit diisi 30 (09:30)."
@@ -208,6 +236,69 @@ const QUESTIONS = [
     correct: 0,
     hint: "Jarum pendek menunjuk angka 8 dan tampak bulan sabit di jendela saat tidur malam.",
     explanation: "Jarum jam menunjuk angka 8 tepat saat tidur malam dengan pemandangan bulan dan bintang, yaitu Pukul 8 malam."
+  },
+
+  /* UNIT 5: KUIS CAMPURAN WAKTU — Drag & Drop Matching (3 Soal / Halaman) */
+  {
+    id: "Q017",
+    level: 5,
+    type: "clock_match",
+    title: "Mencocokkan Jam",
+    question: "Pasangkan gambar jam dengan waktu yang tepat!",
+    instruction: "Tarik waktu yang sesuai ke dalam kotak di bawah gambar jam.",
+    step: 1,
+    clocks: [
+      { id: 1, hour: 7, minute: 0, answer: "07:00", altAnswers: ["05:00", "07:00"], bg: "#FCE7F3", borderColor: "#F472B6" },
+      { id: 2, hour: 10, minute: 0, answer: "10:00", bg: "#E0F2FE", borderColor: "#38BDF8" },
+      { id: 3, hour: 3, minute: 0, answer: "03:00", bg: "#FEF3C7", borderColor: "#FBBF24" },
+      { id: 4, hour: 5, minute: 0, answer: "05:00", bg: "#F3E8FF", borderColor: "#C084FC" },
+      { id: 5, hour: 8, minute: 0, answer: "08:00", bg: "#DCFCE7", borderColor: "#4ADE80" },
+      { id: 6, hour: 11, minute: 0, answer: "11:00", bg: "#EDE9FE", borderColor: "#A78BFA" },
+      { id: 7, hour: 2, minute: 0, answer: "02:00", bg: "#FFEDD5", borderColor: "#FB923C" },
+      { id: 8, hour: 4, minute: 0, answer: "04:00", bg: "#CCFBF1", borderColor: "#2DD4BF" }
+    ],
+    options: ["08:00", "11:00", "02:00", "04:00", "07:00", "10:00", "03:00", "05:00"],
+    points: 8,
+    hint: "Perhatikan jarum pendek yang menunjukkan angka jam. Jarum panjang di angka 12 menunjukkan menit 00.",
+    explanation: "Jarum pendek menunjuk angka jam dan jarum panjang di angka 12 berarti menit :00."
+  },
+  {
+    id: "Q018",
+    level: 5,
+    type: "activity_match",
+    title: "Kegiatan dan Waktu",
+    question: "Amati gambar kegiatan berikut, lalu pilih waktu yang sesuai!",
+    instruction: "Tarik waktu yang sesuai ke gambar kegiatan.",
+    step: 2,
+    activities: [
+      { label: "Anak bangun tidur", code: "A", img: "assets/images/kegiatan_bangun_tidur.png", answer: "05:00 pagi", altAnswers: ["05.00 pagi", "05:00 pagi"] },
+      { label: "Anak sarapan", code: "B", img: "assets/images/kegiatan_sarapan.png", answer: "07:00 pagi", altAnswers: ["07.00 pagi", "07:00 pagi"] },
+      { label: "Anak bermain sepak bola", code: "C", img: "assets/images/kegiatan_sepak_bola.png", answer: "05:00 sore", altAnswers: ["05.00 sore", "05:00 sore"] },
+      { label: "Anak membaca buku", code: "D", img: "assets/images/kegiatan_baca_buku.png", answer: "09:00 malam", altAnswers: ["09.00 malam", "09:00 malam"] }
+    ],
+    options: ["05:00 pagi", "07:00 pagi", "05:00 sore", "09:00 malam"],
+    points: 4,
+    hint: "Bangun tidur di pagi buta (05:00 pagi), sarapan sebelum sekolah (07:00 pagi), main bola sore hari (05:00 sore), membaca buku malam hari (09:00 malam).",
+    explanation: "Bangun tidur pukul 05:00 pagi, sarapan pukul 07:00 pagi, bermain bola pukul 05:00 sore, dan membaca buku pukul 09:00 malam."
+  },
+  {
+    id: "Q019",
+    level: 5,
+    type: "time_of_day_match",
+    title: "Waktu dalam Sehari",
+    question: "Tarik waktu yang sesuai ke dalam kotak!",
+    instruction: "Perhatikan gambar, lalu tarik waktu yang sesuai.",
+    step: 3,
+    scenes: [
+      { label: "Ayam berkokok + matahari terbit", id: 1, img: "assets/images/waktu_pagi.png", answer: "PAGI", altAnswers: ["PAGI", "🌅 PAGI", "Pagi", "🌅 Pagi"] },
+      { label: "Matahari bersinar terang di langit", id: 2, img: "assets/images/waktu_siang.png", answer: "SIANG", altAnswers: ["SIANG", "☀️ SIANG", "Siang", "☀️ Siang"] },
+      { label: "Matahari terbenam", id: 3, img: "assets/images/waktu_sore.png", answer: "SORE", altAnswers: ["SORE", "🌇 SORE", "Sore", "🌇 Sore"] },
+      { label: "Bulan dan bintang", id: 4, img: "assets/images/waktu_malam.png", answer: "MALAM", altAnswers: ["MALAM", "🌙 MALAM", "Malam", "🌙 Malam"] }
+    ],
+    options: ["PAGI", "SIANG", "SORE", "MALAM"],
+    points: 4,
+    hint: "Ayam berkokok menandai pagi, matahari terik adalah siang, langit jingga saat sore, dan bulan bintang saat malam.",
+    explanation: "Pagi ditandai ayam berkokok & matahari terbit, Siang saat matahari terik, Sore saat matahari terbenam, dan Malam saat tampak bulan & bintang."
   }
 ];
 
@@ -226,6 +317,7 @@ let currentDroppedMinute = null;
 let currentSelectedCompareIndex = null;
 let currentTimeCompareCards = [];
 let currentDroppedActivityTime = null;
+let currentMatchAnswers = {};
 
 /* =========================================================
    SISTEM GAMIFIKASI ALA QUIZIZZ (TIMER, STREAK & WARNA IKONIK)
@@ -242,7 +334,12 @@ let maxStreak = 0;
  */
 function startQuestionTimer() {
   stopQuestionTimer();
-  questionTimeRemaining = QUESTION_TIME_LIMIT;
+
+  // Matching questions (multi-slot) get more time
+  const question = currentQuizQuestions[currentQuestionIndex];
+  const isMatchType = question && (question.type === "clock_match" || question.type === "activity_match" || question.type === "time_of_day_match");
+  const timeLimit = isMatchType ? 60 : QUESTION_TIME_LIMIT;
+  questionTimeRemaining = timeLimit;
 
   const bar = $("quizTimerBar");
   const text = $("quizTimerText");
@@ -253,9 +350,9 @@ function startQuestionTimer() {
     bar.className = "quiz-timer-bar";
   }
   if (valEl) {
-    valEl.textContent = `${QUESTION_TIME_LIMIT} detik`;
+    valEl.textContent = `${timeLimit} detik`;
   } else if (text) {
-    text.innerHTML = `<img src="assets/icons/clock.svg" width="14" height="14" alt=""> <span>${QUESTION_TIME_LIMIT} detik</span>`;
+    text.innerHTML = `<img src="assets/icons/clock.svg" width="14" height="14" alt=""> <span>${timeLimit} detik</span>`;
   }
   if (text) {
     text.className = "quiz-timer-pill";
@@ -270,7 +367,7 @@ function startQuestionTimer() {
 
     questionTimeRemaining -= intervalStepMs / 1000;
 
-    const percent = Math.max(0, (questionTimeRemaining / QUESTION_TIME_LIMIT) * 100);
+    const percent = Math.max(0, (questionTimeRemaining / timeLimit) * 100);
     const secsLeft = Math.max(0, Math.ceil(questionTimeRemaining));
 
     if (bar) {
@@ -347,8 +444,35 @@ function handleQuestionTimeout() {
     card.classList.add("anim-quiz-shake");
   }
 
-  // Handle clock_activity_drop timeout
-  if (question && (question.type === "clock_activity_drop" || question.tipe === "clock_activity_drop")) {
+  // Handle matching types (clock_match, activity_match, time_of_day_match) timeout
+  if (question && (question.type === "clock_match" || question.type === "activity_match" || question.type === "time_of_day_match")) {
+    const submitBtn = $("btnMatchSubmit");
+    if (submitBtn) submitBtn.disabled = true;
+    document.querySelectorAll(".match-chip").forEach(c => { c.style.pointerEvents = "none"; c.removeAttribute("draggable"); });
+
+    const expected = getMatchExpectedAnswers(question);
+    Object.keys(expected).forEach(slotId => {
+      const slot = document.querySelector(`.match-drop-slot[data-slot-id="${slotId}"]`);
+      if (slot) {
+        slot.className = "match-drop-slot has-value slot-wrong";
+        slot.innerHTML = `<span class="match-slot-text">${escapeHTML(expected[slotId])}</span>`;
+      }
+    });
+
+    if (feedback) {
+      feedback.className = "quiz-feedback-quizizz feedback-timeout";
+      feedback.innerHTML = `
+        <div class="feedback-quizizz-box">
+          <img src="assets/icons/clock.svg" width="24" height="24" alt="" class="feedback-icon-svg" style="flex-shrink:0;">
+          <div>
+            <h4>Waktu Menjawab Habis</h4>
+            <div class="feedback-explanation">${escapeHTML(question.explanation || "")}</div>
+          </div>
+        </div>
+      `;
+      feedback.classList.remove("hidden");
+    }
+  } else if (question && (question.type === "clock_activity_drop" || question.tipe === "clock_activity_drop")) {
     const submitBtn = $("btnActivityDropSubmit");
     if (submitBtn) submitBtn.disabled = true;
 
@@ -458,6 +582,7 @@ function handleQuestionTimeout() {
       feedback.classList.remove("hidden");
     }
   } else if (question && (question.type === "clock_drag" || question.tipe === "clock_drag")) {
+    if (question && question.type === "clock_drag") {}
     const submitBtn = document.querySelector(".btn-clock-submit");
     if (submitBtn) submitBtn.disabled = true;
 
@@ -562,6 +687,16 @@ function showFloatingScore(text, bonusText = "") {
  * @param {number} levelId 
  */
 function startQuiz(levelId = 1) {
+  if (typeof currentMaterialLevel !== "undefined") {
+    currentMaterialLevel = Number(levelId);
+  }
+  if (Number(levelId) === 5) {
+    level5State = {
+      answers: { q1: {}, q2: {}, q3: {} },
+      totalSolved: 0
+    };
+  }
+
   // Ambil soal yang relevan untuk level ini (dinamis dari storage/pengajar)
   const allQuestions = typeof getQuestions === "function" ? getQuestions() : QUESTIONS;
   
@@ -608,6 +743,8 @@ function renderQuestion() {
   currentSelectedCompareIndex = null;
   currentTimeCompareCards = [];
   currentDroppedActivityTime = null;
+  currentMatchAnswers = {};
+  delete question._shuffledOptions;
 
   const quizProgressLabel = $("quizProgressLabel");
   const quizProgressFill = $("quizProgressFill");
@@ -652,8 +789,8 @@ function renderQuestion() {
 }
 
 /**
- * Membuat elemen visual jam digital alarm interaktif dengan bracket Jam dan Menit
- * Sesuai gambar modul poster (Chassis ungu, layar LED hijau, pointer Jam & Menit)
+ * Membuat elemen visual diagram jam digital dan kotak jawaban sesuai gambar modul/buku
+ * (Pill Jam Digital, Bodi Jam Oranye, Layar Krem, Panah Merah Siku, Kotak Jawaban Jam & Menit)
  * @param {Object} question
  * @returns {HTMLElement}
  */
@@ -662,28 +799,63 @@ function createDigitalAlarmClockWidget(question) {
   wrap.className = "digital-alarm-widget-wrap";
 
   wrap.innerHTML = `
-    <div class="digital-alarm-body-container">
-      <!-- Label Panduan Jam & Menit Sesuai Buku Pelajaran -->
-      <div class="digital-clock-labels-row" aria-hidden="true">
-        <span class="digital-label-tag">👈 Jam</span>
-        <span class="digital-label-tag">Menit 👉</span>
-      </div>
+    <div class="digital-diagram-wrap">
+      <!-- 1. Header Pill: Jam Digital Sesuai Gambar Modul -->
+      <div class="digital-clock-pill-header" aria-label="Label: Jam Digital">Jam Digital</div>
 
-      <div class="digital-alarm-chassis" id="alarmClockChassis">
-        <div class="digital-screen-inner">
-          <!-- Slot Angka Jam -->
-          <div id="slotHour" class="digital-drop-slot hour-slot" data-slot-type="hour" role="region" aria-label="Kotak Angka Jam" tabindex="0">
-            <span class="slot-display-val is-empty">--</span>
-            <span class="slot-mini-label">Jam</span>
+      <!-- 2. Panggung Diagram Jam & Tempat Jawab -->
+      <div class="digital-diagram-stage">
+        <!-- SVG Panah Merah Menunjuk ke Digit Jam dan Menit -->
+        <svg class="digital-arrows-svg" viewBox="0 0 360 195" aria-hidden="true">
+          <!-- Panah Kiri: Menunjuk ke angka Jam -->
+          <path d="M 70 123 L 70 34 L 115 34" stroke="#B91C1C" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          <polygon points="112,29 122,34 112,39" fill="#B91C1C" />
+
+          <!-- Panah Kanan: Menunjuk ke angka Menit -->
+          <path d="M 290 123 L 290 34 L 245 34" stroke="#B91C1C" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          <polygon points="248,29 238,34 248,39" fill="#B91C1C" />
+        </svg>
+
+        <!-- Jam Digital Oranye Ceria Sesuai Gambar Modul -->
+        <div class="digital-clock-center-unit">
+          <div class="digital-alarm-chassis" id="alarmClockChassis">
+            <div class="digital-screen-inner" id="digitalScreenInner">
+              <!-- Drop Slot Layar Jam -->
+              <div class="digital-screen-digit-drop" id="screenHourDrop" data-slot-type="hour" role="region" aria-label="Layar Angka Jam" tabindex="0">
+                <span class="screen-digit screen-hour is-empty" id="screenHourVal">--</span>
+              </div>
+              <div class="digital-screen-colon">:</div>
+              <!-- Drop Slot Layar Menit -->
+              <div class="digital-screen-digit-drop" id="screenMinuteDrop" data-slot-type="minute" role="region" aria-label="Layar Angka Menit" tabindex="0">
+                <span class="screen-digit screen-minute is-empty" id="screenMinuteVal">--</span>
+              </div>
+            </div>
+          </div>
+          <!-- Kaki Jam Merah -->
+          <div class="digital-clock-feet-row" aria-hidden="true">
+            <span class="digital-clock-foot"></span>
+            <span class="digital-clock-foot"></span>
+          </div>
+        </div>
+
+        <!-- Dua Tempat Jawab di Bawah Jam Sesuai Gambar Modul ("Tempat Jawabnya") -->
+        <div class="digital-answer-slots-row">
+          <!-- Kotak Jawaban Jam (Kiri) -->
+          <div id="slotHour" class="digital-drop-slot hour-slot" data-slot-type="hour" role="region" aria-label="Kotak Jawaban Jam" tabindex="0">
+            <div class="slot-content-wrap">
+              <span class="slot-display-val is-empty">--</span>
+              <span class="slot-dotted-line">.....................</span>
+              <span class="slot-box-label">Jam</span>
+            </div>
           </div>
 
-          <!-- Titik Dua Pemisah -->
-          <div class="digital-screen-colon">:</div>
-
-          <!-- Slot Angka Menit -->
-          <div id="slotMinute" class="digital-drop-slot minute-slot" data-slot-type="minute" role="region" aria-label="Kotak Angka Menit" tabindex="0">
-            <span class="slot-display-val is-empty">--</span>
-            <span class="slot-mini-label">Menit</span>
+          <!-- Kotak Jawaban Menit (Kanan) -->
+          <div id="slotMinute" class="digital-drop-slot minute-slot" data-slot-type="minute" role="region" aria-label="Kotak Jawaban Menit" tabindex="0">
+            <div class="slot-content-wrap">
+              <span class="slot-display-val is-empty">--</span>
+              <span class="slot-dotted-line">.....................</span>
+              <span class="slot-box-label">Menit</span>
+            </div>
           </div>
         </div>
       </div>
@@ -1010,6 +1182,23 @@ function renderQuestionIllustration(question) {
   illustration.innerHTML = "";
   currentQuizClock = null;
 
+  // Level 5 matching types: clock_match, activity_match, time_of_day_match
+  if (question.type === "clock_match") {
+    currentMatchAnswers = {};
+    illustration.appendChild(createClockMatchWidget(question));
+    return;
+  }
+  if (question.type === "activity_match") {
+    currentMatchAnswers = {};
+    illustration.appendChild(createActivityMatchWidget(question));
+    return;
+  }
+  if (question.type === "time_of_day_match") {
+    currentMatchAnswers = {};
+    illustration.appendChild(createTimeDayMatchWidget(question));
+    return;
+  }
+
   // 0a. Tipe clock_activity_drop: Menampilkan gambar jam analog + kegiatan + slot drop keterangan waktu (Level 4)
   if (question.type === "clock_activity_drop" || question.tipe === "clock_activity_drop") {
     currentDroppedActivityTime = null;
@@ -1037,7 +1226,10 @@ function renderQuestionIllustration(question) {
   // 0b. Tipe clock_drag: Siswa menggeser / mengarahkan jarum jam ke waktu target
   if (question.type === "clock_drag" || question.tipe === "clock_drag") {
     // Tampilan jam analog bersih tanpa petunjuk/tombol di bawahnya
-    currentQuizClock = createClock(12, 0, 280, true, false);
+    const targetH = Number(question.targetHour ?? 12);
+    const targetM = Number(question.targetMinute ?? 0);
+    const startH = (targetH === 12 && targetM === 0) ? 6 : 12;
+    currentQuizClock = createClock(startH, 0, 280, true, false);
     illustration.appendChild(currentQuizClock);
     return;
   }
@@ -1287,7 +1479,10 @@ function createClock(hour, minute, size = 230, isInteractive = true, showControl
           if (typeof playSound === "function") playSound("tick");
         }
       } else {
-        let nearestH = Math.round(deg / 30) % 12;
+        // Kurangi offset menit agar posisi jarum jam tetap akurat pada jam yang dimaksud
+        let effectiveDeg = deg - (curM / 60) * 30;
+        if (effectiveDeg < 0) effectiveDeg += 360;
+        let nearestH = Math.round(effectiveDeg / 30) % 12;
         if (nearestH === 0) nearestH = 12;
         if (nearestH !== curH) {
           curH = nearestH;
@@ -1301,7 +1496,7 @@ function createClock(hour, minute, size = 230, isInteractive = true, showControl
       if (e.button !== undefined && e.button !== 0) return; // Hanya tombol mouse utama
       if (e.cancelable) e.preventDefault();
 
-      const { deg } = getPointerMetrics(e.clientX, e.clientY);
+      const { deg, dist, radius } = getPointerMetrics(e.clientX, e.clientY);
       const target = e.target;
 
       // Pemilihan jarum yang intuitif untuk anak:
@@ -1313,8 +1508,13 @@ function createClock(hour, minute, size = 230, isInteractive = true, showControl
         activeHand = "hour";
         hourHand.style.zIndex = "30";
         minuteHand.style.zIndex = "10";
+      } else if (dist > radius * 0.68) {
+        // Sentuhan pada piringan luar (dekat tanda menit/angka luar) -> jarum menit (biru)
+        activeHand = "minute";
+        minuteHand.style.zIndex = "30";
+        hourHand.style.zIndex = "10";
       } else {
-        // Sentuhan pada angka / piringan jam otomatis mengarahkan jarum jam (merah)
+        // Sentuhan pada area tengah/dalam jam -> jarum jam (merah)
         activeHand = "hour";
         hourHand.style.zIndex = "30";
         minuteHand.style.zIndex = "10";
@@ -1322,6 +1522,10 @@ function createClock(hour, minute, size = 230, isInteractive = true, showControl
 
       face.classList.add("is-dragging");
       rotateToDeg(deg);
+
+      if (face.setPointerCapture && e.pointerId !== undefined) {
+        try { face.setPointerCapture(e.pointerId); } catch (_) {}
+      }
 
       window.addEventListener("pointermove", onPointerMove, { passive: false });
       window.addEventListener("pointerup", onPointerUp);
@@ -1405,6 +1609,75 @@ function renderAnswers(question) {
 
   grid.innerHTML = "";
 
+  // === Level 5 matching types: chips + Next / Selesai button ===
+  if (question.type === "clock_match" || question.type === "activity_match" || question.type === "time_of_day_match") {
+    grid.className = "match-answers-container";
+
+    const stepKey = `q${question.step || (currentQuestionIndex + 1)}`;
+    const stepAnswers = (level5State && level5State.answers && level5State.answers[stepKey]) || {};
+
+    const bankWrap = document.createElement("div");
+    bankWrap.className = "match-bank-wrap";
+    bankWrap.innerHTML = `
+      <div class="match-bank-title">Pilihan Waktu:</div>
+      <div class="match-draggable-chips-row" id="matchChipsRow"></div>
+    `;
+    const chipsRow = bankWrap.querySelector("#matchChipsRow");
+
+    const colorClasses = ["chip-blue", "chip-green", "chip-amber", "chip-red", "chip-purple", "chip-cyan", "chip-pink", "chip-indigo"];
+    const rawOptions = [...(question.options || [])];
+
+    rawOptions.forEach((opt, idx) => {
+      const chip = document.createElement("div");
+      const isAlreadyPlaced = Object.values(stepAnswers).some(val => normalizeMatchText(val) === normalizeMatchText(opt));
+      chip.className = `clock-drag-chip match-chip ${colorClasses[idx % colorClasses.length]}${isAlreadyPlaced ? " is-placed-slot" : ""}`;
+      chip.draggable = !isAlreadyPlaced;
+      chip.dataset.val = opt;
+      chip.setAttribute("role", "button");
+      chip.setAttribute("tabindex", "0");
+      chip.innerHTML = `<span>${escapeHTML(opt)}</span>`;
+      if (isAlreadyPlaced) {
+        chip.style.pointerEvents = "none";
+      } else {
+        setupMatchChipDragEvents(chip, opt, question);
+      }
+      chipsRow.appendChild(chip);
+    });
+
+    grid.appendChild(bankWrap);
+
+    // Tombol Lanjut / Selesai
+    const nextBtnWrap = document.createElement("div");
+    nextBtnWrap.style.textAlign = "center";
+    nextBtnWrap.style.marginTop = "14px";
+
+    const isLastQuestion = currentQuestionIndex === currentQuizQuestions.length - 1;
+    const nextBtnText = isLastQuestion 
+      ? "Selesai & Lihat Hasil ⭐" 
+      : `Lanjut ke Soal ${currentQuestionIndex + 2} →`;
+
+    const totalSlots = getMatchSlotCount(question);
+    const solvedSlots = Object.keys(stepAnswers).length;
+    const isStepComplete = solvedSlots >= totalSlots;
+
+    nextBtnWrap.innerHTML = `
+      <button id="btnMatchNext" class="btn btn-game-primary btn-match-next${isStepComplete ? " btn-ready-pulse" : ""}" type="button" ${isStepComplete ? "" : "disabled"}>
+        ${nextBtnText}
+      </button>
+    `;
+    const btnNext = nextBtnWrap.querySelector("#btnMatchNext");
+    btnNext.addEventListener("click", () => {
+      onMatchNextClick(question);
+    });
+
+    grid.appendChild(nextBtnWrap);
+
+    // Sembunyikan nextQuestionBtn global agar tidak ganda
+    const globalNext = $("nextQuestionBtn");
+    if (globalNext) globalNext.classList.add("hidden");
+    return;
+  }
+
   // === Tipe clock_drop: Pilihan Kartu Angka Waktu Draggable & Clickable ===
   if (question.type === "clock_drop" || question.tipe === "clock_drop") {
     grid.className = "clock-drop-answers-area";
@@ -1412,7 +1685,7 @@ function renderAnswers(question) {
     const banner = document.createElement("div");
     banner.className = "clock-drop-instruction-banner";
     banner.innerHTML = `
-      <span>Tarik angka (Jam) dan (Menit) ke jam digital di atas, atau klik angka:</span>
+      <span>Tarik angka (Jam) dan (Menit) ke kotak jawaban di atas, atau klik angka:</span>
     `;
     grid.appendChild(banner);
 
@@ -1420,11 +1693,57 @@ function renderAnswers(question) {
     chipsRow.id = "draggableChipsRow";
     chipsRow.className = "clock-draggable-chips-row";
 
-    const colorClasses = ["chip-blue", "chip-green", "chip-amber", "chip-red"];
+    const colorClasses = ["chip-blue", "chip-green", "chip-amber", "chip-purple", "chip-cyan", "chip-red"];
 
-    question.options.forEach((opt, idx) => {
+    // Ambil opsi yang tersedia (minimal 6 opsi dan diacak secara dinamis)
+    let opts = Array.isArray(question.options) ? [...question.options] : (Array.isArray(question.pilihan) ? [...question.pilihan] : []);
+
+    // Format 2 digit angka
+    opts = opts.map(v => String(v).trim().padStart(2, "0"));
+
+    // Pastikan target jam dan menit selalu ada
+    const targetH = String(question.targetHour || "05").padStart(2, "0");
+    const targetM = String(question.targetMinute !== undefined && question.targetMinute !== "" ? question.targetMinute : "00").padStart(2, "0");
+
+    if (!opts.includes(targetH)) opts.push(targetH);
+    if (!opts.includes(targetM)) opts.push(targetM);
+
+    // Kumpulan angka pengecoh jam digital jika opsi kurang dari 6
+    const poolDistractors = ["00", "05", "07", "08", "09", "10", "12", "15", "30", "45", "06", "01"];
+    for (const d of poolDistractors) {
+      if (opts.length >= 6) break;
+      if (!opts.includes(d)) {
+        opts.push(d);
+      }
+    }
+
+    // Jika lebih dari 6, potong jadi 6 namun pastikan targetH & targetM tetap ada
+    if (opts.length > 6) {
+      const essentials = [targetH, targetM];
+      const others = opts.filter(o => !essentials.includes(o));
+      opts = [...essentials, ...others.slice(0, 4)];
+    }
+
+    // Acak (shuffle) susunan opsi dengan Fisher-Yates agar jam dan menit TIDAK berada di pilihan 1 dan 2
+    if (!question._shuffledOptions || question._shuffledOptions.length !== 6) {
+      const shuffled = [...opts];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      // Pastikan targetH dan targetM tidak berada persis di index 0 dan 1
+      if (shuffled[0] === targetH && shuffled[1] === targetM) {
+        const swapIdx = (shuffled.length > 3) ? 3 : 2;
+        [shuffled[0], shuffled[swapIdx]] = [shuffled[swapIdx], shuffled[0]];
+      }
+      question._shuffledOptions = shuffled;
+    }
+
+    const displayOptions = question._shuffledOptions;
+
+    displayOptions.forEach((opt, idx) => {
       const chip = document.createElement("div");
-      chip.className = `clock-drag-chip digital-chip ${colorClasses[idx % 4]}`;
+      chip.className = `clock-drag-chip digital-chip ${colorClasses[idx % colorClasses.length]}`;
       chip.draggable = true;
       chip.dataset.value = String(opt).padStart(2, "0");
       chip.dataset.index = String(idx);
@@ -1435,7 +1754,10 @@ function renderAnswers(question) {
       setupDigitalChipDragEvents(chip, String(opt).padStart(2, "0"), question);
 
       chip.addEventListener("click", () => {
-        if (quizAnswered) return;
+        if (quizAnswered || chip._touchDragged) {
+          chip._touchDragged = false;
+          return;
+        }
         const val = chip.dataset.value;
         if (currentDroppedHour === val) {
           clearDigitalSlot("hour", question);
@@ -1616,46 +1938,99 @@ function renderAnswers(question) {
   });
 }
 
+let currentDraggedDigitalValue = null;
+
 /**
- * Menyiapkan slot drop jam dan menit pada jam digital alarm
+ * Menandai status highlight drag-hover pada kotak jawaban dan layar jam digital
+ * @param {"hour"|"minute"} slotType
+ * @param {boolean} isHover
+ */
+function setDigitalDropHoverState(slotType, isHover) {
+  const slot = slotType === "hour" ? $("slotHour") : $("slotMinute");
+  const screen = slotType === "hour" ? $("screenHourDrop") : $("screenMinuteDrop");
+  if (slot) slot.classList.toggle("drag-hover", isHover);
+  if (screen) screen.classList.toggle("drag-hover", isHover);
+}
+
+/**
+ * Mengecek apakah sentuhan berada di dalam bounding box elemen
+ * @param {Touch} touch
+ * @param {HTMLElement} el
+ * @returns {boolean}
+ */
+function isTouchOverElement(touch, el) {
+  if (!el || !el.getBoundingClientRect) return false;
+  const rect = el.getBoundingClientRect();
+  return (
+    touch.clientX >= rect.left &&
+    touch.clientX <= rect.right &&
+    touch.clientY >= rect.top &&
+    touch.clientY <= rect.bottom
+  );
+}
+
+/**
+ * Menyiapkan slot drop jam dan menit pada diagram jam digital dan kotak jawaban
  * @param {Object} question
  */
 function setupDigitalClockDropSlots(question) {
   const slotH = $("slotHour");
   const slotM = $("slotMinute");
+  const screenH = $("screenHourDrop");
+  const screenM = $("screenMinuteDrop");
 
-  [slotH, slotM].forEach((slot) => {
-    if (!slot) return;
-    const slotType = (slot.getAttribute && slot.getAttribute("data-slot-type")) || 
-                     (slot.dataset && slot.dataset.slotType) || 
-                     (slot.id === "slotHour" ? "hour" : "minute");
+  const targets = [
+    { el: slotH, type: "hour" },
+    { el: slotM, type: "minute" },
+    { el: screenH, type: "hour" },
+    { el: screenM, type: "minute" }
+  ];
 
-    slot.addEventListener("dragover", (e) => {
+  targets.forEach(({ el, type }) => {
+    if (!el) return;
+
+    el.addEventListener("dragenter", (e) => {
       e.preventDefault();
-      e.dataTransfer.dropEffect = "move";
-      slot.classList.add("drag-hover");
+      setDigitalDropHoverState(type, true);
     });
 
-    slot.addEventListener("dragleave", () => {
-      slot.classList.remove("drag-hover");
+    el.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      if (e.dataTransfer) {
+        e.dataTransfer.dropEffect = "move";
+      }
+      setDigitalDropHoverState(type, true);
     });
 
-    slot.addEventListener("drop", (e) => {
+    el.addEventListener("dragleave", (e) => {
+      if (!el.contains(e.relatedTarget)) {
+        setDigitalDropHoverState(type, false);
+      }
+    });
+
+    el.addEventListener("drop", (e) => {
       e.preventDefault();
-      slot.classList.remove("drag-hover");
-      const val = e.dataTransfer.getData("text/plain");
+      setDigitalDropHoverState(type, false);
+
+      let val = null;
+      if (e.dataTransfer) {
+        try { val = e.dataTransfer.getData("text/plain"); } catch (err) {}
+      }
+      if (!val) {
+        val = currentDraggedDigitalValue;
+      }
       if (val) {
-        placeNumberInSlot(slotType, val, question);
+        placeNumberInSlot(type, val, question);
         if (typeof playSound === "function") playSound("tick");
       }
     });
 
-    slot.addEventListener("click", () => {
+    el.addEventListener("click", () => {
       if (quizAnswered) return;
-      if (slotType === "hour" && currentDroppedHour !== null) {
+      if (type === "hour" && currentDroppedHour !== null) {
         clearDigitalSlot("hour", question);
         if (typeof playSound === "function") playSound("tick");
-      } else if (slotType === "minute" && currentDroppedMinute !== null) {
+      } else if (type === "minute" && currentDroppedMinute !== null) {
         clearDigitalSlot("minute", question);
         if (typeof playSound === "function") playSound("tick");
       }
@@ -1718,26 +2093,48 @@ function clearDigitalSlot(slotType, question, updateChips = true) {
 }
 
 /**
- * Memperbarui UI tampilan angka pada slot jam digital
+ * Memperbarui UI tampilan angka pada kotak jawaban dan layar jam digital
  * @param {"hour"|"minute"} slotType
  * @param {string|null} val
  */
 function updateDigitalSlotUI(slotType, val) {
   const slot = slotType === "hour" ? $("slotHour") : $("slotMinute");
+  const screenDigit = slotType === "hour" ? $("screenHourVal") : $("screenMinuteVal");
+
+  if (screenDigit) {
+    if (val !== null) {
+      screenDigit.textContent = val;
+      screenDigit.classList.remove("is-empty");
+      screenDigit.classList.add("has-value");
+    } else {
+      screenDigit.textContent = "--";
+      screenDigit.classList.add("is-empty");
+      screenDigit.classList.remove("has-value");
+    }
+  }
+
   if (!slot) return;
 
   const displayEl = slot.querySelector(".slot-display-val");
+  const dottedEl = slot.querySelector(".slot-dotted-line");
+
   if (val !== null) {
     slot.classList.add("has-value");
     if (displayEl) {
       displayEl.textContent = val;
       displayEl.classList.remove("is-empty");
     }
+    if (dottedEl) {
+      dottedEl.style.display = "none";
+    }
   } else {
     slot.classList.remove("has-value");
     if (displayEl) {
       displayEl.textContent = "--";
       displayEl.classList.add("is-empty");
+    }
+    if (dottedEl) {
+      dottedEl.style.display = "";
     }
   }
 }
@@ -1766,16 +2163,21 @@ function setupDigitalChipDragEvents(chip, val, question) {
   // Desktop HTML5 drag
   chip.addEventListener("dragstart", (e) => {
     if (quizAnswered) return;
-    e.dataTransfer.setData("text/plain", val);
+    currentDraggedDigitalValue = val;
+    if (e.dataTransfer) {
+      try {
+        e.dataTransfer.setData("text/plain", val);
+        e.dataTransfer.effectAllowed = "move";
+      } catch (err) {}
+    }
     chip.classList.add("is-dragging-chip");
   });
 
   chip.addEventListener("dragend", () => {
     chip.classList.remove("is-dragging-chip");
-    const slotH = $("slotHour");
-    const slotM = $("slotMinute");
-    if (slotH) slotH.classList.remove("drag-hover");
-    if (slotM) slotM.classList.remove("drag-hover");
+    currentDraggedDigitalValue = null;
+    setDigitalDropHoverState("hour", false);
+    setDigitalDropHoverState("minute", false);
   });
 
   // Mobile Touch drag dengan ghost visual
@@ -1788,6 +2190,7 @@ function setupDigitalChipDragEvents(chip, val, question) {
     const touch = e.touches[0];
     touchStartX = touch.clientX;
     touchStartY = touch.clientY;
+    chip._touchDragged = false;
   }, { passive: true });
 
   chip.addEventListener("touchmove", (e) => {
@@ -1796,10 +2199,20 @@ function setupDigitalChipDragEvents(chip, val, question) {
     const dx = Math.abs(touch.clientX - touchStartX);
     const dy = Math.abs(touch.clientY - touchStartY);
 
-    if (dx > 8 || dy > 8) {
+    if (dx > 6 || dy > 6) {
+      chip._touchDragged = true;
       if (!touchGhost) {
         touchGhost = chip.cloneNode(true);
         touchGhost.className = `${chip.className} drag-chip-touch-ghost`;
+        touchGhost.style.cssText = `
+          position: fixed !important;
+          pointer-events: none !important;
+          z-index: 999999 !important;
+          transform: scale(1.08);
+          opacity: 0.95;
+          margin: 0;
+          box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+        `;
         document.body.appendChild(touchGhost);
         chip.classList.add("is-dragging-chip");
       }
@@ -1808,20 +2221,14 @@ function setupDigitalChipDragEvents(chip, val, question) {
 
       const slotH = $("slotHour");
       const slotM = $("slotMinute");
-      [slotH, slotM].forEach((s) => {
-        if (!s) return;
-        const rect = s.getBoundingClientRect();
-        if (
-          touch.clientX >= rect.left &&
-          touch.clientX <= rect.right &&
-          touch.clientY >= rect.top &&
-          touch.clientY <= rect.bottom
-        ) {
-          s.classList.add("drag-hover");
-        } else {
-          s.classList.remove("drag-hover");
-        }
-      });
+      const sH = $("screenHourDrop");
+      const sM = $("screenMinuteDrop");
+
+      const isOverHour = isTouchOverElement(touch, slotH) || isTouchOverElement(touch, sH);
+      const isOverMinute = isTouchOverElement(touch, slotM) || isTouchOverElement(touch, sM);
+
+      setDigitalDropHoverState("hour", isOverHour);
+      setDigitalDropHoverState("minute", isOverMinute);
     }
   }, { passive: true });
 
@@ -1834,24 +2241,19 @@ function setupDigitalChipDragEvents(chip, val, question) {
       const touch = e.changedTouches[0];
       const slotH = $("slotHour");
       const slotM = $("slotMinute");
+      const sH = $("screenHourDrop");
+      const sM = $("screenMinuteDrop");
 
-      [slotH, slotM].forEach((s) => {
-        if (!s) return;
-        s.classList.remove("drag-hover");
-        const rect = s.getBoundingClientRect();
-        if (
-          touch.clientX >= rect.left &&
-          touch.clientX <= rect.right &&
-          touch.clientY >= rect.top &&
-          touch.clientY <= rect.bottom
-        ) {
-          const slotType = (s.getAttribute && s.getAttribute("data-slot-type")) || 
-                           (s.dataset && s.dataset.slotType) || 
-                           (s.id === "slotHour" ? "hour" : "minute");
-          placeNumberInSlot(slotType, val, question);
-          if (typeof playSound === "function") playSound("tick");
-        }
-      });
+      setDigitalDropHoverState("hour", false);
+      setDigitalDropHoverState("minute", false);
+
+      if (isTouchOverElement(touch, slotH) || isTouchOverElement(touch, sH)) {
+        placeNumberInSlot("hour", val, question);
+        if (typeof playSound === "function") playSound("tick");
+      } else if (isTouchOverElement(touch, slotM) || isTouchOverElement(touch, sM)) {
+        placeNumberInSlot("minute", val, question);
+        if (typeof playSound === "function") playSound("tick");
+      }
     }
   });
 
@@ -1861,10 +2263,8 @@ function setupDigitalChipDragEvents(chip, val, question) {
       touchGhost = null;
     }
     chip.classList.remove("is-dragging-chip");
-    const slotH = $("slotHour");
-    const slotM = $("slotMinute");
-    if (slotH) slotH.classList.remove("drag-hover");
-    if (slotM) slotM.classList.remove("drag-hover");
+    setDigitalDropHoverState("hour", false);
+    setDigitalDropHoverState("minute", false);
   });
 }
 
@@ -2516,48 +2916,53 @@ function useHint() {
  * Menyelesaikan kuis dan menghitung hasil akhir
  */
 function finishQuiz() {
-  const total = currentQuizQuestions.length;
-  const score = total > 0 ? Math.round((quizCorrect / total) * 100) : 0;
+  const isLevel5 = currentQuizQuestions.some(q => Number(q.level) === 5);
+  const total = isLevel5 ? 16 : currentQuizQuestions.length;
+  const correct = isLevel5 ? (level5State ? level5State.totalSolved : 16) : quizCorrect;
+  const score = total > 0 ? Math.round((correct / total) * 100) : 0;
 
-  const stars =
-    score >= 90 ? 3 :
+  const stars = isLevel5 ? (score >= 80 ? 5 : (score >= 50 ? 3 : 1)) :
+    (score >= 90 ? 3 :
     score >= 70 ? 2 :
-    score >= 50 ? 1 : 0;
+    score >= 50 ? 1 : 0);
 
   const bonus = 50;
   quizPoints += bonus;
 
-  // Buka level berikutnya pada akun siswa
-  const levelIds = [...new Set(currentQuizQuestions.map(q => q.level))];
-  if (!currentStudent.completedLevels) {
-    currentStudent.completedLevels = [];
-  }
-
-  levelIds.forEach(levelId => {
-    if (!currentStudent.completedLevels.includes(levelId)) {
-      currentStudent.completedLevels.push(levelId);
-      currentStudent.stars = (currentStudent.stars || 0) + stars;
+  // Buka level berikutnya pada akun siswa jika login
+  if (currentStudent) {
+    const levelIds = [...new Set(currentQuizQuestions.map(q => q.level))];
+    if (!currentStudent.completedLevels) {
+      currentStudent.completedLevels = [];
     }
-  });
 
-  currentStudent.points = (currentStudent.points || 0) + quizPoints;
-  currentStudent.lastScore = score;
-  currentStudent.lastCorrect = quizCorrect;
-  currentStudent.lastTotal = total;
-  currentStudent.lastHints = quizHints;
-  currentStudent.lastPlayed = Date.now();
-  currentStudent.materialProgress = 100;
+    levelIds.forEach(levelId => {
+      if (!currentStudent.completedLevels.includes(levelId)) {
+        currentStudent.completedLevels.push(levelId);
+        currentStudent.stars = (currentStudent.stars || 0) + stars;
+      }
+    });
+
+    currentStudent.points = (currentStudent.points || 0) + quizPoints;
+    currentStudent.lastScore = score;
+    currentStudent.lastCorrect = correct;
+    currentStudent.lastTotal = total;
+    currentStudent.lastHints = quizHints;
+    currentStudent.lastPlayed = Date.now();
+    currentStudent.materialProgress = 100;
+    saveCurrentStudent();
+  }
 
   lastResult = {
     score: score,
     points: quizPoints,
-    correct: quizCorrect,
+    correct: correct,
     total: total,
     hints: quizHints,
-    stars: stars
+    stars: stars,
+    isLevel5: isLevel5
   };
 
-  saveCurrentStudent();
   renderResult();
   showStudentPage("resultScreen");
   playSound("victory");
@@ -2567,9 +2972,10 @@ function finishQuiz() {
  * Merender layar hasil akhir kuis
  */
 function renderResult() {
-  if (!lastResult || !currentStudent) return;
+  if (!lastResult) return;
 
   const result = lastResult;
+  const studentName = currentStudent ? currentStudent.name : "Siswa Hebat";
 
   const resTitle = $("resultTitle");
   const resScore = $("resultScore");
@@ -2578,6 +2984,33 @@ function renderResult() {
   const resHints = $("resultHints");
   const resStars = $("resultStars");
   const resMsg = $("resultMessage");
+
+  if (result.isLevel5) {
+    if (resTitle) resTitle.textContent = "Hebat! Kamu sudah selesai!";
+    if (resScore) {
+      resScore.textContent = result.score;
+      resScore.className = "result-score-value score-high";
+    }
+    if (resCorrect) resCorrect.textContent = `${result.correct} dari 16`;
+    if (resPoints) resPoints.textContent = result.points;
+    if (resHints) resHints.textContent = result.hints;
+    if (resStars) {
+      let starsHtml = "";
+      for (let i = 0; i < 5; i++) {
+        starsHtml += `<img src="assets/icons/star-gold.svg" class="result-star" width="44" height="44" alt="Bintang Emas">`;
+      }
+      resStars.innerHTML = starsHtml;
+    }
+    if (resMsg) {
+      resMsg.textContent = "Kerja bagus! Kamu berhasil menyelesaikan semua tantangan waktu!";
+    }
+    const retryBtn = $("retryQuizBtn");
+    if (retryBtn) {
+      retryBtn.innerHTML = `<img src="assets/icons/refresh.svg" width="18" height="18" alt=""> <span>Ulangi Soal</span>`;
+      retryBtn.onclick = () => startQuiz(5);
+    }
+    return;
+  }
 
   if (resTitle) {
     if (result.score >= 80) {
@@ -2619,6 +3052,474 @@ function renderResult() {
       resMsg.textContent = "Tetap semangat! Pelajari materi lagi dan coba kuis kembali.";
     }
   }
+}
+
+/* =========================================================
+   LEVEL 5: MULTI-STEP MATCHING WORKSHEET (3 SOAL / HALAMAN)
+   ========================================================= */
+
+let _selectedMatchChip = null;
+let level5State = {
+  answers: { q1: {}, q2: {}, q3: {} },
+  totalSolved: 0
+};
+
+function normalizeMatchText(str) {
+  if (!str) return "";
+  return String(str)
+    .replace(/[^\w]/g, "")
+    .toLowerCase();
+}
+
+function getMatchSlotCount(question) {
+  if (question.type === "clock_match") return (question.clocks || []).length || 8;
+  if (question.type === "activity_match") return (question.activities || []).length || 4;
+  if (question.type === "time_of_day_match") return (question.scenes || []).length || 4;
+  return 4;
+}
+
+function getMatchExpectedAnswers(question) {
+  if (question.type === "clock_match") {
+    const map = {};
+    (question.clocks || []).forEach(c => {
+      map[c.id] = c.answer || `${String(c.hour).padStart(2, "0")}:${String(c.minute).padStart(2, "0")}`;
+    });
+    return map;
+  }
+  if (question.type === "activity_match") {
+    const map = {};
+    (question.activities || []).forEach((a, i) => { map[i] = a.answer; });
+    return map;
+  }
+  if (question.type === "time_of_day_match") {
+    const map = {};
+    (question.scenes || []).forEach((s, i) => { map[i] = s.answer; });
+    return map;
+  }
+  return {};
+}
+
+function renderLevel5Stepper(stepIndex) {
+  return `
+    <div class="level5-stepper-wrap">
+      <div class="level5-stepper">
+        <div class="stepper-step ${stepIndex === 0 ? 'active' : (stepIndex > 0 ? 'completed' : '')}">
+          <span class="stepper-circle">${stepIndex > 0 ? '✓' : '1'}</span>
+          <div class="stepper-title">Soal 1<small>Mencocokkan Jam</small></div>
+        </div>
+        <div class="stepper-divider ${stepIndex > 0 ? 'filled' : ''}"></div>
+        <div class="stepper-step ${stepIndex === 1 ? 'active' : (stepIndex > 1 ? 'completed' : '')}">
+          <span class="stepper-circle">${stepIndex > 1 ? '✓' : '2'}</span>
+          <div class="stepper-title">Soal 2<small>Kegiatan & Waktu</small></div>
+        </div>
+        <div class="stepper-divider ${stepIndex > 1 ? 'filled' : ''}"></div>
+        <div class="stepper-step ${stepIndex === 2 ? 'active' : ''}">
+          <span class="stepper-circle">3</span>
+          <div class="stepper-title">Soal 3<small>Waktu dlm Sehari</small></div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function createMiniClockSVG(hour, minute, bg = "#FFFFFF", borderColor = "#3B82F6") {
+  const size = 84;
+  const cx = size / 2;
+  const cy = size / 2;
+  const r = 38;
+  const innerR = 32;
+
+  let numbersSvg = "";
+  for (let n = 1; n <= 12; n++) {
+    const angle = (n * 30) * Math.PI / 180;
+    const nx = cx + 23 * Math.sin(angle);
+    const ny = cy - 23 * Math.cos(angle) + 3.5;
+    numbersSvg += `<text x="${nx.toFixed(1)}" y="${ny.toFixed(1)}" font-size="8" font-family="'Nunito', 'Segoe UI', sans-serif" font-weight="800" fill="#334155" text-anchor="middle">${n}</text>`;
+  }
+
+  const hourAngle = ((hour % 12) * 30 + (minute / 60) * 30) * Math.PI / 180;
+  const hx = cx + 15 * Math.sin(hourAngle);
+  const hy = cy - 15 * Math.cos(hourAngle);
+
+  const minAngle = (minute * 6) * Math.PI / 180;
+  const mx = cx + 22 * Math.sin(minAngle);
+  const my = cy - 22 * Math.cos(minAngle);
+
+  return `
+    <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" class="mini-clock-svg" style="display:block;margin:0 auto;overflow:visible;">
+      <defs>
+        <filter id="clockShadow-${hour}-${minute}" x="-10%" y="-10%" width="120%" height="120%">
+          <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.1"/>
+        </filter>
+      </defs>
+      <circle cx="${cx}" cy="${cy}" r="${r}" fill="${bg}" stroke="${borderColor}" stroke-width="4" filter="url(#clockShadow-${hour}-${minute})" />
+      <circle cx="${cx}" cy="${cy}" r="${innerR}" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" />
+      ${numbersSvg}
+      <line x1="${cx}" y1="${cy}" x2="${hx.toFixed(1)}" y2="${hy.toFixed(1)}" stroke="#EF4444" stroke-width="3.5" stroke-linecap="round" />
+      <line x1="${cx}" y1="${cy}" x2="${mx.toFixed(1)}" y2="${my.toFixed(1)}" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round" />
+      <circle cx="${cx}" cy="${cy}" r="3.5" fill="#1E293B" />
+      <circle cx="${cx}" cy="${cy}" r="1.5" fill="#F8FAFC" />
+    </svg>
+  `;
+}
+
+function handleMatchDrop(slotEl, droppedVal, question) {
+  if (!slotEl || !droppedVal || quizAnswered) return;
+  const slotId = slotEl.dataset.slotId;
+  const stepKey = `q${question.step || (currentQuestionIndex + 1)}`;
+
+  let isCorrect = false;
+  const normDrop = normalizeMatchText(droppedVal);
+
+  if (question.type === "clock_match") {
+    const clock = (question.clocks || []).find(c => String(c.id) === String(slotId));
+    if (clock) {
+      if (normalizeMatchText(clock.answer) === normDrop) isCorrect = true;
+      if (clock.altAnswers && clock.altAnswers.some(a => normalizeMatchText(a) === normDrop)) isCorrect = true;
+    }
+  } else if (question.type === "activity_match") {
+    const act = (question.activities || [])[parseInt(slotId, 10)] || (question.activities || []).find(a => a.code === slotId);
+    if (act) {
+      if (normalizeMatchText(act.answer) === normDrop) isCorrect = true;
+      if (act.altAnswers && act.altAnswers.some(a => normalizeMatchText(a) === normDrop)) isCorrect = true;
+    }
+  } else if (question.type === "time_of_day_match") {
+    const sc = (question.scenes || [])[parseInt(slotId, 10)] || (question.scenes || []).find(s => String(s.id) === String(slotId));
+    if (sc) {
+      if (normalizeMatchText(sc.answer) === normDrop) isCorrect = true;
+      if (sc.altAnswers && sc.altAnswers.some(a => normalizeMatchText(a) === normDrop)) isCorrect = true;
+    }
+  }
+
+  if (isCorrect) {
+    if (typeof playSound === "function") playSound("correct");
+    slotEl.classList.remove("slot-wrong-shake");
+    slotEl.classList.add("slot-correct");
+    slotEl.style.pointerEvents = "none";
+    slotEl.innerHTML = `<span class="match-slot-text"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:3px;"><polyline points="20 6 9 17 4 12"></polyline></svg>${escapeHTML(droppedVal)}</span>`;
+
+    // Disable chip in bank
+    const bankChips = document.querySelectorAll(".match-chip");
+    for (const chip of bankChips) {
+      if (!chip.classList.contains("is-placed-slot") && normalizeMatchText(chip.dataset.val) === normDrop) {
+        chip.classList.add("is-placed-slot");
+        chip.classList.remove("chip-selected");
+        chip.style.pointerEvents = "none";
+        chip.removeAttribute("draggable");
+        break;
+      }
+    }
+    _selectedMatchChip = null;
+
+    if (!level5State.answers[stepKey]) level5State.answers[stepKey] = {};
+    if (!level5State.answers[stepKey][slotId]) {
+      level5State.answers[stepKey][slotId] = droppedVal;
+      level5State.totalSolved++;
+      quizPoints += 10;
+      const pointsEl = $("quizPoints");
+      if (pointsEl) pointsEl.textContent = quizPoints;
+    }
+
+    const totalSlots = getMatchSlotCount(question);
+    const solvedSlots = Object.keys(level5State.answers[stepKey]).length;
+    if (solvedSlots >= totalSlots) {
+      if (typeof playSound === "function") playSound("streak");
+      const nextBtn = $("btnMatchNext");
+      if (nextBtn) {
+        nextBtn.disabled = false;
+        nextBtn.classList.add("btn-ready-pulse");
+      }
+      showFloatingScore("Hebat!", "Semua jawaban benar!");
+    }
+  } else {
+    if (typeof playSound === "function") playSound("wrong");
+    slotEl.classList.remove("slot-wrong-shake");
+    void slotEl.offsetWidth;
+    slotEl.classList.add("slot-wrong-shake");
+    setTimeout(() => {
+      slotEl.classList.remove("slot-wrong-shake");
+    }, 600);
+
+    _selectedMatchChip = null;
+    document.querySelectorAll(".match-chip").forEach(c => c.classList.remove("chip-selected"));
+  }
+}
+
+function setupMatchSlotEvents(slotEl, slotId, question) {
+  slotEl.addEventListener("dragover", e => {
+    e.preventDefault();
+    if (slotEl.classList.contains("slot-correct")) return;
+    slotEl.classList.add("drag-hover");
+  });
+
+  slotEl.addEventListener("dragleave", () => {
+    slotEl.classList.remove("drag-hover");
+  });
+
+  slotEl.addEventListener("drop", e => {
+    e.preventDefault();
+    slotEl.classList.remove("drag-hover");
+    if (slotEl.classList.contains("slot-correct") || quizAnswered) return;
+    const val = e.dataTransfer.getData("text/plain");
+    if (val) {
+      handleMatchDrop(slotEl, val, question);
+    }
+  });
+
+  slotEl.addEventListener("click", () => {
+    if (slotEl.classList.contains("slot-correct") || quizAnswered) return;
+    if (_selectedMatchChip) {
+      handleMatchDrop(slotEl, _selectedMatchChip, question);
+    }
+  });
+}
+
+function setupMatchChipDragEvents(chip, val, question) {
+  chip.addEventListener("dragstart", e => {
+    if (chip.classList.contains("is-placed-slot") || quizAnswered) {
+      e.preventDefault();
+      return;
+    }
+    chip.classList.add("is-dragging-chip");
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/plain", val);
+  });
+
+  chip.addEventListener("dragend", () => {
+    chip.classList.remove("is-dragging-chip");
+  });
+
+  let touchGhost = null;
+  chip.addEventListener("touchstart", e => {
+    if (chip.classList.contains("is-placed-slot") || quizAnswered) return;
+    const touch = e.touches[0];
+    chip.classList.add("is-dragging-chip");
+    touchGhost = chip.cloneNode(true);
+    touchGhost.className = "match-chip touch-drag-ghost";
+    touchGhost.style.cssText = "position:fixed;pointer-events:none;z-index:9999;opacity:0.9;transform:scale(1.05);box-shadow:0 6px 20px rgba(0,0,0,0.25);";
+    touchGhost.style.left = `${touch.clientX - 40}px`;
+    touchGhost.style.top = `${touch.clientY - 20}px`;
+    document.body.appendChild(touchGhost);
+  }, { passive: true });
+
+  chip.addEventListener("touchmove", e => {
+    if (!touchGhost) return;
+    const touch = e.touches[0];
+    touchGhost.style.left = `${touch.clientX - 40}px`;
+    touchGhost.style.top = `${touch.clientY - 20}px`;
+    document.querySelectorAll(".match-drop-slot:not(.slot-correct)").forEach(s => {
+      const r = s.getBoundingClientRect();
+      s.classList.toggle("drag-hover", touch.clientX >= r.left && touch.clientX <= r.right && touch.clientY >= r.top && touch.clientY <= r.bottom);
+    });
+  }, { passive: true });
+
+  chip.addEventListener("touchend", e => {
+    if (touchGhost) {
+      touchGhost.remove();
+      touchGhost = null;
+      chip.classList.remove("is-dragging-chip");
+      const touch = e.changedTouches[0];
+      document.querySelectorAll(".match-drop-slot:not(.slot-correct)").forEach(s => {
+        s.classList.remove("drag-hover");
+        const r = s.getBoundingClientRect();
+        if (touch.clientX >= r.left && touch.clientX <= r.right && touch.clientY >= r.top && touch.clientY <= r.bottom) {
+          handleMatchDrop(s, val, question);
+        }
+      });
+    }
+  });
+
+  chip.addEventListener("touchcancel", () => {
+    if (touchGhost) {
+      touchGhost.remove();
+      touchGhost = null;
+    }
+    chip.classList.remove("is-dragging-chip");
+  });
+
+  chip.addEventListener("click", () => {
+    if (chip.classList.contains("is-placed-slot") || quizAnswered) return;
+    if (_selectedMatchChip === val) {
+      _selectedMatchChip = null;
+      chip.classList.remove("chip-selected");
+    } else {
+      document.querySelectorAll(".match-chip").forEach(c => c.classList.remove("chip-selected"));
+      _selectedMatchChip = val;
+      chip.classList.add("chip-selected");
+      if (typeof playSound === "function") playSound("tick");
+    }
+  });
+}
+
+function onMatchNextClick(question) {
+  if (currentQuestionIndex < currentQuizQuestions.length - 1) {
+    currentQuestionIndex++;
+    renderQuestion();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } else {
+    finishQuiz();
+  }
+}
+
+function createClockMatchWidget(question) {
+  const wrap = document.createElement("div");
+  wrap.className = "match-widget-wrap";
+  wrap.innerHTML = `
+    ${renderLevel5Stepper(0)}
+    <div class="match-header-info">
+      <div class="match-header-title">${escapeHTML(question.question || "Pasangkan gambar jam dengan waktu yang tepat!")}</div>
+      <div class="match-header-instruction">${escapeHTML(question.instruction || "Tarik waktu yang sesuai ke dalam kotak di bawah gambar jam.")}</div>
+    </div>
+    <div class="match-grid match-grid-4x2" id="clockMatchGrid"></div>
+  `;
+  const grid = wrap.querySelector("#clockMatchGrid");
+  const stepKey = "q1";
+  const stepAnswers = (level5State && level5State.answers && level5State.answers[stepKey]) || {};
+
+  (question.clocks || []).forEach(c => {
+    const cell = document.createElement("div");
+    cell.className = "match-cell";
+
+    const badge = document.createElement("div");
+    badge.className = "match-cell-badge";
+    badge.textContent = c.id;
+    cell.appendChild(badge);
+
+    const clockSvg = createMiniClockSVG(c.hour, c.minute, c.bg || "#FFFFFF", c.borderColor || "#3B82F6");
+    const clockWrap = document.createElement("div");
+    clockWrap.className = "match-cell-clock-face";
+    clockWrap.innerHTML = clockSvg;
+    cell.appendChild(clockWrap);
+
+    const slot = document.createElement("div");
+    slot.className = "match-drop-slot";
+    slot.dataset.slotId = String(c.id);
+
+    const prevAnswer = stepAnswers[String(c.id)];
+    if (prevAnswer) {
+      slot.classList.add("slot-correct");
+      slot.style.pointerEvents = "none";
+      slot.innerHTML = `<span class="match-slot-text"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:3px;"><polyline points="20 6 9 17 4 12"></polyline></svg>${escapeHTML(prevAnswer)}</span>`;
+    } else {
+      slot.innerHTML = `<span class="match-slot-placeholder">Tarik ke sini</span>`;
+      setupMatchSlotEvents(slot, String(c.id), question);
+    }
+    cell.appendChild(slot);
+
+    grid.appendChild(cell);
+  });
+
+  return wrap;
+}
+
+function createActivityMatchWidget(question) {
+  const wrap = document.createElement("div");
+  wrap.className = "match-widget-wrap";
+  wrap.innerHTML = `
+    ${renderLevel5Stepper(1)}
+    <div class="match-header-info">
+      <div class="match-header-title">${escapeHTML(question.question || "Amati gambar kegiatan berikut, lalu pilih waktu yang sesuai!")}</div>
+      <div class="match-header-instruction">${escapeHTML(question.instruction || "Tarik waktu yang sesuai ke gambar kegiatan.")}</div>
+    </div>
+    <div class="match-grid match-grid-4x1" id="activityMatchGrid"></div>
+  `;
+  const grid = wrap.querySelector("#activityMatchGrid");
+  const stepKey = "q2";
+  const stepAnswers = (level5State && level5State.answers && level5State.answers[stepKey]) || {};
+
+  (question.activities || []).forEach((a, i) => {
+    const cell = document.createElement("div");
+    cell.className = "match-cell";
+
+    const badge = document.createElement("div");
+    badge.className = "match-cell-badge";
+    badge.textContent = a.code || String.fromCharCode(65 + i);
+    cell.appendChild(badge);
+
+    const imgWrap = document.createElement("div");
+    imgWrap.className = "match-activity-img-wrap";
+    imgWrap.innerHTML = `<img src="${a.img}" alt="${escapeHTML(a.label)}" class="match-activity-img">`;
+    cell.appendChild(imgWrap);
+
+    const label = document.createElement("div");
+    label.className = "match-cell-label";
+    label.textContent = a.label;
+    cell.appendChild(label);
+
+    const slot = document.createElement("div");
+    slot.className = "match-drop-slot";
+    slot.dataset.slotId = String(i);
+
+    const prevAnswer = stepAnswers[String(i)];
+    if (prevAnswer) {
+      slot.classList.add("slot-correct");
+      slot.style.pointerEvents = "none";
+      slot.innerHTML = `<span class="match-slot-text"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:3px;"><polyline points="20 6 9 17 4 12"></polyline></svg>${escapeHTML(prevAnswer)}</span>`;
+    } else {
+      slot.innerHTML = `<span class="match-slot-placeholder">Tarik ke sini</span>`;
+      setupMatchSlotEvents(slot, String(i), question);
+    }
+    cell.appendChild(slot);
+
+    grid.appendChild(cell);
+  });
+
+  return wrap;
+}
+
+function createTimeDayMatchWidget(question) {
+  const wrap = document.createElement("div");
+  wrap.className = "match-widget-wrap";
+  wrap.innerHTML = `
+    ${renderLevel5Stepper(2)}
+    <div class="match-header-info">
+      <div class="match-header-title">${escapeHTML(question.question || "Tarik waktu yang sesuai ke dalam kotak!")}</div>
+      <div class="match-header-instruction">${escapeHTML(question.instruction || "Perhatikan gambar, lalu tarik waktu yang sesuai.")}</div>
+    </div>
+    <div class="match-grid match-grid-4x1" id="timeDayMatchGrid"></div>
+  `;
+  const grid = wrap.querySelector("#timeDayMatchGrid");
+  const stepKey = "q3";
+  const stepAnswers = (level5State && level5State.answers && level5State.answers[stepKey]) || {};
+
+  (question.scenes || []).forEach((s, i) => {
+    const cell = document.createElement("div");
+    cell.className = "match-cell";
+
+    const badge = document.createElement("div");
+    badge.className = "match-cell-badge";
+    badge.textContent = s.id || (i + 1);
+    cell.appendChild(badge);
+
+    const imgWrap = document.createElement("div");
+    imgWrap.className = "match-scene-img-wrap";
+    imgWrap.innerHTML = `<img src="${s.img}" alt="${escapeHTML(s.label)}" class="match-scene-img">`;
+    cell.appendChild(imgWrap);
+
+    const label = document.createElement("div");
+    label.className = "match-cell-label";
+    label.textContent = s.label;
+    cell.appendChild(label);
+
+    const slot = document.createElement("div");
+    slot.className = "match-drop-slot";
+    slot.dataset.slotId = String(i);
+
+    const prevAnswer = stepAnswers[String(i)];
+    if (prevAnswer) {
+      slot.classList.add("slot-correct");
+      slot.style.pointerEvents = "none";
+      slot.innerHTML = `<span class="match-slot-text"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:3px;"><polyline points="20 6 9 17 4 12"></polyline></svg>${escapeHTML(prevAnswer)}</span>`;
+    } else {
+      slot.innerHTML = `<span class="match-slot-placeholder">Tarik ke sini</span>`;
+      setupMatchSlotEvents(slot, String(i), question);
+    }
+    cell.appendChild(slot);
+
+    grid.appendChild(cell);
+  });
+
+  return wrap;
 }
 
 /**

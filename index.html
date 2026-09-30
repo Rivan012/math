@@ -94,13 +94,21 @@
               </div>
 
               <div class="form-group">
-                <label for="className">Kelas SD</label>
-                <select id="className" class="select" required>
-                  <option value="">-- Pilih Kelas --</option>
-                  <option value="Kelas 2 SD">Kelas 2 SD</option>
-                  <option value="Kelas 3 SD">Kelas 3 SD</option>
-                  <option value="Kelas 4 SD">Kelas 4 SD</option>
-                </select>
+                <label id="classGroupLabel">Pilih Kelas</label>
+                <div class="class-picker-grid" role="radiogroup" aria-labelledby="classGroupLabel">
+                  <label class="class-radio-card" for="class2A">
+                    <input type="radio" name="className" id="class2A" value="2A" checked required>
+                    <span class="class-radio-pill">2A</span>
+                  </label>
+                  <label class="class-radio-card" for="class2B">
+                    <input type="radio" name="className" id="class2B" value="2B" required>
+                    <span class="class-radio-pill">2B</span>
+                  </label>
+                  <label class="class-radio-card" for="class2C">
+                    <input type="radio" name="className" id="class2C" value="2C" required>
+                    <span class="class-radio-pill">2C</span>
+                  </label>
+                </div>
               </div>
 
               <div class="form-group">

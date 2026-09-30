@@ -161,7 +161,8 @@
   }
 
   /* Lembaran Materi (Buku Pembaca) */
-  .flipbook-book {
+  .flipbook-book,
+  .flipbook-page-sheet {
     padding: 20px 14px;
     min-height: auto;
   }
@@ -209,6 +210,41 @@
     font-size: 1.1rem;
   }
 
+  /* Grid Jawaban Quizizz di HP */
+  .quizizz-answer-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  /* Unit 2: Jam Digital Interaktif di HP */
+  .digital-labels-grid {
+    grid-template-columns: 1fr;
+  }
+  .digital-screen-large {
+    padding: 14px 20px;
+  }
+  .digital-screen-large .digi-part {
+    font-size: 2.2rem;
+  }
+  .digital-screen-large .digi-colon {
+    font-size: 2rem;
+  }
+  .clock-preset-buttons {
+    gap: 6px;
+  }
+  .preset-digi-btn {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+
+  /* Materi 4 Grid di HP */
+  .materi4-grid {
+    grid-template-columns: 1fr;
+  }
+  .materi4-poster-header {
+    max-height: 100px;
+  }
+
   /* Jam Analog di HP */
   .clock-face {
     width: 210px;
@@ -230,25 +266,27 @@
     width: 5px;
   }
 
-  /* Jam Digital di HP (Level 2) */
-  .digital-alarm-body-container {
+  /* Jam Digital di HP (Level 2) Sesuai Modul */
+  .digital-diagram-wrap {
     max-width: 100%;
   }
 
-  .digital-alarm-chassis {
-    padding: 12px 14px;
-    border-width: 3px;
-    box-shadow: 0 4px 0 #3B0764;
+  .digital-diagram-stage {
+    transform-origin: top center;
   }
 
-  .digital-screen-inner {
-    padding: 10px 12px;
-    gap: 8px;
+  @media (max-width: 400px) {
+    .digital-diagram-stage {
+      transform: scale(0.92);
+      margin-bottom: -15px;
+    }
   }
 
-  .digital-drop-slot {
-    width: 76px;
-    height: 72px;
+  @media (max-width: 360px) {
+    .digital-diagram-stage {
+      transform: scale(0.84);
+      margin-bottom: -28px;
+    }
   }
 
   .slot-display-val {
@@ -256,13 +294,44 @@
   }
 
   .digital-screen-colon {
-    font-size: 2rem;
+    font-size: 1.9rem;
+  }
+
+  /* 6 Kartu Pilihan Jam Digital di Layar Kecil */
+  .clock-draggable-chips-row {
+    gap: 8px;
+    max-width: 380px;
+    margin: 0 auto 16px;
+  }
+  .clock-drag-chip.digital-chip {
+    min-width: 66px;
+    padding: 8px 12px;
+    font-size: 1.25rem;
   }
 
   /* Level 3: Time Compare di HP (Susun Menumpuk Rapi) */
   .time-compare-container {
     flex-direction: column;
     gap: 12px;
+  }
+
+  /* Materi 3 Buku Teks di HP */
+  .materi3-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .materi3-header-img {
+    max-height: 85px;
+  }
+  .materi3-controls-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .materi3-filter-group {
+    justify-content: center;
+  }
+  .materi3-toggle-poster-btn {
+    text-align: center;
   }
 
   .time-compare-card {

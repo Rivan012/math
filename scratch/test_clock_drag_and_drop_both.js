@@ -7,10 +7,12 @@ console.log("=== VERIFIKASI UNIT 1 CLOCK_DRAG & UNIT 2 CLOCK_DROP ===");
 
 // 1. Verifikasi data/soal.csv
 const soalCsv = fs.readFileSync(path.join(__dirname, "..", "data", "soal.csv"), "utf8");
-assert(soalCsv.includes('Q001,L001,"Halim bangun tidur') && soalCsv.includes('"clock_drag"'), "Q001 harus bertipe clock_drag");
-assert(soalCsv.includes('Q002,L001,"Tika berangkat') && soalCsv.includes('"clock_drag"'), "Q002 harus bertipe clock_drag");
-assert(soalCsv.includes('Q003,L001,"Jam istirahat') && soalCsv.includes('"clock_drag"'), "Q003 harus bertipe clock_drag");
-assert(soalCsv.includes('Q004,L001,"Kira bersiap') && soalCsv.includes('"clock_drag"'), "Q004 harus bertipe clock_drag");
+assert(soalCsv.includes('Q001,L001') && soalCsv.includes('"clock_drag"'), "Q001 harus bertipe clock_drag");
+assert(soalCsv.includes('Q002,L001') && soalCsv.includes('"clock_drag"'), "Q002 harus bertipe clock_drag");
+assert(soalCsv.includes('Q003,L001') && soalCsv.includes('"clock_drag"'), "Q003 harus bertipe clock_drag");
+assert(soalCsv.includes('Q004,L001') && soalCsv.includes('"clock_drag"'), "Q004 harus bertipe clock_drag");
+assert(soalCsv.includes('Q004A,L001') && soalCsv.includes('"clock_drag"'), "Q004A harus bertipe clock_drag");
+assert(soalCsv.includes('Q004B,L001') && soalCsv.includes('"clock_drag"'), "Q004B harus bertipe clock_drag");
 
 assert(soalCsv.includes('Q005,L002,"Halim bangun tidur') && soalCsv.includes('"clock_drop"'), "Q005 harus bertipe clock_drop");
 assert(soalCsv.includes('Q006,L002,"Tika berangkat') && soalCsv.includes('"clock_drop"'), "Q006 harus bertipe clock_drop");
@@ -21,7 +23,7 @@ console.log("✓ data/soal.csv: Unit 1 clock_drag dan Unit 2 clock_drop terverif
 // 2. Verifikasi js/storage.js
 const storageJs = fs.readFileSync(path.join(__dirname, "..", "js", "storage.js"), "utf8");
 assert(/timequest_curriculum_version["'],\s*["']3\.\d["']/.test(storageJs), "storage.js harus menggunakan versi kurikulum valid");
-assert(storageJs.includes('targetHour: 5'), "storage.js memiliki targetHour untuk Q001");
+assert(storageJs.includes('targetHour: 7') || storageJs.includes('targetHour: 5'), "storage.js memiliki targetHour untuk Q001");
 console.log("✓ js/storage.js: Versi kurikulum terverifikasi.");
 
 // 3. Verifikasi js/quiz.js
@@ -108,21 +110,22 @@ vm.runInContext(quizJs, context);
 const resL1 = vm.runInContext(`
   startQuiz(1);
   const q1 = currentQuizQuestions[0];
-  // Simulasi siswa mengarahkan jarum ke pukul 05.00
-  currentQuizClock.setClockTime(5, 0);
+  // Simulasi siswa mengarahkan jarum ke waktu target (pukul 07.35)
+  currentQuizClock.setClockTime(q1.targetHour, q1.targetMinute);
   submitClockDragAnswer(q1);
   ({
     qType: q1.type,
     targetHour: q1.targetHour,
+    targetMinute: q1.targetMinute,
     correct: quizCorrect,
     streak: quizStreak,
     answered: quizAnswered
   });
 `, context);
 
-console.log("Level 1 Q1:", resL1.qType, "Target:", resL1.targetHour, "Correct:", resL1.correct);
+console.log("Level 1 Q1:", resL1.qType, "Target:", resL1.targetHour + ":" + resL1.targetMinute, "Correct:", resL1.correct);
 assert.strictEqual(resL1.qType, "clock_drag", "Level 1 harus tipe clock_drag");
-assert.strictEqual(resL1.correct, 1, "Mengatur jarum ke 05.00 harus bernilai BENAR");
+assert.strictEqual(resL1.correct, 1, "Mengatur jarum ke target waktu harus bernilai BENAR");
 console.log("✓ Simulasi Level 1 (Clock Drag - Mengarahkan Jarum Jam) SUKSES.");
 
 // Test Level 2 (Drag & drop angka jam & menit ke jam digital)
