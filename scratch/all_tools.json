@@ -1,0 +1,320 @@
+[
+  {
+    "name": "multi_replace_file_content",
+    "args": {
+      "Description": "Add global state for wrong attempts",
+      "Instruction": "Add `let currentWrongAttempts = 0;` and reset it in `renderQuestion`",
+      "ReplacementChunks": [
+        {
+          "AllowMultiple": false,
+          "EndLine": 324,
+          "ReplacementContent": "let currentDroppedActivityTime = null;\nlet currentMatchAnswers = {};\nlet currentWrongAttempts = 0;\n\n/* =========================================================\n   SISTEM GAMIFIKASI ALA QUIZIZZ (TIMER, STREAK & WARNA IKONIK)\n   ========================================================= */",
+          "StartLine": 319,
+          "TargetContent": "let currentDroppedActivityTime = null;\nlet currentMatchAnswers = {};\n\n/* =========================================================\n   SISTEM GAMIFIKASI ALA QUIZIZZ (TIMER, STREAK & WARNA IKONIK)\n   ========================================================= */"
+        },
+        {
+          "AllowMultiple": false,
+          "EndLine": 749,
+          "ReplacementContent": "  currentDroppedActivityTime = null;\n  currentMatchAnswers = {};\n  currentWrongAttempts = 0;\n  delete question._shuffledOptions;\n\n  const quizProgressLabel = $(\"quizProgressLabel\");",
+          "StartLine": 744,
+          "TargetContent": "  currentDroppedActivityTime = null;\n  currentMatchAnswers = {};\n  delete question._shuffledOptions;\n\n  const quizProgressLabel = $(\"quizProgressLabel\");"
+        }
+      ],
+      "TargetFile": "c:\\Users\\Ivan\\Downloads\\math\\js\\quiz.js",
+      "toolAction": "Updating global states",
+      "toolSummary": "Update quiz globals"
+    }
+  },
+  {
+    "name": "multi_replace_file_content",
+    "args": {
+      "Description": "Update Level 1 and 2 question text for text input",
+      "Instruction": "Replace 'Arahkan jarum jam ke pukul' with 'Pukul berapakah jam di atas? (Ketik angkanya!)' and 'Pasangkan angka' with 'Ketikkan angka'",
+      "ReplacementChunks": [
+        {
+          "AllowMultiple": true,
+          "EndLine": 81,
+          "ReplacementContent": "    question: \"Pukul berapakah jam di atas? (Ketik angka jam & menit)\",",
+          "StartLine": 17,
+          "TargetContent": "    question: \"Arahkan jarum jam ke pukul 07.35!\","
+        },
+        {
+          "AllowMultiple": true,
+          "EndLine": 81,
+          "ReplacementContent": "    question: \"Pukul berapakah jam di atas? (Ketik angka jam & menit)\",",
+          "StartLine": 17,
+          "TargetContent": "    question: \"Arahkan jarum jam ke pukul 12.00!\","
+        },
+        {
+          "AllowMultiple": true,
+          "EndLine": 81,
+          "ReplacementContent": "    question: \"Pukul berapakah jam di atas? (Ketik angka jam & menit)\",",
+          "StartLine": 17,
+          "TargetContent": "    question: \"Arahkan jarum jam ke pukul 01.45!\","
+        },
+        {
+          "AllowMultiple": true,
+          "EndLine": 81,
+          "ReplacementContent": "    question: \"Pukul berapakah jam di atas? (Ketik angka jam & menit)\",",
+          "StartLine": 17,
+          "TargetContent": "    question: \"Arahkan jarum jam ke pukul 08.00!\","
+        },
+        {
+          "AllowMultiple": true,
+          "EndLine": 81,
+          "ReplacementContent": "    question: \"Pukul berapakah jam di atas? (Ketik angka jam & menit)\",",
+          "StartLine": 17,
+          "TargetContent": "    question: \"Arahkan jarum jam ke pukul 04.30!\","
+        },
+        {
+          "AllowMultiple": true,
+          "EndLine": 81,
+          "ReplacementContent": "    question: \"Pukul berapakah jam di atas? (Ketik angka jam & menit)\",",
+          "StartLine": 17,
+          "TargetContent": "    question: \"Arahkan jarum jam ke pukul 11.20!\","
+        },
+        {
+          "AllowMultiple": true,
+          "EndLine": 131,
+          "ReplacementContent": "    question: \"Halim bangun tidur pukul 5 pagi. Ketikkan angka (jam) dan (menit) yang tepat pada jam digital!\",",
+          "StartLine": 84,
+          "TargetContent": "    question: \"Halim bangun tidur pukul 5 pagi. Pasangkan angka (jam) dan (menit) yang tepat pada jam digital!\","
+        },
+        {
+          "AllowMultiple": true,
+          "EndLine": 131,
+          "ReplacementContent": "    question: \"Tika berangkat ke sekolah pukul 7 pagi. Ketikkan angka (jam) dan (menit) yang tepat pada jam digital!\",",
+          "StartLine": 84,
+          "TargetContent": "    question: \"Tika berangkat ke sekolah pukul 7 pagi. Pasangkan angka (jam) dan (menit) yang tepat pada jam digital!\","
+        },
+        {
+          "AllowMultiple": true,
+          "EndLine": 131,
+          "ReplacementContent": "    question: \"Jam istirahat dan makan siang di sekolah pukul 12 siang. Ketikkan angka (jam) dan (menit) yang tepat!\",",
+          "StartLine": 84,
+          "TargetContent": "    question: \"Jam istirahat dan makan siang di sekolah pukul 12 siang. Pasangkan angka (jam) dan (menit) yang tepat!\","
+        },
+        {
+          "AllowMultiple": true,
+          "EndLine": 131,
+          "ReplacementContent": "    question: \"Belajar malam pada pukul setengah sepuluh (09.30). Ketikkan angka (jam) dan (menit) yang tepat!\",",
+          "StartLine": 84,
+          "TargetContent": "    question: \"Belajar malam pada pukul setengah sepuluh (09.30). Pasangkan angka (jam) dan (menit) yang tepat!\","
+        }
+      ],
+      "TargetFile": "c:\\Users\\Ivan\\Downloads\\math\\js\\quiz.js",
+      "toolAction": "Replacing question text",
+      "toolSummary": "Update question text"
+    }
+  },
+  {
+    "name": "multi_replace_file_content",
+    "args": {
+      "Description": "Add Virtual Keypad CSS",
+      "Instruction": "Append Virtual Keypad styles to the end of style.css",
+      "ReplacementChunks": [
+        {
+          "AllowMultiple": false,
+          "EndLine": 4869,
+          "ReplacementContent": "}\n\n/* =========================================================\n   VIRTUAL KEYPAD (LEVEL 1 & 2 TEXT INPUT)\n   ========================================================= */\n.time-keypad-container { margin-top: 16px; width: 100%; }\n.time-keypad-layout { display: flex; gap: 20px; align-items: flex-start; justify-content: center; flex-wrap: wrap; }\n.time-inputs-area { display: flex; flex-direction: column; background: var(--surface); padding: 16px; border-radius: var(--radius-md); border: 1.5px solid var(--border); box-shadow: 0 4px 6px rgba(0,0,0,0.05); }\n.time-inputs-row { display: flex; align-items: center; gap: 12px; justify-content: center; }\n.time-input-group { display: flex; flex-direction: column; align-items: center; }\n.time-input-group label { font-size: 0.85rem; font-weight: 700; color: var(--muted); margin-bottom: 4px; }\n.time-keypad-input { width: 64px; height: 64px; font-size: 2rem; font-weight: 800; text-align: center; border: 2px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); color: var(--ink); cursor: pointer; transition: all 0.2s; outline: none; }\n.time-keypad-input.active { border-color: var(--primary); background: var(--primary-light); box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15); }\n.time-input-sep { font-size: 2rem; font-weight: 900; color: var(--muted); margin-top: 20px; }\n.time-numpad-area { background: var(--surface); padding: 16px; border-radius: var(--radius-md); border: 1.5px solid var(--border); box-shadow: 0 4px 6px rgba(0,0,0,0.05); }\n.numpad-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }\n.numpad-btn { width: 56px; height: 56px; font-size: 1.5rem; font-weight: 800; border: 1.5px solid var(--border); border-radius: var(--radius-sm); background: #fff; color: var(--ink); cursor: pointer; transition: all 0.15s; box-shadow: 0 2px 0 var(--border); }\n.numpad-btn:active { transform: translateY(2px); box-shadow: none; background: var(--surface-subtle); }\n.numpad-btn-del { color: var(--coral); }\n.numpad-btn-focus { background: var(--primary-light); color: var(--primary); border-color: var(--primary-border); }",
+          "StartLine": 4869,
+          "TargetContent": "}"
+        }
+      ],
+      "TargetFile": "c:\\Users\\Ivan\\Downloads\\math\\css\\style.css",
+      "toolAction": "Adding Keypad CSS",
+      "toolSummary": "Update style.css"
+    }
+  },
+  {
+    "name": "replace_file_content",
+    "args": {
+      "AllowMultiple": false,
+      "Description": "Add Virtual Keypad CSS",
+      "EndLine": 4869,
+      "Instruction": "Append Virtual Keypad CSS to style.css",
+      "ReplacementContent": "  .btn-match-next {\n    width: 100%;\n    min-width: 0;\n  }\n}\n\n/* =========================================================\n   VIRTUAL KEYPAD (LEVEL 1 & 2 TEXT INPUT)\n   ========================================================= */\n.time-keypad-container { margin-top: 16px; width: 100%; }\n.time-keypad-layout { display: flex; gap: 20px; align-items: flex-start; justify-content: center; flex-wrap: wrap; }\n.time-inputs-area { display: flex; flex-direction: column; background: var(--surface); padding: 16px; border-radius: var(--radius-md); border: 1.5px solid var(--border); box-shadow: 0 4px 6px rgba(0,0,0,0.05); }\n.time-inputs-row { display: flex; align-items: center; gap: 12px; justify-content: center; }\n.time-input-group { display: flex; flex-direction: column; align-items: center; }\n.time-input-group label { font-size: 0.85rem; font-weight: 700; color: var(--muted); margin-bottom: 4px; }\n.time-keypad-input { width: 64px; height: 64px; font-size: 2rem; font-weight: 800; text-align: center; border: 2px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); color: var(--ink); cursor: pointer; transition: all 0.2s; outline: none; }\n.time-keypad-input.active { border-color: var(--primary); background: var(--primary-light); box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15); }\n.time-input-sep { font-size: 2rem; font-weight: 900; color: var(--muted); margin-top: 20px; }\n.time-numpad-area { background: var(--surface); padding: 16px; border-radius: var(--radius-md); border: 1.5px solid var(--border); box-shadow: 0 4px 6px rgba(0,0,0,0.05); }\n.numpad-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }\n.numpad-btn { width: 56px; height: 56px; font-size: 1.5rem; font-weight: 800; border: 1.5px solid var(--border); border-radius: var(--radius-sm); background: #fff; color: var(--ink); cursor: pointer; transition: all 0.15s; box-shadow: 0 2px 0 var(--border); }\n.numpad-btn:active { transform: translateY(2px); box-shadow: none; background: var(--surface-subtle); }\n.numpad-btn-del { color: var(--coral); }\n.numpad-btn-focus { background: var(--primary-light); color: var(--primary); border-color: var(--primary-border); }",
+      "StartLine": 4863,
+      "TargetContent": "  .btn-match-next {\n    width: 100%;\n    min-width: 0;\n  }\n}\n\n",
+      "TargetFile": "c:\\Users\\Ivan\\Downloads\\math\\css\\style.css",
+      "toolAction": "Adding Keypad CSS",
+      "toolSummary": "Update style.css"
+    }
+  },
+  {
+    "name": "multi_replace_file_content",
+    "args": {
+      "Description": "Refactor Level 1 & Level 2 answers to use virtual keypad",
+      "Instruction": "Replace clock_drop and clock_drag blocks in renderAnswers to use createTimeInputKeypadWidget",
+      "ReplacementChunks": [
+        {
+          "AllowMultiple": false,
+          "EndLine": 1804,
+          "ReplacementContent": "  // === Tipe clock_drop & clock_drag: Input Angka dengan Virtual Keypad ===\n  if (question.type === \"clock_drop\" || question.tipe === \"clock_drop\" || question.type === \"clock_drag\" || question.tipe === \"clock_drag\") {\n    grid.className = \"clock-drop-answers-area\";\n    grid.appendChild(createTimeInputKeypadWidget(question));\n    return;\n  }",
+          "StartLine": 1681,
+          "TargetContent": "  // === Tipe clock_drop: Pilihan Kartu Angka Waktu Draggable & Clickable ===\n  if (question.type === \"clock_drop\" || question.tipe === \"clock_drop\") {\n    grid.className = \"clock-drop-answers-area\";\n\n    const banner = document.createElement(\"div\");\n    banner.className = \"clock-drop-instruction-banner\";\n    banner.innerHTML = `\n      <span>Tarik angka (Jam) dan (Menit) ke kotak jawaban di atas, atau klik angka:</span>\n    `;\n    grid.appendChild(banner);\n\n    const chipsRow = document.createElement(\"div\");\n    chipsRow.id = \"draggableChipsRow\";\n    chipsRow.className = \"clock-draggable-chips-row\";\n\n    const colorClasses = [\"chip-blue\", \"chip-green\", \"chip-amber\", \"chip-purple\", \"chip-cyan\", \"chip-red\"];\n\n    // Ambil opsi yang tersedia (minimal 6 opsi dan diacak secara dinamis)\n    let opts = Array.isArray(question.options) ? [...question.options] : (Array.isArray(question.pilihan) ? [...question.pilihan] : []);\n\n    // Format 2 digit angka\n    opts = opts.map(v => String(v).trim().padStart(2, \"0\"));\n\n    // Pastikan target jam dan menit selalu ada\n    const targetH = String(question.targetHour || \"05\").padStart(2, \"0\");\n    const targetM = String(question.targetMinute !== undefined && question.targetMinute !== \"\" ? question.targetMinute : \"00\").padStart(2, \"0\");\n\n    if (!opts.includes(targetH)) opts.push(targetH);\n    if (!opts.includes(targetM)) opts.push(targetM);\n\n    // Kumpulan angka pengecoh jam digital jika opsi kurang dari 6\n    const poolDistractors = [\"00\", \"05\", \"07\", \"08\", \"09\", \"10\", \"12\", \"15\", \"30\", \"45\", \"06\", \"01\"];\n    for (const d of poolDistractors) {\n      if (opts.length >= 6) break;\n      if (!opts.includes(d)) {\n        opts.push(d);\n      }\n    }\n\n    // Jika lebih dari 6, potong jadi 6 namun pastikan targetH & targetM tetap ada\n    if (opts.length > 6) {\n      const essentials = [targetH, targetM];\n      const others = opts.filter(o => !essentials.includes(o));\n      opts = [...essentials, ...others.slice(0, 4)];\n    }\n\n    // Acak (shuffle) susunan opsi dengan Fisher-Yates agar jam dan menit TIDAK berada di pilihan 1 dan 2\n    if (!question._shuffledOptions || question._shuffledOptions.length !== 6) {\n      const shuffled = [...opts];\n      for (let i = shuffled.length - 1; i > 0; i--) {\n        const j = Math.floor(Math.random() * (i + 1));\n        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];\n      }\n      // Pastikan targetH dan targetM tidak berada persis di index 0 dan 1\n      if (shuffled[0] === targetH && shuffled[1] === targetM) {\n        const swapIdx = (shuffled.length > 3) ? 3 : 2;\n        [shuffled[0], shuffled[swapIdx]] = [shuffled[swapIdx], shuffled[0]];\n      }\n      question._shuffledOptions = shuffled;\n    }\n\n    const displayOptions = question._shuffledOptions;\n\n    displayOptions.forEach((opt, idx) => {\n      const chip = document.createElement(\"div\");\n      chip.className = `clock-drag-chip digital-chip ${colorClasses[idx % colorClasses.length]}`;\n      chip.draggable = true;\n      chip.dataset.value = String(opt).padStart(2, \"0\");\n      chip.dataset.index = String(idx);\n      chip.setAttribute(\"role\", \"button\");\n      chip.setAttribute(\"tabindex\", \"0\");\n      chip.innerHTML = `<span>${escapeHTML(opt)}</span>`;\n\n      setupDigitalChipDragEvents(chip, String(opt).padStart(2, \"0\"), question);\n\n      chip.addEventListener(\"click\", () => {\n        if (quizAnswered || chip._touchDragged) {\n          chip._touchDragged = false;\n          return;\n        }\n        const val = chip.dataset.value;\n        if (currentDroppedHour === val) {\n          clearDigitalSlot(\"hour\", question);\n          if (typeof playSound === \"function\") playSound(\"tick\");\n          return;\n        }\n        if (currentDroppedMinute === val) {\n          clearDigitalSlot(\"minute\", question);\n          if (typeof playSound === \"function\") playSound(\"tick\");\n          return;\n        }\n        if (currentDroppedHour === null) {\n          placeNumberInSlot(\"hour\", val, question);\n        } else if (currentDroppedMinute === null) {\n          placeNumberInSlot(\"minute\", val, question);\n        } else {\n          placeNumberInSlot(\"hour\", val, question);\n        }\n        if (typeof playSound === \"function\") playSound(\"tick\");\n      });\n\n      chipsRow.appendChild(chip);\n    });\n\n    grid.appendChild(chipsRow);\n\n    const submitBtn = document.createElement(\"button\");\n    submitBtn.type = \"button\";\n    submitBtn.id = \"btnClockDropSubmit\";\n    submitBtn.className = \"btn btn-game-primary btn-clock-submit\";\n    submitBtn.style.marginTop = \"14px\";\n    submitBtn.disabled = true;\n    submitBtn.innerHTML = `\n      <img src=\"assets/icons/check-circle.svg\" width=\"22\" height=\"22\" alt=\"\">\n      <span>Jawab</span>\n    `;\n\n    submitBtn.addEventListener(\"click\", () => {\n      submitClockDropAnswer(question);\n    });\n\n    grid.appendChild(submitBtn);\n    return;\n  }"
+        },
+        {
+          "AllowMultiple": false,
+          "EndLine": 1911,
+          "ReplacementContent": "",
+          "StartLine": 1893,
+          "TargetContent": "  // === Tipe clock_drag: Tombol \"Jawab\" tunggal ===\n  if (question.type === \"clock_drag\" || question.tipe === \"clock_drag\") {\n    grid.className = \"quizizz-answer-grid clock-drag-answer-grid\";\n\n    const submitBtn = document.createElement(\"button\");\n    submitBtn.type = \"button\";\n    submitBtn.className = \"btn btn-game-primary btn-clock-submit\";\n    submitBtn.innerHTML = `\n      <img src=\"assets/icons/check-circle.svg\" width=\"22\" height=\"22\" alt=\"\">\n      <span>Jawab</span>\n    `;\n\n    submitBtn.addEventListener(\"click\", () => {\n      submitClockDragAnswer(question);\n    });\n\n    grid.appendChild(submitBtn);\n    return;\n  }"
+        }
+      ],
+      "TargetFile": "c:\\Users\\Ivan\\Downloads\\math\\js\\quiz.js",
+      "toolAction": "Updating UI for Keypad",
+      "toolSummary": "Refactor quiz.js"
+    }
+  },
+  {
+    "name": "replace_file_content",
+    "args": {
+      "AllowMultiple": false,
+      "Description": "Add keypad functions to quiz.js",
+      "EndLine": 3445,
+      "Instruction": "Append createTimeInputKeypadWidget and submitKeyboardTimeAnswer to the end of quiz.js",
+      "ReplacementContent": "\nfunction createTimeInputKeypadWidget(question) {\n  const container = document.createElement(\"div\");\n  container.className = \"time-keypad-container\";\n  container.innerHTML = `\n    <div class=\"time-keypad-layout\">\n      <!-- Kiri: Input Jam & Menit -->\n      <div class=\"time-inputs-area\">\n        <div class=\"time-inputs-row\">\n          <div class=\"time-input-group\">\n            <label>Jam</label>\n            <input type=\"text\" id=\"keypadInputHour\" class=\"time-keypad-input\" placeholder=\"--\" readonly tabindex=\"-1\">\n          </div>\n          <div class=\"time-input-sep\">:</div>\n          <div class=\"time-input-group\">\n            <label>Menit</label>\n            <input type=\"text\" id=\"keypadInputMinute\" class=\"time-keypad-input\" placeholder=\"--\" readonly tabindex=\"-1\">\n          </div>\n        </div>\n        <button type=\"button\" id=\"btnKeypadSubmit\" class=\"btn btn-game-primary btn-clock-submit\" style=\"margin-top:20px; width:100%;\">\n          <img src=\"assets/icons/check-circle.svg\" width=\"22\" height=\"22\" alt=\"\">\n          <span>Jawab</span>\n        </button>\n      </div>\n\n      <!-- Kanan: Numpad Virtual -->\n      <div class=\"time-numpad-area\">\n        <div class=\"numpad-grid\">\n          <button type=\"button\" class=\"numpad-btn\" data-key=\"1\">1</button>\n          <button type=\"button\" class=\"numpad-btn\" data-key=\"2\">2</button>\n          <button type=\"button\" class=\"numpad-btn\" data-key=\"3\">3</button>\n          <button type=\"button\" class=\"numpad-btn\" data-key=\"4\">4</button>\n          <button type=\"button\" class=\"numpad-btn\" data-key=\"5\">5</button>\n          <button type=\"button\" class=\"numpad-btn\" data-key=\"6\">6</button>\n          <button type=\"button\" class=\"numpad-btn\" data-key=\"7\">7</button>\n          <button type=\"button\" class=\"numpad-btn\" data-key=\"8\">8</button>\n          <button type=\"button\" class=\"numpad-btn\" data-key=\"9\">9</button>\n          <button type=\"button\" class=\"numpad-btn numpad-btn-focus\" data-key=\"next\">➔</button>\n          <button type=\"button\" class=\"numpad-btn\" data-key=\"0\">0</button>\n          <button type=\"button\" class=\"numpad-btn numpad-btn-del\" data-key=\"del\">⌫</button>\n        </div>\n      </div>\n    </div>\n  `;\n\n  let activeInput = \"hour\"; // 'hour' atau 'minute'\n  let hourVal = \"\";\n  let minuteVal = \"\";\n\n  setTimeout(() => {\n    const elH = document.getElementById(\"keypadInputHour\");\n    const elM = document.getElementById(\"keypadInputMinute\");\n    if(elH) elH.classList.add(\"active\");\n    \n    container.querySelectorAll(\".numpad-btn\").forEach(btn => {\n      btn.addEventListener(\"click\", () => {\n        if(quizAnswered) return;\n        const key = btn.dataset.key;\n        if(typeof playSound === \"function\") playSound(\"tick\");\n\n        if (key === \"next\") {\n          activeInput = activeInput === \"hour\" ? \"minute\" : \"hour\";\n          if(elH) elH.classList.toggle(\"active\", activeInput === \"hour\");\n          if(elM) elM.classList.toggle(\"active\", activeInput === \"minute\");\n          return;\n        }\n        if (key === \"del\") {\n          if (activeInput === \"hour\") {\n            hourVal = hourVal.slice(0, -1);\n          } else {\n            minuteVal = minuteVal.slice(0, -1);\n          }\n        } else {\n          if (activeInput === \"hour\") {\n            if (hourVal.length < 2) hourVal += key;\n          } else {\n            if (minuteVal.length < 2) minuteVal += key;\n          }\n        }\n        if(elH) elH.value = hourVal;\n        if(elM) elM.value = minuteVal;\n        \n        // Auto switch to minute when hour has 2 digits\n        if(activeInput === \"hour\" && hourVal.length === 2) {\n          activeInput = \"minute\";\n          if(elH) elH.classList.remove(\"active\");\n          if(elM) elM.classList.add(\"active\");\n        }\n      });\n    });\n\n    const submitBtn = document.getElementById(\"btnKeypadSubmit\");\n    if(submitBtn) {\n      submitBtn.addEventListener(\"click\", () => {\n        submitKeyboardTimeAnswer(question, hourVal, minuteVal);\n      });\n    }\n\n    // click to focus\n    if(elH) elH.addEventListener(\"click\", () => {\n      if(quizAnswered) return;\n      activeInput = \"hour\";\n      elH.classList.add(\"active\");\n      if(elM) elM.classList.remove(\"active\");\n    });\n    if(elM) elM.addEventListener(\"click\", () => {\n      if(quizAnswered) return;\n      activeInput = \"minute\";\n      elM.classList.add(\"active\");\n      if(elH) elH.classList.remove(\"active\");\n    });\n  }, 0);\n\n  return container;\n}\n\nfunction submitKeyboardTimeAnswer(question, hourVal, minuteVal) {\n  if (quizAnswered) return;\n  if (!hourVal || !minuteVal) {\n    if (typeof showToast === \"function\") showToast(\"Silakan isi jam dan menit terlebih dahulu!\");\n    return;\n  }\n\n  const expHour = String(question.targetHour || (question.hour !== undefined ? String(question.hour).padStart(2, \"0\") : \"12\")).padStart(2, \"0\");\n  const expMinute = String(question.targetMinute !== undefined ? String(question.targetMinute).padStart(2, \"0\") : (question.minute !== undefined ? String(question.minute).padStart(2, \"0\") : \"00\")).padStart(2, \"0\");\n\n  const isHourCorrect = hourVal.padStart(2, \"0\") === expHour;\n  const isMinuteCorrect = minuteVal.padStart(2, \"0\") === expMinute;\n  const isCorrect = isHourCorrect && isMinuteCorrect;\n\n  const submitBtn = document.getElementById(\"btnKeypadSubmit\");\n  const feedback = document.getElementById(\"quizFeedback\");\n  const nextBtn = document.getElementById(\"nextQuestionBtn\");\n  const hintBtn = document.getElementById(\"hintBtn\");\n\n  const answerStr = \\`\\${hourVal.padStart(2, \"0\")}:\\${minuteVal.padStart(2, \"0\")}\\`;\n  const targetStr = \\`\\${expHour}:\\${expMinute}\\`;\n\n  if (isCorrect) {\n    quizAnswered = true;\n    stopQuestionTimer();\n    if (hintBtn) hintBtn.disabled = true;\n    if (submitBtn) {\n      submitBtn.disabled = true;\n      submitBtn.className = \"btn btn-game-primary btn-clock-submit clock-correct\";\n    }\n\n    quizCorrect++;\n    quizStreak++;\n    if (quizStreak > maxStreak) maxStreak = quizStreak;\n\n    const speedBonus = Math.min(40, Math.round(questionTimeRemaining * 1.6));\n    const streakBonus = quizStreak >= 2 ? (quizStreak - 1) * 20 : 0;\n    const earnedPoints = (question.points || question.poin || 100) + speedBonus + streakBonus;\n    quizPoints += earnedPoints;\n\n    if (quizStreak >= 2) {\n      if (typeof playSound === \"function\") playSound(\"streak\");\n    } else {\n      if (typeof playSound === \"function\") playSound(\"correct\");\n    }\n\n    updateStreakBanner();\n\n    let bonusMsg = \"\";\n    if (speedBonus > 15 && streakBonus > 0) {\n      bonusMsg = \\`Bonus Cepat (+\\${speedBonus}) & Streak (+\\${streakBonus})\\`;\n    } else if (speedBonus > 15) {\n      bonusMsg = \\`Bonus Kecepatan (+\\${speedBonus})\\`;\n    } else if (streakBonus > 0) {\n      bonusMsg = \\`Bonus Streak (+\\${streakBonus})\\`;\n    }\n\n    showFloatingScore(\\`+\\${earnedPoints}\\`, bonusMsg);\n\n    const expl = question.explanation || question.penjelasan || \\`Waktu yang benar adalah \\${targetStr}.\\`;\n\n    if (feedback) {\n      feedback.className = \"quiz-feedback-quizizz feedback-correct\";\n      feedback.innerHTML = \\`\n        <div class=\"feedback-quizizz-box\">\n          <img src=\"assets/icons/check-circle.svg\" width=\"24\" height=\"24\" alt=\"\" class=\"feedback-icon-svg\" style=\"flex-shrink:0;\">\n          <div>\n            <h4>Hebat! Jawaban Tepat (+\\${earnedPoints} Poin)</h4>\n            <p>Waktu yang ditunjukkan adalah <strong>\\${answerStr}</strong> (Jam \\${expHour} dan Menit \\${expMinute}) — benar!</p>\n            <div class=\"feedback-explanation\">\\${escapeHTML(expl)}</div>\n          </div>\n        </div>\n      \\`;\n      feedback.classList.remove(\"hidden\");\n    }\n    \n    if (nextBtn) {\n      nextBtn.classList.remove(\"hidden\");\n      nextBtn.focus();\n    }\n  } else {\n    currentWrongAttempts++;\n    quizStreak = 0;\n    updateStreakBanner();\n    if (typeof playSound === \"function\") playSound(\"wrong\");\n\n    const card = document.getElementById(\"quizCard\");\n    if (card) {\n      card.classList.remove(\"anim-quiz-shake\");\n      void card.offsetWidth;\n      card.classList.add(\"anim-quiz-shake\");\n    }\n\n    if (currentWrongAttempts < 3) {\n      if (feedback) {\n        feedback.className = \"quiz-feedback-quizizz feedback-wrong\";\n        feedback.innerHTML = \\`\n          <div class=\"feedback-quizizz-box\">\n            <img src=\"assets/icons/x-circle.svg\" width=\"24\" height=\"24\" alt=\"\" class=\"feedback-icon-svg\" style=\"flex-shrink:0;\">\n            <div>\n              <h4>Jawaban Belum Tepat</h4>\n              <p>Jawaban <strong>\\${answerStr}</strong> salah. Kesempatan menjawab: \\${3 - currentWrongAttempts} kali lagi.</p>\n            </div>\n          </div>\n        \\`;\n        feedback.classList.remove(\"hidden\");\n      }\n    } else {\n      quizAnswered = true;\n      stopQuestionTimer();\n      if (hintBtn) hintBtn.disabled = true;\n      if (submitBtn) {\n        submitBtn.disabled = true;\n        submitBtn.className = \"btn btn-game-primary btn-clock-submit clock-wrong\";\n      }\n\n      const expl = question.explanation || question.penjelasan || \\`Waktu yang benar adalah \\${targetStr}.\\`;\n\n      if (feedback) {\n        feedback.className = \"quiz-feedback-quizizz feedback-wrong\";\n        feedback.innerHTML = \\`\n          <div class=\"feedback-quizizz-box\">\n            <img src=\"assets/icons/x-circle.svg\" width=\"24\" height=\"24\" alt=\"\" class=\"feedback-icon-svg\" style=\"flex-shrink:0;\">\n            <div>\n              <h4>Kesempatan Habis</h4>\n              <p>Jawaban yang benar adalah <strong>\\${targetStr}</strong> (Jam \\${expHour} dan Menit \\${expMinute})</p>\n              <div class=\"feedback-explanation\">\\${escapeHTML(expl)}</div>\n            </div>\n          </div>\n        \\`;\n        feedback.classList.remove(\"hidden\");\n      }\n\n      if (nextBtn) {\n        nextBtn.classList.remove(\"hidden\");\n        nextBtn.focus();\n      }\n    }\n  }\n\n  const pointsEl = document.getElementById(\"quizPoints\");\n  if (pointsEl) pointsEl.textContent = quizPoints;\n}",
+      "StartLine": 3445,
+      "TargetContent": "",
+      "TargetFile": "c:\\Users\\Ivan\\Downloads\\math\\js\\quiz.js",
+      "toolAction": "Add keypad functions",
+      "toolSummary": "Update quiz.js"
+    }
+  },
+  {
+    "name": "multi_replace_file_content",
+    "args": {
+      "Description": "Update Level 1 and 2 illustrations to be static",
+      "Instruction": "Update `renderQuestionIllustration` clock_drop and clock_drag to be static and not use drag/drop",
+      "ReplacementChunks": [
+        {
+          "AllowMultiple": false,
+          "EndLine": 1237,
+          "ReplacementContent": "  // 0b. Tipe clock_drop: Menampilkan jam digital alarm tanpa drop slot\n  if (question.type === \"clock_drop\" || question.tipe === \"clock_drop\") {\n    currentDroppedHour = null;\n    currentDroppedMinute = null;\n    // Menggunakan chassis yang sama tapi tanpa drop setup\n    illustration.appendChild(createDigitalAlarmClockWidget(question));\n    return;\n  }\n\n  // 0b. Tipe clock_drag: Tampilan statis, siswa mengetik waktu\n  if (question.type === \"clock_drag\" || question.tipe === \"clock_drag\") {\n    const targetH = Number(question.targetHour ?? 12);\n    const targetM = Number(question.targetMinute ?? 0);\n    // Tampilkan waktu target, tidak interaktif\n    currentQuizClock = createClock(targetH, targetM, 280, false, false);\n    illustration.appendChild(currentQuizClock);\n    return;\n  }",
+          "StartLine": 1219,
+          "TargetContent": "  // 0b. Tipe clock_drop: Menampilkan jam digital alarm interaktif dengan drop slot Jam dan Menit\n  if (question.type === \"clock_drop\" || question.tipe === \"clock_drop\") {\n    currentDroppedHour = null;\n    currentDroppedMinute = null;\n    illustration.appendChild(createDigitalAlarmClockWidget(question));\n    setupDigitalClockDropSlots(question);\n    return;\n  }\n\n  // 0b. Tipe clock_drag: Siswa menggeser / mengarahkan jarum jam ke waktu target\n  if (question.type === \"clock_drag\" || question.tipe === \"clock_drag\") {\n    // Tampilan jam analog bersih tanpa petunjuk/tombol di bawahnya\n    const targetH = Number(question.targetHour ?? 12);\n    const targetM = Number(question.targetMinute ?? 0);\n    const startH = (targetH === 12 && targetM === 0) ? 6 : 12;\n    currentQuizClock = createClock(startH, 0, 280, true, false);\n    illustration.appendChild(currentQuizClock);\n    return;\n  }"
+        }
+      ],
+      "TargetFile": "c:\\Users\\Ivan\\Downloads\\math\\js\\quiz.js",
+      "toolAction": "Updating illustration logic",
+      "toolSummary": "Make Level 1 & 2 static"
+    }
+  },
+  {
+    "name": "multi_replace_file_content",
+    "args": {
+      "Description": "Update keypad to mirror text to digital screen",
+      "Instruction": "Update createTimeInputKeypadWidget in quiz.js to write hourVal and minuteVal into screenHourVal and screenMinuteVal",
+      "ReplacementChunks": [
+        {
+          "AllowMultiple": false,
+          "EndLine": 3525,
+          "ReplacementContent": "        if(elH) elH.value = hourVal;\n        if(elM) elM.value = minuteVal;\n\n        const screenH = document.getElementById(\"screenHourVal\");\n        const screenM = document.getElementById(\"screenMinuteVal\");\n        if(screenH) {\n          screenH.textContent = hourVal || \"--\";\n          screenH.className = hourVal ? \"digital-screen-digit hour-val has-value\" : \"digital-screen-digit hour-val is-empty\";\n        }\n        if(screenM) {\n          screenM.textContent = minuteVal || \"--\";\n          screenM.className = minuteVal ? \"digital-screen-digit minute-val has-value\" : \"digital-screen-digit minute-val is-empty\";\n        }\n        \n        // Auto switch to minute when hour has 2 digits",
+          "StartLine": 3524,
+          "TargetContent": "        if(elH) elH.value = hourVal;\n        if(elM) elM.value = minuteVal;\n        \n        // Auto switch to minute when hour has 2 digits"
+        }
+      ],
+      "TargetFile": "c:\\Users\\Ivan\\Downloads\\math\\js\\quiz.js",
+      "toolAction": "Updating keypad sync",
+      "toolSummary": "Sync keypad to digital screen"
+    }
+  },
+  {
+    "name": "replace_file_content",
+    "args": {
+      "AllowMultiple": false,
+      "Description": "Implement 3x attempts in selectAnswer",
+      "EndLine": 2742,
+      "Instruction": "Update selectAnswer to allow up to 3 wrong attempts",
+      "ReplacementContent": "function selectAnswer(index, button, question) {\n  if (quizAnswered) return;\n\n  const isCorrect = index === question.correct;\n  const feedback = document.getElementById(\"quizFeedback\");\n  const nextBtn = document.getElementById(\"nextQuestionBtn\");\n  const hintBtn = document.getElementById(\"hintBtn\");\n  const card = document.getElementById(\"quizCard\");\n\n  if (isCorrect) {\n    quizAnswered = true;\n    stopQuestionTimer();\n    if (hintBtn) hintBtn.disabled = true;\n\n    // Nonaktifkan semua opsi jawaban dan sorot jawaban yang benar\n    document.querySelectorAll(\".answer-btn\").forEach((btn, i) => {\n      btn.disabled = true;\n      if (i === question.correct) {\n        btn.classList.add(\"correct\");\n      }\n    });\n\n    button.classList.add(\"selected-correct\");\n    quizCorrect++;\n    quizStreak++;\n    if (quizStreak > maxStreak) maxStreak = quizStreak;\n\n    // Bonus kecepatan (hingga +40 poin jika dijawab cepat)\n    const speedBonus = Math.min(40, Math.round(questionTimeRemaining * 1.6));\n    // Bonus streak combo bertingkat\n    const streakBonus = quizStreak >= 2 ? (quizStreak - 1) * 20 : 0;\n    const earnedPoints = 100 + speedBonus + streakBonus;\n\n    quizPoints += earnedPoints;\n\n    if (quizStreak >= 2) {\n      if (typeof playSound === \"function\") playSound(\"streak\");\n    } else {\n      if (typeof playSound === \"function\") playSound(\"correct\");\n    }\n\n    updateStreakBanner();\n\n    let bonusMsg = \"\";\n    if (speedBonus > 15 && streakBonus > 0) {\n      bonusMsg = \\`Bonus Cepat (+\\${speedBonus}) & Streak (+\\${streakBonus})\\`;\n    } else if (speedBonus > 15) {\n      bonusMsg = \\`Bonus Kecepatan (+\\${speedBonus})\\`;\n    } else if (streakBonus > 0) {\n      bonusMsg = \\`Bonus Streak (+\\${streakBonus})\\`;\n    }\n\n    showFloatingScore(\\`+\\${earnedPoints}\\`, bonusMsg);\n\n    if (feedback) {\n      const compliments = [\"Jawaban Tepat!\", \"Benar Sekali!\", \"Pilihan Benar!\"];\n      const randomCompliment = compliments[Math.floor(Math.random() * compliments.length)];\n\n      feedback.className = \"quiz-feedback-quizizz feedback-correct\";\n      feedback.innerHTML = \\`\n        <div class=\"feedback-quizizz-box\">\n          <img src=\"assets/icons/check-circle.svg\" width=\"24\" height=\"24\" alt=\"\" class=\"feedback-icon-svg\" style=\"flex-shrink:0;\">\n          <div>\n            <h4>\\${randomCompliment} (+\\${earnedPoints} Poin)</h4>\n            <div class=\"feedback-explanation\">\\${escapeHTML(question.explanation)}</div>\n          </div>\n        </div>\n      \\`;\n      feedback.classList.remove(\"hidden\");\n    }\n\n    if (nextBtn) {\n      nextBtn.classList.remove(\"hidden\");\n      nextBtn.focus();\n    }\n  } else {\n    currentWrongAttempts++;\n    button.classList.add(\"wrong\");\n    button.disabled = true; // disable this wrong option\n    quizStreak = 0;\n    updateStreakBanner();\n\n    if (card) {\n      card.classList.remove(\"anim-quiz-shake\");\n      void card.offsetWidth;\n      card.classList.add(\"anim-quiz-shake\");\n    }\n\n    if (typeof playSound === \"function\") playSound(\"wrong\");\n\n    if (currentWrongAttempts < 3) {\n      if (feedback) {\n        feedback.className = \"quiz-feedback-quizizz feedback-wrong\";\n        feedback.innerHTML = \\`\n          <div class=\"feedback-quizizz-box\">\n            <img src=\"assets/icons/x-circle.svg\" width=\"24\" height=\"24\" alt=\"\" class=\"feedback-icon-svg\" style=\"flex-shrink:0;\">\n            <div>\n              <h4>Jawaban Belum Tepat</h4>\n              <p>Sisa kesempatan menjawab: \\${3 - currentWrongAttempts} kali lagi.</p>\n            </div>\n          </div>\n        \\`;\n        feedback.classList.remove(\"hidden\");\n      }\n    } else {\n      quizAnswered = true;\n      stopQuestionTimer();\n      if (hintBtn) hintBtn.disabled = true;\n\n      document.querySelectorAll(\".answer-btn\").forEach((btn, i) => {\n        btn.disabled = true;\n        if (i === question.correct) {\n          btn.classList.add(\"correct\");\n        }\n      });\n\n      if (feedback) {\n        feedback.className = \"quiz-feedback-quizizz feedback-wrong\";\n        feedback.innerHTML = \\`\n          <div class=\"feedback-quizizz-box\">\n            <img src=\"assets/icons/x-circle.svg\" width=\"24\" height=\"24\" alt=\"\" class=\"feedback-icon-svg\" style=\"flex-shrink:0;\">\n            <div>\n              <h4>Kesempatan Habis</h4>\n              <p>Jawaban yang benar: <strong>\\${escapeHTML(question.options[question.correct])}</strong></p>\n              <div class=\"feedback-explanation\">\\${escapeHTML(question.explanation)}</div>\n            </div>\n          </div>\n        \\`;\n        feedback.classList.remove(\"hidden\");\n      }\n\n      if (nextBtn) {\n        nextBtn.classList.remove(\"hidden\");\n        nextBtn.focus();\n      }\n    }\n  }\n\n  const pointsEl = document.getElementById(\"quizPoints\");\n  if (pointsEl) pointsEl.textContent = quizPoints;\n}",
+      "StartLine": 2636,
+      "TargetContent": "function selectAnswer(index, button, question) {\n  if (quizAnswered) return;\n  quizAnswered = true;\n  stopQuestionTimer();\n\n  const isCorrect = index === question.correct;\n  const feedback = $(\"quizFeedback\");\n  const nextBtn = $(\"nextQuestionBtn\");\n  const hintBtn = $(\"hintBtn\");\n  const card = $(\"quizCard\");\n\n  if (hintBtn) hintBtn.disabled = true;\n\n  // Nonaktifkan semua opsi jawaban dan sorot jawaban yang benar\n  document.querySelectorAll(\".answer-btn\").forEach((btn, i) => {\n    btn.disabled = true;\n    if (i === question.correct) {\n      btn.classList.add(\"correct\");\n    }\n  });\n\n  if (isCorrect) {\n    button.classList.add(\"selected-correct\");\n    quizCorrect++;\n    quizStreak++;\n    if (quizStreak > maxStreak) maxStreak = quizStreak;\n\n    // Bonus kecepatan (hingga +40 poin jika dijawab cepat)\n    const speedBonus = Math.min(40, Math.round(questionTimeRemaining * 1.6));\n    // Bonus streak combo bertingkat\n    const streakBonus = quizStreak >= 2 ? (quizStreak - 1) * 20 : 0;\n    const earnedPoints = 100 + speedBonus + streakBonus;\n\n    quizPoints += earnedPoints;\n\n    if (quizStreak >= 2) {\n      if (typeof playSound === \"function\") playSound(\"streak\");\n    } else {\n      if (typeof playSound === \"function\") playSound(\"correct\");\n    }\n\n    updateStreakBanner();\n\n    let bonusMsg = \"\";\n    if (speedBonus > 15 && streakBonus > 0) {\n      bonusMsg = `Bonus Cepat (+${speedBonus}) & Streak (+${streakBonus})`;\n    } else if (speedBonus > 15) {\n      bonusMsg = `Bonus Kecepatan (+${speedBonus})`;\n    } else if (streakBonus > 0) {\n      bonusMsg = `Bonus Streak (+${streakBonus})`;\n    }\n\n    showFloatingScore(`+${earnedPoints}`, bonusMsg);\n\n    if (feedback) {\n      const compliments = [\"Jawaban Tepat!\", \"Benar Sekali!\", \"Pilihan Benar!\"];\n      const randomCompliment = compliments[Math.floor(Math.random() * compliments.length)];\n\n      feedback.className = \"quiz-feedback-quizizz feedback-correct\";\n      feedback.innerHTML = `\n        <div class=\"feedback-quizizz-box\">\n          <img src=\"assets/icons/check-circle.svg\" width=\"24\" height=\"24\" alt=\"\" class=\"feedback-icon-svg\" style=\"flex-shrink:0;\">\n          <div>\n            <h4>${randomCompliment} (+${earnedPoints} Poin)</h4>\n            <div class=\"feedback-explanation\">${escapeHTML(question.explanation)}</div>\n          </div>\n        </div>\n      `;\n      feedback.classList.remove(\"hidden\");\n    }\n  } else {\n    button.classList.add(\"wrong\");\n    quizStreak = 0;\n    updateStreakBanner();\n\n    if (card) {\n      card.classList.remove(\"anim-quiz-shake\");\n      void card.offsetWidth;\n      card.classList.add(\"anim-quiz-shake\");\n    }\n\n    if (typeof playSound === \"function\") playSound(\"wrong\");\n\n    if (feedback) {\n      feedback.className = \"quiz-feedback-quizizz feedback-wrong\";\n      feedback.innerHTML = `\n        <div class=\"feedback-quizizz-box\">\n          <img src=\"assets/icons/x-circle.svg\" width=\"24\" height=\"24\" alt=\"\" class=\"feedback-icon-svg\" style=\"flex-shrink:0;\">\n          <div>\n            <h4>Jawaban Belum Tepat</h4>\n            <p>Jawaban yang benar: <strong>${escapeHTML(question.options[question.correct])}</strong></p>\n            <div class=\"feedback-explanation\">${escapeHTML(question.explanation)}</div>\n          </div>\n        </div>\n      `;\n      feedback.classList.remove(\"hidden\");\n    }\n  }\n\n  const pointsEl = $(\"quizPoints\");\n  if (pointsEl) pointsEl.textContent = quizPoints;\n\n  if (nextBtn) {\n    nextBtn.classList.remove(\"hidden\");\n    nextBtn.focus();\n  }\n}",
+      "TargetFile": "c:\\Users\\Ivan\\Downloads\\math\\js\\quiz.js",
+      "toolAction": "Updating selectAnswer",
+      "toolSummary": "Implement 3x attempts in selectAnswer"
+    }
+  },
+  {
+    "name": "multi_replace_file_content",
+    "args": {
+      "Description": "Remove materials tab from teacher.js",
+      "Instruction": "Remove materials tab from teacher.js",
+      "ReplacementChunks": [
+        {
+          "AllowMultiple": false,
+          "EndLine": 130,
+          "ReplacementContent": "  const studentsTab = $(\"teacherStudentsTab\");\n  const resultsTab = $(\"teacherResultsTab\");\n  const rankingTab = $(\"teacherRankingTab\");\n  const questionsTab = $(\"teacherQuestionsTab\");\n\n  if (studentsTab) studentsTab.classList.toggle(\"hidden\", tab !== \"students\");\n  if (resultsTab) resultsTab.classList.toggle(\"hidden\", tab !== \"results\");\n  if (rankingTab) rankingTab.classList.toggle(\"hidden\", tab !== \"ranking\");\n  if (questionsTab) questionsTab.classList.toggle(\"hidden\", tab !== \"questions\");\n\n  renderTeacherDashboard();\n}",
+          "StartLine": 117,
+          "TargetContent": "  const studentsTab = $(\"teacherStudentsTab\");\n  const resultsTab = $(\"teacherResultsTab\");\n  const rankingTab = $(\"teacherRankingTab\");\n  const materialsTab = $(\"teacherMaterialsTab\");\n  const questionsTab = $(\"teacherQuestionsTab\");\n\n  if (studentsTab) studentsTab.classList.toggle(\"hidden\", tab !== \"students\");\n  if (resultsTab) resultsTab.classList.toggle(\"hidden\", tab !== \"results\");\n  if (rankingTab) rankingTab.classList.toggle(\"hidden\", tab !== \"ranking\");\n  if (materialsTab) materialsTab.classList.toggle(\"hidden\", tab !== \"materials\");\n  if (questionsTab) questionsTab.classList.toggle(\"hidden\", tab !== \"questions\");\n\n  renderTeacherDashboard();\n}"
+        },
+        {
+          "AllowMultiple": false,
+          "EndLine": 2205,
+          "ReplacementContent": "  const searchQInput = $(\"searchQuestionInput\");\n  if (searchQInput) {\n    searchQInput.addEventListener(\"input\", renderTeacherQuestions);\n  }\n\n  // 11. Navigasi Sub-Tab Soal Kuis\n  const qSubnavBtns = document.querySelectorAll(\"#teacherQuestionsTab .admin-subnav-btn\");\n  qSubnavBtns.forEach(btn => {\n    btn.addEventListener(\"click\", () => {\n      setQuestionSubtab(btn.dataset.subtab);\n    });\n  });\n\n  const btnCancelQ = $(\"btnCancelQCreate\");\n  if (btnCancelQ) {\n    btnCancelQ.addEventListener(\"click\", () => {\n      setQuestionSubtab(\"q-list\");\n    });\n  }",
+          "StartLine": 2177,
+          "TargetContent": "  const searchQInput = $(\"searchQuestionInput\");\n  if (searchQInput) {\n    searchQInput.addEventListener(\"input\", renderTeacherQuestions);\n  }\n\n  // 10. Navigasi Sub-Tab Materi\n  const matSubnavBtns = document.querySelectorAll(\"#teacherMaterialsTab .admin-subnav-btn\");\n  matSubnavBtns.forEach(btn => {\n    btn.addEventListener(\"click\", () => {\n      setMaterialSubtab(btn.dataset.subtab);\n    });\n  });\n\n  // 11. Navigasi Sub-Tab Soal Kuis\n  const qSubnavBtns = document.querySelectorAll(\"#teacherQuestionsTab .admin-subnav-btn\");\n  qSubnavBtns.forEach(btn => {\n    btn.addEventListener(\"click\", () => {\n      setQuestionSubtab(btn.dataset.subtab);\n    });\n  });\n\n  // 12. Tombol Batal Form Studio\n  const btnCancelMat = $(\"btnCancelMatCreate\");\n  if (btnCancelMat) {\n    btnCancelMat.addEventListener(\"click\", () => {\n      setMaterialSubtab(\"mat-list\");\n    });\n  }\n\n  const btnCancelQ = $(\"btnCancelQCreate\");\n  if (btnCancelQ) {\n    btnCancelQ.addEventListener(\"click\", () => {\n      setQuestionSubtab(\"q-list\");\n    });\n  }"
+        }
+      ],
+      "TargetFile": "c:\\Users\\Ivan\\Downloads\\math\\js\\teacher.js",
+      "toolAction": "Removing materials refs",
+      "toolSummary": "Clean teacher.js"
+    }
+  },
+  {
+    "name": "replace_file_content",
+    "args": {
+      "AllowMultiple": false,
+      "Description": "Implement 3x attempts in submitActivityDropAnswer",
+      "EndLine": 2505,
+      "Instruction": "Update submitActivityDropAnswer to allow 3 wrong attempts",
+      "ReplacementContent": "function submitActivityDropAnswer(question) {\n  if (quizAnswered || currentDroppedActivityTime === null) return;\n\n  const expAnswer = question.targetAnswer || (question.options && question.options[question.correct]) || (question.pilihan && question.pilihan[question.correct]);\n  const isCorrect = currentDroppedActivityTime === expAnswer;\n\n  const slot = document.getElementById(\"timeActivityDropSlot\");\n  const submitBtn = document.getElementById(\"btnActivityDropSubmit\");\n  const feedback = document.getElementById(\"quizFeedback\");\n  const nextBtn = document.getElementById(\"nextQuestionBtn\");\n  const hintBtn = document.getElementById(\"hintBtn\");\n  const card = document.getElementById(\"quizCard\");\n\n  if (isCorrect) {\n    quizAnswered = true;\n    stopQuestionTimer();\n    if (hintBtn) hintBtn.disabled = true;\n    if (submitBtn) submitBtn.disabled = true;\n\n    document.querySelectorAll(\".activity-time-chip\").forEach((c) => {\n      if (c.style) c.style.pointerEvents = \"none\";\n      if (c.removeAttribute) c.removeAttribute(\"draggable\");\n    });\n\n    if (slot) slot.className = \"clock-activity-drop-slot slot-correct has-value\";\n    if (submitBtn) submitBtn.className = \"btn btn-game-primary btn-clock-submit clock-correct\";\n\n    quizCorrect++;\n    quizStreak++;\n    if (quizStreak > maxStreak) maxStreak = quizStreak;\n\n    const speedBonus = Math.min(40, Math.round(questionTimeRemaining * 1.6));\n    const streakBonus = quizStreak >= 2 ? (quizStreak - 1) * 20 : 0;\n    const basePts = question.points || question.poin || 100;\n    const earnedPoints = basePts + speedBonus + streakBonus;\n    quizPoints += earnedPoints;\n\n    if (quizStreak >= 2) {\n      if (typeof playSound === \"function\") playSound(\"streak\");\n    } else {\n      if (typeof playSound === \"function\") playSound(\"correct\");\n    }\n\n    updateStreakBanner();\n\n    let bonusMsg = \"\";\n    if (speedBonus > 15 && streakBonus > 0) {\n      bonusMsg = \\`Bonus Cepat (+\\${speedBonus}) & Streak (+\\${streakBonus})\\`;\n    } else if (speedBonus > 15) {\n      bonusMsg = \\`Bonus Kecepatan (+\\${speedBonus})\\`;\n    } else if (streakBonus > 0) {\n      bonusMsg = \\`Bonus Streak (+\\${streakBonus})\\`;\n    }\n\n    showFloatingScore(\\`+\\${earnedPoints}\\`, bonusMsg);\n\n    if (feedback) {\n      feedback.className = \"quiz-feedback-quizizz feedback-correct\";\n      feedback.innerHTML = \\`\n        <div class=\"feedback-quizizz-box\">\n          <img src=\"assets/icons/check-circle.svg\" width=\"24\" height=\"24\" alt=\"\" class=\"feedback-icon-svg\" style=\"flex-shrink:0;\">\n          <div>\n            <h4>Tepat Sekali! (+\\${earnedPoints} Poin)</h4>\n            <p>Waktu kegiatan adalah <strong>\\${escapeHTML(expAnswer)}</strong> — benar!</p>\n            <div class=\"feedback-explanation\">\\${escapeHTML(question.explanation || question.penjelasan || \"\")}</div>\n          </div>\n        </div>\n      \\`;\n      feedback.classList.remove(\"hidden\");\n    }\n\n    if (nextBtn) {\n      nextBtn.classList.remove(\"hidden\");\n      nextBtn.focus();\n    }\n  } else {\n    currentWrongAttempts++;\n    if (slot) slot.className = \"clock-activity-drop-slot slot-wrong has-value\";\n    if (submitBtn) submitBtn.className = \"btn btn-game-primary btn-clock-submit clock-wrong\";\n    quizStreak = 0;\n    updateStreakBanner();\n\n    if (card) {\n      card.classList.remove(\"anim-quiz-shake\");\n      void card.offsetWidth;\n      card.classList.add(\"anim-quiz-shake\");\n    }\n\n    if (typeof playSound === \"function\") playSound(\"wrong\");\n\n    if (currentWrongAttempts < 3) {\n      if (feedback) {\n        feedback.className = \"quiz-feedback-quizizz feedback-wrong\";\n        feedback.innerHTML = \\`\n          <div class=\"feedback-quizizz-box\">\n            <img src=\"assets/icons/x-circle.svg\" width=\"24\" height=\"24\" alt=\"\" class=\"feedback-icon-svg\" style=\"flex-shrink:0;\">\n            <div>\n              <h4>Pilihan Waktu Belum Tepat</h4>\n              <p>Sisa kesempatan menjawab: \\${3 - currentWrongAttempts} kali lagi.</p>\n            </div>\n          </div>\n        \\`;\n        feedback.classList.remove(\"hidden\");\n      }\n    } else {\n      quizAnswered = true;\n      stopQuestionTimer();\n      if (hintBtn) hintBtn.disabled = true;\n      if (submitBtn) submitBtn.disabled = true;\n\n      document.querySelectorAll(\".activity-time-chip\").forEach((c) => {\n        if (c.style) c.style.pointerEvents = \"none\";\n        if (c.removeAttribute) c.removeAttribute(\"draggable\");\n      });\n\n      if (feedback) {\n        feedback.className = \"quiz-feedback-quizizz feedback-wrong\";\n        feedback.innerHTML = \\`\n          <div class=\"feedback-quizizz-box\">\n            <img src=\"assets/icons/x-circle.svg\" width=\"24\" height=\"24\" alt=\"\" class=\"feedback-icon-svg\" style=\"flex-shrink:0;\">\n            <div>\n              <h4>Kesempatan Habis</h4>\n              <p>Kamu memasang: <strong>\\${escapeHTML(currentDroppedActivityTime)}</strong> — waktu yang benar: <strong>\\${escapeHTML(expAnswer)}</strong></p>\n              <div class=\"feedback-explanation\">\\${escapeHTML(question.explanation || question.penjelasan || \"\")}</div>\n            </div>\n          </div>\n        \\`;\n        feedback.classList.remove(\"hidden\");\n      }\n\n      if (nextBtn) {\n        nextBtn.classList.remove(\"hidden\");\n        nextBtn.focus();\n      }\n    }\n  }\n\n  const pointsEl = document.getElementById(\"quizPoints\");\n  if (pointsEl) pointsEl.textContent = quizPoints;\n}",
+      "StartLine": 2399,
+      "TargetContent": "function submitActivityDropAnswer(question) {\n  if (quizAnswered || currentDroppedActivityTime === null) return;\n  quizAnswered = true;\n  stopQuestionTimer();\n\n  const expAnswer = question.targetAnswer || (question.options && question.options[question.correct]) || (question.pilihan && question.pilihan[question.correct]);\n  const isCorrect = currentDroppedActivityTime === expAnswer;\n\n  const slot = $(\"timeActivityDropSlot\");\n  const submitBtn = $(\"btnActivityDropSubmit\");\n  const feedback = $(\"quizFeedback\");\n  const nextBtn = $(\"nextQuestionBtn\");\n  const hintBtn = $(\"hintBtn\");\n  const card = $(\"quizCard\");\n\n  if (hintBtn) hintBtn.disabled = true;\n  if (submitBtn) submitBtn.disabled = true;\n\n  document.querySelectorAll(\".activity-time-chip\").forEach((c) => {\n    if (c.style) c.style.pointerEvents = \"none\";\n    if (c.removeAttribute) c.removeAttribute(\"draggable\");\n  });\n\n  if (isCorrect) {\n    if (slot) slot.className = \"clock-activity-drop-slot slot-correct has-value\";\n    if (submitBtn) submitBtn.className = \"btn btn-game-primary btn-clock-submit clock-correct\";\n\n    quizCorrect++;\n    quizStreak++;\n    if (quizStreak > maxStreak) maxStreak = quizStreak;\n\n    const speedBonus = Math.min(40, Math.round(questionTimeRemaining * 1.6));\n    const streakBonus = quizStreak >= 2 ? (quizStreak - 1) * 20 : 0;\n    const basePts = question.points || question.poin || 100;\n    const earnedPoints = basePts + speedBonus + streakBonus;\n    quizPoints += earnedPoints;\n\n    if (quizStreak >= 2) {\n      if (typeof playSound === \"function\") playSound(\"streak\");\n    } else {\n      if (typeof playSound === \"function\") playSound(\"correct\");\n    }\n\n    updateStreakBanner();\n\n    let bonusMsg = \"\";\n    if (speedBonus > 15 && streakBonus > 0) {\n      bonusMsg = `Bonus Cepat (+${speedBonus}) & Streak (+${streakBonus})`;\n    } else if (speedBonus > 15) {\n      bonusMsg = `Bonus Kecepatan (+${speedBonus})`;\n    } else if (streakBonus > 0) {\n      bonusMsg = `Bonus Streak (+${streakBonus})`;\n    }\n\n    showFloatingScore(`+${earnedPoints}`, bonusMsg);\n\n    if (feedback) {\n      feedback.className = \"quiz-feedback-quizizz feedback-correct\";\n      feedback.innerHTML = `\n        <div class=\"feedback-quizizz-box\">\n          <img src=\"assets/icons/check-circle.svg\" width=\"24\" height=\"24\" alt=\"\" class=\"feedback-icon-svg\" style=\"flex-shrink:0;\">\n          <div>\n            <h4>Tepat Sekali! (+${earnedPoints} Poin)</h4>\n            <p>Waktu kegiatan adalah <strong>${escapeHTML(expAnswer)}</strong> — benar!</p>\n            <div class=\"feedback-explanation\">${escapeHTML(question.explanation || question.penjelasan || \"\")}</div>\n          </div>\n        </div>\n      `;\n      feedback.classList.remove(\"hidden\");\n    }\n  } else {\n    if (slot) slot.className = \"clock-activity-drop-slot slot-wrong has-value\";\n    if (submitBtn) submitBtn.className = \"btn btn-game-primary btn-clock-submit clock-wrong\";\n    quizStreak = 0;\n    updateStreakBanner();\n\n    if (card) {\n      card.classList.remove(\"anim-quiz-shake\");\n      void card.offsetWidth;\n      card.classList.add(\"anim-quiz-shake\");\n    }\n\n    if (typeof playSound === \"function\") playSound(\"wrong\");\n\n    if (feedback) {\n      feedback.className = \"quiz-feedback-quizizz feedback-wrong\";\n      feedback.innerHTML = `\n        <div class=\"feedback-quizizz-box\">\n          <img src=\"assets/icons/x-circle.svg\" width=\"24\" height=\"24\" alt=\"\" class=\"feedback-icon-svg\" style=\"flex-shrink:0;\">\n          <div>\n            <h4>Pilihan Waktu Belum Tepat</h4>\n            <p>Kamu memasang: <strong>${escapeHTML(currentDroppedActivityTime)}</strong> — waktu yang benar: <strong>${escapeHTML(expAnswer)}</strong></p>\n            <div class=\"feedback-explanation\">${escapeHTML(question.explanation || question.penjelasan || \"\")}</div>\n          </div>\n        </div>\n      `;\n      feedback.classList.remove(\"hidden\");\n    }\n  }\n\n  const pointsEl = $(\"quizPoints\");\n  if (pointsEl) pointsEl.textContent = quizPoints;\n\n  if (nextBtn) {\n    nextBtn.classList.remove(\"hidden\");\n    nextBtn.focus();\n  }\n}",
+      "TargetFile": "c:\\Users\\Ivan\\Downloads\\math\\js\\quiz.js",
+      "toolAction": "Updating submitActivityDropAnswer",
+      "toolSummary": "Add 3x attempt to activity drop"
+    }
+  },
+  {
+    "name": "replace_file_content",
+    "args": {
+      "AllowMultiple": false,
+      "Description": "Fix syntax error in teacher.js",
+      "EndLine": 311,
+      "Instruction": "Remove extra brace",
+      "ReplacementContent": "  });\n}",
+      "StartLine": 307,
+      "TargetContent": "  });\n}\n\n}\n",
+      "TargetFile": "c:\\Users\\Ivan\\Downloads\\math\\js\\teacher.js",
+      "toolAction": "Fixing teacher.js syntax",
+      "toolSummary": "Fix extra brace"
+    }
+  },
+  {
+    "name": "multi_replace_file_content",
+    "args": {
+      "Description": "Hide interactive handles on static clocks",
+      "Instruction": "Update createClock to only add handles and draggable classes if isInteractive is true",
+      "ReplacementChunks": [
+        {
+          "AllowMultiple": false,
+          "EndLine": 1349,
+          "ReplacementContent": "  // Jarum Jam Pendek (Merah)\n  const hourHand = document.createElement(\"div\");\n  hourHand.className = \"clock-hand hour-hand red-hand\" + (isInteractive ? \" draggable-hand\" : \"\");\n  \n  const hourHandle = document.createElement(\"div\");\n  hourHandle.className = \"hand-grab-handle hour-handle\";\n  hourHandle.title = \"Tarik untuk memutar jarum jam (merah)\";\n  if (isInteractive) hourHand.appendChild(hourHandle);",
+          "StartLine": 1342,
+          "TargetContent": "  // Jarum Jam Pendek (Merah) dengan Grab Handle\n  const hourHand = document.createElement(\"div\");\n  hourHand.className = \"clock-hand hour-hand red-hand draggable-hand\";\n  const hourHandle = document.createElement(\"div\");\n  hourHandle.className = \"hand-grab-handle hour-handle\";\n  hourHandle.title = \"Tarik untuk memutar jarum jam (merah)\";\n  hourHand.appendChild(hourHandle);"
+        },
+        {
+          "AllowMultiple": false,
+          "EndLine": 1357,
+          "ReplacementContent": "  // Jarum Menit Panjang (Biru)\n  const minuteHand = document.createElement(\"div\");\n  minuteHand.className = \"clock-hand minute-hand blue-hand\" + (isInteractive ? \" draggable-hand\" : \"\");\n  \n  const minuteHandle = document.createElement(\"div\");\n  minuteHandle.className = \"hand-grab-handle minute-handle\";\n  minuteHandle.title = \"Tarik untuk memutar jarum menit (biru)\";\n  if (isInteractive) minuteHand.appendChild(minuteHandle);",
+          "StartLine": 1350,
+          "TargetContent": "  // Jarum Menit Panjang (Biru) dengan Grab Handle\n  const minuteHand = document.createElement(\"div\");\n  minuteHand.className = \"clock-hand minute-hand blue-hand draggable-hand\";\n  const minuteHandle = document.createElement(\"div\");\n  minuteHandle.className = \"hand-grab-handle minute-handle\";\n  minuteHandle.title = \"Tarik untuk memutar jarum menit (biru)\";\n  minuteHand.appendChild(minuteHandle);"
+        }
+      ],
+      "TargetFile": "c:\\Users\\Ivan\\Downloads\\math\\js\\quiz.js",
+      "toolAction": "Removing interactive handles",
+      "toolSummary": "Fix clock_drag handles"
+    }
+  }
+]

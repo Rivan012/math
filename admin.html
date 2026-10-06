@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ruang Guru & Dashboard Penilaian — TIME QUEST</title>
-  <meta name="description" content="Dashboard evaluasi dan rekapitulasi penilaian belajar matematika murid SD pada petualangan TIME QUEST.">
+  <meta name="description"
+    content="Dashboard evaluasi dan rekapitulasi penilaian belajar matematika murid SD pada petualangan TIME QUEST.">
 
   <!-- Google Fonts: Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap"
+    rel="stylesheet">
 
   <!-- Stylesheet Utama & Responsif -->
   <link rel="stylesheet" href="css/style.css?v=4.0">
   <link rel="stylesheet" href="css/responsive.css?v=4.0">
 </head>
+
 <body>
 
   <!-- =========================================================
@@ -61,18 +65,22 @@
           <form id="adminLoginForm">
             <div class="form-group">
               <label for="adminUsername">Username Guru / NIP</label>
-              <input id="adminUsername" class="input" type="text" placeholder="Contoh: guru01 atau admin" autocomplete="username" required>
+              <input id="adminUsername" class="input" type="text" placeholder="Contoh: guru01 atau admin"
+                autocomplete="username" required>
             </div>
 
             <div class="form-group">
               <label for="adminPassword">Kata Sandi / PIN</label>
-              <input id="adminPassword" class="input" type="password" placeholder="Contoh: 123456" autocomplete="current-password" required>
+              <input id="adminPassword" class="input" type="password" placeholder="Contoh: 123456"
+                autocomplete="current-password" required>
             </div>
 
             <div id="adminLoginError" class="form-error hidden" role="alert"></div>
 
-            <div class="teacher-login-hint" style="margin-bottom: 18px; padding: 10px; background: #F8FAFC; border: 1.5px dashed var(--border-strong); border-radius: var(--radius-sm);">
-              <span class="muted small">Akun demo: <code>guru01</code> / sandi <code>123456</code> (atau PIN: <code>1234</code>)</span>
+            <div class="teacher-login-hint"
+              style="margin-bottom: 18px; padding: 10px; background: #F8FAFC; border: 1.5px dashed var(--border-strong); border-radius: var(--radius-sm);">
+              <span class="muted small">Akun demo: <code>guru01</code> / sandi <code>123456</code> (atau PIN:
+                <code>1234</code>)</span>
             </div>
 
             <div class="form-actions" style="display: flex; flex-direction: column; gap: 10px;">
@@ -97,7 +105,8 @@
           <span class="badge badge-accent">Rekapitulasi Kelas</span>
           <h1>Dashboard Penilaian Guru</h1>
           <p class="muted small">
-            Pantau aktivitas belajar murid, evaluasi pemahaman jam & waktu, serta unduh data format CSV untuk laporan nilai sekolah.
+            Pantau aktivitas belajar murid, evaluasi pemahaman jam & waktu, serta unduh data format CSV untuk laporan
+            nilai sekolah.
           </p>
         </div>
       </div>
@@ -137,7 +146,8 @@
 
       <!-- Tab Navigasi Guru -->
       <div class="teacher-nav-tabs" role="tablist" aria-label="Tab Navigasi Guru">
-        <button class="btn btn-outline teacher-tab active" data-tab="students" type="button" role="tab" aria-selected="true">
+        <button class="btn btn-outline teacher-tab active" data-tab="students" type="button" role="tab"
+          aria-selected="true">
           Daftar Siswa
         </button>
         <button class="btn btn-outline teacher-tab" data-tab="results" type="button" role="tab" aria-selected="false">
@@ -145,12 +155,6 @@
         </button>
         <button class="btn btn-outline teacher-tab" data-tab="ranking" type="button" role="tab" aria-selected="false">
           Peringkat Kelas
-        </button>
-        <button class="btn btn-outline teacher-tab" data-tab="materials" type="button" role="tab" aria-selected="false">
-          Kelola Materi
-        </button>
-        <button class="btn btn-outline teacher-tab" data-tab="questions" type="button" role="tab" aria-selected="false">
-          Kelola Soal Kuis
         </button>
       </div>
 
@@ -161,10 +165,12 @@
             <h2>Daftar Murid Terdaftar</h2>
             <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
               <span id="studentsStorageBadge" class="badge badge-outline">Tersimpan di Browser</span>
-              <button id="refreshStudentsBtn" class="btn btn-outline btn-sm" type="button" title="Segarkan Data dari Server">
+              <button id="refreshStudentsBtn" class="btn btn-outline btn-sm" type="button"
+                title="Segarkan Data dari Server">
                 🔄 Sinkronkan Data
               </button>
-              <button id="clearStudentsBtn" class="btn btn-danger-outline btn-sm" type="button" title="Kosongkan seluruh data murid">
+              <button id="clearStudentsBtn" class="btn btn-danger-outline btn-sm" type="button"
+                title="Kosongkan seluruh data murid">
                 Kosongkan Data Siswa
               </button>
             </div>
@@ -197,7 +203,8 @@
               <button id="exportResultsBtn" class="btn btn-green btn-sm" type="button">
                 <img src="assets/icons/download.svg" width="18" height="18" alt=""> Unduh Format Excel (.xlsx)
               </button>
-              <button id="clearResultsBtn" class="btn btn-danger-outline btn-sm" type="button" title="Reset semua riwayat nilai kuis">
+              <button id="clearResultsBtn" class="btn btn-danger-outline btn-sm" type="button"
+                title="Reset semua riwayat nilai kuis">
                 Kosongkan Riwayat Nilai
               </button>
             </div>
@@ -234,11 +241,12 @@
 
       <!-- TAB 4: KELOLA MATERI -->
       <section id="teacherMaterialsTab" class="teacher-tab-content hidden" role="tabpanel">
-        
+
         <!-- Sub-Nav Pill Bar -->
         <div class="admin-subnav" role="tablist">
           <button type="button" class="admin-subnav-btn active" data-subtab="mat-list" id="btnMatSubtabList">
-            <img src="assets/icons/book.svg" width="16" height="16" alt=""> Daftar Modul Materi <span class="pill-badge" id="matCountBadge">0</span>
+            <img src="assets/icons/book.svg" width="16" height="16" alt=""> Daftar Modul Materi <span class="pill-badge"
+              id="matCountBadge">0</span>
           </button>
           <button type="button" class="admin-subnav-btn" data-subtab="mat-create" id="btnMatSubtabCreate">
             <span>➕</span> Tambah Materi Baru
@@ -265,7 +273,8 @@
                   <option value="3">Level 3 - Lebih Lama / Lebih Cepat</option>
                   <option value="4">Level 4 - Waktu Kegiatan</option>
                 </select>
-                <button type="button" id="btnResetMaterials" class="btn btn-danger-outline btn-sm" title="Kembalikan ke data bawaan">
+                <button type="button" id="btnResetMaterials" class="btn btn-danger-outline btn-sm"
+                  title="Kembalikan ke data bawaan">
                   Reset Default
                 </button>
               </div>
@@ -273,12 +282,18 @@
 
             <!-- Bar Pill Pemilihan Level Materi Cepat & Tombol Tambah Level -->
             <div class="level-pills-bar" id="matLevelPillsBar">
-              <button type="button" class="level-pill-btn active" data-level="all">Semua Level <span class="pill-badge" id="pillMatCountAll">0</span></button>
-              <button type="button" class="level-pill-btn" data-level="1">Level 1: Jam Analog <span class="pill-badge" id="pillMatCountL1">0</span></button>
-              <button type="button" class="level-pill-btn" data-level="2">Level 2: Jam Digital <span class="pill-badge" id="pillMatCountL2">0</span></button>
-              <button type="button" class="level-pill-btn" data-level="3">Level 3: Lama & Sebentar <span class="pill-badge" id="pillMatCountL3">0</span></button>
-              <button type="button" class="level-pill-btn" data-level="4">Level 4: Waktu Kegiatan <span class="pill-badge" id="pillMatCountL4">0</span></button>
-              <button type="button" class="btn btn-game-primary btn-sm" id="btnQuickAddMatForLevel" style="margin-left:auto;">
+              <button type="button" class="level-pill-btn active" data-level="all">Semua Level <span class="pill-badge"
+                  id="pillMatCountAll">0</span></button>
+              <button type="button" class="level-pill-btn" data-level="1">Level 1: Jam Analog <span class="pill-badge"
+                  id="pillMatCountL1">0</span></button>
+              <button type="button" class="level-pill-btn" data-level="2">Level 2: Jam Digital <span class="pill-badge"
+                  id="pillMatCountL2">0</span></button>
+              <button type="button" class="level-pill-btn" data-level="3">Level 3: Lama & Sebentar <span
+                  class="pill-badge" id="pillMatCountL3">0</span></button>
+              <button type="button" class="level-pill-btn" data-level="4">Level 4: Waktu Kegiatan <span
+                  class="pill-badge" id="pillMatCountL4">0</span></button>
+              <button type="button" class="btn btn-game-primary btn-sm" id="btnQuickAddMatForLevel"
+                style="margin-left:auto;">
                 ➕ Tambah Materi untuk Level Ini
               </button>
             </div>
@@ -310,7 +325,8 @@
                 <h2>Formulir Modul Materi</h2>
                 <span class="badge badge-primary">Satu per Satu</span>
               </div>
-              <p class="muted small" style="margin-bottom:16px;">Tuliskan materi pembelajaran baru yang akan langsung terbit ke aplikasi siswa.</p>
+              <p class="muted small" style="margin-bottom:16px;">Tuliskan materi pembelajaran baru yang akan langsung
+                terbit ke aplikasi siswa.</p>
 
               <form id="singleMaterialForm">
                 <div class="form-group">
@@ -325,38 +341,48 @@
 
                 <div class="form-group">
                   <label for="matJudul">Judul Modul Materi</label>
-                  <input type="text" id="matJudul" class="input" required placeholder="Contoh: Mengenal Jarum Pendek & Panjang">
+                  <input type="text" id="matJudul" class="input" required
+                    placeholder="Contoh: Mengenal Jarum Pendek & Panjang">
                 </div>
 
                 <div class="form-group">
                   <label for="matIsi">Isi Penjelasan Materi</label>
-                  <textarea id="matIsi" class="input" rows="5" required placeholder="Tuliskan materi penjelasan konsep waktu dengan bahasa ramah anak..."></textarea>
+                  <textarea id="matIsi" class="input" rows="5" required
+                    placeholder="Tuliskan materi penjelasan konsep waktu dengan bahasa ramah anak..."></textarea>
                 </div>
 
                 <div class="form-group">
                   <label for="matTip">Tips Kunci Belajar / Cara Cepat (Opsional)</label>
-                  <input type="text" id="matTip" class="input" placeholder="Contoh: Jarum pendek = Jam, jarum panjang = Menit.">
+                  <input type="text" id="matTip" class="input"
+                    placeholder="Contoh: Jarum pendek = Jam, jarum panjang = Menit.">
                 </div>
 
                 <div class="form-group">
-                  <label style="font-weight:700;display:block;margin-bottom:6px;">Gambar / SVG Ilustrasi Materi (Opsional)</label>
+                  <label style="font-weight:700;display:block;margin-bottom:6px;">Gambar / SVG Ilustrasi Materi
+                    (Opsional)</label>
                   <div style="display:flex;gap:10px;align-items:center;">
-                    <img id="thumbMatImg" src="assets/icons/book-open.svg" alt="" style="width:46px;height:46px;border-radius:8px;border:1.5px solid var(--border);object-fit:contain;background:#fff;padding:4px;flex-shrink:0;">
+                    <img id="thumbMatImg" src="assets/icons/book-open.svg" alt=""
+                      style="width:46px;height:46px;border-radius:8px;border:1.5px solid var(--border);object-fit:contain;background:#fff;padding:4px;flex-shrink:0;">
                     <div style="flex:1;">
                       <div style="display:flex;gap:8px;align-items:center;">
-                        <button type="button" class="btn btn-outline btn-sm" id="btnUploadMatImg" style="font-size:0.8rem;padding:5px 12px;font-weight:700;">
+                        <button type="button" class="btn btn-outline btn-sm" id="btnUploadMatImg"
+                          style="font-size:0.8rem;padding:5px 12px;font-weight:700;">
                           📁 Upload Gambar / SVG Kustom
                         </button>
-                        <input type="file" id="fileMatImg" accept=".svg,.png,.jpg,.jpeg,.webp,image/*" style="display:none;">
-                        <button type="button" class="btn btn-outline btn-sm" id="btnClearMatImg" style="display:none;color:var(--pink);border-color:var(--pink);font-size:0.75rem;padding:4px 8px;">
+                        <input type="file" id="fileMatImg" accept=".svg,.png,.jpg,.jpeg,.webp,image/*"
+                          style="display:none;">
+                        <button type="button" class="btn btn-outline btn-sm" id="btnClearMatImg"
+                          style="display:none;color:var(--pink);border-color:var(--pink);font-size:0.75rem;padding:4px 8px;">
                           Hapus
                         </button>
                       </div>
-                      <span id="labelUploadedMat" class="muted small" style="margin-top:4px;font-size:0.75rem;color:var(--primary);font-weight:700;display:none;"></span>
+                      <span id="labelUploadedMat" class="muted small"
+                        style="margin-top:4px;font-size:0.75rem;color:var(--primary);font-weight:700;display:none;"></span>
                       <input type="hidden" id="matImg" value="">
                     </div>
                   </div>
-                  <span class="muted small" style="font-size:0.75rem;display:block;margin-top:4px;">Unggah gambar diagram jam atau SVG kustom dari komputer.</span>
+                  <span class="muted small" style="font-size:0.75rem;display:block;margin-top:4px;">Unggah gambar
+                    diagram jam atau SVG kustom dari komputer.</span>
                 </div>
 
                 <div style="display:flex;gap:10px;margin-top:14px;">
@@ -376,22 +402,28 @@
                 <span class="live-preview-badge">👁️ Pratinjau Tampilan Murid</span>
                 <span class="muted small">Real-time</span>
               </div>
-              <p class="muted small" style="margin-bottom:14px;">Inilah tampilan kartu materi yang akan dipelajari murid di aplikasi:</p>
+              <p class="muted small" style="margin-bottom:14px;">Inilah tampilan kartu materi yang akan dipelajari murid
+                di aplikasi:</p>
 
               <article class="material-card" style="margin-bottom:0;box-shadow:none;border:1.5px solid var(--border);">
                 <div class="material-step-badge" id="previewMatStep">1</div>
                 <div class="material-text">
                   <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap;">
                     <h3 style="margin-bottom:0;" id="previewMatJudul">Mengenal Jam Analog</h3>
-                    <span class="badge badge-accent" style="font-size:0.75rem;" id="previewMatLevelBadge">Misi Level 1</span>
+                    <span class="badge badge-accent" style="font-size:0.75rem;" id="previewMatLevelBadge">Misi Level
+                      1</span>
                   </div>
-                  <p id="previewMatIsi" style="line-height:1.5;">Tuliskan materi pada formulir di sebelah kiri untuk melihat tampilan langsung di sini...</p>
+                  <p id="previewMatIsi" style="line-height:1.5;">Tuliskan materi pada formulir di sebelah kiri untuk
+                    melihat tampilan langsung di sini...</p>
                   <div id="previewMatImgWrap" style="display:none;margin:12px 0;text-align:center;">
-                    <img id="previewMatImg" src="" alt="Ilustrasi materi" style="max-width:100%;max-height:180px;border-radius:8px;object-fit:contain;background:#fff;border:1px solid var(--border);">
+                    <img id="previewMatImg" src="" alt="Ilustrasi materi"
+                      style="max-width:100%;max-height:180px;border-radius:8px;object-fit:contain;background:#fff;border:1px solid var(--border);">
                   </div>
                   <div class="tip-banner" id="previewMatTipWrap">
-                    <img src="assets/icons/lightbulb.svg" width="18" height="18" alt="" style="vertical-align:-3px;margin-right:4px;">
-                    <strong>Kunci Belajar:</strong> <span id="previewMatTip">Jarum panjang ke angka 12 berarti menit 00.</span>
+                    <img src="assets/icons/lightbulb.svg" width="18" height="18" alt=""
+                      style="vertical-align:-3px;margin-right:4px;">
+                    <strong>Kunci Belajar:</strong> <span id="previewMatTip">Jarum panjang ke angka 12 berarti menit
+                      00.</span>
                   </div>
                 </div>
               </article>
@@ -408,23 +440,30 @@
                 <h2>Unggah Berkas Spreadsheet</h2>
                 <span class="badge badge-accent">Excel (.xlsx) / CSV</span>
               </div>
-              <p class="muted small" style="margin-bottom:14px;">Impor modul materi massal langsung dari file spreadsheet tanpa perlu input satu per satu.</p>
+              <p class="muted small" style="margin-bottom:14px;">Impor modul materi massal langsung dari file
+                spreadsheet tanpa perlu input satu per satu.</p>
 
               <div class="dropzone-box" id="materialDropzone">
-                <input type="file" id="materialCsvInput" accept=".xlsx,.xls,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,text/csv" style="display:none;">
-                <img src="assets/icons/upload.svg" width="42" height="42" alt="" style="margin-bottom:10px;opacity:0.85;">
+                <input type="file" id="materialCsvInput"
+                  accept=".xlsx,.xls,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,text/csv"
+                  style="display:none;">
+                <img src="assets/icons/upload.svg" width="42" height="42" alt=""
+                  style="margin-bottom:10px;opacity:0.85;">
                 <p style="font-weight:800;font-size:1rem;margin-bottom:4px;">Pilih Berkas Excel / CSV Materi</p>
                 <p class="muted small">Tarik dan lepas (drag & drop) berkas Excel (.xlsx) ke kotak ini</p>
                 <button type="button" class="btn btn-outline btn-sm" style="margin-top:12px;" id="btnBrowseMaterialCsv">
                   Pilih Berkas Spreadsheet
                 </button>
-                <div id="materialFileSelected" class="file-chosen-text hidden" style="margin-top:10px;font-weight:700;color:var(--primary);"></div>
+                <div id="materialFileSelected" class="file-chosen-text hidden"
+                  style="margin-top:10px;font-weight:700;color:var(--primary);"></div>
               </div>
 
               <!-- Pengaturan Target Level & Mode Unggah Materi -->
-              <div style="margin-top:16px;background:var(--surface-subtle);padding:14px;border-radius:var(--radius-md);border:1px solid var(--border);">
+              <div
+                style="margin-top:16px;background:var(--surface-subtle);padding:14px;border-radius:var(--radius-md);border:1px solid var(--border);">
                 <div class="form-group" style="margin-bottom:12px;">
-                  <label for="uploadMaterialTargetLevel" style="font-weight:800;font-size:0.88rem;">🎯 Target Level Materi:</label>
+                  <label for="uploadMaterialTargetLevel" style="font-weight:800;font-size:0.88rem;">🎯 Target Level
+                    Materi:</label>
                   <select id="uploadMaterialTargetLevel" class="select" style="min-height:40px;padding:8px 12px;">
                     <option value="all">Otomatis (Sesuai kolom level di dalam file)</option>
                     <option value="1">Khusus Level 1: Mengenal Jam Analog</option>
@@ -435,19 +474,23 @@
                 </div>
 
                 <div class="form-group" style="margin-bottom:0;">
-                  <label style="font-weight:800;font-size:0.88rem;display:block;margin-bottom:6px;">⚙️ Mode Unggah:</label>
+                  <label style="font-weight:800;font-size:0.88rem;display:block;margin-bottom:6px;">⚙️ Mode
+                    Unggah:</label>
                   <div style="display:flex;flex-wrap:wrap;gap:14px;">
-                    <label style="display:inline-flex;align-items:center;gap:6px;font-size:0.88rem;font-weight:600;cursor:pointer;">
+                    <label
+                      style="display:inline-flex;align-items:center;gap:6px;font-size:0.88rem;font-weight:600;cursor:pointer;">
                       <input type="radio" name="matImportMode" value="append" checked> Tambahkan ke materi yang ada
                     </label>
-                    <label style="display:inline-flex;align-items:center;gap:6px;font-size:0.88rem;font-weight:600;cursor:pointer;">
+                    <label
+                      style="display:inline-flex;align-items:center;gap:6px;font-size:0.88rem;font-weight:600;cursor:pointer;">
                       <input type="radio" name="matImportMode" value="replace"> Gantikan seluruh materi level ini
                     </label>
                   </div>
                 </div>
               </div>
 
-              <button type="button" id="btnUploadMaterialCsv" class="btn btn-green btn-sm" style="width:100%;margin-top:14px;padding:10px;">
+              <button type="button" id="btnUploadMaterialCsv" class="btn btn-green btn-sm"
+                style="width:100%;margin-top:14px;padding:10px;">
                 <img src="assets/icons/upload.svg" width="16" height="16" alt=""> Upload Berkas Excel / CSV
               </button>
             </div>
@@ -458,11 +501,13 @@
                 <h2>Format Template Excel Materi</h2>
                 <span class="badge badge-green">Resmi</span>
               </div>
-              <p class="muted small">Unduh template spreadsheet resmi berformat Excel (.xlsx) per level atau lengkap untuk semua level.</p>
+              <p class="muted small">Unduh template spreadsheet resmi berformat Excel (.xlsx) per level atau lengkap
+                untuk semua level.</p>
 
               <!-- Grup Tombol Unduh Template Excel Materi per Level -->
               <div style="margin:14px 0;">
-                <label style="font-weight:800;font-size:0.85rem;display:block;margin-bottom:8px;">Unduh Template per Level:</label>
+                <label style="font-weight:800;font-size:0.85rem;display:block;margin-bottom:8px;">Unduh Template per
+                  Level:</label>
                 <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:10px;">
                   <button type="button" class="btn btn-outline btn-sm btn-template-mat-level" data-level="1">
                     📥 Template Level 1 (Jam Analog)
@@ -478,8 +523,10 @@
                   </button>
                 </div>
 
-                <button type="button" id="btnTemplateMaterialCsv" class="btn btn-primary btn-sm" style="width:100%;padding:10px;">
-                  <img src="assets/icons/download.svg" width="16" height="16" alt=""> Unduh Template Lengkap (Semua Level .xlsx)
+                <button type="button" id="btnTemplateMaterialCsv" class="btn btn-primary btn-sm"
+                  style="width:100%;padding:10px;">
+                  <img src="assets/icons/download.svg" width="16" height="16" alt=""> Unduh Template Lengkap (Semua
+                  Level .xlsx)
                 </button>
               </div>
 
@@ -510,7 +557,8 @@
         <!-- Sub-Nav Pill Bar -->
         <div class="admin-subnav" role="tablist">
           <button type="button" class="admin-subnav-btn active" data-subtab="q-list" id="btnQSubtabList">
-            <img src="assets/icons/clock.svg" width="16" height="16" alt=""> Bank Soal Kuis <span class="pill-badge" id="qCountBadge">0</span>
+            <img src="assets/icons/clock.svg" width="16" height="16" alt=""> Bank Soal Kuis <span class="pill-badge"
+              id="qCountBadge">0</span>
           </button>
           <button type="button" class="admin-subnav-btn" data-subtab="q-create" id="btnQSubtabCreate">
             <span>➕</span> Buat Soal Baru
@@ -529,7 +577,8 @@
                 <span class="muted small">Bank pertanyaan yang akan diujikan kepada murid saat kuis</span>
               </div>
               <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-                <input type="text" id="searchQuestionInput" class="admin-table-search" placeholder="🔍 Cari soal kuis...">
+                <input type="text" id="searchQuestionInput" class="admin-table-search"
+                  placeholder="🔍 Cari soal kuis...">
                 <select id="filterQuestionLevel" class="admin-table-select">
                   <option value="all">Semua Level</option>
                   <option value="1">Level 1 - Jam Analog</option>
@@ -544,7 +593,8 @@
                   <option value="clock">🕒 Jam Analog (Pilihan Ganda)</option>
                   <option value="text">📝 Pilihan Ganda Teks</option>
                 </select>
-                <button type="button" id="btnResetQuestions" class="btn btn-danger-outline btn-sm" title="Kembalikan ke bank soal bawaan">
+                <button type="button" id="btnResetQuestions" class="btn btn-danger-outline btn-sm"
+                  title="Kembalikan ke bank soal bawaan">
                   Reset Default
                 </button>
               </div>
@@ -596,7 +646,7 @@
         <!-- SUBTAB 2: BUAT SOAL SATU PER SATU -->
         <div id="qSubtabCreate" class="q-subtab-view hidden">
           <div class="studio-grid admin-studio-grid">
-            
+
             <!-- Form Input Soal -->
             <div class="card">
               <div class="section-heading">
@@ -624,7 +674,8 @@
                       <option value="clock_drag">🕒 Putar Jarum Jam (Level 1 Interaktif Siswa)</option>
                       <option value="clock_drop">🔢 Pasangkan Jam Digital (Level 2 Interaktif Siswa)</option>
                       <option value="time_compare">⏱️ Centang Perbandingan Waktu (Level 3 Interaktif Siswa)</option>
-                      <option value="clock_activity_drop">📅 Pasangkan Waktu Kegiatan (Level 4 Interaktif Siswa)</option>
+                      <option value="clock_activity_drop">📅 Pasangkan Waktu Kegiatan (Level 4 Interaktif Siswa)
+                      </option>
                       <option value="clock">🕒 Jam Analog (Pilihan Ganda)</option>
                       <option value="text">📝 Pilihan Ganda Teks</option>
                     </select>
@@ -632,22 +683,29 @@
                 </div>
 
                 <!-- Pengaturan Waktu Target Jam Analog (clock_drag & clock) -->
-                <div id="clockSettingsRow" class="form-group" style="background:var(--bg);padding:16px;border-radius:var(--radius-md);border:1.5px solid var(--border);margin-bottom:18px;">
+                <div id="clockSettingsRow" class="form-group"
+                  style="background:var(--bg);padding:16px;border-radius:var(--radius-md);border:1.5px solid var(--border);margin-bottom:18px;">
                   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                    <label id="clockSettingsLabel" style="margin-bottom:0;font-weight:800;">Target Waktu Jam Analog (Kunci Jawaban):</label>
+                    <label id="clockSettingsLabel" style="margin-bottom:0;font-weight:800;">Target Waktu Jam Analog
+                      (Kunci Jawaban):</label>
                     <span id="clockSettingsBadge" class="badge badge-accent">Mode Siswa: Putar Jam</span>
                   </div>
                   <p id="clockSettingsDesc" class="muted small" style="margin-bottom:12px;">
-                    Murid akan memutar/mengarahkan jarum jam dan menit ke posisi target waktu ini, lalu menekan tombol <strong>"Jawab"</strong>.
+                    Murid akan memutar/mengarahkan jarum jam dan menit ke posisi target waktu ini, lalu menekan tombol
+                    <strong>"Jawab"</strong>.
                   </p>
                   <div class="form-row-2">
                     <div>
-                      <label for="qClockHour" class="small muted" style="margin-bottom:4px;display:block;">Jarum Jam / Target Jam (1 - 12)</label>
-                      <input type="number" id="qClockHour" class="input" min="1" max="12" value="5" placeholder="Contoh: 5">
+                      <label for="qClockHour" class="small muted" style="margin-bottom:4px;display:block;">Jarum Jam /
+                        Target Jam (1 - 12)</label>
+                      <input type="number" id="qClockHour" class="input" min="1" max="12" value="5"
+                        placeholder="Contoh: 5">
                     </div>
                     <div>
-                      <label for="qClockMinute" class="small muted" style="margin-bottom:4px;display:block;">Jarum Menit / Target Menit (0 - 59)</label>
-                      <input type="number" id="qClockMinute" class="input" min="0" max="59" step="1" value="0" placeholder="Contoh: 0">
+                      <label for="qClockMinute" class="small muted" style="margin-bottom:4px;display:block;">Jarum Menit
+                        / Target Menit (0 - 59)</label>
+                      <input type="number" id="qClockMinute" class="input" min="0" max="59" step="1" value="0"
+                        placeholder="Contoh: 0">
                     </div>
                   </div>
                   <div class="quick-presets" style="margin-top:10px;">
@@ -660,21 +718,25 @@
                 </div>
 
                 <!-- Pengaturan Waktu & Kartu Angka Jam Digital (clock_drop Level 2) -->
-                <div id="digitalClockSettingsRow" class="form-group" style="background:var(--bg);padding:16px;border-radius:var(--radius-md);border:1.5px solid var(--border);margin-bottom:18px;display:none;">
+                <div id="digitalClockSettingsRow" class="form-group"
+                  style="background:var(--bg);padding:16px;border-radius:var(--radius-md);border:1.5px solid var(--border);margin-bottom:18px;display:none;">
                   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
                     <label style="margin-bottom:0;font-weight:800;">Target Jam Digital (Kunci Jawaban Siswa):</label>
                     <span class="badge badge-blue">Mode Siswa: Jam Digital (L2)</span>
                   </div>
                   <p class="muted small" style="margin-bottom:12px;">
-                    Murid akan memasangkan kartu angka (Jam) dan (Menit) ke kotak layar jam digital alarm, lalu menekan tombol <strong>"Jawab"</strong>.
+                    Murid akan memasangkan kartu angka (Jam) dan (Menit) ke kotak layar jam digital alarm, lalu menekan
+                    tombol <strong>"Jawab"</strong>.
                   </p>
                   <div class="form-row-2">
                     <div>
-                      <label for="qDigitalHour" class="small muted" style="margin-bottom:4px;display:block;">Angka Jam Target (01 - 12)</label>
+                      <label for="qDigitalHour" class="small muted" style="margin-bottom:4px;display:block;">Angka Jam
+                        Target (01 - 12)</label>
                       <input type="text" id="qDigitalHour" class="input" value="05" maxlength="2" placeholder="05">
                     </div>
                     <div>
-                      <label for="qDigitalMinute" class="small muted" style="margin-bottom:4px;display:block;">Angka Menit Target (00 - 59)</label>
+                      <label for="qDigitalMinute" class="small muted" style="margin-bottom:4px;display:block;">Angka
+                        Menit Target (00 - 59)</label>
                       <input type="text" id="qDigitalMinute" class="input" value="00" maxlength="2" placeholder="00">
                     </div>
                   </div>
@@ -689,66 +751,88 @@
 
                   <div style="margin-top:14px;border-top:1px dashed var(--border);padding-top:12px;">
                     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                      <label class="small muted" style="font-weight:700;margin-bottom:0;">6 Kartu Angka Pilihan Siswa (Drag & Drop):</label>
-                      <button type="button" class="btn btn-outline btn-sm" id="btnAutoGenerateChips" style="padding:2px 8px;font-size:0.75rem;">
+                      <label class="small muted" style="font-weight:700;margin-bottom:0;">6 Kartu Angka Pilihan Siswa
+                        (Drag & Drop):</label>
+                      <button type="button" class="btn btn-outline btn-sm" id="btnAutoGenerateChips"
+                        style="padding:2px 8px;font-size:0.75rem;">
                         ⚡ Isi & Acak 6 Pilihan Kartu
                       </button>
                     </div>
                     <div class="form-row-6" style="display:grid;grid-template-columns:repeat(6, 1fr);gap:8px;">
                       <div>
-                        <span class="small muted" style="font-size:0.72rem;display:block;margin-bottom:2px;">Kartu 1</span>
-                        <input type="text" id="qChip1" class="input" value="07" maxlength="2" style="text-align:center;font-weight:800;font-family:monospace;">
+                        <span class="small muted" style="font-size:0.72rem;display:block;margin-bottom:2px;">Kartu
+                          1</span>
+                        <input type="text" id="qChip1" class="input" value="07" maxlength="2"
+                          style="text-align:center;font-weight:800;font-family:monospace;">
                       </div>
                       <div>
-                        <span class="small muted" style="font-size:0.72rem;display:block;margin-bottom:2px;">Kartu 2</span>
-                        <input type="text" id="qChip2" class="input" value="30" maxlength="2" style="text-align:center;font-weight:800;font-family:monospace;">
+                        <span class="small muted" style="font-size:0.72rem;display:block;margin-bottom:2px;">Kartu
+                          2</span>
+                        <input type="text" id="qChip2" class="input" value="30" maxlength="2"
+                          style="text-align:center;font-weight:800;font-family:monospace;">
                       </div>
                       <div>
-                        <span class="small muted" style="font-size:0.72rem;display:block;margin-bottom:2px;">Kartu 3</span>
-                        <input type="text" id="qChip3" class="input" value="05" maxlength="2" style="text-align:center;font-weight:800;font-family:monospace;">
+                        <span class="small muted" style="font-size:0.72rem;display:block;margin-bottom:2px;">Kartu
+                          3</span>
+                        <input type="text" id="qChip3" class="input" value="05" maxlength="2"
+                          style="text-align:center;font-weight:800;font-family:monospace;">
                       </div>
                       <div>
-                        <span class="small muted" style="font-size:0.72rem;display:block;margin-bottom:2px;">Kartu 4</span>
-                        <input type="text" id="qChip4" class="input" value="12" maxlength="2" style="text-align:center;font-weight:800;font-family:monospace;">
+                        <span class="small muted" style="font-size:0.72rem;display:block;margin-bottom:2px;">Kartu
+                          4</span>
+                        <input type="text" id="qChip4" class="input" value="12" maxlength="2"
+                          style="text-align:center;font-weight:800;font-family:monospace;">
                       </div>
                       <div>
-                        <span class="small muted" style="font-size:0.72rem;display:block;margin-bottom:2px;">Kartu 5</span>
-                        <input type="text" id="qChip5" class="input" value="00" maxlength="2" style="text-align:center;font-weight:800;font-family:monospace;">
+                        <span class="small muted" style="font-size:0.72rem;display:block;margin-bottom:2px;">Kartu
+                          5</span>
+                        <input type="text" id="qChip5" class="input" value="00" maxlength="2"
+                          style="text-align:center;font-weight:800;font-family:monospace;">
                       </div>
                       <div>
-                        <span class="small muted" style="font-size:0.72rem;display:block;margin-bottom:2px;">Kartu 6</span>
-                        <input type="text" id="qChip6" class="input" value="06" maxlength="2" style="text-align:center;font-weight:800;font-family:monospace;">
+                        <span class="small muted" style="font-size:0.72rem;display:block;margin-bottom:2px;">Kartu
+                          6</span>
+                        <input type="text" id="qChip6" class="input" value="06" maxlength="2"
+                          style="text-align:center;font-weight:800;font-family:monospace;">
                       </div>
                     </div>
                   </div>
                 </div>
 
                 <!-- Pengaturan Level 3: Perbandingan Waktu (time_compare) -->
-                <div id="timeCompareSettingsRow" class="form-group" style="background:var(--bg);padding:16px;border-radius:var(--radius-md);border:1.5px solid var(--border);margin-bottom:18px;display:none;">
+                <div id="timeCompareSettingsRow" class="form-group"
+                  style="background:var(--bg);padding:16px;border-radius:var(--radius-md);border:1.5px solid var(--border);margin-bottom:18px;display:none;">
                   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
                     <label style="margin-bottom:0;font-weight:800;">Pengaturan 2 Kartu Kegiatan (Level 3):</label>
                     <span class="badge badge-yellow">Mode Siswa: Perbandingan (L3)</span>
                   </div>
                   <p class="muted small" style="margin-bottom:12px;">
-                    Siswa akan membandingkan 2 kegiatan, mencentang <strong>[✓]</strong> pada kegiatan yang benar, lalu menekan tombol <strong>"Jawab"</strong>.
+                    Siswa akan membandingkan 2 kegiatan, mencentang <strong>[✓]</strong> pada kegiatan yang benar, lalu
+                    menekan tombol <strong>"Jawab"</strong>.
                   </p>
                   <div class="form-row-2">
-                    <div style="background:var(--card-bg);padding:12px;border-radius:var(--radius-sm);border:1px solid var(--border);">
+                    <div
+                      style="background:var(--card-bg);padding:12px;border-radius:var(--radius-sm);border:1px solid var(--border);">
                       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
                         <strong style="font-size:0.85rem;">Kartu Kegiatan 1</strong>
                         <label style="font-size:0.75rem;cursor:pointer;display:flex;align-items:center;gap:4px;">
                           <input type="radio" name="qTimeCompareCorrect" value="0"> Kunci Benar
                         </label>
                       </div>
-                      <label for="qCompareLabel1" class="small muted" style="display:block;margin-bottom:2px;">Nama Kegiatan 1:</label>
-                      <input type="text" id="qCompareLabel1" class="input" value="Menyisir rambut" placeholder="Contoh: Menyisir rambut">
-                      
-                      <label class="small muted" style="display:block;margin:8px 0 3px 0;">Gambar / SVG Kegiatan 1:</label>
+                      <label for="qCompareLabel1" class="small muted" style="display:block;margin-bottom:2px;">Nama
+                        Kegiatan 1:</label>
+                      <input type="text" id="qCompareLabel1" class="input" value="Menyisir rambut"
+                        placeholder="Contoh: Menyisir rambut">
+
+                      <label class="small muted" style="display:block;margin:8px 0 3px 0;">Gambar / SVG Kegiatan
+                        1:</label>
                       <div style="display:flex;gap:8px;align-items:center;margin-bottom:4px;">
-                        <img id="thumbCompareImg1" src="assets/images/activity_combing.png" alt="" style="width:38px;height:38px;border-radius:6px;border:1px solid var(--border);object-fit:cover;background:#fff;flex-shrink:0;">
+                        <img id="thumbCompareImg1" src="assets/images/activity_combing.png" alt=""
+                          style="width:38px;height:38px;border-radius:6px;border:1px solid var(--border);object-fit:cover;background:#fff;flex-shrink:0;">
                         <div style="flex:1;display:flex;flex-direction:column;gap:4px;">
                           <div style="display:flex;gap:6px;">
-                            <select id="selectCompareImg1Preset" class="select" style="font-size:0.78rem;padding:4px 8px;min-height:30px;flex:1;">
+                            <select id="selectCompareImg1Preset" class="select"
+                              style="font-size:0.78rem;padding:4px 8px;min-height:30px;flex:1;">
                               <option value="assets/images/activity_combing.png">Menyisir Rambut</option>
                               <option value="assets/images/activity_bathing.png">Mandi</option>
                               <option value="assets/images/activity_sleeping.png">Tidur Malam</option>
@@ -757,35 +841,44 @@
                               <option value="assets/images/activity_breakfast.png">Sarapan</option>
                               <option value="assets/images/activity_cooking.png">Memasak</option>
                               <option value="assets/images/activity_drinking.png">Meminum Air</option>
-                              <option value="custom" id="optCustomCompare1" disabled hidden>📁 SVG/Gambar Diunggah</option>
+                              <option value="custom" id="optCustomCompare1" disabled hidden>📁 SVG/Gambar Diunggah
+                              </option>
                             </select>
-                            <button type="button" class="btn btn-outline btn-sm" id="btnUploadCompareImg1" style="font-size:0.75rem;padding:4px 10px;min-height:30px;white-space:nowrap;font-weight:700;">
+                            <button type="button" class="btn btn-outline btn-sm" id="btnUploadCompareImg1"
+                              style="font-size:0.75rem;padding:4px 10px;min-height:30px;white-space:nowrap;font-weight:700;">
                               📁 Upload File (SVG/Foto)
                             </button>
-                            <input type="file" id="fileCompareImg1" accept=".svg,.png,.jpg,.jpeg,.webp,image/*" style="display:none;">
+                            <input type="file" id="fileCompareImg1" accept=".svg,.png,.jpg,.jpeg,.webp,image/*"
+                              style="display:none;">
                           </div>
-                          <span id="labelUploadedCompare1" class="muted small" style="font-size:0.72rem;display:none;color:var(--primary);font-weight:700;"></span>
+                          <span id="labelUploadedCompare1" class="muted small"
+                            style="font-size:0.72rem;display:none;color:var(--primary);font-weight:700;"></span>
                         </div>
                       </div>
                       <input type="hidden" id="qCompareImg1" value="assets/images/activity_combing.png">
                     </div>
 
-                    <div style="background:var(--card-bg);padding:12px;border-radius:var(--radius-sm);border:1px solid var(--border);">
+                    <div
+                      style="background:var(--card-bg);padding:12px;border-radius:var(--radius-sm);border:1px solid var(--border);">
                       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
                         <strong style="font-size:0.85rem;">Kartu Kegiatan 2</strong>
                         <label style="font-size:0.75rem;cursor:pointer;display:flex;align-items:center;gap:4px;">
                           <input type="radio" name="qTimeCompareCorrect" value="1" checked> Kunci Benar
                         </label>
                       </div>
-                      <label for="qCompareLabel2" class="small muted" style="display:block;margin-bottom:2px;">Nama Kegiatan 2:</label>
+                      <label for="qCompareLabel2" class="small muted" style="display:block;margin-bottom:2px;">Nama
+                        Kegiatan 2:</label>
                       <input type="text" id="qCompareLabel2" class="input" value="Mandi" placeholder="Contoh: Mandi">
-                      
-                      <label class="small muted" style="display:block;margin:8px 0 3px 0;">Gambar / SVG Kegiatan 2:</label>
+
+                      <label class="small muted" style="display:block;margin:8px 0 3px 0;">Gambar / SVG Kegiatan
+                        2:</label>
                       <div style="display:flex;gap:8px;align-items:center;margin-bottom:4px;">
-                        <img id="thumbCompareImg2" src="assets/images/activity_bathing.png" alt="" style="width:38px;height:38px;border-radius:6px;border:1px solid var(--border);object-fit:cover;background:#fff;flex-shrink:0;">
+                        <img id="thumbCompareImg2" src="assets/images/activity_bathing.png" alt=""
+                          style="width:38px;height:38px;border-radius:6px;border:1px solid var(--border);object-fit:cover;background:#fff;flex-shrink:0;">
                         <div style="flex:1;display:flex;flex-direction:column;gap:4px;">
                           <div style="display:flex;gap:6px;">
-                            <select id="selectCompareImg2Preset" class="select" style="font-size:0.78rem;padding:4px 8px;min-height:30px;flex:1;">
+                            <select id="selectCompareImg2Preset" class="select"
+                              style="font-size:0.78rem;padding:4px 8px;min-height:30px;flex:1;">
                               <option value="assets/images/activity_bathing.png">Mandi</option>
                               <option value="assets/images/activity_combing.png">Menyisir Rambut</option>
                               <option value="assets/images/activity_sleeping.png">Tidur Malam</option>
@@ -794,14 +887,18 @@
                               <option value="assets/images/activity_breakfast.png">Sarapan</option>
                               <option value="assets/images/activity_cooking.png">Memasak</option>
                               <option value="assets/images/activity_drinking.png">Meminum Air</option>
-                              <option value="custom" id="optCustomCompare2" disabled hidden>📁 SVG/Gambar Diunggah</option>
+                              <option value="custom" id="optCustomCompare2" disabled hidden>📁 SVG/Gambar Diunggah
+                              </option>
                             </select>
-                            <button type="button" class="btn btn-outline btn-sm" id="btnUploadCompareImg2" style="font-size:0.75rem;padding:4px 10px;min-height:30px;white-space:nowrap;font-weight:700;">
+                            <button type="button" class="btn btn-outline btn-sm" id="btnUploadCompareImg2"
+                              style="font-size:0.75rem;padding:4px 10px;min-height:30px;white-space:nowrap;font-weight:700;">
                               📁 Upload File (SVG/Foto)
                             </button>
-                            <input type="file" id="fileCompareImg2" accept=".svg,.png,.jpg,.jpeg,.webp,image/*" style="display:none;">
+                            <input type="file" id="fileCompareImg2" accept=".svg,.png,.jpg,.jpeg,.webp,image/*"
+                              style="display:none;">
                           </div>
-                          <span id="labelUploadedCompare2" class="muted small" style="font-size:0.72rem;display:none;color:var(--primary);font-weight:700;"></span>
+                          <span id="labelUploadedCompare2" class="muted small"
+                            style="font-size:0.72rem;display:none;color:var(--primary);font-weight:700;"></span>
                         </div>
                       </div>
                       <input type="hidden" id="qCompareImg2" value="assets/images/activity_bathing.png">
@@ -810,60 +907,81 @@
                 </div>
 
                 <!-- Pengaturan Level 4: Pasangkan Waktu Kegiatan (clock_activity_drop) -->
-                <div id="activityDropSettingsRow" class="form-group" style="background:var(--bg);padding:16px;border-radius:var(--radius-md);border:1.5px solid var(--border);margin-bottom:18px;display:none;">
+                <div id="activityDropSettingsRow" class="form-group"
+                  style="background:var(--bg);padding:16px;border-radius:var(--radius-md);border:1.5px solid var(--border);margin-bottom:18px;display:none;">
                   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                    <label style="margin-bottom:0;font-weight:800;">Pengaturan Jam Kegiatan & Pilihan Waktu (Level 4):</label>
+                    <label style="margin-bottom:0;font-weight:800;">Pengaturan Jam Kegiatan & Pilihan Waktu (Level
+                      4):</label>
                     <span class="badge badge-accent">Mode Siswa: Waktu Kegiatan (L4)</span>
                   </div>
                   <p class="muted small" style="margin-bottom:12px;">
-                    Siswa mengamati gambar dan jam analog kegiatan, lalu menarik keterangan waktu yang tepat ke kotak target kegiatan dan menekan tombol <strong>"Jawab"</strong>.
+                    Siswa mengamati gambar dan jam analog kegiatan, lalu menarik keterangan waktu yang tepat ke kotak
+                    target kegiatan dan menekan tombol <strong>"Jawab"</strong>.
                   </p>
                   <div class="form-row-2">
                     <div>
-                      <label for="qActivityCorrectAnswer" class="small muted" style="display:block;margin-bottom:4px;font-weight:700;">Kunci Keterangan Waktu Benar:</label>
-                      <input type="text" id="qActivityCorrectAnswer" class="input" value="Pukul 7 pagi" placeholder="Contoh: Pukul 7 pagi">
+                      <label for="qActivityCorrectAnswer" class="small muted"
+                        style="display:block;margin-bottom:4px;font-weight:700;">Kunci Keterangan Waktu Benar:</label>
+                      <input type="text" id="qActivityCorrectAnswer" class="input" value="Pukul 7 pagi"
+                        placeholder="Contoh: Pukul 7 pagi">
                     </div>
                     <div>
-                      <label class="small muted" style="display:block;margin-bottom:4px;font-weight:700;">Gambar / SVG Ilustrasi Kegiatan:</label>
+                      <label class="small muted" style="display:block;margin-bottom:4px;font-weight:700;">Gambar / SVG
+                        Ilustrasi Kegiatan:</label>
                       <div style="display:flex;gap:8px;align-items:center;">
-                        <img id="thumbActivityImg" src="assets/images/time_activity_school.png" alt="" style="width:44px;height:44px;border-radius:6px;border:1.5px solid var(--border);object-fit:cover;background:#fff;flex-shrink:0;">
+                        <img id="thumbActivityImg" src="assets/images/time_activity_school.png" alt=""
+                          style="width:44px;height:44px;border-radius:6px;border:1.5px solid var(--border);object-fit:cover;background:#fff;flex-shrink:0;">
                         <div style="flex:1;display:flex;flex-direction:column;gap:4px;">
                           <div style="display:flex;gap:6px;">
-                            <select id="qActivityImg" class="select" style="font-size:0.8rem;padding:4px 8px;min-height:32px;flex:1;">
-                              <option value="assets/images/time_activity_school.png">🏫 Berangkat Sekolah (Pagi 07.00)</option>
-                              <option value="assets/images/time_activity_class.png">📖 Belajar di Kelas (Pagi 08.00)</option>
-                              <option value="assets/images/time_activity_lunch.png">🍽️ Makan Siang (Siang 12.00)</option>
-                              <option value="assets/images/time_activity_sleep.png">🛏️ Tidur Malam (Malam 09.00)</option>
-                              <option value="custom" id="optCustomActivityImg" disabled hidden>📁 SVG / Gambar Diunggah</option>
+                            <select id="qActivityImg" class="select"
+                              style="font-size:0.8rem;padding:4px 8px;min-height:32px;flex:1;">
+                              <option value="assets/images/time_activity_school.png">🏫 Berangkat Sekolah (Pagi 07.00)
+                              </option>
+                              <option value="assets/images/time_activity_class.png">📖 Belajar di Kelas (Pagi 08.00)
+                              </option>
+                              <option value="assets/images/time_activity_lunch.png">🍽️ Makan Siang (Siang 12.00)
+                              </option>
+                              <option value="assets/images/time_activity_sleep.png">🛏️ Tidur Malam (Malam 09.00)
+                              </option>
+                              <option value="custom" id="optCustomActivityImg" disabled hidden>📁 SVG / Gambar Diunggah
+                              </option>
                             </select>
-                            <button type="button" class="btn btn-outline btn-sm" id="btnUploadActivityImg" style="font-size:0.75rem;padding:4px 10px;white-space:nowrap;min-height:32px;font-weight:700;">
+                            <button type="button" class="btn btn-outline btn-sm" id="btnUploadActivityImg"
+                              style="font-size:0.75rem;padding:4px 10px;white-space:nowrap;min-height:32px;font-weight:700;">
                               📁 Upload File (SVG/Foto)
                             </button>
-                            <input type="file" id="fileActivityImg" accept=".svg,.png,.jpg,.jpeg,.webp,image/*" style="display:none;">
+                            <input type="file" id="fileActivityImg" accept=".svg,.png,.jpg,.jpeg,.webp,image/*"
+                              style="display:none;">
                           </div>
-                          <span id="labelUploadedActivity" class="muted small" style="font-size:0.72rem;display:none;color:var(--primary);font-weight:700;"></span>
+                          <span id="labelUploadedActivity" class="muted small"
+                            style="font-size:0.72rem;display:none;color:var(--primary);font-weight:700;"></span>
                         </div>
                       </div>
                     </div>
                   </div>
 
                   <div style="margin-top:14px;border-top:1px dashed var(--border);padding-top:12px;">
-                    <label class="small muted" style="font-weight:700;margin-bottom:6px;display:block;">4 Pilihan Keterangan Waktu Siswa (Drag & Drop):</label>
+                    <label class="small muted" style="font-weight:700;margin-bottom:6px;display:block;">4 Pilihan
+                      Keterangan Waktu Siswa (Drag & Drop):</label>
                     <div class="form-row-4" style="display:grid;grid-template-columns:repeat(2, 1fr);gap:8px;">
                       <div>
-                        <span class="small muted" style="font-size:0.75rem;display:block;margin-bottom:2px;">Opsi 1 (Target Kunci)</span>
+                        <span class="small muted" style="font-size:0.75rem;display:block;margin-bottom:2px;">Opsi 1
+                          (Target Kunci)</span>
                         <input type="text" id="qActChip1" class="input" value="Pukul 7 pagi">
                       </div>
                       <div>
-                        <span class="small muted" style="font-size:0.75rem;display:block;margin-bottom:2px;">Opsi 2 (Pengecoh)</span>
+                        <span class="small muted" style="font-size:0.75rem;display:block;margin-bottom:2px;">Opsi 2
+                          (Pengecoh)</span>
                         <input type="text" id="qActChip2" class="input" value="Pukul 7 malam">
                       </div>
                       <div>
-                        <span class="small muted" style="font-size:0.75rem;display:block;margin-bottom:2px;">Opsi 3 (Pengecoh)</span>
+                        <span class="small muted" style="font-size:0.75rem;display:block;margin-bottom:2px;">Opsi 3
+                          (Pengecoh)</span>
                         <input type="text" id="qActChip3" class="input" value="Pukul 8 pagi">
                       </div>
                       <div>
-                        <span class="small muted" style="font-size:0.75rem;display:block;margin-bottom:2px;">Opsi 4 (Pengecoh)</span>
+                        <span class="small muted" style="font-size:0.75rem;display:block;margin-bottom:2px;">Opsi 4
+                          (Pengecoh)</span>
                         <input type="text" id="qActChip4" class="input" value="Pukul 12 siang">
                       </div>
                     </div>
@@ -872,38 +990,47 @@
 
                 <div class="form-group">
                   <label for="qText">Kalimat Pertanyaan</label>
-                  <input type="text" id="qText" class="input" required placeholder="Contoh: Halim bangun tidur pukul 5 pagi. Arahkan jarum jam ke pukul 05.00!">
+                  <input type="text" id="qText" class="input" required
+                    placeholder="Contoh: Halim bangun tidur pukul 5 pagi. Arahkan jarum jam ke pukul 05.00!">
                 </div>
 
                 <!-- Upload Gambar Kustom Soal (Opsional untuk semua soal / pilihan ganda) -->
                 <div class="form-group" id="questionImageUploadRow" style="display:none;">
-                  <label style="font-weight:700;display:block;margin-bottom:6px;">Gambar / SVG Ilustrasi Soal (Opsional):</label>
+                  <label style="font-weight:700;display:block;margin-bottom:6px;">Gambar / SVG Ilustrasi Soal
+                    (Opsional):</label>
                   <div style="display:flex;gap:10px;align-items:center;">
-                    <img id="thumbQuestionImg" src="assets/icons/clock.svg" alt="" style="width:44px;height:44px;border-radius:8px;border:1.5px solid var(--border);object-fit:contain;background:#fff;padding:4px;flex-shrink:0;">
+                    <img id="thumbQuestionImg" src="assets/icons/clock.svg" alt=""
+                      style="width:44px;height:44px;border-radius:8px;border:1.5px solid var(--border);object-fit:contain;background:#fff;padding:4px;flex-shrink:0;">
                     <div style="flex:1;">
                       <div style="display:flex;gap:8px;align-items:center;">
-                        <button type="button" class="btn btn-outline btn-sm" id="btnUploadQuestionImg" style="font-size:0.8rem;padding:5px 12px;font-weight:700;">
+                        <button type="button" class="btn btn-outline btn-sm" id="btnUploadQuestionImg"
+                          style="font-size:0.8rem;padding:5px 12px;font-weight:700;">
                           📁 Upload Gambar / SVG Kustom
                         </button>
-                        <input type="file" id="fileQuestionImg" accept=".svg,.png,.jpg,.jpeg,.webp,image/*" style="display:none;">
-                        <button type="button" class="btn btn-outline btn-sm" id="btnClearQuestionImg" style="display:none;color:var(--pink);border-color:var(--pink);font-size:0.75rem;padding:4px 8px;">
+                        <input type="file" id="fileQuestionImg" accept=".svg,.png,.jpg,.jpeg,.webp,image/*"
+                          style="display:none;">
+                        <button type="button" class="btn btn-outline btn-sm" id="btnClearQuestionImg"
+                          style="display:none;color:var(--pink);border-color:var(--pink);font-size:0.75rem;padding:4px 8px;">
                           Hapus
                         </button>
                       </div>
-                      <span id="labelUploadedQuestionImg" class="muted small" style="margin-top:4px;font-size:0.75rem;color:var(--primary);font-weight:700;display:none;"></span>
+                      <span id="labelUploadedQuestionImg" class="muted small"
+                        style="margin-top:4px;font-size:0.75rem;color:var(--primary);font-weight:700;display:none;"></span>
                       <input type="hidden" id="qCustomImg" value="">
                     </div>
                   </div>
-                  <span class="muted small" style="font-size:0.75rem;display:block;margin-top:4px;">Bisa upload gambar atau SVG ilustrasi soal dari komputer.</span>
+                  <span class="muted small" style="font-size:0.75rem;display:block;margin-top:4px;">Bisa upload gambar
+                    atau SVG ilustrasi soal dari komputer.</span>
                 </div>
 
                 <!-- 4 Pilihan Jawaban dengan Click-to-Select Kunci Jawaban (Hanya untuk tipe Pilihan Ganda) -->
                 <div class="form-group" id="optionsBuilderGroup" style="display:none;">
                   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
                     <label style="margin-bottom:0;">Pilihan Jawaban (A, B, C, D)</label>
-                    <span class="muted small" style="font-size:0.75rem;">💡 Klik huruf untuk memilih kunci jawaban benar</span>
+                    <span class="muted small" style="font-size:0.75rem;">💡 Klik huruf untuk memilih kunci jawaban
+                      benar</span>
                   </div>
-                  
+
                   <div class="options-builder-grid">
                     <!-- Opsi A -->
                     <div class="option-builder-item is-correct" id="optItemA">
@@ -943,13 +1070,15 @@
                   </div>
                   <div class="form-group">
                     <label for="qHint">Petunjuk / Bantuan Hint (Opsional)</label>
-                    <input type="text" id="qHint" class="input" placeholder="Contoh: Arahkan jarum pendek ke 5 dan jarum panjang ke 12">
+                    <input type="text" id="qHint" class="input"
+                      placeholder="Contoh: Arahkan jarum pendek ke 5 dan jarum panjang ke 12">
                   </div>
                 </div>
 
                 <div class="form-group">
                   <label for="qExplanation">Pembahasan Jawaban (Opsional)</label>
-                  <input type="text" id="qExplanation" class="input" placeholder="Contoh: Pukul 05.00 artinya jarum pendek di angka 5 dan jarum panjang di angka 12.">
+                  <input type="text" id="qExplanation" class="input"
+                    placeholder="Contoh: Pukul 05.00 artinya jarum pendek di angka 5 dan jarum panjang di angka 12.">
                 </div>
 
                 <div style="display:flex;gap:10px;margin-top:14px;">
@@ -969,21 +1098,26 @@
                 <span class="live-preview-badge">👁️ Pratinjau Kuis Murid</span>
                 <span class="badge badge-yellow" id="previewQPointsBadge">100 Poin</span>
               </div>
-              <p class="muted small" style="margin-bottom:12px;">Tampilan persis seperti yang dilihat dan dimainkan murid:</p>
+              <p class="muted small" style="margin-bottom:12px;">Tampilan persis seperti yang dilihat dan dimainkan
+                murid:</p>
 
               <!-- Pertanyaan Preview -->
-              <div class="preview-quiz-title" id="previewQText" style="font-size:1.15rem;font-weight:900;margin-bottom:16px;">
+              <div class="preview-quiz-title" id="previewQText"
+                style="font-size:1.15rem;font-weight:900;margin-bottom:16px;">
                 Halim bangun tidur pukul 5 pagi. Arahkan jarum jam ke pukul 05.00!
               </div>
 
               <!-- Pratinjau Gambar Ilustrasi Soal Kustom (Opsional) -->
               <div id="previewQuestionImgWrap" style="display:none;margin:12px auto;text-align:center;">
-                <img id="previewQuestionCustomImg" src="" alt="Ilustrasi soal" style="max-width:100%;max-height:180px;border-radius:8px;object-fit:contain;background:#fff;border:1px solid var(--border);">
+                <img id="previewQuestionCustomImg" src="" alt="Ilustrasi soal"
+                  style="max-width:100%;max-height:180px;border-radius:8px;object-fit:contain;background:#fff;border:1px solid var(--border);">
               </div>
 
               <!-- Jam Analog Preview -->
-              <div class="preview-clock-wrap" id="previewClockWrap" style="display:flex;justify-content:center;margin:16px 0;">
-                <div class="clock-face" id="previewClockFace" style="width:220px;height:220px;margin:0 auto;position:relative;">
+              <div class="preview-clock-wrap" id="previewClockWrap"
+                style="display:flex;justify-content:center;margin:16px 0;">
+                <div class="clock-face" id="previewClockFace"
+                  style="width:220px;height:220px;margin:0 auto;position:relative;">
                   <div class="clock-number" style="--angle: 30deg;"><span>1</span></div>
                   <div class="clock-number" style="--angle: 60deg;"><span>2</span></div>
                   <div class="clock-number" style="--angle: 90deg;"><span>3</span></div>
@@ -996,30 +1130,37 @@
                   <div class="clock-number" style="--angle: 300deg;"><span>10</span></div>
                   <div class="clock-number" style="--angle: 330deg;"><span>11</span></div>
                   <div class="clock-number" style="--angle: 360deg;"><span>12</span></div>
-                  <div class="clock-hand hour-hand red-hand" id="previewHourHand" style="transform:translateX(-50%) rotate(150deg);height:54px;width:7px;"></div>
-                  <div class="clock-hand minute-hand blue-hand" id="previewMinuteHand" style="transform:translateX(-50%) rotate(0deg);height:78px;width:5px;"></div>
+                  <div class="clock-hand hour-hand red-hand" id="previewHourHand"
+                    style="transform:translateX(-50%) rotate(150deg);height:54px;width:7px;"></div>
+                  <div class="clock-hand minute-hand blue-hand" id="previewMinuteHand"
+                    style="transform:translateX(-50%) rotate(0deg);height:78px;width:5px;"></div>
                   <div class="clock-center"></div>
                 </div>
               </div>
 
               <!-- Jawab Button Preview (Untuk clock_drag Level 1 Siswa) -->
               <div id="previewClockDragAction" style="margin:20px 0 10px 0;text-align:center;">
-                <button type="button" class="btn btn-game-primary btn-clock-submit" style="pointer-events:none;min-width:170px;">
+                <button type="button" class="btn btn-game-primary btn-clock-submit"
+                  style="pointer-events:none;min-width:170px;">
                   <img src="assets/icons/check-circle.svg" width="20" height="20" alt="">
                   <span>Jawab</span>
                 </button>
-                <div class="muted small" style="margin-top:8px;">💡 Siswa memutar jarum jam analog, lalu menekan tombol <strong>Jawab</strong>.</div>
+                <div class="muted small" style="margin-top:8px;">💡 Siswa memutar jarum jam analog, lalu menekan tombol
+                  <strong>Jawab</strong>.</div>
               </div>
 
               <!-- Jam Digital Preview (Untuk Level 2 Siswa) Sesuai Modul -->
-              <div class="digital-alarm-widget-wrap" id="previewDigitalClockWrap" style="display:none;margin:16px auto;">
+              <div class="digital-alarm-widget-wrap" id="previewDigitalClockWrap"
+                style="display:none;margin:16px auto;">
                 <div class="digital-diagram-wrap">
                   <div class="digital-clock-pill-header">Jam Digital</div>
                   <div class="digital-diagram-stage">
                     <svg class="digital-arrows-svg" viewBox="0 0 360 195" aria-hidden="true">
-                      <path d="M 70 123 L 70 34 L 115 34" stroke="#B91C1C" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M 70 123 L 70 34 L 115 34" stroke="#B91C1C" stroke-width="2.8" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round" />
                       <polygon points="112,29 122,34 112,39" fill="#B91C1C" />
-                      <path d="M 290 123 L 290 34 L 245 34" stroke="#B91C1C" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M 290 123 L 290 34 L 245 34" stroke="#B91C1C" stroke-width="2.8" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round" />
                       <polygon points="248,29 238,34 248,39" fill="#B91C1C" />
                     </svg>
 
@@ -1064,7 +1205,8 @@
                 <div class="clock-drop-instruction-banner" style="margin-bottom:10px;font-size:0.82rem;">
                   <span>Tarik angka (Jam) dan (Menit) ke kotak jawaban di atas:</span>
                 </div>
-                <div class="clock-draggable-chips-row" id="previewChipsRow" style="justify-content:center;margin-bottom:14px;gap:8px;display:flex;flex-wrap:wrap;">
+                <div class="clock-draggable-chips-row" id="previewChipsRow"
+                  style="justify-content:center;margin-bottom:14px;gap:8px;display:flex;flex-wrap:wrap;">
                   <div class="clock-drag-chip digital-chip chip-blue" id="previewChip1"><span>07</span></div>
                   <div class="clock-drag-chip digital-chip chip-green" id="previewChip2"><span>30</span></div>
                   <div class="clock-drag-chip digital-chip chip-amber" id="previewChip3"><span>05</span></div>
@@ -1072,18 +1214,22 @@
                   <div class="clock-drag-chip digital-chip chip-cyan" id="previewChip5"><span>00</span></div>
                   <div class="clock-drag-chip digital-chip chip-red" id="previewChip6"><span>06</span></div>
                 </div>
-                <button type="button" class="btn btn-game-primary btn-clock-submit" style="pointer-events:none;min-width:170px;">
+                <button type="button" class="btn btn-game-primary btn-clock-submit"
+                  style="pointer-events:none;min-width:170px;">
                   <img src="assets/icons/check-circle.svg" width="20" height="20" alt="">
                   <span>Jawab</span>
                 </button>
-                <div class="muted small" style="margin-top:8px;">💡 Siswa memasangkan angka jam dan menit ke jam digital, lalu menekan tombol <strong>Jawab</strong>.</div>
+                <div class="muted small" style="margin-top:8px;">💡 Siswa memasangkan angka jam dan menit ke jam
+                  digital, lalu menekan tombol <strong>Jawab</strong>.</div>
               </div>
 
               <!-- Perbandingan Kegiatan Preview (Untuk Level 3 Siswa) -->
-              <div class="time-compare-container" id="previewTimeCompareWrap" style="display:none;margin:16px auto;justify-content:center;">
+              <div class="time-compare-container" id="previewTimeCompareWrap"
+                style="display:none;margin:16px auto;justify-content:center;">
                 <div class="time-compare-card" id="previewCompareCard0">
                   <div class="time-compare-img-box">
-                    <img class="time-compare-img" id="previewCompareImg0" src="assets/images/activity_combing.png" alt="">
+                    <img class="time-compare-img" id="previewCompareImg0" src="assets/images/activity_combing.png"
+                      alt="">
                   </div>
                   <div class="time-compare-label-row">
                     <span class="time-compare-label" id="previewCompareLabel0">Menyisir rambut</span>
@@ -1093,7 +1239,8 @@
                 <div class="time-compare-divider" id="previewCompareDivider">atau</div>
                 <div class="time-compare-card selected card-correct" id="previewCompareCard1">
                   <div class="time-compare-img-box">
-                    <img class="time-compare-img" id="previewCompareImg1" src="assets/images/activity_bathing.png" alt="">
+                    <img class="time-compare-img" id="previewCompareImg1" src="assets/images/activity_bathing.png"
+                      alt="">
                   </div>
                   <div class="time-compare-label-row">
                     <span class="time-compare-label" id="previewCompareLabel1">Mandi</span>
@@ -1104,17 +1251,21 @@
 
               <!-- Jawab Button Preview (Untuk time_compare Level 3 Siswa) -->
               <div id="previewTimeCompareAction" style="margin:16px 0 10px 0;display:none;text-align:center;">
-                <button type="button" class="btn btn-game-primary btn-clock-submit" style="pointer-events:none;min-width:170px;">
+                <button type="button" class="btn btn-game-primary btn-clock-submit"
+                  style="pointer-events:none;min-width:170px;">
                   <img src="assets/icons/check-circle.svg" width="20" height="20" alt="">
                   <span>Jawab</span>
                 </button>
-                <div class="muted small" style="margin-top:8px;">💡 Siswa mencentang salah satu kartu kegiatan, lalu menekan tombol <strong>Jawab</strong>.</div>
+                <div class="muted small" style="margin-top:8px;">💡 Siswa mencentang salah satu kartu kegiatan, lalu
+                  menekan tombol <strong>Jawab</strong>.</div>
               </div>
 
               <!-- Waktu Kegiatan Preview (Untuk Level 4 Siswa) -->
-              <div class="clock-activity-widget-wrap" id="previewActivityDropWrap" style="display:none;margin:16px auto;">
+              <div class="clock-activity-widget-wrap" id="previewActivityDropWrap"
+                style="display:none;margin:16px auto;">
                 <div class="clock-activity-card">
-                  <img class="clock-activity-img" id="previewActivityImg" src="assets/images/time_activity_school.png" alt="Kegiatan waktu">
+                  <img class="clock-activity-img" id="previewActivityImg" src="assets/images/time_activity_school.png"
+                    alt="Kegiatan waktu">
                 </div>
                 <div class="clock-activity-slot-col">
                   <div class="clock-activity-drop-slot has-value" id="previewActivitySlot">
@@ -1128,17 +1279,24 @@
                 <div class="clock-drop-instruction-banner" style="margin-bottom:10px;font-size:0.82rem;">
                   <span>Tarik pilihan waktu ke dalam kotak di atas, atau klik pilihan:</span>
                 </div>
-                <div class="clock-draggable-chips-row" id="previewActChipsRow" style="justify-content:center;margin-bottom:14px;gap:8px;display:flex;flex-wrap:wrap;">
-                  <div class="clock-drag-chip activity-time-chip chip-blue is-placed-slot" id="previewActChip1"><span>Pukul 7 pagi</span></div>
-                  <div class="clock-drag-chip activity-time-chip chip-green" id="previewActChip2"><span>Pukul 7 malam</span></div>
-                  <div class="clock-drag-chip activity-time-chip chip-amber" id="previewActChip3"><span>Pukul 8 pagi</span></div>
-                  <div class="clock-drag-chip activity-time-chip chip-red" id="previewActChip4"><span>Pukul 12 siang</span></div>
+                <div class="clock-draggable-chips-row" id="previewActChipsRow"
+                  style="justify-content:center;margin-bottom:14px;gap:8px;display:flex;flex-wrap:wrap;">
+                  <div class="clock-drag-chip activity-time-chip chip-blue is-placed-slot" id="previewActChip1">
+                    <span>Pukul 7 pagi</span></div>
+                  <div class="clock-drag-chip activity-time-chip chip-green" id="previewActChip2"><span>Pukul 7
+                      malam</span></div>
+                  <div class="clock-drag-chip activity-time-chip chip-amber" id="previewActChip3"><span>Pukul 8
+                      pagi</span></div>
+                  <div class="clock-drag-chip activity-time-chip chip-red" id="previewActChip4"><span>Pukul 12
+                      siang</span></div>
                 </div>
-                <button type="button" class="btn btn-game-primary btn-clock-submit" style="pointer-events:none;min-width:170px;">
+                <button type="button" class="btn btn-game-primary btn-clock-submit"
+                  style="pointer-events:none;min-width:170px;">
                   <img src="assets/icons/check-circle.svg" width="20" height="20" alt="">
                   <span>Jawab</span>
                 </button>
-                <div class="muted small" style="margin-top:8px;">💡 Siswa memasangkan keterangan waktu kegiatan yang tepat, lalu menekan tombol <strong>Jawab</strong>.</div>
+                <div class="muted small" style="margin-top:8px;">💡 Siswa memasangkan keterangan waktu kegiatan yang
+                  tepat, lalu menekan tombol <strong>Jawab</strong>.</div>
               </div>
 
               <!-- Options Preview (Untuk Pilihan Ganda MCQ) -->
@@ -1161,7 +1319,8 @@
                 </div>
               </div>
 
-              <div id="previewHintWrap" style="margin-top:14px;background:var(--bg);padding:8px 12px;border-radius:var(--radius-sm);font-size:0.8rem;color:var(--muted);display:none;">
+              <div id="previewHintWrap"
+                style="margin-top:14px;background:var(--bg);padding:8px 12px;border-radius:var(--radius-sm);font-size:0.8rem;color:var(--muted);display:none;">
                 💡 <strong>Hint:</strong> <span id="previewHintText"></span>
               </div>
             </div>
@@ -1177,23 +1336,30 @@
                 <h2>Unggah Berkas Spreadsheet Soal</h2>
                 <span class="badge badge-accent">Excel (.xlsx) / CSV</span>
               </div>
-              <p class="muted small" style="margin-bottom:14px;">Impor puluhan soal kuis sekaligus lengkap dengan pilihan dan kunci jawaban.</p>
+              <p class="muted small" style="margin-bottom:14px;">Impor puluhan soal kuis sekaligus lengkap dengan
+                pilihan dan kunci jawaban.</p>
 
               <div class="dropzone-box" id="questionDropzone">
-                <input type="file" id="questionCsvInput" accept=".xlsx,.xls,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,text/csv" style="display:none;">
-                <img src="assets/icons/upload.svg" width="42" height="42" alt="" style="margin-bottom:10px;opacity:0.85;">
+                <input type="file" id="questionCsvInput"
+                  accept=".xlsx,.xls,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,text/csv"
+                  style="display:none;">
+                <img src="assets/icons/upload.svg" width="42" height="42" alt=""
+                  style="margin-bottom:10px;opacity:0.85;">
                 <p style="font-weight:800;font-size:1rem;margin-bottom:4px;">Pilih Berkas Excel / CSV Soal</p>
                 <p class="muted small">Tarik dan lepas (drag & drop) berkas Excel (.xlsx) ke kotak ini</p>
                 <button type="button" class="btn btn-outline btn-sm" style="margin-top:12px;" id="btnBrowseQuestionCsv">
                   Pilih Berkas Spreadsheet
                 </button>
-                <div id="questionFileSelected" class="file-chosen-text hidden" style="margin-top:10px;font-weight:700;color:var(--primary);"></div>
+                <div id="questionFileSelected" class="file-chosen-text hidden"
+                  style="margin-top:10px;font-weight:700;color:var(--primary);"></div>
               </div>
 
               <!-- Pengaturan Target Level & Mode Unggah Kuis -->
-              <div style="margin-top:16px;background:var(--surface-subtle);padding:14px;border-radius:var(--radius-md);border:1px solid var(--border);">
+              <div
+                style="margin-top:16px;background:var(--surface-subtle);padding:14px;border-radius:var(--radius-md);border:1px solid var(--border);">
                 <div class="form-group" style="margin-bottom:12px;">
-                  <label for="uploadQuestionTargetLevel" style="font-weight:800;font-size:0.88rem;">🎯 Target Level Kuis:</label>
+                  <label for="uploadQuestionTargetLevel" style="font-weight:800;font-size:0.88rem;">🎯 Target Level
+                    Kuis:</label>
                   <select id="uploadQuestionTargetLevel" class="select" style="min-height:40px;padding:8px 12px;">
                     <option value="all">Otomatis (Sesuai kolom level di dalam file)</option>
                     <option value="1">Khusus Level 1: Mengenal Jam Analog</option>
@@ -1204,19 +1370,23 @@
                 </div>
 
                 <div class="form-group" style="margin-bottom:0;">
-                  <label style="font-weight:800;font-size:0.88rem;display:block;margin-bottom:6px;">⚙️ Mode Unggah Kuis:</label>
+                  <label style="font-weight:800;font-size:0.88rem;display:block;margin-bottom:6px;">⚙️ Mode Unggah
+                    Kuis:</label>
                   <div style="display:flex;flex-wrap:wrap;gap:14px;">
-                    <label style="display:inline-flex;align-items:center;gap:6px;font-size:0.88rem;font-weight:600;cursor:pointer;">
+                    <label
+                      style="display:inline-flex;align-items:center;gap:6px;font-size:0.88rem;font-weight:600;cursor:pointer;">
                       <input type="radio" name="qImportMode" value="append" checked> Tambahkan ke kuis yang ada
                     </label>
-                    <label style="display:inline-flex;align-items:center;gap:6px;font-size:0.88rem;font-weight:600;cursor:pointer;">
+                    <label
+                      style="display:inline-flex;align-items:center;gap:6px;font-size:0.88rem;font-weight:600;cursor:pointer;">
                       <input type="radio" name="qImportMode" value="replace"> Gantikan seluruh soal pada level ini
                     </label>
                   </div>
                 </div>
               </div>
 
-              <button type="button" id="btnUploadQuestionCsv" class="btn btn-green btn-sm" style="width:100%;margin-top:14px;padding:10px;">
+              <button type="button" id="btnUploadQuestionCsv" class="btn btn-green btn-sm"
+                style="width:100%;margin-top:14px;padding:10px;">
                 <img src="assets/icons/upload.svg" width="16" height="16" alt=""> Upload Berkas Excel / CSV
               </button>
             </div>
@@ -1231,7 +1401,8 @@
 
               <!-- Grup Tombol Unduh Template Excel Kuis per Level -->
               <div style="margin:14px 0;">
-                <label style="font-weight:800;font-size:0.85rem;display:block;margin-bottom:8px;">Unduh Template per Level:</label>
+                <label style="font-weight:800;font-size:0.85rem;display:block;margin-bottom:8px;">Unduh Template per
+                  Level:</label>
                 <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:10px;">
                   <button type="button" class="btn btn-outline btn-sm btn-template-q-level" data-level="1">
                     📥 Template Level 1 (Jam Analog)
@@ -1247,8 +1418,10 @@
                   </button>
                 </div>
 
-                <button type="button" id="btnTemplateQuestionCsv" class="btn btn-primary btn-sm" style="width:100%;padding:10px;">
-                  <img src="assets/icons/download.svg" width="16" height="16" alt=""> Unduh Template Lengkap (Semua Level .xlsx)
+                <button type="button" id="btnTemplateQuestionCsv" class="btn btn-primary btn-sm"
+                  style="width:100%;padding:10px;">
+                  <img src="assets/icons/download.svg" width="16" height="16" alt=""> Unduh Template Lengkap (Semua
+                  Level .xlsx)
                 </button>
               </div>
 
@@ -1270,8 +1443,10 @@
                   <span class="excel-col-badge">menit</span>
                 </div>
                 <ul class="template-features-list">
-                  <li><strong>tipe</strong>: Isi <code>clock</code> untuk jam analog atau <code>text</code> untuk teks.</li>
-                  <li><strong>kunci</strong>: Isi huruf jawaban benar: <code>A</code>, <code>B</code>, <code>C</code>, atau <code>D</code>.</li>
+                  <li><strong>tipe</strong>: Isi <code>clock</code> untuk jam analog atau <code>text</code> untuk teks.
+                  </li>
+                  <li><strong>kunci</strong>: Isi huruf jawaban benar: <code>A</code>, <code>B</code>, <code>C</code>,
+                    atau <code>D</code>.</li>
                   <li><strong>jam & menit</strong>: Waktu jarum jam analog (1-12) dan menit (0-59).</li>
                 </ul>
               </div>
@@ -1285,7 +1460,10 @@
       <div class="card teacher-guide-note">
         <h3>Catatan Panduan Pengajar</h3>
         <p class="muted small">
-          Aplikasi berjalan secara lokal di peramban tanpa server eksternal. Gunakan tombol <strong>Unduh Format Excel (.xlsx)</strong> di tab Rekap Nilai untuk mengunduh laporan rekapitulasi yang dapat langsung dibuka di Microsoft Excel atau Google Spreadsheet. Anda juga dapat mengunggah modul materi dan bank soal kuis massal menggunakan format spreadsheet <strong>Excel (.xlsx)</strong> atau CSV dengan templat yang telah disediakan.
+          Aplikasi berjalan secara lokal di peramban tanpa server eksternal. Gunakan tombol <strong>Unduh Format Excel
+            (.xlsx)</strong> di tab Rekap Nilai untuk mengunduh laporan rekapitulasi yang dapat langsung dibuka di
+          Microsoft Excel atau Google Spreadsheet. Anda juga dapat mengunggah modul materi dan bank soal kuis massal
+          menggunakan format spreadsheet <strong>Excel (.xlsx)</strong> atau CSV dengan templat yang telah disediakan.
         </p>
       </div>
 
@@ -1306,4 +1484,5 @@
   <script src="js/csv.js?v=3.2"></script>
   <script src="js/teacher.js?v=4.0"></script>
 </body>
+
 </html>

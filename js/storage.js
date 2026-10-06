@@ -754,10 +754,10 @@ const DEFAULT_QUESTIONS = [
 ];
 
 function getQuestions() {
-  if (Storage.get("timequest_curriculum_version") !== "4.0") {
+  if (Storage.get("timequest_curriculum_version") !== "3.9") {
     Storage.set(STORAGE_KEYS.MATERIALS, JSON.parse(JSON.stringify(DEFAULT_MATERIALS)));
     Storage.set(STORAGE_KEYS.QUESTIONS, JSON.parse(JSON.stringify(DEFAULT_QUESTIONS)));
-    Storage.set("timequest_curriculum_version", "4.0");
+    Storage.set("timequest_curriculum_version", "3.9");
     return JSON.parse(JSON.stringify(DEFAULT_QUESTIONS));
   }
   const questions = Storage.get(STORAGE_KEYS.QUESTIONS, null);

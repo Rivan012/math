@@ -177,7 +177,7 @@ function renderLevels() {
   grid.innerHTML = "";
 
   LEVELS.forEach(level => {
-    const completedLevels = currentStudent.completedLevels || [];
+    const completedLevels = currentStudent ? (currentStudent.completedLevels || []) : [];
     const unlocked = level.id === 1 || completedLevels.includes(level.id - 1);
     const completed = completedLevels.includes(level.id);
     const studied = hasStudiedLevel(level.id);
@@ -524,19 +524,38 @@ function getMaterialExhibitHtml(item) {
           <p class="reader-clock-caption" id="flipbookClockCaption">Pukul 5 tepat (Jarum panjang di angka 12)</p>
         </div>
 
-        <div class="clock-preset-buttons" role="group" aria-label="Pilihan contoh jam">
-          <button type="button" class="preset-btn active" data-h="5" data-m="0" data-deg-h="150" data-deg-m="0" data-desc="Pukul 05.00 tepat (Halim bangun tidur)">
-            Pukul 05.00
-          </button>
-          <button type="button" class="preset-btn" data-h="7" data-m="0" data-deg-h="210" data-deg-m="0" data-desc="Pukul 07.00 tepat (Berangkat sekolah)">
-            Pukul 07.00
-          </button>
-          <button type="button" class="preset-btn" data-h="4" data-m="30" data-deg-h="135" data-deg-m="180" data-desc="Pukul 04.30 (Setengah lima)">
-            Pukul 04.30
-          </button>
-          <button type="button" class="preset-btn" data-h="6" data-m="30" data-deg-h="195" data-deg-m="180" data-desc="Pukul 06.30 (Setengah tujuh)">
-            Pukul 06.30
-          </button>
+        <div class="materi-keypad-container" style="background:#fff; border-radius:12px; padding:16px; margin: 16px 0; border: 2px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+          <div class="time-inputs-row" style="display:flex; justify-content:center; align-items:center; gap: 10px; margin-bottom: 12px;">
+            <div class="time-input-group" style="text-align:center;">
+              <label style="display:block; font-size:12px; color:var(--text-secondary); margin-bottom:4px; font-weight:600;">Jam</label>
+              <input type="text" id="materiInputHour" class="time-keypad-input active" placeholder="--" readonly tabindex="-1" style="width:50px; height:50px; text-align:center; font-size:24px; font-weight:bold; font-family:'Outfit', sans-serif; border:2px solid var(--primary); border-radius:8px; color:var(--text-primary); cursor:pointer; background:#f0f5ff;">
+            </div>
+            <div class="time-input-sep" style="font-size:28px; font-weight:bold; color:var(--text-secondary);">:</div>
+            <div class="time-input-group" style="text-align:center;">
+              <label style="display:block; font-size:12px; color:var(--text-secondary); margin-bottom:4px; font-weight:600;">Menit</label>
+              <input type="text" id="materiInputMinute" class="time-keypad-input" placeholder="--" readonly tabindex="-1" style="width:50px; height:50px; text-align:center; font-size:24px; font-weight:bold; font-family:'Outfit', sans-serif; border:2px solid var(--border); border-radius:8px; color:var(--text-primary); cursor:pointer; background:#fff;">
+            </div>
+            <button type="button" id="btnMateriApply" class="btn btn-primary" style="margin-left:10px; padding: 12px 20px; font-size:16px; align-self:flex-end;">
+              Terapkan
+            </button>
+          </div>
+          
+          <div class="time-numpad-area" style="max-width: 260px; margin: 0 auto; display:block;">
+            <div class="numpad-grid" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px;">
+              <button type="button" class="materi-numpad-btn" data-key="1" style="background:#f8f9fa; border:2px solid var(--border); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">1</button>
+              <button type="button" class="materi-numpad-btn" data-key="2" style="background:#f8f9fa; border:2px solid var(--border); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">2</button>
+              <button type="button" class="materi-numpad-btn" data-key="3" style="background:#f8f9fa; border:2px solid var(--border); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">3</button>
+              <button type="button" class="materi-numpad-btn" data-key="4" style="background:#f8f9fa; border:2px solid var(--border); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">4</button>
+              <button type="button" class="materi-numpad-btn" data-key="5" style="background:#f8f9fa; border:2px solid var(--border); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">5</button>
+              <button type="button" class="materi-numpad-btn" data-key="6" style="background:#f8f9fa; border:2px solid var(--border); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">6</button>
+              <button type="button" class="materi-numpad-btn" data-key="7" style="background:#f8f9fa; border:2px solid var(--border); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">7</button>
+              <button type="button" class="materi-numpad-btn" data-key="8" style="background:#f8f9fa; border:2px solid var(--border); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">8</button>
+              <button type="button" class="materi-numpad-btn" data-key="9" style="background:#f8f9fa; border:2px solid var(--border); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">9</button>
+              <button type="button" class="materi-numpad-btn" data-key="next" style="background:var(--primary-light); color:var(--primary-dark); border:2px solid var(--primary-light); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">➔</button>
+              <button type="button" class="materi-numpad-btn" data-key="0" style="background:#f8f9fa; border:2px solid var(--border); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">0</button>
+              <button type="button" class="materi-numpad-btn" data-key="del" style="background:#fee2e2; color:#ef4444; border:2px solid #fee2e2; border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">⌫</button>
+            </div>
+          </div>
         </div>
       </div>
     `;
@@ -600,13 +619,37 @@ function getMaterialExhibitHtml(item) {
             </div>
           </div>
 
-          <div class="clock-preset-buttons" role="group" aria-label="Jadwal Digital Tika & Halim">
-            <button type="button" class="preset-digi-btn active" data-h="5" data-m="0" data-read="Pukul 05.00 tepat (Halim bangun tidur - Hal. 178)">05:00 Bangun Tidur</button>
-            <button type="button" class="preset-digi-btn" data-h="6" data-m="0" data-read="Pukul 06.00 pagi (Tika sarapan - Hal. 179)">06:00 Sarapan</button>
-            <button type="button" class="preset-digi-btn" data-h="7" data-m="0" data-read="Pukul 07.00 pagi (Masuk sekolah - Hal. 179)">07:00 Masuk Sekolah</button>
-            <button type="button" class="preset-digi-btn" data-h="12" data-m="0" data-read="Pukul 12.00 siang (Makan di Kantin Sehat - Hal. 180)">12:00 Kantin Sehat</button>
-            <button type="button" class="preset-digi-btn" data-h="4" data-m="0" data-read="Pukul 04.00 sore (Tika bermain bersama adik - Hal. 180)">16:00 Bermain Sore</button>
-            <button type="button" class="preset-digi-btn" data-h="9" data-m="0" data-read="Pukul 09.00 malam (Tika tidur malam - Hal. 181)">21:00 Tidur Malam</button>
+          <div class="materi-keypad-container" style="background:#fff; border-radius:12px; padding:16px; margin: 16px 0; border: 2px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+            <div class="time-inputs-row" style="display:flex; justify-content:center; align-items:center; gap: 10px; margin-bottom: 12px;">
+              <div class="time-input-group" style="text-align:center;">
+                <label style="display:block; font-size:12px; color:var(--text-secondary); margin-bottom:4px; font-weight:600;">Jam</label>
+                <input type="text" id="materiInputHour" class="time-keypad-input active" placeholder="--" readonly tabindex="-1" style="width:50px; height:50px; text-align:center; font-size:24px; font-weight:bold; font-family:'Outfit', sans-serif; border:2px solid var(--primary); border-radius:8px; color:var(--text-primary); cursor:pointer; background:#f0f5ff;">
+              </div>
+              <div class="time-input-sep" style="font-size:28px; font-weight:bold; color:var(--text-secondary);">:</div>
+              <div class="time-input-group" style="text-align:center;">
+                <label style="display:block; font-size:12px; color:var(--text-secondary); margin-bottom:4px; font-weight:600;">Menit</label>
+                <input type="text" id="materiInputMinute" class="time-keypad-input" placeholder="--" readonly tabindex="-1" style="width:50px; height:50px; text-align:center; font-size:24px; font-weight:bold; font-family:'Outfit', sans-serif; border:2px solid var(--border); border-radius:8px; color:var(--text-primary); cursor:pointer; background:#fff;">
+              </div>
+              <button type="button" id="btnMateriApply" class="btn btn-primary" style="margin-left:10px; padding: 12px 20px; font-size:16px; align-self:flex-end;">
+                Terapkan
+              </button>
+            </div>
+            <div class="time-numpad-area" style="max-width: 260px; margin: 0 auto; display:block;">
+              <div class="numpad-grid" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px;">
+                <button type="button" class="materi-numpad-btn" data-key="1" style="background:#f8f9fa; border:2px solid var(--border); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">1</button>
+                <button type="button" class="materi-numpad-btn" data-key="2" style="background:#f8f9fa; border:2px solid var(--border); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">2</button>
+                <button type="button" class="materi-numpad-btn" data-key="3" style="background:#f8f9fa; border:2px solid var(--border); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">3</button>
+                <button type="button" class="materi-numpad-btn" data-key="4" style="background:#f8f9fa; border:2px solid var(--border); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">4</button>
+                <button type="button" class="materi-numpad-btn" data-key="5" style="background:#f8f9fa; border:2px solid var(--border); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">5</button>
+                <button type="button" class="materi-numpad-btn" data-key="6" style="background:#f8f9fa; border:2px solid var(--border); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">6</button>
+                <button type="button" class="materi-numpad-btn" data-key="7" style="background:#f8f9fa; border:2px solid var(--border); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">7</button>
+                <button type="button" class="materi-numpad-btn" data-key="8" style="background:#f8f9fa; border:2px solid var(--border); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">8</button>
+                <button type="button" class="materi-numpad-btn" data-key="9" style="background:#f8f9fa; border:2px solid var(--border); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">9</button>
+                <button type="button" class="materi-numpad-btn" data-key="next" style="background:var(--primary-light); color:var(--primary-dark); border:2px solid var(--primary-light); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">➔</button>
+                <button type="button" class="materi-numpad-btn" data-key="0" style="background:#f8f9fa; border:2px solid var(--border); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">0</button>
+                <button type="button" class="materi-numpad-btn" data-key="del" style="background:#fee2e2; color:#ef4444; border:2px solid #fee2e2; border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">⌫</button>
+              </div>
+            </div>
           </div>
         </div>
       `;
@@ -646,20 +689,38 @@ function getMaterialExhibitHtml(item) {
           <p class="reader-clock-caption" id="dualCaption">Pukul 07.00 tepat (Masuk sekolah)</p>
         </div>
 
-        <div class="clock-preset-buttons" role="group" aria-label="Pilihan perbandingan jam">
-          <button type="button" class="dual-preset-btn active" data-time="07:00" data-deg-h="210" data-deg-m="0" data-desc="Pukul 07.00 tepat (Masuk sekolah)">
-            07:00
-          </button>
-          <button type="button" class="dual-preset-btn" data-time="05:00" data-deg-h="150" data-deg-m="0" data-desc="Pukul 05.00 tepat (Bangun tidur)">
-            05:00
-          </button>
-          <button type="button" class="dual-preset-btn" data-time="09:30" data-deg-h="285" data-deg-m="180" data-desc="Pukul 09.30 (Setengah sepuluh / istirahat)">
-            09:30
-          </button>
-          <button type="button" class="dual-preset-btn" data-time="12:00" data-deg-h="360" data-deg-m="0" data-desc="Pukul 12.00 tepat (Makan siang)">
-            12:00
-          </button>
-        </div>
+          <div class="materi-keypad-container" style="background:#fff; border-radius:12px; padding:16px; margin: 16px 0; border: 2px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+            <div class="time-inputs-row" style="display:flex; justify-content:center; align-items:center; gap: 10px; margin-bottom: 12px;">
+              <div class="time-input-group" style="text-align:center;">
+                <label style="display:block; font-size:12px; color:var(--text-secondary); margin-bottom:4px; font-weight:600;">Jam</label>
+                <input type="text" id="materiInputHour" class="time-keypad-input active" placeholder="--" readonly tabindex="-1" style="width:50px; height:50px; text-align:center; font-size:24px; font-weight:bold; font-family:'Outfit', sans-serif; border:2px solid var(--primary); border-radius:8px; color:var(--text-primary); cursor:pointer; background:#f0f5ff;">
+              </div>
+              <div class="time-input-sep" style="font-size:28px; font-weight:bold; color:var(--text-secondary);">:</div>
+              <div class="time-input-group" style="text-align:center;">
+                <label style="display:block; font-size:12px; color:var(--text-secondary); margin-bottom:4px; font-weight:600;">Menit</label>
+                <input type="text" id="materiInputMinute" class="time-keypad-input" placeholder="--" readonly tabindex="-1" style="width:50px; height:50px; text-align:center; font-size:24px; font-weight:bold; font-family:'Outfit', sans-serif; border:2px solid var(--border); border-radius:8px; color:var(--text-primary); cursor:pointer; background:#fff;">
+              </div>
+              <button type="button" id="btnMateriApply" class="btn btn-primary" style="margin-left:10px; padding: 12px 20px; font-size:16px; align-self:flex-end;">
+                Terapkan
+              </button>
+            </div>
+            <div class="time-numpad-area" style="max-width: 260px; margin: 0 auto; display:block;">
+              <div class="numpad-grid" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px;">
+                <button type="button" class="materi-numpad-btn" data-key="1" style="background:#f8f9fa; border:2px solid var(--border); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">1</button>
+                <button type="button" class="materi-numpad-btn" data-key="2" style="background:#f8f9fa; border:2px solid var(--border); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">2</button>
+                <button type="button" class="materi-numpad-btn" data-key="3" style="background:#f8f9fa; border:2px solid var(--border); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">3</button>
+                <button type="button" class="materi-numpad-btn" data-key="4" style="background:#f8f9fa; border:2px solid var(--border); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">4</button>
+                <button type="button" class="materi-numpad-btn" data-key="5" style="background:#f8f9fa; border:2px solid var(--border); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">5</button>
+                <button type="button" class="materi-numpad-btn" data-key="6" style="background:#f8f9fa; border:2px solid var(--border); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">6</button>
+                <button type="button" class="materi-numpad-btn" data-key="7" style="background:#f8f9fa; border:2px solid var(--border); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">7</button>
+                <button type="button" class="materi-numpad-btn" data-key="8" style="background:#f8f9fa; border:2px solid var(--border); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">8</button>
+                <button type="button" class="materi-numpad-btn" data-key="9" style="background:#f8f9fa; border:2px solid var(--border); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">9</button>
+                <button type="button" class="materi-numpad-btn" data-key="next" style="background:var(--primary-light); color:var(--primary-dark); border:2px solid var(--primary-light); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">➔</button>
+                <button type="button" class="materi-numpad-btn" data-key="0" style="background:#f8f9fa; border:2px solid var(--border); border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">0</button>
+                <button type="button" class="materi-numpad-btn" data-key="del" style="background:#fee2e2; color:#ef4444; border:2px solid #fee2e2; border-radius:8px; font-size:20px; font-weight:600; padding:12px 0; cursor:pointer;">⌫</button>
+              </div>
+            </div>
+          </div>
       </div>
     `;
   }
@@ -906,58 +967,157 @@ function generateClockNumbers() {
 function initFlipbookInteractiveEvents(container) {
   if (!container || typeof container.querySelectorAll !== "function") return;
 
-  // Preset Jam Analog (Level 1)
-  const presetBtns = container.querySelectorAll(".preset-btn");
-  presetBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-      presetBtns.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
+  // Keypad Jam Analog (Level 1 - M002)
+  const materiKeypadContainer = container.querySelector(".materi-keypad-container");
+  if (materiKeypadContainer) {
+    let activeInput = "hour";
+    let hourVal = "";
+    let minuteVal = "";
+    
+    const elH = container.querySelector("#materiInputHour");
+    const elM = container.querySelector("#materiInputMinute");
+    const btnApply = container.querySelector("#btnMateriApply");
+    
+    container.querySelectorAll(".materi-numpad-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const key = btn.dataset.key;
+        if (typeof playSound === "function") playSound("tick");
 
-      const degH = btn.getAttribute("data-deg-h");
-      const degM = btn.getAttribute("data-deg-m");
-      const desc = btn.getAttribute("data-desc");
-      const textH = btn.getAttribute("data-h");
-      const textM = btn.getAttribute("data-m");
-
-      const hourHand = container.querySelector("#flipbookHourHand");
-      const minuteHand = container.querySelector("#flipbookMinuteHand");
-      const badge = container.querySelector("#flipbookDigitalBadge");
-      const caption = container.querySelector("#flipbookClockCaption");
-
-      if (hourHand) hourHand.style.transform = `translateX(-50%) rotate(${degH}deg)`;
-      if (minuteHand) minuteHand.style.transform = `translateX(-50%) rotate(${degM}deg)`;
-      if (badge) badge.textContent = `${String(textH).padStart(2, "0")}.${String(textM).padStart(2, "0")}`;
-      if (caption) caption.textContent = desc;
-
-      if (typeof playSound === "function") playSound("tick");
+        if (key === "next") {
+          activeInput = activeInput === "hour" ? "minute" : "hour";
+          if(elH) elH.classList.toggle("active", activeInput === "hour");
+          if(elM) elM.classList.toggle("active", activeInput === "minute");
+          return;
+        }
+        if (key === "del") {
+          if (activeInput === "hour") {
+            hourVal = hourVal.slice(0, -1);
+          } else {
+            minuteVal = minuteVal.slice(0, -1);
+          }
+        } else {
+          if (activeInput === "hour") {
+            if (hourVal.length < 2) hourVal += key;
+          } else {
+            if (minuteVal.length < 2) minuteVal += key;
+          }
+        }
+        if(elH) elH.value = hourVal;
+        if(elM) elM.value = minuteVal;
+        
+        if (activeInput === "hour" && hourVal.length === 2) {
+          activeInput = "minute";
+          if(elH) elH.classList.remove("active");
+          if(elM) elM.classList.add("active");
+        }
+      });
     });
-  });
 
-  // Preset Jam Dual Analog-Digital (Level 2)
-  const dualBtns = container.querySelectorAll(".dual-preset-btn");
-  dualBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-      dualBtns.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-
-      const degH = btn.getAttribute("data-deg-h");
-      const degM = btn.getAttribute("data-deg-m");
-      const time = btn.getAttribute("data-time");
-      const desc = btn.getAttribute("data-desc");
-
-      const hourHand = container.querySelector("#dualHourHand");
-      const minuteHand = container.querySelector("#dualMinuteHand");
-      const digitalDisplay = container.querySelector("#dualDigitalDisplay");
-      const caption = container.querySelector("#dualCaption");
-
-      if (hourHand) hourHand.style.transform = `translateX(-50%) rotate(${degH}deg)`;
-      if (minuteHand) minuteHand.style.transform = `translateX(-50%) rotate(${degM}deg)`;
-      if (digitalDisplay) digitalDisplay.textContent = time;
-      if (caption) caption.textContent = desc;
-
-      if (typeof playSound === "function") playSound("tick");
+    if (elH) elH.addEventListener("click", () => {
+      activeInput = "hour";
+      elH.classList.add("active");
+      if(elM) elM.classList.remove("active");
     });
-  });
+    
+    if (elM) elM.addEventListener("click", () => {
+      activeInput = "minute";
+      elM.classList.add("active");
+      if(elH) elH.classList.remove("active");
+    });
+
+    if (btnApply) {
+      btnApply.addEventListener("click", () => {
+        if (!hourVal || !minuteVal) {
+          if (typeof showToast === "function") showToast("Silakan isi jam dan menit!");
+          return;
+        }
+        
+        let h = parseInt(hourVal, 10);
+        let m = parseInt(minuteVal, 10);
+        
+        if (h > 12) h = 12;
+        if (h === 0) h = 12;
+        if (m > 59) m = 59;
+        
+        const hStr = String(h).padStart(2, "0");
+        const mStr = String(m).padStart(2, "0");
+        const timeStr = `${hStr}:${mStr}`;
+
+        // M002 Logic (Analog)
+        const hourHand = container.querySelector("#flipbookHourHand");
+        const minuteHand = container.querySelector("#flipbookMinuteHand");
+        const badge = container.querySelector("#flipbookDigitalBadge");
+        const caption = container.querySelector("#flipbookClockCaption");
+
+        // M004 Logic (Dual)
+        const dualHourHand = container.querySelector("#dualHourHand");
+        const dualMinuteHand = container.querySelector("#dualMinuteHand");
+        const dualDigitalDisplay = container.querySelector("#dualDigitalDisplay");
+        const dualCaption = container.querySelector("#dualCaption");
+
+        // Apply angles if analog exists
+        const hourAngle = ((h % 12) + m / 60) * 30;
+        const minuteAngle = m * 6;
+
+        if (hourHand) hourHand.style.transform = `translateX(-50%) rotate(${hourAngle}deg)`;
+        if (minuteHand) minuteHand.style.transform = `translateX(-50%) rotate(${minuteAngle}deg)`;
+        if (badge) badge.textContent = `${hStr}.${mStr}`;
+        if (caption) {
+          if (m === 0) {
+            caption.innerHTML = `Pukul <strong>${hStr}.00</strong> tepat`;
+          } else if (m === 30) {
+            const nextH = (h % 12) + 1;
+            caption.innerHTML = `Pukul <strong>${hStr}.30</strong> (Setengah ${nextH})`;
+          } else {
+            caption.innerHTML = `Pukul <strong>${hStr}.${mStr}</strong>`;
+          }
+        }
+
+        if (dualHourHand) dualHourHand.style.transform = `translateX(-50%) rotate(${hourAngle}deg)`;
+        if (dualMinuteHand) dualMinuteHand.style.transform = `translateX(-50%) rotate(${minuteAngle}deg)`;
+        if (dualDigitalDisplay) dualDigitalDisplay.textContent = timeStr;
+        if (dualCaption) {
+          if (m === 0) {
+            dualCaption.innerHTML = `Pukul <strong>${timeStr}</strong> tepat`;
+          } else {
+            dualCaption.innerHTML = `Pukul <strong>${timeStr}</strong>`;
+          }
+        }
+
+        // M003 Logic (Interactive Digital)
+        const digiConsole = container.querySelector(".digital-interactive-console");
+        if (digiConsole) {
+           // We can't call renderDigi easily because it's scoped, but wait...
+           // renderDigi is scoped inside `if (digiConsole)`.
+           // Let's just update the DOM directly!
+           const digiHourText = digiConsole.querySelector("#digiHourText");
+           const digiMinText = digiConsole.querySelector("#digiMinText");
+           const lblH = digiConsole.querySelector("#lblHour");
+           const lblM = digiConsole.querySelector("#lblMin");
+           const readAloud = container.querySelector("#digiReadAloud");
+           
+           if (digiHourText) digiHourText.textContent = hStr;
+           if (digiMinText) digiMinText.textContent = mStr;
+           if (lblH) lblH.textContent = hStr;
+           if (lblM) lblM.textContent = mStr;
+           if (readAloud) {
+             if (m === 0) {
+               readAloud.innerHTML = `Jam ini dibaca: <strong>Pukul ${hStr}.00 tepat</strong>`;
+             } else if (m === 30) {
+               const nextH = (h % 12) + 1;
+               readAloud.innerHTML = `Jam ini dibaca: <strong>Pukul ${hStr}.30 (Setengah ${nextH})</strong>`;
+             } else {
+               readAloud.innerHTML = `Jam ini dibaca: <strong>Pukul ${hStr} lewat ${mStr} menit</strong>`;
+             }
+           }
+        }
+
+        if (typeof playSound === "function") playSound("correct");
+      });
+    }
+  }
+
+
 
   // Helper fungsi untuk memutar jarum jam dengan sentuhan jari / mouse drag
   function setupDraggableClock(clockFace, hourHand, minuteHand, onTimeChanged) {
